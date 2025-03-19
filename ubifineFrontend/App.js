@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 import { ProfileStack } from './Profile';
 
 
-const HomeScreen = ({ navigation }) => {
+const App = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.row}>
         <View style={styles.buttonContainer}>
-          <Button title="Profile" onPress={() => navigation.navigate('Profile')} />
+          <Button title="Profile" onPress={() => navigation.navigate('ProfileHome')} />
         </View>
         <View style={styles.buttonContainer}>
           <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
@@ -39,16 +39,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-const App = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Profile" component={ProfileStack} options={{ headerShown: false}} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+
 
 
 const styles = StyleSheet.create({

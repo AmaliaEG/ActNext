@@ -230,18 +230,18 @@ const AboutUBIFINEAppScreen = () => {
 };
 
 // Defines the available profile screens
-export const ProfileStack = () => {
-    return (
-        <Stack.Navigator initialRouteName="ProfileHome">
-            <Stack.Screen name="ProfileHome" component={ProfileHomeScreen} options={{ title: 'Profile' }} />
-            <Stack.Screen name="ProfileDetails" component={ProfileDetailsScreen} options={{ title: 'Profile Details' }} />
-            <Stack.Screen name="Language" component={LanguageScreen} />
-            <Stack.Screen name="Notifications" component={NotificationsScreen} />
-            <Stack.Screen name="StorageAndData" component={StorageAndDataScreen} />
-            <Stack.Screen name="AboutUBIFINEApp" component={AboutUBIFINEAppScreen} />
-        </Stack.Navigator>
-    );
-};
+// export const ProfileStack = () => {
+//     return (
+//         <Stack.Navigator initialRouteName="ProfileHome">
+//             <Stack.Screen name="ProfileHome" component={ProfileHomeScreen} options={{ title: 'Profile' }} />
+//             <Stack.Screen name="ProfileDetails" component={ProfileDetailsScreen} options={{ title: 'Profile Details' }} />
+//             <Stack.Screen name="Language" component={LanguageScreen} />
+//             <Stack.Screen name="Notifications" component={NotificationsScreen} />
+//             <Stack.Screen name="StorageAndData" component={StorageAndDataScreen} />
+//             <Stack.Screen name="AboutUBIFINEApp" component={AboutUBIFINEAppScreen} />
+//         </Stack.Navigator>
+//     );
+// };
 
 const styles = StyleSheet.create({
     container: {
@@ -320,3 +320,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+
+export {
+    ProfileHomeScreen,
+    ProfileDetailsScreen,
+    LanguageScreen,
+    NotificationsScreen,
+    StorageAndDataScreen,
+    AboutUBIFINEAppScreen
+};
