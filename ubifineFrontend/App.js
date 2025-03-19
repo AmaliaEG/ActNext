@@ -1,25 +1,40 @@
+import { StatusBar } from 'expo-status-bar';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-} from 'react-native';
-import { ProfileStack } from './Profile';
+import AI from './AI';
+import SettingsPage from './Settings'; // Your settings page
 
 const Stack = createStackNavigator();
+import { ProfileStack } from './Profile';
+
 
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Profile')}
-      >
-        <Text style={styles.buttonText}> Go to Profile </Text>
-      </TouchableOpacity>
+      <View style={styles.row}>
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Show Settings"
+            onPress={() => navigation.navigate('Settings')} // Navigate to SettingsPage
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+        <Button
+            title="AI"
+            onPress={() => navigation.navigate('AI')} // Navigate to AI
+          />
+        </View>
+      </View>
+      <View style={styles.row}>
+        <View style={styles.buttonContainer}>
+          <Button title="Profile" onPress={() => navigation.navigate('Profile')} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
+        </View>
+      </View>
     </View>
   );
 };
@@ -40,6 +55,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  buttonContainer: {
+    margin: 10, // Adjust the margin as needed
     alignItems: 'center',
   },
   button: {
