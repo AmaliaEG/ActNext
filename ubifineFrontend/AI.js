@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
 
 const AI = () => {
@@ -17,7 +18,6 @@ const AI = () => {
                     Alert.alert('Permission required', 'Audio playback requires permission to access audio.');
                     return;
                 }
-
                 // Load the sound
                 console.log('Loading audio...');
                 const { sound } = await Audio.Sound.createAsync(

@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AI from './AI';
 import SettingsPage from './Settings'; // Your settings page
 
 const Stack = createStackNavigator();
@@ -19,7 +20,10 @@ export default function App( {navigation}) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Button 2" onPress={() => alert('Button 2 pressed')} />
+        <Button
+            title="AI"
+            onPress={() => navigation.navigate('AI')} // Navigate to AI
+          />
         </View>
       </View>
       <View style={styles.row}>

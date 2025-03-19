@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './App'; // Your main screen with the buttons
 import SettingsPage from './Settings'; // Your settings page
+import AI from './AI'; // Your AI page
 
 const Stack = createStackNavigator();
 
@@ -12,6 +13,7 @@ const Navigator = () => {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Settings" component={SettingsPage} />
+        <Stack.Screen name="AI" component={AI} />
       </Stack.Navigator>
     </NavigationContainer>
   );
