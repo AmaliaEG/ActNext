@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -6,40 +7,8 @@ import {
     TextInput,
     ScrollView
 } from "react-native";
-import { AntDesign, Feather } from "@expo/vector-icons";
-import { createStackNavigator } from "@react-navigation/stack";
-import React, { use, useEffect, useState } from 'react';
+import { Feather } from "@expo/vector-icons";
 import * as SecureStore from 'expo-secure-store';
-
-const Stack = createStackNavigator();
-
-const ProfileHomeScreen = ({ navigation }) => {
-    // Array containing profile menu options
-    const menuItems = [
-        { title: 'Profile', screen: 'ProfileDetails' },
-        { title: 'Language', screen: 'Language' },
-        { title: 'Notifications', screen: 'Notifications' },
-        { title: 'Storage and Data', screen: 'StorageAndData' },
-        { title: 'About UBIFINE App', screen: 'AboutUBIFINEApp' },
-    ];
-
-    // A button is created for each item in menuItems containing a label, arrow and
-    // a onPress handler that navigates to the screen of the corresponding item.
-    return (
-        <View style={styles.container}>
-            {menuItems.map((item, index) => (
-                <TouchableOpacity
-                    key={index}
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate(item.screen)}
-                >
-                    <Text style={styles.menuText}>{item.title}</Text>
-                    <AntDesign name="right" size={20} color="#000" />
-                </TouchableOpacity>
-            ))}
-        </View>
-    );
-};
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = () => {
@@ -205,59 +174,10 @@ const ProfileDetailsScreen = () => {
     )
 };
 
-const LanguageScreen = () => {
-    <View style={styles.container}>
-        <Text>Language Settings</Text>
-    </View>
-};
-
-const NotificationsScreen = () => {
-    <View style={styles.container}>
-        <Text>Notification Settings</Text>
-    </View>
-};
-
-const StorageAndDataScreen = () => {
-    <View style={styles.container}>
-        <Text>Storage and Data Settings</Text>
-    </View>
-};
-
-const AboutUBIFINEAppScreen = () => {
-    <View style={styles.container}>
-        <Text>About UBIFINE App</Text>
-    </View>
-};
-
-// Defines the available profile screens
-// export const ProfileStack = () => {
-//     return (
-//         <Stack.Navigator initialRouteName="ProfileHome">
-//             <Stack.Screen name="ProfileHome" component={ProfileHomeScreen} options={{ title: 'Profile' }} />
-//             <Stack.Screen name="ProfileDetails" component={ProfileDetailsScreen} options={{ title: 'Profile Details' }} />
-//             <Stack.Screen name="Language" component={LanguageScreen} />
-//             <Stack.Screen name="Notifications" component={NotificationsScreen} />
-//             <Stack.Screen name="StorageAndData" component={StorageAndDataScreen} />
-//             <Stack.Screen name="AboutUBIFINEApp" component={AboutUBIFINEAppScreen} />
-//         </Stack.Navigator>
-//     );
-// };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-    },
-    menuItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
-    menuText: {
-        fontSize: 16,
     },
     sectionTitle: {
         fontSize: 20,
@@ -321,11 +241,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export {
-    ProfileHomeScreen,
-    ProfileDetailsScreen,
-    LanguageScreen,
-    NotificationsScreen,
-    StorageAndDataScreen,
-    AboutUBIFINEAppScreen
-};
+export default ProfileDetailsScreen;

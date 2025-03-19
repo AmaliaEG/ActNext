@@ -7,7 +7,7 @@ import AI from './AI';
 import SettingsPage from './Settings'; // Your settings page
 
 const Stack = createStackNavigator();
-import { ProfileStack } from './Profile';
+import { ProfileStack } from './BurgerMenuScreen';
 
 
 const App = ({ navigation }) => {
@@ -29,7 +29,7 @@ const App = ({ navigation }) => {
       </View>
       <View style={styles.row}>
         <View style={styles.buttonContainer}>
-          <Button title="Profile" onPress={() => navigation.navigate('ProfileHome')} />
+          <Button title="BurgerMenu" onPress={() => navigation.navigate('Menu')} />
         </View>
         <View style={styles.buttonContainer}>
           <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
