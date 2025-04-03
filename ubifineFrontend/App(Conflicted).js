@@ -2,8 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Feed from './Feed';
-import DetailsScreen from './DetailsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import SettingsPage from './Settings'; // Your settings page
 
