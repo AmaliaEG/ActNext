@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './App'; // Your main screen with the buttons
-import SettingsPage from './Settings'; // Your settings page
-import Feed from './Feed'; // Your Feed page
-import LanguageScreen from './LanguageScreen';
-import NotificationsScreen from './NotificationsScreen';
-import StorageAndDataScreen from './StorageAndDataScreen';
-import AboutUBIFINEAppScreen from './AboutUBIFINEAppScreen';
-import ProfileDetailsScreen from './ProfileDetailsScreen';
-import BurgerMenuScreen from './BurgerMenuScreen';
-import DetailsScreen from './DetailsScreen';
+import HomeScreen from '../screens/demo menu/App'; // Your main screen with the buttons
+import SettingsPage from '../screens/Settings/Settings'; // Your settings page
+import Feed from '../screens/mainPage/Feed'; // Your Feed page
+import LanguageScreen from '../screens/burgermenu/LanguageScreen';
+import NotificationsScreen from '../screens/burgermenu/NotificationsScreen';
+import StorageAndDataScreen from '../screens/burgermenu/StorageAndDataScreen';
+import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
+import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
+import BurgerMenuScreen from '../screens/burgermenu/BurgerMenuScreen';
+import DetailsScreen from '../screens/mainPage/DetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ const Navigator = () => {
         <Stack.Screen name="Language" component={LanguageScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen name="StorageAndData" component={StorageAndDataScreen} />
-        <Stack.Screen name="AboutUBIFINEApp" component={AboutUBIFINEAppScreen} />
+        <Stack.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

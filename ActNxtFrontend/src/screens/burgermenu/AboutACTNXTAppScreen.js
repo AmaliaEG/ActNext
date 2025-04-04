@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-const AboutUBIFINEAppScreen = () => {
+const AboutACTNXTAppScreen = () => {
     return (
         <View style={styles.container}>
-            <Text>About UBIFINE App</Text>
+            <Text>About ACTNXT App</Text>
         </View>
     );
 };
@@ -16,4 +16,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AboutUBIFINEAppScreen;
+export default AboutACTNXTAppScreen;

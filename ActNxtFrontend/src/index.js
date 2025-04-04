@@ -1,8 +1,6 @@
 import { registerRootComponent } from 'expo';
 
-import SettingsPage from './Settings';
-import App from './App';
-import nav from './Navigator';
+import nav from './navigation/Navigator.js';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,

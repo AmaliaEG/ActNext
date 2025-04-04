@@ -14,7 +14,7 @@ const BurgerMenuScreen = ({ navigation }) => {
         { title: 'Language', screen: 'Language' },
         { title: 'Notifications', screen: 'Notifications' },
         { title: 'Storage and Data', screen: 'StorageAndData' },
-        { title: 'About UBIFINE App', screen: 'AboutUBIFINEApp' },
+        { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
     ];
 
     // A button is created for each item in menuItems containing a label, arrow and
