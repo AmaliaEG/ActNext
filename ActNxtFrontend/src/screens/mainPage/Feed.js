@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, FlatList, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Import Ionicons for the menu icon
 
 const Feed = () => {
   const navigation = useNavigation(); // Access the navigation object using the hook
@@ -17,6 +18,10 @@ const Feed = () => {
 
   return (
     <View style={styles.container}>
+      <Pressable onPress={() => navigation.navigate('Settings')} style={styles.menuButton}>
+        <Ionicons name="menu" size={30} color="black" />
+      </Pressable>
+
       <FlatList
         keyExtractor={(item) => item.id}
         data={colors}

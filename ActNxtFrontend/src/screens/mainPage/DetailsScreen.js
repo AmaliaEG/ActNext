@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const DetailsScreen = ({ route }) => {
-    const { item } = route.params;
+    const { item } = route.params; // Assuming you pass a task or item as a parameter
 
     return (
-        <View style={[styles.container, { backgroundColor: item.colour }]}>
-            <Text style={styles.text}>You clicked on: {item.description}</Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>Hello World!</Text>
         </View>
     );
 };
@@ -16,10 +16,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "white",
     },
     text: {
         fontSize: 24,
-        color: "white",
+        color: "Black",
         fontWeight: "bold",
     },
 });
