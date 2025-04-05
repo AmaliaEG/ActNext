@@ -18,7 +18,7 @@ const Feed = () => {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => navigation.navigate('Settings')} style={styles.menuButton}>
+      <Pressable onPress={() => navigation.navigate('SettingsScreen')} style={styles.menuButton}>
         <Ionicons name="menu" size={30} color="black" />
       </Pressable>
 

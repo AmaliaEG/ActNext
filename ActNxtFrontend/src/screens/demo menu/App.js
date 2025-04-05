@@ -1,15 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import Feed from '../mainPage/Feed';
-import DetailsScreen from '../mainPage/DetailsScreen';
-import { createStackNavigator } from '@react-navigation/stack';
-import SettingsPage from '../Settings/Settings'; // Your settings page
-
-const Stack = createStackNavigator();
-import { ProfileStack } from '../burgermenu/BurgerMenuScreen';
-
 
 const App = ({ navigation }) => {
   return (
@@ -18,7 +8,7 @@ const App = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <Button
             title="Show Settings"
-            onPress={() => navigation.navigate('Settings')} 
+            onPress={() => navigation.navigate('SettingsScreen')} 
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -29,9 +19,6 @@ const App = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.row}>
-        <View style={styles.buttonContainer}>
-          <Button title="BurgerMenu" onPress={() => navigation.navigate('Menu')} />
-        </View>
         <View style={styles.buttonContainer}>
           <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
         </View>

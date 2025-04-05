@@ -1,10 +1,20 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import SettingsList from '../Settings/SettingsList';
 
 const LanguageScreen = () => {
+    const settings = [
+        {
+            name: 'Language',
+            function: (value) => console.log('Selected Language:', value),
+            type: 'dropdown',
+            options: ['English', 'Danish', 'Lorem Ipsum'],
+        },
+    ];
+
     return (
         <View style={styles.container}>
-            <Text>Language Settings</Text>
+            <SettingsList settings={settings} />
         </View>
     );
 };

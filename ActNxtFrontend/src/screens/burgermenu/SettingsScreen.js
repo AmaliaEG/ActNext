@@ -7,7 +7,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import React from 'react';
 
-const BurgerMenuScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation }) => {
     // Array containing profile menu options
     const menuItems = [
         { title: 'Profile', screen: 'ProfileDetails' },
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default BurgerMenuScreen;
+export default SettingsScreen;

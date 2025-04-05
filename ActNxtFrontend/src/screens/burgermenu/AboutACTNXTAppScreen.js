@@ -1,10 +1,20 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import SettingsList from '../Settings/SettingsList';
 
 const AboutACTNXTAppScreen = () => {
+    const settings = [
+        {
+            name: 'Help and Support',
+            function: () => console.log('Button Pressed'),
+            type: 'button',
+            options: 'Contact Support',
+        },
+    ];
+
     return (
         <View style={styles.container}>
-            <Text>About ACTNXT App</Text>
+            <SettingsList settings={settings} />
         </View>
     );
 };

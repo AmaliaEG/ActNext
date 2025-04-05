@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import RadioGroup from 'react-native-radio-buttons-group';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SettingsList = ({ settings }) => {
   return (
@@ -68,10 +69,27 @@ const SettingItem = ({ setting }) => {
 const SwitchSetting = ({ name, onToggle }) => {
   const [isEnabled, setIsEnabled] = useState(false);
 
-  const handleToggle = () => {
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const value = await AsyncStorage.getItem(`setting:${name}`);
+        if (value !== null) setIsEnabled(JSON.parse(value));
+      } catch (e) {
+        console.error(`Failed to load setting: ${name}`, e);
+      }
+    };
+    load();
+  }, []);
+
+  const handleToggle = async () => {
     const newValue = !isEnabled;
     setIsEnabled(newValue);
     onToggle(newValue);
+    try {
+      await AsyncStorage.setItem(`setting:${name}`, JSON.stringify(newValue));
+    } catch (e) {
+      console.error(`Failed to save setting: ${name}`, e);
+    }
   };
 
   return (
@@ -91,9 +109,26 @@ const SwitchSetting = ({ name, onToggle }) => {
 const DropdownSetting = ({ name, onSelect, options }) => {
   const [selectedValue, setSelectedValue] = useState(options[0]);
 
-  const handleValueChange = (value) => {
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const value = await AsyncStorage.getItem(`setting:${name}`);
+        if (value !== null) setSelectedValue(value);
+      } catch (e) {
+        console.error(`Failed to load setting: ${name}`, e);
+      }
+    };
+    load();
+  }, []);
+
+  const handleValueChange = async (value) => {
     setSelectedValue(value);
     onSelect(value);
+    try {
+      await AsyncStorage.setItem(`setting:${name}`, value);
+    } catch (e) {
+      console.error(`Failed to save dropdownd: ${name}`, e);
+    }
   };
 
   return (
@@ -127,9 +162,27 @@ const ButtonSetting = ({ name, onPress, buttonText }) => {
 const TextInputSetting = ({ name, onChangeText }) => {
   const [text, setText] = useState('');
 
-  const handleTextChange = (value) => {
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const value = await AsyncStorage.getItem(`setting:${name}`);
+        if (value !== null) setText(value);
+      } catch (e) {
+        console.error(`Failed to load text input: ${name}`, e);
+      }
+    };
+    load();
+  }, []);
+
+
+  const handleTextChange = async (value) => {
     setText(value);
     onChangeText(value);
+    try {
+      await AsyncStorage.setItem(`setting:${name}`, value);
+    } catch (e) {
+      console.error(`Failed to sace checkbox`, e);
+    }
   };
 
   return (
@@ -149,10 +202,27 @@ const TextInputSetting = ({ name, onChangeText }) => {
 const CheckboxSetting = ({ name, onToggle }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const handleToggle = () => {
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const value = await AsyncStorage.getItem(`setting:${name}`);
+        if (value !== null) setIsChecked(JSON.parse(value));
+      } catch (e) {
+        console.error(`Failed to load checkbox: ${name}`, e);
+      }
+    };
+    load();
+  }, []);
+
+  const handleToggle = async () => {
     const newValue = !isChecked;
     setIsChecked(newValue);
     onToggle(newValue);
+    try {
+      await AsyncStorage.setItem(`setting:${name}`, JSON.stringify(newValue));
+    } catch (e) {
+      console.error(`Failed to sace checkbox: ${name}`, e);
+    }
   };
 
   return (
@@ -172,9 +242,26 @@ const CheckboxSetting = ({ name, onToggle }) => {
 const RadioSetting = ({ name, onSelect, options }) => {
   const [selectedId, setSelectedId] = useState(options[0].id);
 
-  const handleSelect = (id) => {
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const value = await AsyncStorage.getItem(`setting:${name}`);
+        if (value !== null) setSelectedId(value);
+      } catch (e) {
+        console.error(`Failed to load radio setting: ${name}`, e);
+      }
+    };
+    load();
+  }, []);
+
+  const handleSelect = async (id) => {
     setSelectedId(id);
     onSelect(id);
+    try {
+      await AsyncStorage.setItem(`setting:${name}`, id);
+    } catch (e) {
+      console.error(`Failed to save slider: ${name}`, e);
+    }
   };
 
   return (
@@ -193,9 +280,26 @@ const RadioSetting = ({ name, onSelect, options }) => {
 const SliderSetting = ({ name, onValueChange }) => {
   const [sliderValue, setSliderValue] = useState(0);
 
-  const handleValueChange = (value) => {
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const value = await AsyncStorage.getItem(`setting:${name}`);
+        if (value !== null) setSliderValue(parseInt(value));
+      } catch (e) {
+        console.error(`Failed to load slider: ${name}`, e);
+      }
+    };
+    load();
+  }, []);
+
+  const handleValueChange = async (value) => {
     setSliderValue(value);
     onValueChange(value);
+    try {
+      await AsyncStorage.setItem(`setting:${name}`, String(value));
+    } catch (e) {
+      console.error(`Failed to save slider: ${name}`, e);
+    }
   };
 
   return (
