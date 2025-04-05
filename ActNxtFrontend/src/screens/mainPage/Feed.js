@@ -18,9 +18,11 @@ const Feed = () => {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => navigation.navigate('SettingsScreen')} style={styles.menuButton}>
-        <Ionicons name="menu" size={30} color="black" />
-      </Pressable>
+      <View style={styles.menuContainer}>
+        <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton}>
+          <Ionicons name="menu" size={30} color="black" />
+        </Pressable>
+      </View>
 
       <FlatList
         keyExtractor={(item) => item.id}
@@ -55,6 +57,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  menuContainer: {
+    marginBottom: 10,
+  },
+  menuButton: {
+    padding: 10,
+    marginTop: 20,
   },
 });
 
