@@ -1,20 +1,23 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import SettingsList from '../Settings/SettingsList';
 
 const AboutACTNXTAppScreen = () => {
-    const settings = [
-        {
-            name: 'Help and Support',
-            function: () => console.log('Button Pressed'),
-            type: 'button',
-            options: 'Contact Support',
-        },
-    ];
-
     return (
         <View style={styles.container}>
-            <SettingsList settings={settings} />
+            <SettingsList
+                settings={[
+                    {
+                        name: 'Help and Support',
+                        function: () => {
+                            console.log('Redirecting to support...');
+                            // Should be directed to a website or another screen
+                        },
+                        type: 'button',
+                        options: 'Contact Support',
+                    },
+                ]}
+            />
         </View>
     );
 };

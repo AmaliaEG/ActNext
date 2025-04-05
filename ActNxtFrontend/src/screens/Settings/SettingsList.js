@@ -107,13 +107,17 @@ const SwitchSetting = ({ name, onToggle }) => {
 
 // Dropdown Setting
 const DropdownSetting = ({ name, onSelect, options }) => {
-  const [selectedValue, setSelectedValue] = useState(options[0]);
+  const [selectedValue, setSelectedValue] = useState(null);
 
   useEffect(() => {
     const load = async () => {
       try {
         const value = await AsyncStorage.getItem(`setting:${name}`);
-        if (value !== null) setSelectedValue(value);
+        if (value && options.includes(value)) {
+          setSelectedValue(value);
+        } else {
+          setSelectedValue(options[0]);
+        }
       } catch (e) {
         console.error(`Failed to load setting: ${name}`, e);
       }
@@ -138,7 +142,7 @@ const DropdownSetting = ({ name, onSelect, options }) => {
         selectedValue={selectedValue}
         onValueChange={handleValueChange}
         style={styles.picker}
-        dropdownIconColor="#000"
+        // dropdownIconColor="#000"
       >
         {options.map((option, index) => (
           <Picker.Item key={index} label={option} value={option} />
@@ -277,30 +281,36 @@ const RadioSetting = ({ name, onSelect, options }) => {
 };
 
 // Slider Setting
-const SliderSetting = ({ name, onValueChange }) => {
-  const [sliderValue, setSliderValue] = useState(0);
+const SliderSetting = ({ name, onValueChange, value }) => {
+  const [sliderValue, setSliderValue] = useState(null);
 
   useEffect(() => {
     const load = async () => {
       try {
         const value = await AsyncStorage.getItem(`setting:${name}`);
-        if (value !== null) setSliderValue(parseInt(value));
+        if (value !== null && !isNaN(Number(value))) {
+          setSliderValue(Number(value));
+        } else {
+          setSliderValue(50);
+        }
       } catch (e) {
         console.error(`Failed to load slider: ${name}`, e);
       }
     };
     load();
   }, []);
+  
 
-  const handleValueChange = async (value) => {
-    setSliderValue(value);
-    onValueChange(value);
+  const handleSlidingComplete = async (newValue) => {
     try {
-      await AsyncStorage.setItem(`setting:${name}`, String(value));
+      await AsyncStorage.setItem(`setting:${name}`, String(newValue));
+      onValueChange(newValue);
     } catch (e) {
       console.error(`Failed to save slider: ${name}`, e);
     }
   };
+  
+  if (sliderValue === null) return null;
 
   return (
     <View style={styles.settingItem}>
@@ -311,7 +321,8 @@ const SliderSetting = ({ name, onValueChange }) => {
         maximumValue={100}
         step={1}
         value={sliderValue}
-        onValueChange={handleValueChange}
+        onValueChange={setSliderValue}
+        onSlidingComplete={handleSlidingComplete}
         minimumTrackTintColor="#81b0ff"
         maximumTrackTintColor="#767577"
         thumbTintColor="#f5dd4b"
