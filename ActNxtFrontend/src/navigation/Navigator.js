@@ -14,7 +14,7 @@ import StorageAndDataScreen from '../screens/burgermenu/StorageAndDataScreen';
 import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
-import DetailsScreen from '../screens/mainPage/TaskExpansion';
+import TaskExpansion from '../screens/mainPage/TaskExpansion';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -99,7 +99,7 @@ const Navigator = () => {
       >
         <Drawer.Screen name="Home" component={App} />
         <Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
-        <Drawer.Screen name="Details" component={DetailsScreen} />
+        <Drawer.Screen name="Details" component={TaskExpansion} />
         <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
         <Drawer.Screen name="ProfileDetails" component={ProfileDetailsScreen} />
         <Drawer.Screen name="Language" component={LanguageScreen} />
