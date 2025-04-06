@@ -14,7 +14,7 @@ import StorageAndDataScreen from '../screens/burgermenu/StorageAndDataScreen';
 import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
-import DetailsScreen from '../screens/mainPage/DetailsScreen';
+import DetailsScreen from '../screens/mainPage/TaskExpansion';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
