@@ -13,19 +13,42 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      },
+      "bundleIdentifier": "com.anonymous.ActnxtFrontend",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.ActnxtFrontend",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-secure-store"
-    ]
+      "expo-secure-store",
+      [
+        "react-native-auth0",
+        {
+          "domain": "dev-actnxt.eu.auth0.com"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "df87c634-203c-4f76-8859-17be9871c290"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/df87c634-203c-4f76-8859-17be9871c290"
+    }
   }
 }

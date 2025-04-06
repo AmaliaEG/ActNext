@@ -1,33 +1,51 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
 const App = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <View style={styles.buttonContainer}>
+    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <View style={styles.buttonContainer}>
+           <LoginButton/>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Show Settings"
+              onPress={() => navigation.navigate('SettingsScreen')} 
+            />
+          </View>
+          <View style={styles.buttonContainer}>
           <Button
-            title="Show Settings"
-            onPress={() => navigation.navigate('SettingsScreen')} 
-          />
+              title="Feed"
+              onPress={() => navigation.navigate('Feed')}
+            />
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-        <Button
-            title="Feed"
-            onPress={() => navigation.navigate('Feed')}
-          />
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.buttonContainer}>
-          <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
+        <View style={styles.row}>
+          <View style={styles.buttonContainer}>
+            <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
+          </View>
         </View>
       </View>
-    </View>
+     </Auth0Provider>
   );
 };
 
+const LoginButton = () => {
+  const {authorize} = useAuth0();
 
+  const onPress = async () => {
+      try {
+          await authorize();
+      } catch (e) {
+          console.log(e);
+      }
+  };
+
+  return <Button onPress={onPress} title="Log in" />
+}
 
 
 const styles = StyleSheet.create({
