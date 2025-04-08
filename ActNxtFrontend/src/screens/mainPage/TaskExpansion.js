@@ -1,95 +1,90 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const TaskExpansion = ({ task, onLike, onDislike, onStar, onComplete }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [isDisliked, setIsDisliked] = useState(false);
-  const [isStarred, setIsStarred] = useState(task.isStarred || false);
-  const [isCompleted, setIsCompleted] = useState(false);
-
+const TaskExpansion = ({ route }) => {
+  const { item } = route.params;
+  const navigation = useNavigation();
+  const targetGroup = {
+    name: "About to leave",
+    color: "#FF5252"
+  }
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisliked] = useState(false);
   const handleLike = () => {
-    setIsLiked(!isLiked);
-    setIsDisliked(false);
-    onLike && onLike(task.id, !isLiked);
+    setLiked(!liked);
+    if (disliked) setDisliked(false);
   };
-
   const handleDislike = () => {
-    setIsDisliked(!isDisliked);
-    setIsLiked(false);
-    onDislike && onDislike(task.id, !isDisliked);
-  };
-
-  const handleStar = () => {
-    const newStarredState = !isStarred;
-    setIsStarred(newStarredState);
-    onStar && onStar(task.id, newStarredState);
-  };
-
-  const handleComplete = () => {
-    setIsCompleted(true);
-    onComplete && onComplete(task.id);
+    setDisliked(!disliked);
+    if (liked) setLiked(false);
   };
 
   return (
     <View style={styles.container}>
-      {/* Task Content */}
-      <View style={styles.contentContainer}>
-        <Text style={styles.title}>{task.title}</Text>
-        <Text style={styles.description}>{task.description}</Text>
-        
-        {task.group && (
-          <View style={[
-            styles.groupTag,
-            task.group === 'aboutToLeave' && styles.aboutToLeave,
-            task.group === 'shopOften' && styles.shopOften,
-            task.group === 'newShoppers' && styles.newShoppers
-          ]}>
-            <Text style={styles.groupText}>
-              {task.group === 'aboutToLeave' ? 'About to Leave' : 
-               task.group === 'shopOften' ? 'Frequent Shopper' : 'New Shopper'}
-            </Text>
-          </View>
-        )}
+      {/* Head bar */}
+      <View style = {styles.header}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Feed')}
+          style={styles.backButton}
+        >
+          <Ionicons name = "arrow-back" size = {24} color = "black" />
+        </TouchableOpacity>
+        <Text style={styles.title}>{item.title ||"Task title"}</Text>
+        <View style={styles.rightSpacer} /> {/*Balances header*/}
       </View>
 
-      {/* Action Buttons */}
-      <View style={styles.actionsContainer}>
-        <TouchableOpacity onPress={handleLike} style={styles.actionButton}>
-          <Ionicons 
-            name={isLiked ? "thumbs-up" : "thumbs-up-outline"} 
-            size={24} 
-            color={isLiked ? "#4CAF50" : "#666"} 
-          />
-          <Text style={styles.actionText}>Useful</Text>
-        </TouchableOpacity>
+      {/*Main content */}
+      <View style = {styles.contentContainer}>
+        {/* Target Group Row*/}
+        <View style={styles.targetGroupContainer}>
+          <View style={[styles.colorCircle, {backgroundColor: targetGroup.color}]}/>
+          <Text style={styles.groupNameText}>{targetGroup.name}</Text>
+        </View>
 
-        <TouchableOpacity onPress={handleDislike} style={styles.actionButton}>
-          <Ionicons 
-            name={isDisliked ? "thumbs-down" : "thumbs-down-outline"} 
-            size={24} 
-            color={isDisliked ? "#F44336" : "#666"} 
-          />
-          <Text style={styles.actionText}>Not Useful</Text>
-        </TouchableOpacity>
+        {/* Detailed description of task*/}
+        <Text style = {styles.contentText} >
+          Lorem ipsum dolor sit amet, 
+          consectetur adipiscing elit. Curabitur gravida maximus erat, 
+          laoreet varius mi eleifend a. Suspendisse sollicitudin at mauris at tempus. 
+          Donec nunc urna, laoreet id purus vel, malesuada facilisis ipsum. 
+          Aliquam ac nisi dignissim, interdum enim non, commodo dui. 
+          Duis lacinia dolor non est feugiat, sed aliquet massa finibus.
+        </Text>
 
-        <TouchableOpacity onPress={handleStar} style={styles.actionButton}>
-          <Ionicons 
-            name={isStarred ? "star" : "star-outline"} 
-            size={24} 
-            color={isStarred ? "#FFC107" : "#666"} 
-          />
-          <Text style={styles.actionText}>Star</Text>
-        </TouchableOpacity>
+        {/* Like/Dislike Buttons*/}
+        <View style={styles.rightAlignedButtonContainer}>
+          <TouchableOpacity
+            style={[styles.button, liked && styles.likedButton]}
+            onPress={handleLike}
+          >
+            <Ionicons
+              name={liked ? "thumbs-up" : "thumbs-up-outline"}
+              size={20}
+              color={liked ? "white" : "#666"}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, disliked && styles.dislikedButton]}
+            onPress={handleDislike}
+          >
+            <Ionicons
+              name = {disliked ? "thumbs-down" : "thumbs-down-outline"}
+              size={20}
+              color={disliked ? "white" : "#666"}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
 
-        <TouchableOpacity 
-          onPress={handleComplete} 
-          style={[styles.completeButton, isCompleted && styles.completedButton]}
-          disabled={isCompleted}
+      {/* Finish button */}
+      <View style={styles.finishedButtonContainer}>
+        <TouchableOpacity
+          style={styles.finishedButton}
+          onPress={() => navigation.navigate('Feed')}
         >
-          <Text style={styles.completeButtonText}>
-            {isCompleted ? 'Completed' : 'Mark Complete'}
-          </Text>
+          <Text style={styles.finishedButtonText}>Finished</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -98,82 +93,135 @@ const TaskExpansion = ({ task, onLike, onDislike, onStar, onComplete }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    marginVertical: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+      flex: 1,
+      backgroundColor: "white",
   },
-  contentContainer: {
-    marginBottom: 16,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+    paddingTop: 40,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0'
+  },
+  backButton: {
+    padding: 8,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
+    color: 'black',
+    right: 16,
+    textAlign: 'center',
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+      fontSize: 18,
+      alignItems: 'center',
+      color: "Black",
+  },
+  contentContainer:{
+    padding: 25,
+    margin: 16,
+    marginTop: 60,
+    borderLeftWidth: 1, 
+    borderLeftColor: 'black',
+    alignSelf: 'flex-start',
+    width: 'auto',
+    flexGrow: 0,
+    flexShrink: 1,
+  },
+  targetGroupContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: -10,
+    marginBottom: 12,
+  },
+  colorCircle: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 6,
+  },
+  groupNameText: {
+    fontSize: 16,
     color: '#333',
   },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 12,
-    lineHeight: 20,
+  contentText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: 'black',
   },
-  groupTag: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-    marginBottom: 8,
-  },
-  aboutToLeave: {
-    backgroundColor: '#FFEBEE',
-  },
-  shopOften: {
-    backgroundColor: '#E8F5E9',
-  },
-  newShoppers: {
-    backgroundColor: '#E3F2FD',
-  },
-  groupText: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  actionsContainer: {
+  buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    borderTopWidth: 1,
+    marginTop: 20,
+    paddingTop: 16,
     borderTopColor: '#eee',
-    paddingTop: 12,
   },
-  actionButton: {
-    alignItems: 'center',
-    paddingHorizontal: 8,
+  rightAlignedButtonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      marginTop: 20,
+      paddingTop: 16,
   },
-  actionText: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 4,
-  },
-  completeButton: {
-    backgroundColor: '#2196F3',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+  button: {
+    width: 40, // Fixed width for circular buttons
+    height: 40,
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
   },
-  completedButton: {
-    backgroundColor: '#E0E0E0',
+  likedButton: {
+      backgroundColor: '#4CAF50',
+      borderColor: '#4CAF50',
   },
-  completeButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
+  dislikedButton: {
+      backgroundColor: '#F44336',
+      borderColor: '#F44336',
+  },
+  buttonText: {
+      marginLeft: 8,
+      color: '#666',
+      fontWeight: '500',
+  },
+  likedText: {
+      color: 'white',
+  },
+  dislikedText: {
+      color: 'white',
+  },
+  finishedButtonContainer: {
+    position: 'absolute',
+    bottom: 170,
+    left: 20,
+    right: 20,
+  },
+  finishedButton: {
+      backgroundColor: '#2196F3',
+      paddingVertical: 15,
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  finishedButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
   },
 });
 
 export default TaskExpansion;
+
+
+
