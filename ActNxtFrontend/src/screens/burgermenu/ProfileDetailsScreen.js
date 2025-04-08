@@ -79,113 +79,115 @@ const ProfileDetailsScreen = () => {
         }
     };
 
+    const LoggedInDetails = () => {
+        return (
+            <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
+            <ScrollView contentContainerStyle={styles.container}>
+                <Text style={styles.sectionTitle}>Profile Details</Text>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Name</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={name}
+                        onChangeText={setName}
+                    />
+                </View>
+    
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Birth Date</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={birthDate}
+                        onChangeText={setBirthDate}
+                    />
+                </View>
+    
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Gender</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={gender}
+                        onChangeText={setGender}
+                    />
+                </View>
+    
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={email}
+                        onChangeText={setEmail}
+                    />
+                </View>
+    
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Code</Text>
+                    <View style={styles.codeContainer}>
+                        <TextInput
+                            style={styles.codeInput}
+                            value={showCode ? code : '*'.repeat(code.length)}
+                            onChangeText={setCode}
+                            editable={isEditindPassword}
+                            secureTextEntry={!showCode}
+                        />
+                        <TouchableOpacity 
+                            style={styles.eyeIcon}
+                            onPress={() => setShowCode(!showCode)}
+                        >
+                            <Feather name={showCode ? 'eye-off' : 'eye'} size={20} color="#000" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+    
+                <TouchableOpacity
+                    style={styles.newPasswordSection}
+                    onPress={() => setIsEditingPassword(!isEditindPassword)}
+                >
+                    <Text style={styles.newPasswordLabel}>New Password</Text>
+                    {isEditindPassword && (
+                        <>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>New Password</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    value={newPassword}
+                                    onChangeText={setNewPassword}
+                                    secureTextEntry
+                                />
+                            </View>
+    
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.label}>Confirm New Password</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    value={confirmPassword}
+                                    onChangeText={setConfirmPassword}
+                                    secureTextEntry
+                                />
+                            </View>
+                        </>
+                    )}
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
+                    <Text style={styles.saveButtonText}>Save Changes</Text>
+                </TouchableOpacity>
+                <LogoutButton/>
+            </ScrollView>
+        </Auth0Provider>
+        )
+    }
+
     return (
         <>
             {user && <LoggedInDetails/>}
-            {!user && <Text>Not logged in</Text>}
+            {!user && <Text>Not logged in</Text> && <LoggedInDetails/>}
             {error && <Text>{error.message}</Text>}
         </>
     )
 };
 
-const LoggedInDetails = () => {
-    return (
-        <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.sectionTitle}>Profile Details</Text>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Name</Text>
-                <TextInput
-                    style={styles.input}
-                    value={name}
-                    onChangeText={setName}
-                />
-            </View>
 
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Birth Date</Text>
-                <TextInput
-                    style={styles.input}
-                    value={birthDate}
-                    onChangeText={setBirthDate}
-                />
-            </View>
-
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Gender</Text>
-                <TextInput
-                    style={styles.input}
-                    value={gender}
-                    onChangeText={setGender}
-                />
-            </View>
-
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Email</Text>
-                <TextInput
-                    style={styles.input}
-                    value={email}
-                    onChangeText={setEmail}
-                />
-            </View>
-
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Code</Text>
-                <View style={styles.codeContainer}>
-                    <TextInput
-                        style={styles.codeInput}
-                        value={showCode ? code : '*'.repeat(code.length)}
-                        onChangeText={setCode}
-                        editable={isEditindPassword}
-                        secureTextEntry={!showCode}
-                    />
-                    <TouchableOpacity 
-                        style={styles.eyeIcon}
-                        onPress={() => setShowCode(!showCode)}
-                    >
-                        <Feather name={showCode ? 'eye-off' : 'eye'} size={20} color="#000" />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <TouchableOpacity
-                style={styles.newPasswordSection}
-                onPress={() => setIsEditingPassword(!isEditindPassword)}
-            >
-                <Text style={styles.newPasswordLabel}>New Password</Text>
-                {isEditindPassword && (
-                    <>
-                        <View style={styles.inputContainer}>
-                            <Text style={styles.label}>New Password</Text>
-                            <TextInput
-                                style={styles.input}
-                                value={newPassword}
-                                onChangeText={setNewPassword}
-                                secureTextEntry
-                            />
-                        </View>
-
-                        <View style={styles.inputContainer}>
-                            <Text style={styles.label}>Confirm New Password</Text>
-                            <TextInput
-                                style={styles.input}
-                                value={confirmPassword}
-                                onChangeText={setConfirmPassword}
-                                secureTextEntry
-                            />
-                        </View>
-                    </>
-                )}
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-                <Text style={styles.saveButtonText}>Save Changes</Text>
-            </TouchableOpacity>
-            <LogoutButton/>
-        </ScrollView>
-    </Auth0Provider>
-    )
-}
 
 const LogoutButton = () => {
     const {clearSession} = useAuth0();
