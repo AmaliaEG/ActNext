@@ -31,6 +31,7 @@ const SettingsScreen = ({ navigation }) => {
                     <AntDesign name="right" size={20} color="#000" />
                 </TouchableOpacity>
             ))}
+        
         </View>
     );
 };

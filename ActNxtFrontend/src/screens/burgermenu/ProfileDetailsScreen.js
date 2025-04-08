@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as SecureStore from 'expo-secure-store';
+import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = () => {
@@ -24,6 +25,7 @@ const ProfileDetailsScreen = () => {
     const [isEditindPassword, setIsEditingPassword] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const {user, error} = useAuth0();
 
     // When the Profile Details Screen loads, previous stored data gets retrieved from SecureStore ONCE.
     // Updates the state, so previous data is displayed.
@@ -78,9 +80,19 @@ const ProfileDetailsScreen = () => {
     };
 
     return (
+        <>
+            {user && <LoggedInDetails/>}
+            {!user && <Text>Not logged in</Text>}
+            {error && <Text>{error.message}</Text>}
+        </>
+    )
+};
+
+const LoggedInDetails = () => {
+    return (
+        <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.sectionTitle}>Profile Details</Text>
-
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Name</Text>
                 <TextInput
@@ -166,13 +178,32 @@ const ProfileDetailsScreen = () => {
                 )}
             </TouchableOpacity>
             
-
             <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
                 <Text style={styles.saveButtonText}>Save Changes</Text>
             </TouchableOpacity>
+            <LogoutButton/>
         </ScrollView>
+    </Auth0Provider>
     )
-};
+}
+
+const LogoutButton = () => {
+    const {clearSession} = useAuth0();
+
+    const onPress = async () => {
+        try {
+            await clearSession();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    return (
+        <TouchableOpacity style={styles.saveButton} onPress={onPress}>
+        <Text style={styles.saveButtonText}>Log Out</Text>
+        </TouchableOpacity>
+    )
+}
 
 const styles = StyleSheet.create({
     container: {

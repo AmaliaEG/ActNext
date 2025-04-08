@@ -1,10 +1,10 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, Platform } from 'react-native';
 import React from 'react';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
 const App = ({ navigation }) => {
   return (
-    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
+    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} redirectUri={Platform.OS === 'ios' ? 'com.anonymous.actnxtfrontend.auth0://dev-actnxt.eu.auth0.com/ios/com.anonymous.actnxtfrontend/callback' : 'com.anonymous.actnxtfrontend.auth0://dev-actnxt.eu.auth0.com/android/com.anonymous.actnxtfrontend/callback'}>
       <View style={styles.container}>
         <View style={styles.row}>
           <View style={styles.buttonContainer}>

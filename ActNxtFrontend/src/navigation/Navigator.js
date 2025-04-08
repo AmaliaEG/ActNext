@@ -15,6 +15,7 @@ import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
 import DetailsScreen from '../screens/mainPage/TaskExpansion';
+import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
