@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import { NavigationContainer } from '@react-navigation/native';
@@ -75,15 +75,17 @@ const CustomDrawerContent = (props) => {
         onBackdropPress={() => setSettingsModalVisible(false)}
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
-        <View style={styles.modalContent}>
-          {activeSettingScreen ? (
-            <TouchableOpacity onPress={() => setActiveSettingScreen(null)}>
-              <Text style={styles.backButton}>Back</Text>
-            </TouchableOpacity>
-          ) : (
-            <Text style={styles.modalTitle}>Settings</Text>
-          )}
-          {renderSettingComponent()}
+        <View style={styles.modalContainer}>
+          <ScrollView contentContainerStyle={styles.modalContent}>
+            {activeSettingScreen ? (
+              <TouchableOpacity onPress={() => setActiveSettingScreen(null)}>
+                <Text style={styles.backButton}>Back</Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={styles.modalTitle}>Settings</Text>
+            )}
+            {renderSettingComponent()}
+          </ScrollView>
         </View>
       </Modal>
     </View>
@@ -125,11 +127,14 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     elevation: 4,
   },
-  modalContent: {
+  modalContainer: {
     height: '80%',
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    overflow: 'hidden',
+  },
+  modalContent: {
     padding: 20,
   },
   modalTitle: {
