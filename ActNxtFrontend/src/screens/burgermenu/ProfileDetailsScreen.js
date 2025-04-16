@@ -10,6 +10,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import * as SecureStore from 'expo-secure-store';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import DateTimePickerInput from './DateTimePickerInput';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = () => {
@@ -95,10 +96,9 @@ const ProfileDetailsScreen = () => {
     
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Birth Date</Text>
-                    <TextInput
-                        style={styles.input}
+                    <DateTimePickerInput
                         value={birthDate}
-                        onChangeText={setBirthDate}
+                        onChange={setBirthDate}
                     />
                 </View>
     
