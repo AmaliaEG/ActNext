@@ -71,7 +71,7 @@ const Feed = () => {
     <Pressable onPress={() => navigation.navigate('Details', { item })}>
       <View style={[styles.item, { backgroundColor: item.colour }]}>
         <Text style={styles.text}>{item.description}</Text>
-        <Text style={styles.dateText}>Assigned: {item.dateAssigned.toLocaleDateString()}</Text> /* gives us the date in a readable format */
+        <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text> /* gives us the date in a readable format */
 
         {item.isOverdue && (
           <View style={styles.warningContainer}>
