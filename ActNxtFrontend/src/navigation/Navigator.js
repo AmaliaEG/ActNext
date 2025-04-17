@@ -16,6 +16,7 @@ import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
 import TaskExpansion from '../screens/mainPage/TaskExpansion';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import Themes from '../screens/burgermenu/Themes';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -41,6 +42,7 @@ const CustomDrawerContent = (props) => {
         return (
           <>
             <DrawerItem label="Profile" onPress={() => setActiveSettingScreen('Profile')} />
+            <DrawerItem label="Themes" onPress={() => setActiveSettingScreen('Themes')} />
             <DrawerItem label="Language" onPress={() => setActiveSettingScreen('Language')} />
             <DrawerItem label="Notifications" onPress={() => setActiveSettingScreen('Notifications')} />
             <DrawerItem label="Storage & Data" onPress={() => setActiveSettingScreen('Storage & Data')} />

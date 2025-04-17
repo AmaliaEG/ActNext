@@ -11,6 +11,7 @@ const SettingsScreen = ({ navigation }) => {
     // Array containing profile menu options
     const menuItems = [
         { title: 'Profile', screen: 'ProfileDetails' },
+        { title: 'Themes', screen: 'Themes' },
         { title: 'Language', screen: 'Language' },
         { title: 'Notifications', screen: 'Notifications' },
         { title: 'Storage and Data', screen: 'StorageAndData' },
