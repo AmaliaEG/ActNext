@@ -2,25 +2,50 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Database } from '../services/database'; // Import the database service
 
 const Feed = () => {
   const navigation = useNavigation();
 
-  const allTasks = [
-    { id: '1', colour: 'red', description: 'task1', dateAssigned: '04/30/2025' },
-    { id: '2', colour: 'blue', description: 'task2', dateAssigned: '04/19/2025' },
-    { id: '3', colour: 'green', description: 'task3', dateAssigned: '04/25/2025' },
-    { id: '4', colour: 'black', description: 'task4', dateAssigned: '05/05/2025' },
-    { id: '5', colour: 'purple', description: 'task5', dateAssigned: '04/10/2025' },
-    { id: '6', colour: 'orange', description: 'task6', dateAssigned: '05/08/2025' },
-    { id: '7', colour: 'pink', description: 'task7', dateAssigned: '06/01/2025' },
-    { id: '8', colour: 'brown', description: 'task8', dateAssigned: '06/02/2025' },
-  ];
+  // const allTasks = [
+  //   { id: '1', colour: 'red', description: 'task1', dateAssigned: '04/30/2025' },
+  //   { id: '2', colour: 'blue', description: 'task2', dateAssigned: '04/19/2025' },
+  //   { id: '3', colour: 'green', description: 'task3', dateAssigned: '04/25/2025' },
+  //   { id: '4', colour: 'black', description: 'task4', dateAssigned: '05/05/2025' },
+  //   { id: '5', colour: 'purple', description: 'task5', dateAssigned: '04/10/2025' },
+  //   { id: '6', colour: 'orange', description: 'task6', dateAssigned: '05/08/2025' },
+  //   { id: '7', colour: 'pink', description: 'task7', dateAssigned: '06/01/2025' },
+  //   { id: '8', colour: 'brown', description: 'task8', dateAssigned: '06/02/2025' },
+  // ];
 
   const [userTasks, setUserTasks] = useState([]);
 
   useEffect(() => {
-    assignTasks();
+    // assignTasks();
+    const fetchAndAssignTasks = async () => {
+      try {
+        // 1. Fetch tasks from Firestore
+        const allTasks = await Database.getTasks();
+        
+        // 2. Process tasks (your existing logic)
+        const currentDate = new Date();
+        const sortedTasks = allTasks
+          .map((task) => ({
+            ...task,
+            isOverdue: task.dateAssigned < currentDate,
+          }))
+          .sort((a, b) => a.dateAssigned - b.dateAssigned);
+
+        // 3. Set the top 3 tasks
+        setUserTasks(sortedTasks.slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        // Fallback to mock data if needed
+        setUserTasks(getMockTasks().slice(0, 3));
+      }
+    };
+
+    fetchAndAssignTasks();
   }, []);
 
   /*
@@ -34,26 +59,27 @@ const Feed = () => {
  * 5. Selects the first three tasks from the sorted list.
  * 6. Updates the state to display these three tasks.
  */
-  const assignTasks = () => {
-    const currentDate = new Date();
+
+  // const assignTasks = () => {
+  //   const currentDate = new Date();
   
     
-    const sortedTasks = allTasks
-      .map((task) => {
-        const [month, day, year] = task.dateAssigned.split('/');
-        const taskDate = new Date(year, month - 1, day);
+  //   const sortedTasks = allTasks
+  //     .map((task) => {
+  //       const [month, day, year] = task.dateAssigned.split('/');
+  //       const taskDate = new Date(year, month - 1, day);
   
-        return {
-          ...task,
-          dateAssigned: taskDate,
-          isOverdue: taskDate < currentDate,
-        };
-      })
-      .sort((a, b) => a.dateAssigned - b.dateAssigned); 
+  //       return {
+  //         ...task,
+  //         dateAssigned: taskDate,
+  //         isOverdue: taskDate < currentDate,
+  //       };
+  //     })
+  //     .sort((a, b) => a.dateAssigned - b.dateAssigned); 
   
-    const tasksToAdd = sortedTasks.slice(0, 3);
-    setUserTasks(tasksToAdd);
-  };
+  //   const tasksToAdd = sortedTasks.slice(0, 3);
+  //   setUserTasks(tasksToAdd);
+  // };
   
 
   return (
@@ -134,5 +160,17 @@ const styles = StyleSheet.create({
   },
   
 });
+
+// Mock data fallback
+const getMockTasks = () => [
+  {
+    id: '1',
+    colour: 'red',
+    description: 'Follow up with cart abandoners',
+    dateAssigned: new Date('2025-04-30'),
+    group: 'aboutToLeave'
+  },
+  // ... other mock tasks
+];
 
 export default Feed;
