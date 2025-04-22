@@ -1,17 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import mockTasks from './MockTasks.json'; // Import JSON data
+
+// Target group dictionary
+const Groups = {
+  1: {
+    name: "Win Back Plan", 
+    color: "#E862AE"
+  },
+  2: {
+    name: "Regain Performance Plan",
+    color: "#F8CF46"
+  },
+  3: {
+    name: "Growth Plan",
+    color: "#5CD2CD"
+  }
+}
 
 const TaskExpansion = ({ route }) => {
-  const { item } = route.params;
+  const { taskId } = route.params;
   const navigation = useNavigation();
-  const targetGroup = {
-    name: "About to leave",
-    color: "#FF5252"
-  }
+  const [task, setTask] = useState(null);
+  
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
+
+  useEffect(() => {
+    const foundTask = mockTasks.find(t => t.id === taskId);
+    if (foundTask) {
+      setTask({
+        ...foundTask,
+        dateAssigned: new Date(foundTask.dateAssigned)
+      });
+    }
+  }, [taskId]);
+
+  if (!task) return <View style={styles.container}><Text>Loading...</Text></View>;
+
+  const targetGroup = Groups[task.group] || Groups[1]; // Fallback to group 1
+
+  // Like system
   const handleLike = () => {
     setLiked(!liked);
     if (disliked) setDisliked(false);
@@ -25,13 +56,10 @@ const TaskExpansion = ({ route }) => {
     <View style={styles.container}>
       {/* Head bar */}
       <View style = {styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Feed')}
-          style={styles.backButton}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={styles.backButton}>
           <Ionicons name = "arrow-back" size = {24} color = "black" />
         </TouchableOpacity>
-        <Text style={styles.title}>{item.title ||"Task title"}</Text>
+        <Text style={styles.title}>{taskId.title ||"Task title"}</Text>
         <View style={styles.rightSpacer} /> {/*Balances header*/}
       </View>
 
@@ -44,14 +72,7 @@ const TaskExpansion = ({ route }) => {
         </View>
 
         {/* Detailed description of task*/}
-        <Text style = {styles.contentText} >
-          Lorem ipsum dolor sit amet, 
-          consectetur adipiscing elit. Curabitur gravida maximus erat, 
-          laoreet varius mi eleifend a. Suspendisse sollicitudin at mauris at tempus. 
-          Donec nunc urna, laoreet id purus vel, malesuada facilisis ipsum. 
-          Aliquam ac nisi dignissim, interdum enim non, commodo dui. 
-          Duis lacinia dolor non est feugiat, sed aliquet massa finibus.
-        </Text>
+        <Text style={styles.contentText}>{task.description}</Text>
 
         {/* Like/Dislike Buttons*/}
         <View style={styles.rightAlignedButtonContainer}>

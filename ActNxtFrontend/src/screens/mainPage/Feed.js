@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Database } from '../services/database'; // Import the database service
+import Mock from './MockTasks.json'; // Import JSON data
+
+const GroupColours = {
+  1: '#E862AE', // Light salmon for Win Back
+  2: '#F8CF46', // Gold for Regain Performance
+  3: '#5CD2CD'  // Pale green for Growth
+};
 
 const Feed = () => {
   const navigation = useNavigation();
@@ -22,30 +28,22 @@ const Feed = () => {
 
   useEffect(() => {
     // assignTasks();
-    const fetchAndAssignTasks = async () => {
-      try {
-        // 1. Fetch tasks from Firestore
-        const allTasks = await Database.getTasks();
-        
-        // 2. Process tasks (your existing logic)
-        const currentDate = new Date();
-        const sortedTasks = allTasks
-          .map((task) => ({
-            ...task,
-            isOverdue: task.dateAssigned < currentDate,
-          }))
-          .sort((a, b) => a.dateAssigned - b.dateAssigned);
-
-        // 3. Set the top 3 tasks
-        setUserTasks(sortedTasks.slice(0, 3));
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-        // Fallback to mock data if needed
-        setUserTasks(getMockTasks().slice(0, 3));
-      }
+    const processTasks = () => {
+      const currentDate = new Date();
+      
+      const processedTasks = Mock.map(task => {
+        const dateAssigned = new Date(task.dateAssigned);
+        return {
+          ...task,
+          dateAssigned,
+          isOverdue: dateAssigned < currentDate
+        };
+      }).sort((a, b) => a.dateAssigned - b.dateAssigned);
+      
+      setUserTasks(processedTasks.slice(0, 3));
     };
 
-    fetchAndAssignTasks();
+    processTasks();
   }, []);
 
   /*
@@ -91,23 +89,24 @@ const Feed = () => {
       </View>
 
       <FlatList
-  keyExtractor={(item) => item.id}
-  data={userTasks}
-  renderItem={({ item }) => (
-    <Pressable onPress={() => navigation.navigate('Details', { item })}>
-      <View style={[styles.item, { backgroundColor: item.colour }]}>
-        <Text style={styles.text}>{item.description}</Text>
-        <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text> /* gives us the date in a readable format */
+      keyExtractor={(item) => item.id}
+      data={userTasks}
+      renderItem={({ item }) => (
+        <Pressable 
+          onPress={() => navigation.navigate('Details', {taskId: item.id})}>
+          <View style={[styles.item, { backgroundColor: GroupColours[item.group]}]}>
+            <Text style={styles.text}>{item.title}</Text>
+            <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text> /* gives us the date in a readable format */
 
-        {item.isOverdue && (
-          <View style={styles.warningContainer}>
-            <Ionicons name="warning" size={20} color="yellow" />
-            <Text style={styles.warningText}>Overdue!</Text>
+            {item.isOverdue && (
+              <View style={styles.warningContainer}>
+                <Ionicons name="warning" size={20} color="yellow" />
+                <Text style={styles.warningText}>Overdue!</Text>
+              </View>
+            )}
           </View>
-        )}
-      </View>
-    </Pressable>
-  )}
+        </Pressable>
+      )}
 />
 
     </View>
@@ -160,17 +159,5 @@ const styles = StyleSheet.create({
   },
   
 });
-
-// Mock data fallback
-const getMockTasks = () => [
-  {
-    id: '1',
-    colour: 'red',
-    description: 'Follow up with cart abandoners',
-    dateAssigned: new Date('2025-04-30'),
-    group: 'aboutToLeave'
-  },
-  // ... other mock tasks
-];
 
 export default Feed;
