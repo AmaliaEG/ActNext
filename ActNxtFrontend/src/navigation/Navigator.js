@@ -96,23 +96,25 @@ const CustomDrawerContent = (props) => {
 
 const Navigator = () => {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        // initialRouteName="Feed"
-        screenOptions={{ drawerType: 'slide', drawerStyle: { width: '75%' }, headerShown: false }}
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
-      >
-        <Drawer.Screen name="Home" component={App} />
-        <Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
-        <Drawer.Screen name="Details" component={TaskExpansion} />
-        <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-        <Drawer.Screen name="ProfileDetails" component={ProfileDetailsScreen} />
-        <Drawer.Screen name="Language" component={LanguageScreen} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-        <Drawer.Screen name="StorageAndData" component={StorageAndDataScreen} />
-        <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} >
+      <NavigationContainer>
+        <Drawer.Navigator
+          // initialRouteName="Feed"
+          screenOptions={{ drawerType: 'slide', drawerStyle: { width: '75%' }, headerShown: false }}
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
+        >
+          <Drawer.Screen name="Home" component={App} />
+          <Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
+          <Drawer.Screen name="Details" component={TaskExpansion} />
+          <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
+          <Drawer.Screen name="ProfileDetails" component={ProfileDetailsScreen} />
+          <Drawer.Screen name="Language" component={LanguageScreen} />
+          <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+          <Drawer.Screen name="StorageAndData" component={StorageAndDataScreen} />
+          <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </Auth0Provider>
   );
 };
 

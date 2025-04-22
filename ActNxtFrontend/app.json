@@ -38,7 +38,8 @@
       [
         "react-native-auth0",
         {
-          "domain": "dev-actnxt.eu.auth0.com"
+          "domain": "dev-actnxt.eu.auth0.com",
+          "customScheme": "yourapp.auth0"
         }
       ]
     ],

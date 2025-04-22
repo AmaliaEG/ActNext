@@ -1,10 +1,10 @@
 import { Button, StyleSheet, Text, View, Platform } from 'react-native';
 import React from 'react';
-import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import {useAuth0} from 'react-native-auth0';
+
 
 const App = ({ navigation }) => {
   return (
-    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} redirectUri={Platform.OS === 'ios' ? 'com.anonymous.actnxtfrontend.auth0://dev-actnxt.eu.auth0.com/ios/com.anonymous.actnxtfrontend/callback' : 'com.anonymous.actnxtfrontend.auth0://dev-actnxt.eu.auth0.com/android/com.anonymous.actnxtfrontend/callback'}>
       <View style={styles.container}>
         <View style={styles.row}>
           <View style={styles.buttonContainer}>
@@ -29,22 +29,45 @@ const App = ({ navigation }) => {
           </View>
         </View>
       </View>
-     </Auth0Provider>
   );
 };
 
 const LoginButton = () => {
-  const {authorize} = useAuth0();
+  const { authorize, user, error, isLoading, clearSession } = useAuth0();
 
-  const onPress = async () => {
-      try {
-          await authorize();
-      } catch (e) {
-          console.log(e);
-      }
+  const onLogin = async () => {
+    try {
+      await authorize();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  return <Button onPress={onPress} title="Log in" />
+  const onLogout = async () => {
+    try {
+      await clearSession();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  return (
+    <View>
+      {user ? (
+        <>
+          <Text>Logged in as {user.name}</Text>
+          <Button onPress={onLogout} title="Log out" />
+        </>
+      ) : (
+        <Button onPress={onLogin} title="Log in" />
+      )}
+      {error && <Text>{error.message}</Text>}
+    </View>
+  );
 }
 
 

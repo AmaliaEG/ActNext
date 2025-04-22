@@ -31,6 +31,7 @@ const ProfileDetailsScreen = () => {
     // When the Profile Details Screen loads, previous stored data gets retrieved from SecureStore ONCE.
     // Updates the state, so previous data is displayed.
     useEffect(() => {
+        console.log("Component re-rendered");
         const loadProfileData = async () => {
             try {
                 const savedName = await SecureStore.getItemAsync('name');
@@ -54,6 +55,7 @@ const ProfileDetailsScreen = () => {
     }, []);
     
     const handleSaveChanges = async () => {
+        console.log("saving changes")
         try {
             // Save profile data
             await SecureStore.setItemAsync('name', name);
@@ -81,9 +83,12 @@ const ProfileDetailsScreen = () => {
     };
 
     const LoggedInDetails = () => {
-        return (
-            <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
-            <ScrollView contentContainerStyle={styles.container}>
+        console.log("getting login details")
+        
+    }
+
+    return (
+        <ScrollView contentContainerStyle={styles.container}>
                 <Text style={styles.sectionTitle}>Profile Details</Text>
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Name</Text>
@@ -174,16 +179,6 @@ const ProfileDetailsScreen = () => {
                 </TouchableOpacity>
                 <LogoutButton/>
             </ScrollView>
-        </Auth0Provider>
-        )
-    }
-
-    return (
-        <>
-            {user && <LoggedInDetails/>}
-            {!user && <Text>Not logged in</Text> && <LoggedInDetails/>}
-            {error && <Text>{error.message}</Text>}
-        </>
     )
 };
 
