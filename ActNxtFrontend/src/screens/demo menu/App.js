@@ -1,10 +1,34 @@
 import { Button, StyleSheet, Text, View, Platform } from 'react-native';
+import { useState } from 'react';
 import React from 'react';
 import {useAuth0} from 'react-native-auth0';
+import { ThemeContext } from '@react-navigation/native';
+import { Appearance } from 'react-native';
+
 
 
 const App = ({ navigation }) => {
+    const [theme, setTheme] = useState('light');
+  
+    const updatateTheme = (newTheme) => {
+      let mode;
+      if (!newTheme) {
+        mode = theme.mode == 'dark' ? 'light' : 'dark';
+        newTheme = { mode };
+    } else {
+      if (newTheme.system){
+        const systemColorScheme = Appearance.getColorScheme();
+        mode = systemColorScheme === 'dark' ? 'dark' : 'light';
+
+        newTheme = {...newTheme, mode };
+      } else {
+        newTheme = {...newTheme, system: false};
+      }
+    }
+    setTheme(newTheme);
+    };
   return (
+    <ThemeContext.Provider value={{ theme, updatateTheme }}>
       <View style={styles.container}>
         <View style={styles.row}>
           <View style={styles.buttonContainer}>
@@ -29,9 +53,9 @@ const App = ({ navigation }) => {
           </View>
         </View>
       </View>
+    </ThemeContext.Provider>
   );
 };
-
 const LoginButton = () => {
   const { authorize, user, error, isLoading, clearSession } = useAuth0();
 

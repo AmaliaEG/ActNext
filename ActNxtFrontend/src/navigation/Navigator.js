@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, ThemeContext } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import App from '../screens/demo menu/App'; // Your main screen with the buttons
@@ -16,7 +16,8 @@ import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
 import TaskExpansion from '../screens/mainPage/TaskExpansion';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
-import Themes from '../screens/burgermenu/Themes';
+import ThemesScreen from '../screens/burgermenu/ThemesScreen';
+import { ThemeProvider } from '../screens/burgermenu/ThemeContext'; // Import your ThemeProvider
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -30,6 +31,8 @@ const CustomDrawerContent = (props) => {
     switch (activeSettingScreen) {
       case 'Profile':
         return <ProfileDetailsScreen />;
+      case 'Themes':
+        return <ThemesScreen />;
       case 'Language':
         return <LanguageScreen />;
       case 'Notifications':
@@ -96,28 +99,29 @@ const CustomDrawerContent = (props) => {
 
 const Navigator = () => {
   return (
-    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} >
-      <NavigationContainer>
-        <Drawer.Navigator
-          // initialRouteName="Feed"
-          screenOptions={{ drawerType: 'slide', drawerStyle: { width: '75%' }, headerShown: false }}
-          drawerContent={(props) => <CustomDrawerContent {...props} />}
-        >
-          <Drawer.Screen name="Home" component={App} />
-          <Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
-          <Drawer.Screen name="Details" component={TaskExpansion} />
-          <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-          <Drawer.Screen name="ProfileDetails" component={ProfileDetailsScreen} />
-          <Drawer.Screen name="Language" component={LanguageScreen} />
-          <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-          <Drawer.Screen name="StorageAndData" component={StorageAndDataScreen} />
-          <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
-        </Drawer.Navigator>
-      </NavigationContainer>
+    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
+      <ThemeProvider> {/* <- Add this around NavigationContainer */}
+        <NavigationContainer>
+          <Drawer.Navigator
+            screenOptions={{ drawerType: 'slide', drawerStyle: { width: '75%' }, headerShown: false }}
+            drawerContent={(props) => <CustomDrawerContent {...props} />}
+          >
+            <Drawer.Screen name="Home" component={App} />
+            <Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
+            <Drawer.Screen name="Details" component={TaskExpansion} />
+            <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
+            <Drawer.Screen name="Themes" component={ThemesScreen} />
+            <Drawer.Screen name="ProfileDetails" component={ProfileDetailsScreen} />
+            <Drawer.Screen name="Language" component={LanguageScreen} />
+            <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+            <Drawer.Screen name="StorageAndData" component={StorageAndDataScreen} />
+            <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </ThemeProvider> {/* <- Close it here */}
     </Auth0Provider>
   );
 };
-
 
 const styles = StyleSheet.create({
   gearWrapper: {

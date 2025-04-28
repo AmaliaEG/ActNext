@@ -3,6 +3,7 @@ import { View, FlatList, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Mock from './MockTasks.json'; // Import JSON data
+import { ThemeContext } from '@react-navigation/native';
 
 const GroupColours = {
   1: '#E862AE', // Light salmon for Win Back
@@ -108,11 +109,9 @@ const Feed = () => {
         </Pressable>
       )}
 />
-
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

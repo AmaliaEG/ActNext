@@ -18,8 +18,6 @@ const SettingsScreen = ({ navigation }) => {
         { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
     ];
 
-    // A button is created for each item in menuItems containing a label, arrow and
-    // a onPress handler that navigates to the screen of the corresponding item.
     return (
         <View style={styles.container}>
             {menuItems.map((item, index) => (
