@@ -27,20 +27,25 @@ const Themes = () => {
       <View style={styles.buttonContainer}>
         <Button 
           title="Light" 
+          icon="lightbulb-on"
+          isActive ={ theme.mode === 'light' }
           onPress={() => updateTheme({ mode: 'light' })}
         />
       </View>
       <View style={styles.buttonContainer}>
         <Button 
-          title="Dark" 
-          onPress={() => updateTheme({ mode: 'dark' })}
+            title="Dark" 
+            icon="weather-night"
+            isActive ={ theme.mode === 'dark' }
+            onPress={() => updateTheme({ mode: 'dark' })}
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button 
-          title="System" 
-          onPress={() => updateTheme({ mode: true })}
-        />
+      <Button 
+        title="System" 
+        isActive={theme.mode === 'system'}
+        onPress={() => updateTheme({ mode: 'system' })}
+      />
       </View>
     </View>
   );
