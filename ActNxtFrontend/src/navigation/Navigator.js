@@ -99,8 +99,9 @@ const CustomDrawerContent = (props) => {
 
 const Navigator = () => {
   return (
+    <ThemeProvider>
     <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"}>
-      <ThemeProvider> {/* <- Add this around NavigationContainer */}
+       {/* <- Add this around NavigationContainer */}
         <NavigationContainer>
           <Drawer.Navigator
             screenOptions={{ drawerType: 'slide', drawerStyle: { width: '75%' }, headerShown: false }}
@@ -118,8 +119,9 @@ const Navigator = () => {
             <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
           </Drawer.Navigator>
         </NavigationContainer>
-      </ThemeProvider> {/* <- Close it here */}
+       {/* <- Close it here */}
     </Auth0Provider>
+    </ThemeProvider>
   );
 };
 
