@@ -60,7 +60,7 @@ const TaskExpansion = ({ route }) => {
           <Ionicons name = "arrow-back" size = {24} color = "black" />
         </TouchableOpacity>
         <Text style={styles.title}>{taskId.title ||"Task title"}</Text>
-        <View style={styles.rightSpacer} /> {/*Balances header*/}
+        <View style={styles.rightSpacer} /> 
       </View>
 
       {/*Main content */}
