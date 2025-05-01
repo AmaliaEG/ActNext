@@ -12,22 +12,17 @@ const GroupColours = {
 
 const Feed = () => {
   const navigation = useNavigation();
-
-  // const allTasks = [
-  //   { id: '1', colour: 'red', description: 'task1', dateAssigned: '04/30/2025' },
-  //   { id: '2', colour: 'blue', description: 'task2', dateAssigned: '04/19/2025' },
-  //   { id: '3', colour: 'green', description: 'task3', dateAssigned: '04/25/2025' },
-  //   { id: '4', colour: 'black', description: 'task4', dateAssigned: '05/05/2025' },
-  //   { id: '5', colour: 'purple', description: 'task5', dateAssigned: '04/10/2025' },
-  //   { id: '6', colour: 'orange', description: 'task6', dateAssigned: '05/08/2025' },
-  //   { id: '7', colour: 'pink', description: 'task7', dateAssigned: '06/01/2025' },
-  //   { id: '8', colour: 'brown', description: 'task8', dateAssigned: '06/02/2025' },
-  // ];
-
   const [userTasks, setUserTasks] = useState([]);
 
+const getTheFirstSentence = (description) => {
+  if (!description) return '';
+
+  const sentences = description.split('.');
+  return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
+};
+
+
   useEffect(() => {
-    // assignTasks();
     const processTasks = () => {
       const currentDate = new Date();
       
@@ -36,7 +31,8 @@ const Feed = () => {
         return {
           ...task,
           dateAssigned,
-          isOverdue: dateAssigned < currentDate
+          isOverdue: dateAssigned < currentDate,
+          firstSentence: getTheFirstSentence(task.description),
         };
       }).sort((a, b) => a.dateAssigned - b.dateAssigned);
       
@@ -45,40 +41,6 @@ const Feed = () => {
 
     processTasks();
   }, []);
-
-  /*
- * Assigns the next three tasks based on their assigned date.
- * 
- * This function does the following:
- * 1. Gets the current date.
- * 2. Converts the dateAssigned string from each task into a Date object.
- * 3. Determines if each task is overdue (if its date is before the current date).
- * 4. Sorts all tasks in ascending order based on their assigned date.
- * 5. Selects the first three tasks from the sorted list.
- * 6. Updates the state to display these three tasks.
- */
-
-  // const assignTasks = () => {
-  //   const currentDate = new Date();
-  
-    
-  //   const sortedTasks = allTasks
-  //     .map((task) => {
-  //       const [month, day, year] = task.dateAssigned.split('/');
-  //       const taskDate = new Date(year, month - 1, day);
-  
-  //       return {
-  //         ...task,
-  //         dateAssigned: taskDate,
-  //         isOverdue: taskDate < currentDate,
-  //       };
-  //     })
-  //     .sort((a, b) => a.dateAssigned - b.dateAssigned); 
-  
-  //   const tasksToAdd = sortedTasks.slice(0, 3);
-  //   setUserTasks(tasksToAdd);
-  // };
-  
 
   return (
     <View style={styles.container}>
@@ -89,26 +51,27 @@ const Feed = () => {
       </View>
 
       <FlatList
-      keyExtractor={(item) => item.id}
-      data={userTasks}
-      renderItem={({ item }) => (
-        <Pressable 
-          onPress={() => navigation.navigate('Details', {taskId: item.id})}>
-          <View style={[styles.item, { backgroundColor: GroupColours[item.group]}]}>
-            <Text style={styles.text}>{item.title}</Text>
-            <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text> /* gives us the date in a readable format */
+        keyExtractor={(item) => item.id}
+        data={userTasks}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => navigation.navigate('Details', {taskId: item.id})}>
+            <View style={styles.item}>
+              <View style={[styles.colorDot, { backgroundColor: GroupColours[item.group] }]} />
+              
+              <Text style={styles.text}>{item.title}</Text>
+              <Text style={styles.descriptionText}>{item.firstSentence}</Text>
+              <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text>
 
-            {item.isOverdue && (
-              <View style={styles.warningContainer}>
-                <Ionicons name="warning" size={20} color="yellow" />
-                <Text style={styles.warningText}>Overdue!</Text>
-              </View>
-            )}
-          </View>
-        </Pressable>
-      )}
-/>
-
+              {item.isOverdue && (
+                <View style={styles.warningContainer}>
+                  <Ionicons name="warning" size={20} color="yellow" />
+                  <Text style={styles.warningText}>Overdue!</Text>
+                </View>
+              )}
+            </View>
+          </Pressable>
+        )}
+      />
     </View>
   );
 };
@@ -117,21 +80,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
+    backgroundColor: '#f5f5f5',
   },
   item: {
-    padding: 50,
+    padding: 20,
     marginVertical: 8,
     borderRadius: 10,
+    backgroundColor: 'white',
+    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  colorDot: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    width: 15,
+    height: 15,
+    borderRadius: 50,
   },
   text: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
+    marginLeft: 20, 
   },
   dateText: {
-    color: 'white',
+    color: 'gray',
     fontSize: 12,
     marginTop: 5,
+    marginLeft: 20, 
   },
   menuContainer: {
     marginBottom: 10,
@@ -157,7 +138,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
-  
+  descriptionText: {
+    color: 'gray',
+    fontSize: 12,
+    marginTop: 5,
+    marginLeft: 20, 
+    fontStyle: 'italic', 
+  },
 });
 
 export default Feed;

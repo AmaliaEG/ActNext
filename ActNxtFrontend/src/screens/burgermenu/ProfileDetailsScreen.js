@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as SecureStore from 'expo-secure-store';
-import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import {useAuth0} from 'react-native-auth0';
 import DateTimePickerInput from './DateTimePickerInput';
+import GenderPickerInput from './GenderPickerInput';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = () => {
@@ -54,9 +55,21 @@ const ProfileDetailsScreen = () => {
         loadProfileData();
     }, []);
     
+    const isValidEmail = (email) => {
+        let val = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        return val.test(email);
+    };
+
     const handleSaveChanges = async () => {
         console.log("saving changes")
         try {
+
+            // Check for valid email
+            if (!isValidEmail(email)) {
+                alert('Invalid email. Please enter a valid email address.');
+                return;
+            }
+
             // Save profile data
             await SecureStore.setItemAsync('name', name);
             await SecureStore.setItemAsync('birthDate', birthDate);
@@ -82,11 +95,6 @@ const ProfileDetailsScreen = () => {
         }
     };
 
-    const LoggedInDetails = () => {
-        console.log("getting login details")
-        
-    }
-
     return (
         <ScrollView contentContainerStyle={styles.container}>
                 <Text style={styles.sectionTitle}>Profile Details</Text>
@@ -95,7 +103,11 @@ const ProfileDetailsScreen = () => {
                     <TextInput
                         style={styles.input}
                         value={name}
-                        onChangeText={setName}
+                        onChangeText={(text) => {
+                            const cleaned = text.replace(/[0-9]/g, ''); // Removes all digits
+                            setName(cleaned);
+                        }}
+                        placeholder="Enter your name"
                     />
                 </View>
     
@@ -108,12 +120,7 @@ const ProfileDetailsScreen = () => {
                 </View>
     
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Gender</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={gender}
-                        onChangeText={setGender}
-                    />
+                    <GenderPickerInput value={gender} onChange={setGender}/>
                 </View>
     
                 <View style={styles.inputContainer}>
