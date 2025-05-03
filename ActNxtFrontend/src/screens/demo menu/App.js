@@ -10,7 +10,7 @@ import { Appearance } from 'react-native';
 const App = ({ navigation }) => {
     const [theme, setTheme] = useState('light');
   
-    const updatateTheme = (newTheme) => {
+    const updateTheme = (newTheme) => {
       let mode;
       if (!newTheme) {
         mode = theme.mode == 'dark' ? 'light' : 'dark';
@@ -28,7 +28,7 @@ const App = ({ navigation }) => {
     setTheme(newTheme);
     };
   return (
-    <ThemeContext.Provider value={{ theme, updatateTheme }}>
+    <ThemeContext.Provider value={{ theme, updateTheme }}>
       <View style={styles.container}>
         <View style={styles.row}>
           <View style={styles.buttonContainer}>
@@ -120,3 +120,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+export { LoginButton };

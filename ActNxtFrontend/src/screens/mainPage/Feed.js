@@ -14,12 +14,12 @@ const Feed = () => {
   const navigation = useNavigation();
   const [userTasks, setUserTasks] = useState([]);
 
-const getTheFirstSentence = (description) => {
-  if (!description) return '';
+  const getTheFirstSentence = (description) => {
+    if (!description) return '';
 
-  const sentences = description.split('.');
-  return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-};
+    const sentences = description.split('.');
+    return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
+  };
 
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const getTheFirstSentence = (description) => {
           isOverdue: dateAssigned < currentDate,
           firstSentence: getTheFirstSentence(task.description),
         };
+      // Sorts by date (earliest first)
       }).sort((a, b) => a.dateAssigned - b.dateAssigned);
       
       setUserTasks(processedTasks.slice(0, 3));
@@ -45,7 +46,7 @@ const getTheFirstSentence = (description) => {
   return (
     <View style={styles.container}>
       <View style={styles.menuContainer}>
-        <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton}>
+        <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color="black" />
         </Pressable>
       </View>
