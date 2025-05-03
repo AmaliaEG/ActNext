@@ -53,7 +53,7 @@ const Feed = () => {
       </View>
 
       <FlatList
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.Id.toString()}
         data={userTasks}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>

@@ -1,7 +1,8 @@
 import TaskExpansion from '../src/screens/mainPage/TaskExpansion';
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
-import MockTasks from '../src/screens/mainPage/MockTasks.json';
+import MockTasks from '../src/screens/mainPage/JSON_Mockdata.json';
+import { StyleSheet } from 'react-native';
 
 const mockNavigate = jest.fn();
 jest.mock('@react-navigation/native', () => ({
@@ -17,12 +18,12 @@ jest.mock('@expo/vector-icons', () => ({
 
 describe('TaskExpansion', () => {
     const testTask = MockTasks[0];
-    const route = { params: { taskId: testTask.id } };
+    const route = { params: { taskId: testTask.Id } };
 
-    it('renders task details correctly', () => {
-        const { getByText } = render(<TaskExpansion route={route} />);
-        expect(getByText(testTask.description)).toBeTruthy();
-        expect(getByText('Finished')).toBeTruthy();
+    it('renders task details correctly', async () => {
+        const { findByText } = render(<TaskExpansion route={route} />);
+        expect(await findByText(testTask.Description)).toBeTruthy();
+        expect(await findByText('Finished')).toBeTruthy();
     });
 
     it('toggles like and dislike buttons', () => {
@@ -46,7 +47,8 @@ describe('TaskExpansion', () => {
         const { getByText, getByTestId } = render(<TaskExpansion route={route} />);
         expect(getByText('Win Back Plan')).toBeTruthy(); // testing for group 1
         const colorCircle = getByTestId('color-circle');
-        expect(colorCircle.props.style.find(style => style.backgroundColor === '#E862AE')).toBeTruthy();
+        const flatStyle = StyleSheet.flatten(colorCircle.props.style);
+        expect(flatStyle.backgroundColor).toBe('#E862AE');
     });
 
     it('shows loading state id task not found', () => {

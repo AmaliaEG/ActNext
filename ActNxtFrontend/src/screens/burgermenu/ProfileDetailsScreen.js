@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as SecureStore from 'expo-secure-store';
-import {useAuth0} from 'react-native-auth0';
+import { useAuth0 } from 'react-native-auth0';
 import DateTimePickerInput from './DateTimePickerInput';
 import GenderPickerInput from './GenderPickerInput';
 
@@ -32,7 +32,7 @@ const ProfileDetailsScreen = () => {
     // When the Profile Details Screen loads, previous stored data gets retrieved from SecureStore ONCE.
     // Updates the state, so previous data is displayed.
     useEffect(() => {
-        console.log("Component re-rendered");
+        // console.log("Component re-rendered");
         const loadProfileData = async () => {
             try {
                 const savedName = await SecureStore.getItemAsync('name');
@@ -48,7 +48,7 @@ const ProfileDetailsScreen = () => {
                 if (savedEmail) setEmail(savedEmail);
                 if (savedCode) setCode(savedCode);
             } catch (error) {
-                console.error('Failed to load profile data:', error);
+                if (__DEV__) console.error('Failed to load profile data:', error);
             }
         };
 
@@ -61,12 +61,14 @@ const ProfileDetailsScreen = () => {
     };
 
     const handleSaveChanges = async () => {
-        console.log("saving changes")
+        // console.log("saving changes")
         try {
 
             // Check for valid email
             if (!isValidEmail(email)) {
-                alert('Invalid email. Please enter a valid email address.');
+                if (typeof alert !== 'undefined') {
+                    alert('Invalid email. Please enter a valid email address.');
+                }
                 return;
             }
 
@@ -80,18 +82,18 @@ const ProfileDetailsScreen = () => {
             if (newPassword && newPassword === confirmPassword) {
                 await SecureStore.setItemAsync('code', newPassword);
                 setCode(newPassword);
-                console.log('Password changed Succesfully');
+                // console.log('Password changed Succesfully');
                 // Clear the fields after confirmation
                 setNewPassword('');
                 setConfirmPassword('');
             } else if (newPassword !== confirmPassword) {
-                console.error('New password and the confirmed password do not match');
+                // console.error('New password and the confirmed password do not match');
                 return;
             }
 
-            console.log('Changes saved:', { name, birthDate, gender, email, code });
+            // console.log('Changes saved:', { name, birthDate, gender, email, code });
         } catch (error) {
-            console.error('Failed to save profile data:', error);
+            if (__DEV__) console.error('Failed to save profile data:', error);
         }
     };
 
@@ -129,6 +131,7 @@ const ProfileDetailsScreen = () => {
                         style={styles.input}
                         value={email}
                         onChangeText={setEmail}
+                        placeholder='Enter your email'
                     />
                 </View>
     
@@ -136,6 +139,7 @@ const ProfileDetailsScreen = () => {
                     <Text style={styles.label}>Code</Text>
                     <View style={styles.codeContainer}>
                         <TextInput
+                            testID='password-input'
                             style={styles.codeInput}
                             value={showCode ? code : '*'.repeat(code.length)}
                             onChangeText={setCode}
@@ -143,6 +147,7 @@ const ProfileDetailsScreen = () => {
                             secureTextEntry={!showCode}
                         />
                         <TouchableOpacity 
+                            testID='eye-icon'
                             style={styles.eyeIcon}
                             onPress={() => setShowCode(!showCode)}
                         >
@@ -165,6 +170,7 @@ const ProfileDetailsScreen = () => {
                                     value={newPassword}
                                     onChangeText={setNewPassword}
                                     secureTextEntry
+                                    placeholder='New Password'
                                 />
                             </View>
     
@@ -175,6 +181,7 @@ const ProfileDetailsScreen = () => {
                                     value={confirmPassword}
                                     onChangeText={setConfirmPassword}
                                     secureTextEntry
+                                    placeholder='Confirm New Password'
                                 />
                             </View>
                         </>
@@ -198,7 +205,7 @@ const LogoutButton = () => {
         try {
             await clearSession();
         } catch (e) {
-            console.log(e);
+            if (__DEV__) console.log(e);
         }
     };
 
