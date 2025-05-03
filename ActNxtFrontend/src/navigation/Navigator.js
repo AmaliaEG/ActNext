@@ -100,7 +100,7 @@ const CustomDrawerContent = (props) => {
 const Navigator = () => {
   return (
     <ThemeProvider>
-    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} redirectUri={window.location.origin}>
+    <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} >
        {/* <- Add this around NavigationContainer */}
         <NavigationContainer>
           <Drawer.Navigator
