@@ -8,10 +8,10 @@ Due to the App calling the constant useAuth0, it makes it difficult to run isola
 Therefore, we use some mock values, where:
 
     user: We pretend that it is logged in
-    authorize: Handles logging in (where we don't really need to log in)
-    clearSession: Handles logging out
-    isLoading: Controls the loading state
-    error: Controls the error display
+    loginWithRedirect: Simulates the login action
+    logout: Simulates the logout action
+    isLoading: Controls whether the Auth0 is still loading
+    error: Simulates any Auth0-related error messages
 
 In other words, the test will behave as if the user is already logged in.
 
@@ -25,10 +25,11 @@ jest.mock('react-native-auth0', () => ({
 describe("App", () => {
     it('renders buttons correctly', () => {
         const navigationMock = { navigate: jest.fn() }; // Needed when navigation is used
+
         mockUseAuth0.mockReturnValue({
             user: null,
-            authorize: jest.fn(),
-            clearSession: jest.fn(),
+            loginWithRedirect: jest.fn(),
+            logout: jest.fn(),
             isLoading: false,
             error: null,
         });
@@ -48,8 +49,8 @@ describe("LoginButton", () => {
     it('shows the logout button when user is logged in', () => {
         mockUseAuth0.mockReturnValue({
             user: { name: "Test User" },
-            authorize: jest.fn(),
-            clearSession: jest.fn(),
+            loginWithRedirect: jest.fn(),
+            logout: jest.fn(),
             isLoading: false,
             error: null,
         });
@@ -63,8 +64,8 @@ describe("LoginButton", () => {
     it('shows the login button when user is logged out', () => {
         mockUseAuth0.mockReturnValue({
             user: null,
-            authorize: jest.fn(),
-            clearSession: jest.fn(),
+            loginWithRedirect: jest.fn(),
+            logout: jest.fn(),
             isLoading: false,
             error: null,
         });
@@ -74,12 +75,12 @@ describe("LoginButton", () => {
     });
 
     it('calls authorize() when Log in is pressed', () => {
-        const mockAuthorize = jest.fn();
+        const mockLogin = jest.fn();
         
         mockUseAuth0.mockReturnValue({
             user: null,
-            authorize: mockAuthorize,
-            clearSession: jest.fn(),
+            loginWithRedirect: mockLogin,
+            logout: jest.fn(),
             isLoading: false,
             error: null,
         });
@@ -87,16 +88,16 @@ describe("LoginButton", () => {
         const { getByText } = render(<LoginButton />);
         fireEvent.press(getByText("Log in"));
 
-        expect(mockAuthorize).toHaveBeenCalled();
+        expect(mockLogin).toHaveBeenCalled();
     });
 
     it('calls clearSession() when Log out is pressed', () => {
-        const mockClearSession = jest.fn();
+        const mockLogout = jest.fn();
         
         mockUseAuth0.mockReturnValue({
             user: { name: "Test User" },
-            authorize: jest.fn(),
-            clearSession: mockClearSession,
+            loginWithRedirect: jest.fn(),
+            logout: mockLogout,
             isLoading: false,
             error: null,
         });
@@ -104,7 +105,7 @@ describe("LoginButton", () => {
         const { getByText } = render(<LoginButton />);
         fireEvent.press(getByText("Log out"));
 
-        expect(mockClearSession).toHaveBeenCalled();
+        expect(mockLogout).toHaveBeenCalled();
     });
 });
 

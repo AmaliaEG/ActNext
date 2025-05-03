@@ -1,8 +1,7 @@
 import Feed from '../src/screens/mainPage/Feed';
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
-import MockTasks from '../src/screens/mainPage/MockTasks.json';
-import { useNavigation } from '@react-navigation/native';
+import MockTasks from '../src/screens/mainPage/JSON_Mockdata.json';
 
 // Making mock navigation from the navigations used in Feed.js
 const mockOpenDrawer = jest.fn();
@@ -19,43 +18,46 @@ jest.mock('@react-navigation/native', () => ({
     }),
 }));
 
+// Helper function
 const getTheFirstSentence = (description) => {
     if (!description) return '';
-
     const sentences = description.split('.');
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
 };
 
 describe('Feed', () => {
     it('shows overdue warning if task is overdue', () => {
-        const { queryByText } = render(<Feed />);
-        const overdueTask = MockTasks.find(task => new Date(task.dateAssigned) < new Date());
-        
+        const { queryAllByText } = render(<Feed />);
+
+        const overdueTask = MockTasks.find(task => new Date(task.DtCreate) < new Date());
         if (overdueTask) {
-            expect(queryByText('Overdue!')).toBeTruthy();
+            const overdueWarnings = queryAllByText('Overdue!');
+            expect(overdueWarnings.length).toBeGreaterThan(0);
         }
     });
 
     it('renders task title, description, and due date', () => {
-        const { getByText } = render(<Feed />);
+        const { getAllByText } = render(<Feed />);
         const firstTask = MockTasks
-            .map(task => ({...task, dateAssigned: new Date(task.dateAssigned) }))
+            .map(task => ({...task, dateAssigned: new Date(task.DtCreate) }))
             .sort((a, b) => a.dateAssigned - b.dateAssigned)[0];
 
         const expectedDate = `Due: ${firstTask.dateAssigned.toLocaleDateString()}`;
         
-        expect(getByText(firstTask.title)).toBeTruthy();
-        expect(getByText(getTheFirstSentence(firstTask.description))).toBeTruthy();
-        expect(getByText(expectedDate)).toBeTruthy();
+        expect(getAllByText(firstTask.Title)).toBeTruthy();
+        expect(getAllByText(getTheFirstSentence(firstTask.Description))).toBeTruthy();
+        expect(getAllByText(expectedDate).length).toBeGreaterThan(0);
     });
     
     // User Interaction tests
     it('navigates to task details on press', () => {
-        const { getByText } = render(<Feed />);
-        const firstTask = MockTasks.sort((a, b) => new Date(a.dateAssigned) - new Date(b.dateAssigned))[0];
+        const { getAllByText } = render(<Feed />);
+        const firstTask = MockTasks
+            .map(task => ({...task, dateAssigned: new Date(task.DtCreate) }))
+            .sort((a, b) => a.dateAssigned - b.dateAssigned)[0];
         
-        fireEvent.press(getByText(firstTask.title));
-        expect(mockNavigate).toHaveBeenCalledWith('Details', { taskId: firstTask.id });
+        fireEvent.press(getAllByText(firstTask.Title)[0]);
+        expect(mockNavigate).toHaveBeenCalledWith('Details', { taskId: firstTask.Id });
     });
     
     it('opens drawer on burger menu press', () => {
