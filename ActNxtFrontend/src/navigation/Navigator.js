@@ -30,7 +30,7 @@ const CustomDrawerContent = (props) => {
   const renderSettingComponent = () => {
     switch (activeSettingScreen) {
       case 'Profile':
-        return <ProfileDetailsScreen />;
+        return <ProfileDetailsScreen navigation={props.navigation} closeModal={() => setSettingsModalVisible(false)}/>;
       case 'Themes':
         return <ThemesScreen />;
       case 'Language':

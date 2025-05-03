@@ -14,11 +14,12 @@ import DateTimePickerInput from './DateTimePickerInput';
 import GenderPickerInput from './GenderPickerInput';
 
 // State hooks for storing and updating user details
-const ProfileDetailsScreen = () => {
-    const [name, setName] = useState('John Doe');
-    const [birthDate, setBirthDate] = useState('DD/MM/YYYY');
-    const [gender, setGender] = useState('Male');
-    const [email, setEmail] = useState('john.doe@example.com');
+const ProfileDetailsScreen = ({navigation, closeModal}) => {
+    const {logout,user, isAuthenticated} = useAuth0();
+    const [name, setName] = useState(user?.name);
+    const [birthDate, setBirthDate] = useState(user?.birthdate);
+    const [gender, setGender] = useState(user?.gender);
+    const [email, setEmail] = useState(user?.email);
     // Code and password is the same
     // Called different things to know which is shown on the profile description,
     // and which is used to change the code.
@@ -27,7 +28,6 @@ const ProfileDetailsScreen = () => {
     const [isEditindPassword, setIsEditingPassword] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const {user, error} = useAuth0();
 
     // When the Profile Details Screen loads, previous stored data gets retrieved from SecureStore ONCE.
     // Updates the state, so previous data is displayed.
@@ -42,7 +42,7 @@ const ProfileDetailsScreen = () => {
                 const savedCode = await SecureStore.getItemAsync('code');
 
 
-                if (savedName) setName(savedName);
+                if (savedName) setName(user?.name);
                 if (savedBirthDate) setBirthDate(savedBirthDate);
                 if (savedGender) setGender(savedGender);
                 if (savedEmail) setEmail(savedEmail);
@@ -92,6 +92,16 @@ const ProfileDetailsScreen = () => {
             console.log('Changes saved:', { name, birthDate, gender, email, code });
         } catch (error) {
             console.error('Failed to save profile data:', error);
+        }
+    };
+
+    const LogoutButton = async () => {
+        try {
+            logout()
+            navigation.navigate('Home')
+            closeModal?.();
+        } catch (e) {
+            console.log(e);
         }
     };
 
@@ -184,30 +194,16 @@ const ProfileDetailsScreen = () => {
                 <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
                     <Text style={styles.saveButtonText}>Save Changes</Text>
                 </TouchableOpacity>
-                <LogoutButton/>
+                <TouchableOpacity style={styles.saveButton} onPress={LogoutButton}>
+                <Text style={styles.saveButtonText}>Log Out</Text>
+                </TouchableOpacity>
             </ScrollView>
     )
 };
 
 
 
-const LogoutButton = () => {
-    const {clearSession} = useAuth0();
 
-    const onPress = async () => {
-        try {
-            await clearSession();
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    return (
-        <TouchableOpacity style={styles.saveButton} onPress={onPress}>
-        <Text style={styles.saveButtonText}>Log Out</Text>
-        </TouchableOpacity>
-    )
-}
 
 const styles = StyleSheet.create({
     container: {
