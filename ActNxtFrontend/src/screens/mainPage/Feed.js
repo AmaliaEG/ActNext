@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Mock from './MockTasks.json'; // Import JSON data
+//import Mock from './MockTasks.json'; // Import JSON data
+import Mock from './JSON_Mockdata.json'; // Import JSON data
 
 const GroupColours = {
   1: '#E862AE', // Light salmon for Win Back
@@ -27,12 +28,12 @@ const Feed = () => {
       const currentDate = new Date();
       
       const processedTasks = Mock.map(task => {
-        const dateAssigned = new Date(task.dateAssigned);
+        const dateAssigned = new Date(task.DtCreate);
         return {
           ...task,
           dateAssigned,
           isOverdue: dateAssigned < currentDate,
-          firstSentence: getTheFirstSentence(task.description),
+          firstSentence: getTheFirstSentence(task.Description),
         };
       // Sorts by date (earliest first)
       }).sort((a, b) => a.dateAssigned - b.dateAssigned);
@@ -55,11 +56,14 @@ const Feed = () => {
         keyExtractor={(item) => item.id}
         data={userTasks}
         renderItem={({ item }) => (
-          <Pressable onPress={() => navigation.navigate('Details', {taskId: item.id})}>
+          <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>
             <View style={styles.item}>
-              <View style={[styles.colorDot, { backgroundColor: GroupColours[item.group] }]} />
+              <View style={styles.info}>
+                <View style={[styles.colorDot, { backgroundColor: GroupColours[item.SalesAnalysisId] }]} />
+                <Text style={styles.CompanyNameText}>{item.CompanyName}</Text>
+              </View>
               
-              <Text style={styles.text}>{item.title}</Text>
+              <Text style={styles.text}>{item.Title}</Text>
               <Text style={styles.descriptionText}>{item.firstSentence}</Text>
               <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text>
 
@@ -95,13 +99,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  info: {
+    padding: 5,
+  },
   colorDot: {
     position: 'absolute',
-    top: 10,
-    left: 10,
+    marginLeft: -5,
     width: 15,
     height: 15,
     borderRadius: 50,
+  },
+  CompanyNameText: {
+    marginLeft: 15,
+    marginTop: -7,
   },
   text: {
     color: 'black',

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import mockTasks from './MockTasks.json'; // Import JSON data
+//import mockTasks from './MockTasks.json'; // Import JSON data
+import mockTasks from './JSON_Mockdata.json'; // Import JSON data
 
 // Target group dictionary
 const Groups = {
@@ -29,18 +30,18 @@ const TaskExpansion = ({ route }) => {
   const [disliked, setDisliked] = useState(false);
 
   useEffect(() => {
-    const foundTask = mockTasks.find(t => t.id === taskId);
+    const foundTask = mockTasks.find(t => t.Id === taskId);
     if (foundTask) {
       setTask({
         ...foundTask,
-        dateAssigned: new Date(foundTask.dateAssigned)
+        dateAssigned: new Date(foundTask.DtCreate)
       });
     }
   }, [taskId]);
 
   if (!task) return <View style={styles.container}><Text>Loading...</Text></View>;
 
-  const targetGroup = Groups[task.group] || Groups[1]; // Fallback to group 1
+  const targetGroup = Groups[task.SalesAnalysisId] || Groups[1]; // Fallback to group 1
 
   // Like system
   const handleLike = () => {
@@ -59,12 +60,18 @@ const TaskExpansion = ({ route }) => {
         <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={styles.backButton}>
           <Ionicons name = "arrow-back" size = {24} color = "black" />
         </TouchableOpacity>
-        <Text style={styles.title}>{taskId.title ||"Task title"}</Text>
+        <Text style={styles.Title}>{task.Title ||"Task title"}</Text>
         <View style={styles.rightSpacer} /> 
       </View>
 
       {/*Main content */}
       <View style = {styles.contentContainer}>
+        {/*Company name*/}
+        <View style={styles.companyNameContainer}>
+          <Text style={styles.companyName}>{task.CompanyName}</Text>
+        </View>
+        
+        
         {/* Target Group Row*/}
         <View style={styles.targetGroupContainer}>
           <View testID='color-circle' style={[styles.colorCircle, {backgroundColor: targetGroup.color}]}/>
@@ -72,7 +79,7 @@ const TaskExpansion = ({ route }) => {
         </View>
 
         {/* Detailed description of task*/}
-        <Text style={styles.contentText}>{task.description}</Text>
+        <Text style={styles.contentText}>{task.Description}</Text>
 
         {/* Like/Dislike Buttons*/}
         <View style={styles.rightAlignedButtonContainer}>
@@ -130,12 +137,12 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: 8,
+    marginLeft: -8,
   },
-  title: {
+  Title: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'black',
-    right: 16,
     textAlign: 'center',
     flex: 1,
   },
@@ -160,11 +167,25 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 1,
   },
+  companyNameContainer: {
+    borderWidth: 1,
+    borderColor: '#f2f4f5', // Light gray border
+    borderRadius: 6,
+    padding: 3,
+    backgroundColor: '#f2f4f5',
+    alignSelf: 'flex-start',
+    width: 'auto',
+  },
+  companyName: {
+    fontSize: 16,
+    fontWeight: 'regular',
+    marginBottom: 3,
+  },
   targetGroupContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: -10,
-    marginBottom: 12,
+    marginTop: 20,
+    marginBottom: 10,
   },
   colorCircle: {
     width: 12,
