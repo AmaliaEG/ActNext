@@ -57,11 +57,11 @@ const App = ({ navigation }) => {
   );
 };
 const LoginButton = () => {
-  const { authorize, user, error, isLoading, clearSession } = useAuth0();
+  const { logout, loginWithRedirect, authorize, user, error, isLoading, clearSession } = useAuth0();
 
   const onLogin = async () => {
     try {
-      await authorize();
+      loginWithRedirect()
     } catch (e) {
       console.log(e);
     }
@@ -69,7 +69,7 @@ const LoginButton = () => {
 
   const onLogout = async () => {
     try {
-      await clearSession();
+      logout()
     } catch (e) {
       console.log(e);
     }

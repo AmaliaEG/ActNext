@@ -74,7 +74,7 @@ const TaskExpansion = ({ route }) => {
         
         {/* Target Group Row*/}
         <View style={styles.targetGroupContainer}>
-          <View style={[styles.colorCircle, {backgroundColor: targetGroup.color}]}/>
+          <View testID='color-circle' style={[styles.colorCircle, {backgroundColor: targetGroup.color}]}/>
           <Text style={styles.groupNameText}>{targetGroup.name}</Text>
         </View>
 
@@ -84,6 +84,7 @@ const TaskExpansion = ({ route }) => {
         {/* Like/Dislike Buttons*/}
         <View style={styles.rightAlignedButtonContainer}>
           <TouchableOpacity
+            testID='like-button'
             style={[styles.button, liked && styles.likedButton]}
             onPress={handleLike}
           >
@@ -94,6 +95,7 @@ const TaskExpansion = ({ route }) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            testID='dislike-button'
             style={[styles.button, disliked && styles.dislikedButton]}
             onPress={handleDislike}
           >

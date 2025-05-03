@@ -1,6 +1,6 @@
 import Feed from '../src/screens/mainPage/Feed';
 import React from 'react';
-import { render, fireEvent, act, resetToDefaults } from "@testing-library/react-native";
+import { render, fireEvent } from "@testing-library/react-native";
 import MockTasks from '../src/screens/mainPage/MockTasks.json';
 import { useNavigation } from '@react-navigation/native';
 
@@ -36,14 +36,17 @@ describe('Feed', () => {
         }
     });
 
-    it('renders task titles and dates', () => {
+    it('renders task title, description, and due date', () => {
         const { getByText } = render(<Feed />);
         const firstTask = MockTasks
             .map(task => ({...task, dateAssigned: new Date(task.dateAssigned) }))
             .sort((a, b) => a.dateAssigned - b.dateAssigned)[0];
 
+        const expectedDate = `Due: ${firstTask.dateAssigned.toLocaleDateString()}`;
+        
         expect(getByText(firstTask.title)).toBeTruthy();
         expect(getByText(getTheFirstSentence(firstTask.description))).toBeTruthy();
+        expect(getByText(expectedDate)).toBeTruthy();
     });
     
     // User Interaction tests
