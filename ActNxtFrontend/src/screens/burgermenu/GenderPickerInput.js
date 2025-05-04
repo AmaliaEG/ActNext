@@ -8,8 +8,13 @@ const GenderPickerInput = ({ value, onChange }) => {
             <Text style={styles.label}>Select Gender</Text>
             <Picker
                 selectedValue={value}
-                onChange={onChange}
+                onValueChange={(newValue) => {
+                    if (newValue !== undefined) {
+                        onChange(newValue);
+                    }
+                }}
                 style={styles.picker}
+                testID="gender-picker"
             >
                 <Picker.Item label="Male" value="Male" />
                 <Picker.Item label="Female" value="Female" />

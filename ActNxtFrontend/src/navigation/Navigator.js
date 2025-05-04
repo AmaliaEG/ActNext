@@ -70,8 +70,9 @@ const CustomDrawerContent = (props) => {
             setActiveSettingScreen(null); // Reset screen
           }}
           style={styles.gearButton}
+          testID='settings-button'
         >
-          <MaterialIcons name="settings" size={24} color="black" />
+          <MaterialIcons name="settings" size={24} color="black" testID="icon-settings"/>
         </TouchableOpacity>
       </View>
 
@@ -160,4 +161,5 @@ const styles = StyleSheet.create({
 });
 
 
+export { CustomDrawerContent };
 export default Navigator;

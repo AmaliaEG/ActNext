@@ -21,7 +21,7 @@ const Themes = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: activeColor }]}>
+    <View style={[styles.container, { backgroundColor: activeColor }]} testID='themes-container'>
       <Text style={styles.title}>Theme Settings</Text>
       
       <View style={styles.buttonContainer}>

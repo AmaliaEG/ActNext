@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 
 
 const DateTimePickerInput = ({ value, onChange }) => {
@@ -16,7 +16,7 @@ const DateTimePickerInput = ({ value, onChange }) => {
 
     return (
         <View>
-            <TouchableOpacity onPress={() => setShow(true)}>
+            <TouchableOpacity onPress={() => setShow(true)} testID="datepicker-button" >
                 <TextInput
                     style={styles.input}
                     value={value}
@@ -31,8 +31,11 @@ const DateTimePickerInput = ({ value, onChange }) => {
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={handleChange}
-                    minimumDate={new Date(1900, 1, 1)}
+                    // The mimimum date gets updated each year
+                    // Maximum age is set to 120 years old
+                    minimumDate={new Date(new Date().getFullYear() - 120, 0, 1)}
                     maximumDate={new Date()}
+                    testID="datepicker"
                 />
             )}
         </View>
