@@ -145,4 +145,44 @@ describe('ProfileDetailsScreen', () => {
             expect(SecureStore.setItemAsync).toHaveBeenCalledWith('code', 'mypassword');
         });
     });
+
+    it('calls logout and navigates to home when logout button is pressed', async () => {
+        const mockLogout = jest.fn();
+        const mockNavigate = jest.fn();
+        const mockCloseModal = jest.fn();
+
+        useAuth0.mockReturnValue({
+            logout: mockLogout,
+            user: { email: 'test@example.com' },
+            isAuthenticated: true,
+        });
+
+        const { getByText } = render(
+            <ProfileDetailsScreen
+                navigation={{ navigate: mockNavigate }}
+                closeModal={mockCloseModal}
+            />
+        );
+
+        fireEvent.press(getByText('Log Out'));
+        await waitFor(() => {
+            expect(mockLogout).toHaveBeenCalled();
+            expect(mockNavigate).toHaveBeenCalledWith('Home');
+            expect(mockCloseModal).toHaveBeenCalled();
+        });
+    });
+
+    it('does not save if required field are empty', async () => {
+        const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
+
+        fireEvent.changeText(getByPlaceholderText('Enter your name'), '');
+        fireEvent.changeText(getByPlaceholderText('Enter your email'), '');
+
+        fireEvent.press(getByText('Save Changes'));
+
+        await waitFor(() => {
+            expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith('name', expect.anything());
+            expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith('email', expect.anything());
+        });
+    });
 });
