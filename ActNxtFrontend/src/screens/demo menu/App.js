@@ -1,9 +1,10 @@
 import { Button, StyleSheet, Text, View, Platform } from 'react-native';
 import { useState } from 'react';
 import React from 'react';
-import {useAuth0} from 'react-native-auth0';
+import { useAuth0 } from 'react-native-auth0';
 import { ThemeContext } from '@react-navigation/native';
 import { Appearance } from 'react-native';
+import useAuthStore from '../../store/useAuthStore';
 
 
 
@@ -57,21 +58,33 @@ const App = ({ navigation }) => {
   );
 };
 const LoginButton = () => {
-  const { logout, loginWithRedirect, authorize, user, error, isLoading, clearSession } = useAuth0();
+  // Auth0 hooks
+  const { authorize, user: auth0User, error, isLoading, clearSession } = useAuth0();
+
+  // Zustand store
+  const { setAuth, logout, user: zustandUser } = useAuthStore();
+
+  // Fallback mechanism just in case
+  // Will get removed once Zustand is confirmed to work
+  const currentUser = zustandUser || auth0User;
 
   const onLogin = async () => {
     try {
-      loginWithRedirect()
-    } catch (e) {
-      console.log(e);
+      const credentials = await authorize();
+      if (credentials) {
+        setAuth(credentials.accessToken, credentials.user);
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
     }
   };
 
   const onLogout = async () => {
     try {
-      logout()
-    } catch (e) {
-      console.log(e);
+      await clearSession();
+      logout();
+    } catch (error) {
+      console.error('Logout failed:', error);
     }
   };
 
@@ -81,18 +94,19 @@ const LoginButton = () => {
 
   return (
     <View>
-      {user ? (
-        <>
-          <Text>Logged in as {user.name}</Text>
-          <Button onPress={onLogout} title="Log out" />
-        </>
+      {isLoading && <Text>Loading...</Text>}
+      {error && <Text>{error.message}</Text>}
+      {currentUser && (
+        <Text>Logged in as {currentUser.name}</Text>
+      )}
+      {currentUser ? (
+        <Button onPress={onLogout} title="Log out" />
       ) : (
         <Button onPress={onLogin} title="Log in" />
       )}
-      {error && <Text>{error.message}</Text>}
     </View>
   );
-}
+};
 
 
 const styles = StyleSheet.create({
