@@ -1,50 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { ThemeContext } from './ThemeContext'; 
-import { Appearance } from 'react-native';
+import useSettingsStore from '../../store/useSettingsStore';
 
-const colors = {
-  light: '#FFFFFF',  
-  dark: '#000000',   
-};
+// const colors = {
+//   light: '#FFFFFF',  
+//   dark: '#000000',   
+// };
 
 const Themes = () => {
-  const { theme, updateTheme } = useContext(ThemeContext);
+  const { updateTheme } = useContext(ThemeContext);
+  const { theme } = useSettingsStore(); // get theme from Zustand
 
-  
-  let activeColor = colors[theme.mode] || colors.light; 
-  const [isActive, setIsActive] = useState(theme.mode === 'dark');
-
-  const handleSwitch = () => {
-    updateTheme();
-    setIsActive(previousState => !previousState);
+  const getButtonColor = (mode) => {
+    return theme.mode === mode ? '#007AFF' : '#CCCCCC';
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: activeColor }]} testID='themes-container'>
-      <Text style={styles.title}>Theme Settings</Text>
+    <View style={[styles.container, { backgroundColor: theme.mode === 'dark' ? '#121212' : '#FFFFFF' }]} testID='themes-container'>
+      <Text style={[styles.title, { color: theme.mode === 'dark' ? '#FFFFFF' : '#000000'}]}>Theme Settings</Text>
       
       <View style={styles.buttonContainer}>
         <Button 
           title="Light" 
-          icon="lightbulb-on"
-          isActive ={ theme.mode === 'light' }
+          // icon="lightbulb-on"
           onPress={() => updateTheme({ mode: 'light' })}
+          color={getButtonColor('light')}
         />
       </View>
       <View style={styles.buttonContainer}>
         <Button 
             title="Dark" 
-            icon="weather-night"
-            isActive ={ theme.mode === 'dark' }
+            // icon="weather-night"
             onPress={() => updateTheme({ mode: 'dark' })}
+            color={getButtonColor('dark')}
         />
       </View>
       <View style={styles.buttonContainer}>
       <Button 
         title="System" 
-        isActive={theme.mode === 'system'}
         onPress={() => updateTheme({ mode: 'system' })}
+        color={getButtonColor('system')}
       />
       </View>
     </View>

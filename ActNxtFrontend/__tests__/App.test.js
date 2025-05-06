@@ -22,20 +22,45 @@ jest.mock('react-native-auth0', () => ({
     useAuth0: jest.fn(),
 }));
 
+jest.mock('@react-native-async-storage/async-storage', () => ({
+    __esModule: true,
+    default: {
+        setItem: jest.fn(),
+        getItem: jest.fn(),
+        removeItem: jest.fn(),
+        clear: jest.fn(),
+    }
+}));
+
+jest.mock('../src/store/useAuthStore', () => ({
+    __esModule: true,
+    default: () => ({
+        setAuth: jest.fn(),
+        logout: jest.fn(),
+        user: null,
+    }),
+}));
+
+const mockAuthorize = jest.fn();
+const mockClearSession = jest.fn();
+
+beforeEach(() => {
+    jest.clearAllMocks();
+
+    mockUseAuth0.mockReturnValue({
+        authorize: mockAuthorize,
+        clearSession: mockClearSession,
+        user: null,
+        isLoading: false,
+        error: null
+    });
+});
+
 describe("App", () => {
     it('renders buttons correctly', () => {
         const navigationMock = { navigate: jest.fn() }; // Needed when navigation is used
 
-        mockUseAuth0.mockReturnValue({
-            user: null,
-            loginWithRedirect: jest.fn(),
-            logout: jest.fn(),
-            isLoading: false,
-            error: null,
-        });
-
         const { getByText } = render(<App navigation={navigationMock} />);
-
 
         // Checking if a button or other known element appears
         expect(getByText('Show Settings')).toBeTruthy();
@@ -49,8 +74,8 @@ describe("LoginButton", () => {
     it('shows the logout button when user is logged in', () => {
         mockUseAuth0.mockReturnValue({
             user: { name: "Test User" },
-            loginWithRedirect: jest.fn(),
-            logout: jest.fn(),
+            authorize: mockAuthorize,
+            clearSession: mockClearSession,
             isLoading: false,
             error: null,
         });
@@ -62,42 +87,22 @@ describe("LoginButton", () => {
 
 
     it('shows the login button when user is logged out', () => {
-        mockUseAuth0.mockReturnValue({
-            user: null,
-            loginWithRedirect: jest.fn(),
-            logout: jest.fn(),
-            isLoading: false,
-            error: null,
-        });
-        
         const { getByText } = render(<LoginButton />);
         expect(getByText('Log in')).toBeTruthy();
     });
 
     it('calls authorize() when Log in is pressed', () => {
-        const mockLogin = jest.fn();
-        
-        mockUseAuth0.mockReturnValue({
-            user: null,
-            loginWithRedirect: mockLogin,
-            logout: jest.fn(),
-            isLoading: false,
-            error: null,
-        });
-
         const { getByText } = render(<LoginButton />);
         fireEvent.press(getByText("Log in"));
 
-        expect(mockLogin).toHaveBeenCalled();
+        expect(mockAuthorize).toHaveBeenCalled();
     });
 
     it('calls clearSession() when Log out is pressed', () => {
-        const mockLogout = jest.fn();
-        
         mockUseAuth0.mockReturnValue({
             user: { name: "Test User" },
-            loginWithRedirect: jest.fn(),
-            logout: mockLogout,
+            authorize: mockAuthorize,
+            clearSession: mockClearSession,
             isLoading: false,
             error: null,
         });
@@ -105,7 +110,7 @@ describe("LoginButton", () => {
         const { getByText } = render(<LoginButton />);
         fireEvent.press(getByText("Log out"));
 
-        expect(mockLogout).toHaveBeenCalled();
+        expect(mockClearSession).toHaveBeenCalled();
     });
 });
 

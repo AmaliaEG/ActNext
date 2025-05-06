@@ -1,16 +1,19 @@
 import React, { createContext, useState, useContext } from 'react';
+import useSettingsStore from '../../store/useSettingsStore';
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState('light'); // default is light
+    const { theme, toggleTheme, updateTheme } = useSettingsStore();
 
-    const toggleTheme = (selectedTheme) => {
-        setTheme(selectedTheme);
+    const contextValue = {
+        theme,
+        toggleTheme,
+        updateTheme
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={contextValue}>
             {children}
         </ThemeContext.Provider>
     );
