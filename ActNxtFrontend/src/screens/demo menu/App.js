@@ -59,7 +59,7 @@ const App = ({ navigation }) => {
 };
 const LoginButton = () => {
   // Auth0 hooks
-  const { loginWithRedirect, authorize, user, error, isLoading, clearSession } = useAuth0();
+  const { loginWithRedirect, authorize, user:auth0User, error, isLoading, clearSession } = useAuth0();
 
   // Zustand store
   const { setAuth, logout, user: zustandUser } = useAuthStore();
