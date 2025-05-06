@@ -7,17 +7,22 @@ import { Appearance } from "react-native";
 const useSettingsStore = create(
     persist(
         (set) => ({
-            // State
-            theme: 'light',
-            language: 'en',
-            notificationsEnabled: true,
-
-            // Actions
+            // Theme
+            theme: { mode: 'light' },
             toggleTheme: () =>
-                set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
-
+                set((state) => ({
+                    theme: {
+                        mode: state.theme.mode === 'light' ? 'dark' : 'light'
+                    }
+                })),
+                updateTheme: (newTheme) => set({ theme: newTheme || { mode: 'light' } }), // fallback
+            
+            // Language
+            language: 'en',
             setLanguage: (language) => set({ language }),
-
+            
+            // Notifications
+            notificationsEnabled: true,
             toggleNotifications: () =>
                 set((state) => ({ notificationsEnabled: !state.notificationsEnabled })),
         }),

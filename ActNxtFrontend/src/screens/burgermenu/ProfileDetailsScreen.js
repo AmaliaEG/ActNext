@@ -5,101 +5,91 @@ import {
     TouchableOpacity,
     StyleSheet,
     TextInput,
-    ScrollView
+    ScrollView,
+    Alert
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import * as SecureStore from 'expo-secure-store';
 import { useAuth0 } from 'react-native-auth0';
 import DateTimePickerInput from './DateTimePickerInput';
 import GenderPickerInput from './GenderPickerInput';
+import useProfileStore from '../../store/useProfileStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
-    const {logout,user, isAuthenticated} = useAuth0();
-    const [name, setName] = useState(user?.name);
-    const [birthDate, setBirthDate] = useState(user?.birthdate);
-    const [gender, setGender] = useState(user?.gender);
-    const [email, setEmail] = useState(user?.email);
+    const { logout, user } = useAuth0();
+    const { profile, updateProfile, resetProfile } = useProfileStore();
+
     // Code and password is the same
     // Called different things to know which is shown on the profile description,
     // and which is used to change the code.
-    const [code, setCode] = useState('123456');
+    const [localEdits, setLocalEdits] = useState({ ...profile });
     const [showCode, setShowCode] = useState(false);
-    const [isEditindPassword, setIsEditingPassword] = useState(false);
+    const [isEditingPassword, setIsEditingPassword] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     // When the Profile Details Screen loads, previous stored data gets retrieved from SecureStore ONCE.
     // Updates the state, so previous data is displayed.
     useEffect(() => {
-        // console.log("Component re-rendered");
-        const loadProfileData = async () => {
-            try {
-                const savedName = await SecureStore.getItemAsync('name');
-                const savedBirthDate = await SecureStore.getItemAsync('birthDate');
-                const savedGender = await SecureStore.getItemAsync('gender');
-                const savedEmail = await SecureStore.getItemAsync('email');
-                const savedCode = await SecureStore.getItemAsync('code');
+        if (user) {
+            const updatedProfile = {
+                name: user.name || '',
+                email: user.email || '',
+                ...profile
+            };
+            updateProfile(updatedProfile);
+            setLocalEdits(updatedProfile);
+        }
+    }, [user]);
 
-
-                if (savedName) setName(user?.name);
-                if (savedBirthDate) setBirthDate(savedBirthDate);
-                if (savedGender) setGender(savedGender);
-                if (savedEmail) setEmail(savedEmail);
-                if (savedCode) setCode(savedCode);
-            } catch (error) {
-                if (__DEV__) console.error('Failed to load profile data:', error);
-            }
+    useEffect(() => {
+        const checkStorage = async () => {
+            const current = await AsyncStorage.getItem('user-profile');
+            console.log('Current storage:', current);
         };
+        checkStorage();
+    }, [profile]);
 
-        loadProfileData();
-    }, []);
-    
     const isValidEmail = (email) => {
         let val = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         return val.test(email);
     };
 
     const handleSaveChanges = async () => {
-        // console.log("saving changes")
-        try {
+        // Check for valid email
+        if (!isValidEmail(localEdits.email)) {
+            Alert.alert('Error','Please enter a valid email address.');
+            return;
+        }
 
-            // Check for valid email
-            if (!isValidEmail(email)) {
-                if (typeof alert !== 'undefined') {
-                    alert('Invalid email. Please enter a valid email address.');
-                }
-                return;
-            }
+        if (newPassword && newPassword !== confirmPassword) {
+            Alert.alert('Error','Passwords do not match');
+            return;
+        }
 
-            // Save profile data
-            await SecureStore.setItemAsync('name', name);
-            await SecureStore.setItemAsync('birthDate', birthDate);
-            await SecureStore.setItemAsync('gender', gender);
-            await SecureStore.setItemAsync('email', email);
+        const success = await updateProfile({
+            ...localEdits,
+            code: newPassword || profile.code
+        });
 
-            // Save new password if provided and confirmed
-            if (newPassword && newPassword === confirmPassword) {
-                await SecureStore.setItemAsync('code', newPassword);
-                setCode(newPassword);
-                // console.log('Password changed Succesfully');
-                // Clear the fields after confirmation
+        if (success) {
+            Alert.alert('Success', 'Profile updated successfully');
+            if (newPassword) {
                 setNewPassword('');
                 setConfirmPassword('');
-            } else if (newPassword !== confirmPassword) {
-                // console.error('New password and the confirmed password do not match');
-                return;
             }
-
-            // console.log('Changes saved:', { name, birthDate, gender, email, code });
-        } catch (error) {
-            if (__DEV__) console.error('Failed to save profile data:', error);
+            const updated = await AsyncStorage.getItem('user-profile');
+            console.log('Verified storage:', updated);
+        } else {
+            Alert.alert('Error', 'Failed to save profile');
         }
     };
 
     const LogoutButton = async () => {
         try {
-            logout()
+            await logout()
+            resetProfile();
             navigation.navigate('Home')
             closeModal?.();
         } catch (e) {
@@ -114,10 +104,10 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                     <Text style={styles.label}>Name</Text>
                     <TextInput
                         style={styles.input}
-                        value={name}
+                        value={localEdits.name}
                         onChangeText={(text) => {
                             const cleaned = text.replace(/[0-9]/g, ''); // Removes all digits
-                            setName(cleaned);
+                            setLocalEdits({...localEdits, name: cleaned});
                         }}
                         placeholder="Enter your name"
                     />
@@ -126,21 +116,24 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Birth Date</Text>
                     <DateTimePickerInput
-                        value={birthDate}
-                        onChange={setBirthDate}
+                        value={localEdits.birthDate}
+                        onChange={(date) => setLocalEdits({...localEdits, birthDate: date})}
                     />
                 </View>
     
                 <View style={styles.inputContainer}>
-                    <GenderPickerInput value={gender} onChange={setGender}/>
+                    <GenderPickerInput
+                        value={localEdits.gender}
+                        onChange={(gender) => setLocalEdits({...localEdits, gender})}
+                    />
                 </View>
     
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Email</Text>
                     <TextInput
                         style={styles.input}
-                        value={email}
-                        onChangeText={setEmail}
+                        value={localEdits.email}
+                        onChangeText={(text) => setLocalEdits({...localEdits, email: text})}
                         placeholder='Enter your email'
                     />
                 </View>
@@ -151,9 +144,12 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                         <TextInput
                             testID='password-input'
                             style={styles.codeInput}
-                            value={showCode ? code : '*'.repeat(code.length)}
-                            onChangeText={setCode}
-                            editable={isEditindPassword}
+                            value={showCode ? 
+                                (isEditingPassword ? localEdits.code : profile.code)
+                                 : '*'.repeat(profile.code.length)
+                            }
+                            onChangeText={(text) => setLocalEdits({...localEdits, code: text})}
+                            editable={isEditingPassword}
                             secureTextEntry={!showCode}
                         />
                         <TouchableOpacity 
@@ -168,10 +164,10 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     
                 <TouchableOpacity
                     style={styles.newPasswordSection}
-                    onPress={() => setIsEditingPassword(!isEditindPassword)}
+                    onPress={() => setIsEditingPassword(!isEditingPassword)}
                 >
                     <Text style={styles.newPasswordLabel}>New Password</Text>
-                    {isEditindPassword && (
+                    {isEditingPassword && (
                         <>
                             <View style={styles.inputContainer}>
                                 <Text style={styles.label}>New Password</Text>
