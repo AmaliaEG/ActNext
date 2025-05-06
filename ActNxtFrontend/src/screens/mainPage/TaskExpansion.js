@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 //import mockTasks from './MockTasks.json'; // Import JSON data
-import mockTasks from './JSON_Mockdata.json'; // Import JSON data
+// import mockTasks from './JSON_Mockdata.json'; // Import JSON data
+import useInsightsStore from '../../store/useInsightsStore';
 
 // Target group dictionary
 const Groups = {
@@ -23,6 +24,8 @@ const Groups = {
 
 const TaskExpansion = ({ route }) => {
   const { taskId } = route.params;
+  const { insights, addFeedback } = useInsightsStore();
+
   const navigation = useNavigation();
   const [task, setTask] = useState(null);
   
@@ -30,7 +33,7 @@ const TaskExpansion = ({ route }) => {
   const [disliked, setDisliked] = useState(false);
 
   useEffect(() => {
-    const foundTask = mockTasks.find(t => t.Id === taskId);
+    const foundTask = insights.find(t => t.Id === taskId);
     if (foundTask) {
       setTask({
         ...foundTask,
@@ -47,10 +50,15 @@ const TaskExpansion = ({ route }) => {
   const handleLike = () => {
     setLiked(!liked);
     if (disliked) setDisliked(false);
+
+    addFeedback(taskId, 'like');
   };
+
   const handleDislike = () => {
     setDisliked(!disliked);
     if (liked) setLiked(false);
+
+    addFeedback(taskId, 'dislike');
   };
 
   return (

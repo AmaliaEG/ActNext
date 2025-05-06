@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //import Mock from './MockTasks.json'; // Import JSON data
 import Mock from './JSON_Mockdata.json'; // Import JSON data
+import useInsightsStore from '../../store/useInsightsStore';
 
 const GroupColours = {
   1: '#E862AE', // Light salmon for Win Back
@@ -13,7 +14,7 @@ const GroupColours = {
 
 const Feed = () => {
   const navigation = useNavigation();
-  const [userTasks, setUserTasks] = useState([]);
+  const { insights, setInsights } = useInsightsStore();
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
@@ -38,7 +39,7 @@ const Feed = () => {
       // Sorts by date (earliest first)
       }).sort((a, b) => a.dateAssigned - b.dateAssigned);
       
-      setUserTasks(processedTasks.slice(0, 3));
+      setInsights(processedTasks.slice(0, 3));
     };
 
     processTasks();
@@ -54,7 +55,7 @@ const Feed = () => {
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
-        data={userTasks}
+        data={insights}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>
             <View style={styles.item}>
