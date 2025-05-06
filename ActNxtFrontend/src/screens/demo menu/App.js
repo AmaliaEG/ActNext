@@ -57,19 +57,11 @@ const App = ({ navigation }) => {
   );
 };
 const LoginButton = () => {
-  const { logout, loginWithRedirect, authorize, user, error, isLoading, clearSession } = useAuth0();
+  const { loginWithRedirect, authorize, user, error, isLoading, clearSession } = useAuth0();
 
   const onLogin = async () => {
     try {
-      loginWithRedirect()
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const onLogout = async () => {
-    try {
-      logout()
+      await authorize();
     } catch (e) {
       console.log(e);
     }
@@ -84,7 +76,6 @@ const LoginButton = () => {
       {user ? (
         <>
           <Text>Logged in as {user.name}</Text>
-          <Button onPress={onLogout} title="Log out" />
         </>
       ) : (
         <Button onPress={onLogin} title="Log in" />

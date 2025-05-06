@@ -15,7 +15,7 @@ import GenderPickerInput from './GenderPickerInput';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
-    const {logout,user, isAuthenticated} = useAuth0();
+    const {logout,user, isAuthenticated, clearSession} = useAuth0();
     const [name, setName] = useState(user?.name);
     const [birthDate, setBirthDate] = useState(user?.birthdate);
     const [gender, setGender] = useState(user?.gender);
@@ -97,9 +97,9 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
         }
     };
 
-    const LogoutButton = async () => {
+    const LogoutFunc= async () => {
         try {
-            logout()
+            await clearSession();
             navigation.navigate('Home')
             closeModal?.();
         } catch (e) {
@@ -201,9 +201,19 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                 <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
                     <Text style={styles.saveButtonText}>Save Changes</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.saveButton} onPress={LogoutButton}>
-                <Text style={styles.saveButtonText}>Log Out</Text>
-                </TouchableOpacity>
+                
+                <View>
+                {user ? (
+                        <>
+                            <TouchableOpacity style={styles.saveButton} onPress={LogoutFunc}>
+                            <Text style={styles.saveButtonText}>Log Out</Text>
+                            </TouchableOpacity>
+                        </>
+                      ):(
+                      <>
+                      <Text> Not logged in to any user </Text>
+                      </>)}
+                </View>
             </ScrollView>
     )
 };
