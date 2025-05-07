@@ -13,23 +13,37 @@ jest.mock('@expo/vector-icons', () => ({
     Feather: () => null
 }));
 
+let mockUpdateProfile = jest.fn();
+let mockResetProfile = jest.fn();
+
+jest.mock('../src/store/useProfileStore', () => {
+    const React = require('react');
+
+    return {
+        __esModule: true,
+        default: () => ({
+            profile: {
+                name: 'John Doe',
+                birthDate: '01/01/1990',
+                gender: 'Male',
+                email: 'john@example.com',  
+                code: '123456'
+            },
+            updateProfile: mockUpdateProfile,
+            resetProfile: mockResetProfile,
+        }),
+    };
+});
+
+
 describe('ProfileDetailsScreen', () => {
     const mockUser = {
         email: 'test@example.com'
     };
 
     beforeEach(() => {
-        // Mock SecureStore methods
-        SecureStore.getItemAsync.mockImplementation((key) =>
-            Promise.resolve({
-                name: 'John Doe',
-                birthDate: '01/01/1990',
-                gender: 'Male',
-                email: 'john@example.com',
-                code: '123456'
-            }[key])
-        );
-
+        mockUpdateProfile.mockClear();
+        mockResetProfile.mockClear();
         SecureStore.setItemAsync.mockResolvedValue();
 
         // Mock Auth0 hooks
@@ -49,18 +63,6 @@ describe('ProfileDetailsScreen', () => {
 
         // Wait for initial data to load
         expect(await findByText('Profile Details')).toBeTruthy();
-    });
-
-    it('loads saved profile data on mount', async () => {
-        render(<ProfileDetailsScreen />);
-
-        await waitFor(() => {
-            expect(SecureStore.getItemAsync).toHaveBeenCalledWith('name');
-            expect(SecureStore.getItemAsync).toHaveBeenCalledWith('birthDate');
-            expect(SecureStore.getItemAsync).toHaveBeenCalledWith('gender');
-            expect(SecureStore.getItemAsync).toHaveBeenCalledWith('email');
-            expect(SecureStore.getItemAsync).toHaveBeenCalledWith('code');
-        });
     });
 
     it('updates name field and removes digits', async () => {
@@ -96,12 +98,13 @@ describe('ProfileDetailsScreen', () => {
 
         fireEvent.changeText(getByPlaceholderText('Enter your name'), 'Jane');
         fireEvent.changeText(getByPlaceholderText('Enter your email'), 'jane@example.com');
-
         fireEvent.press(getByText('Save Changes'));
 
         await waitFor(() => {
-            expect(SecureStore.setItemAsync).toHaveBeenCalledWith('name', 'Jane');
-            expect(SecureStore.setItemAsync).toHaveBeenCalledWith('email', 'jane@example.com');
+            expect(mockUpdateProfile).toHaveBeenCalledWith(expect.objectContaining({
+                name: 'Jane',
+                email: 'jane@example.com'
+            }));
         });
     });
 
@@ -109,14 +112,12 @@ describe('ProfileDetailsScreen', () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
 
         fireEvent.press(getByText('New Password'));
-
         fireEvent.changeText(getByPlaceholderText('New Password'), 'abc123');
         fireEvent.changeText(getByPlaceholderText('Confirm New Password'), 'abc456');
-
         fireEvent.press(getByText('Save Changes'));
 
         await waitFor(() => {
-            expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith('code', 'abc123');
+            expect(mockUpdateProfile).not.toHaveBeenCalled();
         });
     });
 
@@ -127,7 +128,7 @@ describe('ProfileDetailsScreen', () => {
         fireEvent.press(getByText('Save Changes'));
 
         await waitFor(() => {
-            expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith();
+            expect(mockUpdateProfile).not.toHaveBeenCalled();
         });
     });
 
@@ -135,14 +136,14 @@ describe('ProfileDetailsScreen', () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
 
         fireEvent.press(getByText('New Password'));
-
         fireEvent.changeText(getByPlaceholderText('New Password'), 'mypassword');
         fireEvent.changeText(getByPlaceholderText('Confirm New Password'), 'mypassword');
-
         fireEvent.press(getByText('Save Changes'));
 
         await waitFor(() => {
-            expect(SecureStore.setItemAsync).toHaveBeenCalledWith('code', 'mypassword');
+            expect(mockUpdateProfile).toHaveBeenCalledWith(expect.objectContaining({
+                code: 'mypassword'
+            }));
         });
     });
 
@@ -177,12 +178,10 @@ describe('ProfileDetailsScreen', () => {
 
         fireEvent.changeText(getByPlaceholderText('Enter your name'), '');
         fireEvent.changeText(getByPlaceholderText('Enter your email'), '');
-
         fireEvent.press(getByText('Save Changes'));
 
         await waitFor(() => {
-            expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith('name', expect.anything());
-            expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith('email', expect.anything());
+            expect(mockUpdateProfile).not.toHaveBeenCalled();
         });
     });
 });

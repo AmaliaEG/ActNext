@@ -1,7 +1,6 @@
 import TaskExpansion from '../src/screens/mainPage/TaskExpansion';
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
-import MockTasks from '../src/screens/mainPage/JSON_Mockdata.json';
 import { StyleSheet } from 'react-native';
 
 const mockNavigate = jest.fn();
@@ -16,13 +15,30 @@ jest.mock('@expo/vector-icons', () => ({
     Ionicons: () => null,
 }));
 
+jest.mock('../src/store/useInsightsStore', () => ({
+    __esModule: true,
+    default: () => ({
+        insights: [
+            {
+                Id: '1',
+                Title: 'Mock Task Title',
+                CompanyName: 'Mock Company',
+                SalesAnalysisId: 1,
+                Description: 'Mock task description',
+                DtCreate: '2024-05-01T00:00:00.007'
+            }
+        ],
+        addFeedback: jest.fn(),
+        queuedFeedback: [],
+    }),
+}));
+
 describe('TaskExpansion', () => {
-    const testTask = MockTasks[0];
-    const route = { params: { taskId: testTask.Id } };
+    const route = { params: { taskId: '1' } };
 
     it('renders task details correctly', async () => {
         const { findByText } = render(<TaskExpansion route={route} />);
-        expect(await findByText(testTask.Description)).toBeTruthy();
+        expect(await findByText('Mock task description')).toBeTruthy();
         expect(await findByText('Finished')).toBeTruthy();
     });
 
@@ -32,7 +48,7 @@ describe('TaskExpansion', () => {
         const dislikeBtn = getByTestId('dislike-button');
 
         fireEvent.press(likeBtn);
-        fireEvent.press(dislikeBtn); // Should remove like and se dislike
+        fireEvent.press(dislikeBtn); // Should remove like and set dislike
         fireEvent.press(likeBtn); 
         fireEvent.press(likeBtn);
     });

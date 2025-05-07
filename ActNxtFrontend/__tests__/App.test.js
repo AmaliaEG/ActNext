@@ -22,15 +22,6 @@ jest.mock('react-native-auth0', () => ({
     useAuth0: jest.fn(),
 }));
 
-jest.mock('@react-native-async-storage/async-storage', () => ({
-    __esModule: true,
-    default: {
-        setItem: jest.fn(),
-        getItem: jest.fn(),
-        removeItem: jest.fn(),
-        clear: jest.fn(),
-    }
-}));
 
 jest.mock('../src/store/useAuthStore', () => ({
     __esModule: true,

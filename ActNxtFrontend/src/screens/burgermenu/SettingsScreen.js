@@ -17,7 +17,7 @@ const SettingsScreen = ({ navigation }) => {
         toggleNotifications
     } = useSettingsStore();
 
-    const isDarkMode = activeTheme.mode === 'dark';
+    const isDarkMode = theme.mode === 'dark';
     
     const menuItems = [
         { title: 'Profile', screen: 'ProfileDetails' },
