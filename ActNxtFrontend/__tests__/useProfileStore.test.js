@@ -1,8 +1,11 @@
-import { render, fireEvent, act, waitFor } from "@testing-library/react-native";
+import create from 'zustand';
+import { act } from '@testing-library/react-native' ;
 import useProfileStore from "../src/store/useProfileStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-jest.mock('@react-native-async-storage/async-storage');
+jest.mock('@react-native-async-storage/async-storage', () => 
+    require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
 
 const expectedProfileDescription = (expectedDes) => {
     const actual = useProfileStore.getState().profile;
