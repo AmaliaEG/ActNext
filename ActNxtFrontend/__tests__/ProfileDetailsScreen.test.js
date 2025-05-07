@@ -3,6 +3,9 @@ import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import ProfileDetailsScreen from '../src/screens/burgermenu/ProfileDetailsScreen';
 import * as SecureStore from 'expo-secure-store';
 import { useAuth0 } from 'react-native-auth0';
+import { Alert } from 'react-native';
+
+jest.spyOn(Alert, 'alert');
 
 // Mock external dependencies
 jest.mock('expo-secure-store');
@@ -44,6 +47,7 @@ describe('ProfileDetailsScreen', () => {
     beforeEach(() => {
         mockUpdateProfile.mockClear();
         mockResetProfile.mockClear();
+        Alert.alert.mockClear();
         SecureStore.setItemAsync.mockResolvedValue();
 
         // Mock Auth0 hooks
@@ -111,6 +115,10 @@ describe('ProfileDetailsScreen', () => {
     it('shows error when new password and confirm password fo not match', async () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
 
+        // Test
+        fireEvent.changeText(getByPlaceholderText('Enter your name'), 'John');
+        fireEvent.changeText(getByPlaceholderText('Enter your email'), 'john@example.com');
+
         fireEvent.press(getByText('New Password'));
         fireEvent.changeText(getByPlaceholderText('New Password'), 'abc123');
         fireEvent.changeText(getByPlaceholderText('Confirm New Password'), 'abc456');
@@ -118,17 +126,22 @@ describe('ProfileDetailsScreen', () => {
 
         await waitFor(() => {
             expect(mockUpdateProfile).not.toHaveBeenCalled();
+            expect(Alert.alert).toHaveBeenCalledWith('Error', 'Passwords do not match');
         });
     });
 
     it('shows alert for invalid email', async () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
 
+        // Test
+        fireEvent.changeText(getByPlaceholderText('Enter your name'), 'John');
+
         fireEvent.changeText(getByPlaceholderText('Enter your email'), 'invalid email');
         fireEvent.press(getByText('Save Changes'));
 
         await waitFor(() => {
             expect(mockUpdateProfile).not.toHaveBeenCalled();
+            expect(Alert.alert).toHaveBeenCalledWith('Error', 'Please enter a valid email address.');
         });
     });
 
@@ -182,6 +195,7 @@ describe('ProfileDetailsScreen', () => {
 
         await waitFor(() => {
             expect(mockUpdateProfile).not.toHaveBeenCalled();
+            expect(Alert.alert).toHaveBeenCalledWith('Error',  expect.any(String));
         });
     });
 });

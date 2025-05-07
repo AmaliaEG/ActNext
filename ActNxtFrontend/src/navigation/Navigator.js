@@ -18,6 +18,10 @@ import TaskExpansion from '../screens/mainPage/TaskExpansion';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 import ThemesScreen from '../screens/burgermenu/ThemesScreen';
 import { ThemeProvider } from '../screens/burgermenu/ThemeContext'; // Import your ThemeProvider
+import useProfileStore from '../store/useProfileStore';
+import useSettingsStore from '../store/useSettingsStore';
+import useAuthStore from '../store/useAuthStore';
+import useInsightStore from '../store/useInsightsStore';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -99,6 +103,28 @@ const CustomDrawerContent = (props) => {
 };
 
 const Navigator = () => {
+  const profileReady = useProfileStore((state) => state._hasHydrated);
+  const settingsReady = useSettingsStore((state) => state._hasHydrated);
+  const insightsReady = useInsightStore((state) => state._hasHydrated);
+  const authReady = useAuthStore((state) => state._hasHydrated);
+
+  console.log('Hydration states:', {
+    profileReady,
+    settingsReady,
+    authReady,
+    insightsReady
+  });
+  
+  const allHydrated = profileReady && settingsReady && insightsReady && authReady;
+
+  if (!allHydrated) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading app stores...</Text>
+      </View>
+    );
+  }
+
   return (
     <ThemeProvider>
     <Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} >

@@ -14,7 +14,7 @@ const GroupColours = {
 
 const Feed = () => {
   const navigation = useNavigation();
-  const { insights, setInsights } = useInsightsStore();
+  const { insights, setInsights, _hasHydrated: isHydrated } = useInsightsStore();
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
@@ -27,7 +27,6 @@ const Feed = () => {
   useEffect(() => {
     const processTasks = () => {
       const currentDate = new Date();
-      
       const processedTasks = Mock.map(task => {
         const dateAssigned = new Date(task.DtCreate);
         return {
@@ -41,9 +40,18 @@ const Feed = () => {
       
       setInsights(processedTasks.slice(0, 3));
     };
+    if (isHydrated) {
+      processTasks();
+    }
+  }, [isHydrated]);
 
-    processTasks();
-  }, []);
+  if (!isHydrated) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading app stores...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

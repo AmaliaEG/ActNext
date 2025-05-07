@@ -10,7 +10,15 @@ import useSettingsStore from '../../store/useSettingsStore';
 
 const Themes = () => {
   const { updateTheme } = useContext(ThemeContext);
-  const { theme } = useSettingsStore(); // get theme from Zustand
+  const { theme, _hasHydrated: isHydrated } = useSettingsStore(); // get theme from Zustand
+
+  if (!isHydrated) {
+      return (
+          <View style={styles.centered}>
+          <Text>Loading themes...</Text>
+          </View>
+      );
+  }
 
   const getButtonColor = (mode) => {
     return theme.mode === mode ? '#007AFF' : '#CCCCCC';
@@ -53,6 +61,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,

@@ -15,7 +15,8 @@ const useSettingsStore = create(
                         mode: state.theme.mode === 'light' ? 'dark' : 'light'
                     }
                 })),
-                updateTheme: (newTheme) => set({ theme: newTheme || { mode: 'light' } }), // fallback
+            
+            updateTheme: (newTheme) => set({ theme: newTheme || { mode: 'light' } }), // fallback
             
             // Language
             language: 'en',
@@ -25,10 +26,20 @@ const useSettingsStore = create(
             notificationsEnabled: true,
             toggleNotifications: () =>
                 set((state) => ({ notificationsEnabled: !state.notificationsEnabled })),
+
+            _hasHydrated: false,
+            setHasHydrated: (value) => set({ _hasHydrated: value }),
         }),
         {
             name: 'app-settings',
             getStorage: () => AsyncStorage,
+            onRehydrateStorage: () => (state) => {
+                console.log('[Zustand] onRehydrateStorage called');
+                return (state) => {
+                    console.log('[Zustand] Final hydration step:', state)
+                    state?.setHasHydrated?.(true);
+                }
+            }
         }
     )
 );

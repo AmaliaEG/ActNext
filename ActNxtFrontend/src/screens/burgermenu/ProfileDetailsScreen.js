@@ -18,7 +18,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const { logout, user } = useAuth0();
-    const { profile, updateProfile, resetProfile } = useProfileStore();
+    const { profile, updateProfile, resetProfile, _hasHydrated: isHydrated } = useProfileStore();
+
+    if (!isHydrated) {
+        return (
+            <View style={styles.centered}>
+            <Text>Loading profile details...</Text>
+            </View>
+        );
+    }
 
     // Code and password is the same
     // Called different things to know which is shown on the profile description,
@@ -208,6 +216,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+    },
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     sectionTitle: {
         fontSize: 20,

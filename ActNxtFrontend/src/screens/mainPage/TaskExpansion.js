@@ -24,11 +24,10 @@ const Groups = {
 
 const TaskExpansion = ({ route }) => {
   const { taskId } = route.params;
-  const { insights, addFeedback } = useInsightsStore();
+  const { insights, addFeedback, _hasHydrated: isHydrated } = useInsightsStore();
 
   const navigation = useNavigation();
   const [task, setTask] = useState(null);
-  
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
 
@@ -40,9 +39,17 @@ const TaskExpansion = ({ route }) => {
         dateAssigned: new Date(foundTask.DtCreate)
       });
     }
-  }, [taskId]);
+  }, [taskId, insights]);
 
-  if (!task) return <View style={styles.container}><Text>Loading...</Text></View>;
+  if (!isHydrated) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading task store...</Text>
+      </View>
+    );
+  }
+
+  if (!task) return <View style={styles.container}><Text>Loading task...</Text></View>;
 
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1]; // Fallback to group 1
 

@@ -9,6 +9,8 @@ const useInsightStore = create(
             // State
             insights: [],
             queuedFeedback: [],
+            _hasHydrated: false,
+            setHasHydrated: (value) => set({ _hasHydrated: value }),
 
             // Actions
             setInsights: (data) => set({ insights: data }),
@@ -21,13 +23,22 @@ const useInsightStore = create(
             })),
 
             queueFeedback: (feedback) =>
-                set((state) => ({ queuedFeedback: [...state.queuedFeedback, feedback] })),
+                set((state) => ({
+                    queuedFeedback: [...state.queuedFeedback, feedback]
+                })),
 
             clearQueuedFeedback: () => set({ queuedFeedback: [] }),
         }),
         {
             name: 'insights-data',
             getStorage: () => AsyncStorage,
+            onRehydrateStorage: () => (state) => {
+                console.log('[Zustand] onRehydrateStorage called');
+                return (state) => {
+                    console.log('[Zustand] Final hydration step:', state)
+                    state?.setHasHydrated?.(true);
+                }
+            }
         }
     )
 );

@@ -14,8 +14,17 @@ const SettingsScreen = ({ navigation }) => {
         theme,
         language,
         notificationsEnabled,
-        toggleNotifications
+        toggleNotifications,
+        _hasHydrated: isHydrated
     } = useSettingsStore();
+
+    if (!isHydrated) {
+        return (
+          <View style={styles.centered}>
+            <Text>Loading settings...</Text>
+          </View>
+        );
+    }
 
     const isDarkMode = theme.mode === 'dark';
     
@@ -87,6 +96,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+    },
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     menuItem: {
         flexDirection: 'row',

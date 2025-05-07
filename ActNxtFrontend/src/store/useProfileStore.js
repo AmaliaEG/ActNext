@@ -7,46 +7,24 @@ const useProfileStore = create(
     persist(
         (set) => ({
             // State
-            profile: {
-                name: '',
-                birthDate: null,
-                gender: '',
-                email: '',
-                code: '123456',
-            },
+            profile: {},
+            _hasHydrated: false,
+            setHasHydrated: (value) => set({ _hasHydrated: value }),
 
             // Actions
-            updateProfile: (newData) => {
-                try {
-                    set((state) => ({
-                        profile: {...state.profile, ...newData }
-                    }));
-                    return true;
-                } catch (error) {
-                    console.error('Update failed:', error);
-                    return false;
-                }
-            },
-
-            resetProfile: () =>
-                set({
-                    profile: {
-                        name: '',
-                        birthDate: null,
-                        gender: '',
-                        email: '',
-                        code: '123456'
-                    }
-                }),
+            updateProfile: (newProfile) => set({ profile: newProfile }),
+            resetProfile: () => set({ profile: {} }),
         }),
         {
-            name: 'user-profile',
+            name: 'profile-storage',
             getStorage: () => AsyncStorage,
             onRehydrateStorage: () => (state) => {
-                if (state) {
-                    console.log('[Zustand persists] Profile storage hydrated', state.profile);
+                console.log('[Zustand] onRehydrateStorage called');
+                return (state) => {
+                    console.log('[Zustand] Final hydration step:', state)
+                    state?.setHasHydrated?.(true);
                 }
-            },
+            }
         }
     )
 );
