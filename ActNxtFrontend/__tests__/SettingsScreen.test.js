@@ -3,10 +3,26 @@ import { render, fireEvent } from "@testing-library/react-native";
 import SettingsScreen from '../src/screens/burgermenu/SettingsScreen';
 
 const mockNavigate = jest.fn();
+const mockNavigation = { navigate: mockNavigate };
 
-const mockNavigation = {
-    navigate: mockNavigate,
-};
+jest.mock('../src/store/useSettingsStore', () => {
+    return {
+        __esModule: true,
+        default: () => ({
+            theme: { mode: 'light' },
+            toggleTheme: jest.fn(),
+            updateTheme: jest.fn(),
+            language: 'en',
+            setLanguage: jest.fn(),
+            notificationsEnabled: true,
+            toggleNotifications: jest.fn()
+        })
+    }
+})
+
+jest.mock('@expo/vector-icons', () => ({
+    AntDesign: () => null,
+}));
 
 const menuItems = [
     { title: 'Profile', screen: 'ProfileDetails' },
@@ -16,10 +32,6 @@ const menuItems = [
     { title: 'Storage and Data', screen: 'StorageAndData' },
     { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
 ];
-
-jest.mock('@expo/vector-icons', () => ({
-    AntDesign: () => null,
-}));
 
 describe('SettingsScreen', () => {
     beforeEach(() => {

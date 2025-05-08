@@ -5,12 +5,11 @@ import Modal from 'react-native-modal';
 import { NavigationContainer, ThemeContext } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import App from '../screens/demo menu/App'; // Your main screen with the buttons
+import App from '../screens/demo_menu/App'; // Your main screen with the buttons
 // import SettingsPage from '../screens/Settings/Settings'; // Your settings page
 import Feed from '../screens/mainPage/Feed'; // Your Feed page
 import LanguageScreen from '../screens/burgermenu/LanguageScreen';
 import NotificationsScreen from '../screens/burgermenu/NotificationsScreen';
-import StorageAndDataScreen from '../screens/burgermenu/StorageAndDataScreen';
 import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
@@ -37,8 +36,6 @@ const CustomDrawerContent = (props) => {
         return <LanguageScreen />;
       case 'Notifications':
         return <NotificationsScreen />;
-      case 'Storage & Data':
-        return <StorageAndDataScreen />;
       case 'About':
         return <AboutACTNXTAppScreen />;
       default:
@@ -48,7 +45,6 @@ const CustomDrawerContent = (props) => {
             <DrawerItem label="Themes" onPress={() => setActiveSettingScreen('Themes')} />
             <DrawerItem label="Language" onPress={() => setActiveSettingScreen('Language')} />
             <DrawerItem label="Notifications" onPress={() => setActiveSettingScreen('Notifications')} />
-            <DrawerItem label="Storage & Data" onPress={() => setActiveSettingScreen('Storage & Data')} />
             <DrawerItem label="About" onPress={() => setActiveSettingScreen('About')} />
           </>
         );
@@ -116,7 +112,6 @@ const Navigator = () => {
             <Drawer.Screen name="ProfileDetails" component={ProfileDetailsScreen} />
             <Drawer.Screen name="Language" component={LanguageScreen} />
             <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-            <Drawer.Screen name="StorageAndData" component={StorageAndDataScreen} />
             <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
           </Drawer.Navigator>
         </NavigationContainer>

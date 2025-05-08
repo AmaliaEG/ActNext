@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text, StyleSheet, Pressable } from 'react-native';
+import { View, FlatList, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //import Mock from './MockTasks.json'; // Import JSON data
@@ -14,21 +14,18 @@ const GroupColours = {
 
 const Feed = () => {
   const navigation = useNavigation();
-  const { insights, setInsights } = useInsightsStore();
+  const { insights, setInsights, hydrated } = useInsightsStore();
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
-
     const sentences = description.split('.');
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-  };
-
+  };  
 
   useEffect(() => {
-    const processTasks = () => {
+    if (hydrated && insights.length === 0) {
       const currentDate = new Date();
-      
-      const processedTasks = Mock.map(task => {
+      const processedTasks = Mock.map((task) => {
         const dateAssigned = new Date(task.DtCreate);
         return {
           ...task,
@@ -40,10 +37,17 @@ const Feed = () => {
       }).sort((a, b) => a.dateAssigned - b.dateAssigned);
       
       setInsights(processedTasks.slice(0, 3));
-    };
+    }
+  }, [hydrated]);
 
-    processTasks();
-  }, []);
+  if (!hydrated) {
+      return (
+        <View style={styles.centered}>
+            <ActivityIndicator size="large" />
+            <Text>Loading insights...</Text>
+        </View>
+      );
+  }
 
   return (
     <View style={styles.container}>
@@ -66,7 +70,7 @@ const Feed = () => {
               
               <Text style={styles.text}>{item.Title}</Text>
               <Text style={styles.descriptionText}>{item.firstSentence}</Text>
-              <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text>
+              <Text style={styles.dateText}>Due: {new Date(item.dateAssigned).toLocaleDateString()}</Text>
 
               {item.isOverdue && (
                 <View style={styles.warningContainer}>
@@ -87,6 +91,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
     backgroundColor: '#f5f5f5',
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   item: {
     padding: 20,

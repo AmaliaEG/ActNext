@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     Switch,
+    ActivityIndicator,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import React from 'react';
@@ -14,10 +15,20 @@ const SettingsScreen = ({ navigation }) => {
         theme,
         language,
         notificationsEnabled,
-        toggleNotifications
+        toggleNotifications,
+        hydrated
     } = useSettingsStore();
 
-    const isDarkMode = activeTheme.mode === 'dark';
+    if (!hydrated) {
+        return (
+            <View style={styles.centered}>
+                <ActivityIndicator size="large" />
+                <Text>Loading settings...</Text>
+            </View>
+        )
+    }
+
+    const isDarkMode = theme.mode === 'dark';
     
     const menuItems = [
         { title: 'Profile', screen: 'ProfileDetails' },
@@ -41,7 +52,6 @@ const SettingsScreen = ({ navigation }) => {
                 />
             )
         },
-        { title: 'Storage and Data', screen: 'StorageAndData' },
         { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
     ];
 
@@ -87,6 +97,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+    },
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     menuItem: {
         flexDirection: 'row',

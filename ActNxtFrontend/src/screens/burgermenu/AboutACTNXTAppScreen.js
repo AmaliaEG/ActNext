@@ -3,6 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import SettingsList from '../Settings/SettingsList';
 
 const AboutACTNXTAppScreen = () => {
+    // Implement logic for working link to ActNxt website, when website is made
+
     return (
         <View style={styles.container}>
             <SettingsList

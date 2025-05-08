@@ -6,19 +6,19 @@ import {
     StyleSheet,
     TextInput,
     ScrollView,
-    Alert
+    Alert,
+    ActivityIndicator
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useAuth0 } from 'react-native-auth0';
 import DateTimePickerInput from './DateTimePickerInput';
 import GenderPickerInput from './GenderPickerInput';
 import useProfileStore from '../../store/useProfileStore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
-    const { logout, user , clearSession} = useAuth0();
-    const { profile, updateProfile, resetProfile } = useProfileStore();
+    const { logout, user } = useAuth0();
+    const { profile, updateProfile, resetProfile, hydrated } = useProfileStore();
 
     // Code and password is the same
     // Called different things to know which is shown on the profile description,
@@ -29,27 +29,20 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    // When the Profile Details Screen loads, previous stored data gets retrieved from SecureStore ONCE.
-    // Updates the state, so previous data is displayed.
     useEffect(() => {
-        if (user) {
+        if (hydrated && user) {
             const updatedProfile = {
                 name: user.name || '',
+                birthDate: profile?.birthDate || '',
+                gender: profile?.gender || '',
                 email: user.email || '',
+                code: profile?.code || '',
                 ...profile
             };
             updateProfile(updatedProfile);
             setLocalEdits(updatedProfile);
         }
-    }, [user]);
-
-    useEffect(() => {
-        const checkStorage = async () => {
-            const current = await AsyncStorage.getItem('user-profile');
-            console.log('Current storage:', current);
-        };
-        checkStorage();
-    }, [profile]);
+    }, [hydrated, user]);
 
     const isValidEmail = (email) => {
         let val = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -74,15 +67,8 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
         });
 
         if (success) {
-            Alert.alert('Success', 'Profile updated successfully');
-            if (newPassword) {
-                setNewPassword('');
-                setConfirmPassword('');
-            }
-            const updated = await AsyncStorage.getItem('user-profile');
-            console.log('Verified storage:', updated);
-        } else {
-            Alert.alert('Error', 'Failed to save profile');
+            setNewPassword('');
+            setConfirmPassword('');
         }
     };
 
@@ -96,6 +82,15 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
             console.log(e);
         }
     };
+
+    if (!hydrated) {
+        return (
+            <View style={styles.centered}>
+                <ActivityIndicator size="large" />
+                <Text>Loading profile...</Text>
+            </View>
+        );
+    }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -146,7 +141,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                             style={styles.codeInput}
                             value={showCode ? 
                                 (isEditingPassword ? localEdits.code : profile.code)
-                                 : '*'.repeat(profile.code.length)
+                                 : '*'.repeat((profile.code || '').length)
                             }
                             onChangeText={(text) => setLocalEdits({...localEdits, code: text})}
                             editable={isEditingPassword}
@@ -218,6 +213,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+    },
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     sectionTitle: {
         fontSize: 20,

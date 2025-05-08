@@ -19,7 +19,7 @@ const DateTimePickerInput = ({ value, onChange }) => {
             <TouchableOpacity onPress={() => setShow(true)} testID="datepicker-button" >
                 <TextInput
                     style={styles.input}
-                    value={value}
+                    value={value || ''}
                     editable={false}
                     placeholder="DD/MM/YYYY"
                 />
@@ -27,7 +27,7 @@ const DateTimePickerInput = ({ value, onChange }) => {
 
             { show && (
                 <DateTimePicker
-                    value={new Date()}
+                    value={value ? new Date(value) : new Date()}
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={handleChange}
