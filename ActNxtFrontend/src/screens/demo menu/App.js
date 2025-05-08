@@ -1,83 +1,48 @@
-import { Button, StyleSheet, Text, View, Platform } from 'react-native';
-import { useState } from 'react';
+import { Button, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { useAuth0 } from 'react-native-auth0';
 import { ThemeContext } from '@react-navigation/native';
 import { Appearance } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
 import useAuthStore from '../../store/useAuthStore';
-import useProfileStore from '../../store/useProfileStore';
-import useSettingsStore from '../../store/useSettingsStore';
-import useInsightStore from '../../store/useInsightsStore';
-
 
 const App = ({ navigation }) => {
-    const profileReady = useProfileStore((state) => state._hasHydrated);
-    const settingsReady = useSettingsStore((state) => state._hasHydrated);
-    const insightsReady = useInsightStore((state) => state._hasHydrated);
-    const authReady = useAuthStore((state) => state._hasHydrated);
-
-    console.log('Hydration states:', {
-      authReady,
-      insightsReady,
-      profileReady,
-      settingsReady,
-    });
-    
-    const allHydrated = profileReady && settingsReady && insightsReady && authReady;
+    const [theme, setTheme] = useState({ mode: 'light' });
+    const [isHydrated, setIsHydrated] = useState(false);
+    const { loadAuth } = useAuthStore();
 
     useEffect(() => {
-      const resetStorage = async () => {
-        try {
-          // await AsyncStorage.clear();
-          // const result = await AsyncStorage.getItem('zustand-test-key');
-          console.log('[Zustand] Cleared AsyncStorage for fresh start.');
-        } catch (error) {
-          console.error('[Zustand] Clear error:', error)
-        }
+      const hydrate = async () => {
+        await loadAuth();
+        setIsHydrated(true);
       };
 
-      resetStorage();
-    },[]);
-
-    useEffect(() => {
-      const checkAsyncStorage = async () => {
-        try {
-          // await AsyncStorage.clear();
-          const storedSettings = await AsyncStorage.getItem('app-settings');
-          console.log('[AsyncStorage] Raw app-settings value:', storedSettings);
-        } catch (error) {
-          console.error('[AsyncStorage] Read error:', error)
-        }
-      };
-
-      checkAsyncStorage();
-    },[]);
-
-    const [theme, setTheme] = useState('light');
+      hydrate();
+    }, []);
   
     const updateTheme = (newTheme) => {
       let mode;
       if (!newTheme) {
         mode = theme.mode == 'dark' ? 'light' : 'dark';
         newTheme = { mode };
-    } else {
-      if (newTheme.system){
+      } else if (newTheme.system) {
         const systemColorScheme = Appearance.getColorScheme();
         mode = systemColorScheme === 'dark' ? 'dark' : 'light';
-
         newTheme = {...newTheme, mode };
       } else {
         newTheme = {...newTheme, system: false};
       }
-    }
-    setTheme(newTheme);
+
+      setTheme(newTheme);
     };
 
-    if (!allHydrated) {
-      return <Text>Loading stores...</Text>
-    };
+    if (!isHydrated) {
+      return (
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color="#007BFF" />
+        </View>
+      );
+    }
 
     return (
       <ThemeContext.Provider value={{ theme, updateTheme }}>
@@ -146,11 +111,8 @@ const App = ({ navigation }) => {
 
   return (
     <View>
-      {isLoading && <Text>Loading...</Text>}
       {error && <Text>{error.message}</Text>}
-      {currentUser && (
-        <Text>Logged in as {currentUser.name}</Text>
-      )}
+      {currentUser && (<Text>Logged in as {currentUser.name}</Text>)}
       {currentUser ? (
         <Button onPress={onLogout} title="Log out" />
       ) : (
@@ -163,6 +125,11 @@ const App = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  centered: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,32 +1,33 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // User profile description
-const useProfileStore = create(
-    persist(
-        (set) => ({
-            // State
-            profile: {},
-            _hasHydrated: false,
-            setHasHydrated: (value) => set({ _hasHydrated: value }),
+const useProfileStore = create((set) => ({
+    profile: {
+        name: '',
+        birthDate: '',
+        gender: '',
+        email: '',
+        code: ''
+    },
 
-            // Actions
-            updateProfile: (newProfile) => set({ profile: newProfile }),
-            resetProfile: () => set({ profile: {} }),
-        }),
-        {
-            name: 'profile-storage',
-            getStorage: () => AsyncStorage,
-            onRehydrateStorage: () => (state) => {
-                console.log('[Zustand] onRehydrateStorage called');
-                return (state) => {
-                    console.log('[Zustand] Final hydration step:', state)
-                    state?.setHasHydrated?.(true);
-                }
-            }
+    loadProfile: async () => {
+        const stored = await AsyncStorage.getItem('user-profile');
+        if (stored) {
+            set({ profile: JSON.parse(stored) });
         }
-    )
-);
+    },
+
+    updateProfile: async (updated) => {
+        await AsyncStorage.setItem('user-profile', JSON.stringify(updated));
+        set({ profile: updated });
+        return true;
+    },
+    
+    resetProfile: async () => {
+        await AsyncStorage.removeItem('user-profile');
+        set({ profile: {} });
+    },
+}));
 
 export default useProfileStore;

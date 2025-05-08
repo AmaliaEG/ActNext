@@ -3,10 +3,6 @@ import { act } from '@testing-library/react-native' ;
 import useProfileStore from "../src/store/useProfileStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-jest.mock('@react-native-async-storage/async-storage', () => 
-    require('@react-native-async-storage/async-storage/jest/async-storage-mock')
-);
-
 const expectedProfileDescription = (expectedDes) => {
     const actual = useProfileStore.getState().profile;
     expect(actual).toEqual(expectedDes);
@@ -22,7 +18,7 @@ const defaultProfile = {
 
 describe('useProfileStore', () => {
     beforeEach(() => {
-        useProfileStore.getState().resetProfile(); // Resets before each test
+        useProfileStore.setState({ profile: {} }); // Resets before each test
     });
 
     it('renders user profile correctly', () => {

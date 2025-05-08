@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text, StyleSheet, Pressable } from 'react-native';
+import { View, FlatList, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //import Mock from './MockTasks.json'; // Import JSON data
@@ -14,20 +14,28 @@ const GroupColours = {
 
 const Feed = () => {
   const navigation = useNavigation();
-  const { insights, setInsights, _hasHydrated: isHydrated } = useInsightsStore();
+  const { insights, setInsights, loadInsights } = useInsightsStore();
+  const [hydrated, setHydrated] = useState(false);
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
-
     const sentences = description.split('.');
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-  };
-
+  };  
 
   useEffect(() => {
-    const processTasks = () => {
+    const hydrateAndLoad = async () => {
+      await loadInsights();
+      setHydrated(true);
+    };
+
+    hydrateAndLoad();
+  }, []);
+
+  useEffect(() => {
+    if (hydrated && insights.length === 0) {
       const currentDate = new Date();
-      const processedTasks = Mock.map(task => {
+      const processedTasks = Mock.map((task) => {
         const dateAssigned = new Date(task.DtCreate);
         return {
           ...task,
@@ -39,19 +47,17 @@ const Feed = () => {
       }).sort((a, b) => a.dateAssigned - b.dateAssigned);
       
       setInsights(processedTasks.slice(0, 3));
-    };
-    if (isHydrated) {
-      processTasks();
     }
-  }, [isHydrated]);
+  }, [hydrated]);
 
-  if (!isHydrated) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading app stores...</Text>
-      </View>
-    );
-  }
+  if (!hydrated) {
+          return (
+              <View style={styles.centered}>
+                  <ActivityIndicator size="large" />
+                  <Text>Loading insights...</Text>
+              </View>
+          );
+      }
 
   return (
     <View style={styles.container}>
@@ -95,6 +101,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 25,
     backgroundColor: '#f5f5f5',
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   item: {
     padding: 20,

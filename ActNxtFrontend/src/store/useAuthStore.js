@@ -1,33 +1,29 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Auth State
-const useAuthStore = create(
-    persist(
-        (set) => ({
-            // State
-            token: null,
-            user: null,
-            _hasHydrated: false,
-            setHasHydrated: (value) => set({ _hasHydrated: value }),
+const useAuthStore = create((set) => ({
+    isLoggenIn: false,
+    userInfo: null,
 
-            // Actions
-            setAuth: (token, user) => set({ token, user }),
-            logout: () => set({ token: null, user: null }),
-        }),
-        {
-            name: 'auth-storage',
-            getStorage: () => AsyncStorage,
-            onRehydrateStorage: () => (state) => {
-                console.log('[Zustand] onRehydrateStorage called');
-                return (state) => {
-                    console.log('[Zustand] Final hydration step:', state)
-                    state?.setHasHydrated?.(true);
-                }
-            }
+    loadAuth: async () => {
+        const stored = await AsyncStorage.getItem('auth-state');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            set({ isLoggenIn: parsed.isLoggenIn, userInfo: parsed.userInfo });
         }
-    )
-);
+    },
+
+    login: async (userInfo) => {
+        const newState = { isLoggenIn: true, userInfo };
+        await AsyncStorage.setItem('auth-state', JSON.stringify(newState));
+        set(newState);
+    },
+
+    logout: async () => {
+        await AsyncStorage.removeItem('auth-state');
+        set({ isLoggenIn: false, userInfo: null });
+    },
+}));
 
 export default useAuthStore;

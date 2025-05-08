@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     Switch,
+    ActivityIndicator,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import React from 'react';
@@ -15,15 +16,27 @@ const SettingsScreen = ({ navigation }) => {
         language,
         notificationsEnabled,
         toggleNotifications,
-        _hasHydrated: isHydrated
+        loadSettings,
     } = useSettingsStore();
 
-    if (!isHydrated) {
+    const [hydrated, setHydrated] = useState(false);
+
+    useEffect(() => {
+        const hydrate = async () => {
+            await loadSettings();
+            setHydrated(true);
+        };
+
+        hydrate();
+    }, []);
+
+    if (!hydrated) {
         return (
-          <View style={styles.centered}>
-            <Text>Loading settings...</Text>
-          </View>
-        );
+            <View style={styles.centered}>
+                <ActivityIndicator size="large" />
+                <Text>Loading settings...</Text>
+            </View>
+        )
     }
 
     const isDarkMode = theme.mode === 'dark';
@@ -50,7 +63,6 @@ const SettingsScreen = ({ navigation }) => {
                 />
             )
         },
-        { title: 'Storage and Data', screen: 'StorageAndData' },
         { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
     ];
 

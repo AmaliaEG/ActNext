@@ -1,19 +1,10 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import SettingsList from '../Settings/SettingsList';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useSettingsStore from '../../store/useSettingsStore';
 
 const LanguageScreen = () => {
-    const [selectedLang, setSelectedLang] = useState('English');
-
-    useEffect(() => {
-        const loadLang = async () => {
-            const saved = await AsyncStorage.getItem('setting:Language');
-            if (saved) setSelectedLang(saved);
-        };
-        loadLang();
-    }, []);
+    const { language, setLanguage } = useSettingsStore();
 
     return (
         <View style={styles.container}>
@@ -21,11 +12,8 @@ const LanguageScreen = () => {
                 settings={[
                     {
                         name: 'Language',
-                        value: selectedLang,
-                        function: async (value) => {
-                            setSelectedLang(value);
-                            await AsyncStorage.setItem('setting:Language', value);
-                        },
+                        value: language,
+                        function: setLanguage,
                         type: 'dropdown',
                         options: ['English', 'Danish', 'Lorem Ipsum'],
                     },

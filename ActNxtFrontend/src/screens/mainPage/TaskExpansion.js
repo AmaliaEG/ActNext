@@ -24,7 +24,7 @@ const Groups = {
 
 const TaskExpansion = ({ route }) => {
   const { taskId } = route.params;
-  const { insights, addFeedback, _hasHydrated: isHydrated } = useInsightsStore();
+  const { insights, addFeedback, loadInsights, hydrated } = useInsightsStore();
 
   const navigation = useNavigation();
   const [task, setTask] = useState(null);
@@ -32,24 +32,30 @@ const TaskExpansion = ({ route }) => {
   const [disliked, setDisliked] = useState(false);
 
   useEffect(() => {
-    const foundTask = insights.find(t => t.Id === taskId);
-    if (foundTask) {
-      setTask({
-        ...foundTask,
-        dateAssigned: new Date(foundTask.DtCreate)
-      });
+    if (!hydrated) {
+      loadInsights();
     }
-  }, [taskId, insights]);
+  }, [hydrated]);
 
-  if (!isHydrated) {
+  useEffect(() => {
+    if (hydrated) {
+      const foundTask = insights.find(t => t.Id === taskId);
+      if (foundTask) {
+        setTask({
+          ...foundTask,
+          dateAssigned: new Date(foundTask.DtCreate)
+        });
+      }
+    }
+  }, [taskId, insights, hydrated]);
+
+  if (!hydrated || !task) {
     return (
       <View style={styles.container}>
-        <Text>Loading task store...</Text>
+        <Text>Loading task...</Text>
       </View>
     );
   }
-
-  if (!task) return <View style={styles.container}><Text>Loading task...</Text></View>;
 
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1]; // Fallback to group 1
 
@@ -140,6 +146,11 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       backgroundColor: "white",
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',

@@ -1,46 +1,39 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Sales Insights
-const useInsightStore = create(
-    persist(
-        (set) => ({
-            // State
-            insights: [],
-            queuedFeedback: [],
-            _hasHydrated: false,
-            setHasHydrated: (value) => set({ _hasHydrated: value }),
+const useInsightStore = create((set) => ({
+        insights: [],
+        queuedFeedback: [],
 
-            // Actions
-            setInsights: (data) => set({ insights: data }),
+        loadInsights: async () => {
+            const stored = await AsyncStorage.getItem('insights');
+            if (stored) {
+                set({ insights: JSON.parse(stored) });
+            }
+        },
 
-            addFeedback: (insightId, feedback) =>
-                set((state) => ({
-                    insights: state.insights.map((item) =>
+        setInsights: async (data) => {
+            await AsyncStorage.setItem('insights', JSON.stringify(data));
+            set({ insights: data });
+        },
+
+        addFeedback: async (insightId, feedback) => {
+            set((state) => {
+                const updated = state.insights.map((item) =>
                     item.id === insightId ? { ...item, feedback } : item
-                ),
+            );
+            AsyncStorage.setItem('insights', JSON.stringify(updated));
+            return { insights: updated };
+            });
+        },
+
+        queueFeedback: (feedback) =>
+            set((state) => ({
+                queuedFeedback: [...state.queuedFeedback, feedback]
             })),
 
-            queueFeedback: (feedback) =>
-                set((state) => ({
-                    queuedFeedback: [...state.queuedFeedback, feedback]
-                })),
-
-            clearQueuedFeedback: () => set({ queuedFeedback: [] }),
-        }),
-        {
-            name: 'insights-data',
-            getStorage: () => AsyncStorage,
-            onRehydrateStorage: () => (state) => {
-                console.log('[Zustand] onRehydrateStorage called');
-                return (state) => {
-                    console.log('[Zustand] Final hydration step:', state)
-                    state?.setHasHydrated?.(true);
-                }
-            }
-        }
-    )
-);
+        clearQueuedFeedback: () => set({ queuedFeedback: [] }),
+    }));
 
 export default useInsightStore;

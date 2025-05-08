@@ -10,15 +10,7 @@ import useSettingsStore from '../../store/useSettingsStore';
 
 const Themes = () => {
   const { updateTheme } = useContext(ThemeContext);
-  const { theme, _hasHydrated: isHydrated } = useSettingsStore(); // get theme from Zustand
-
-  if (!isHydrated) {
-      return (
-          <View style={styles.centered}>
-          <Text>Loading themes...</Text>
-          </View>
-      );
-  }
+  const { theme } = useSettingsStore(); // get theme from Zustand
 
   const getButtonColor = (mode) => {
     return theme.mode === mode ? '#007AFF' : '#CCCCCC';
