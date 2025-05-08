@@ -14,23 +14,13 @@ const GroupColours = {
 
 const Feed = () => {
   const navigation = useNavigation();
-  const { insights, setInsights, loadInsights } = useInsightsStore();
-  const [hydrated, setHydrated] = useState(false);
+  const { insights, setInsights, hydrated } = useInsightsStore();
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
     const sentences = description.split('.');
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
   };  
-
-  useEffect(() => {
-    const hydrateAndLoad = async () => {
-      await loadInsights();
-      setHydrated(true);
-    };
-
-    hydrateAndLoad();
-  }, []);
 
   useEffect(() => {
     if (hydrated && insights.length === 0) {
@@ -51,13 +41,13 @@ const Feed = () => {
   }, [hydrated]);
 
   if (!hydrated) {
-          return (
-              <View style={styles.centered}>
-                  <ActivityIndicator size="large" />
-                  <Text>Loading insights...</Text>
-              </View>
-          );
-      }
+      return (
+        <View style={styles.centered}>
+            <ActivityIndicator size="large" />
+            <Text>Loading insights...</Text>
+        </View>
+      );
+  }
 
   return (
     <View style={styles.container}>
@@ -80,7 +70,7 @@ const Feed = () => {
               
               <Text style={styles.text}>{item.Title}</Text>
               <Text style={styles.descriptionText}>{item.firstSentence}</Text>
-              <Text style={styles.dateText}>Due: {item.dateAssigned.toLocaleDateString()}</Text>
+              <Text style={styles.dateText}>Due: {new Date(item.dateAssigned).toLocaleDateString()}</Text>
 
               {item.isOverdue && (
                 <View style={styles.warningContainer}>

@@ -5,20 +5,34 @@ import { useAuth0 } from 'react-native-auth0';
 import { ThemeContext } from '@react-navigation/native';
 import { Appearance } from 'react-native';
 import useAuthStore from '../../store/useAuthStore';
+import useSettingsStore from '../../store/useSettingsStore';
+import useProfileStore from '../../store/useProfileStore';
+import useInsightsStore from '../../store/useInsightsStore';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = ({ navigation }) => {
     const [theme, setTheme] = useState({ mode: 'light' });
-    const [isHydrated, setIsHydrated] = useState(false);
-    const { loadAuth } = useAuthStore();
+
+    // Stores
+    const { loadAuth, hydrated: authHydrated } = useAuthStore();
+    const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
+    const { loadProfile, hydrated: profileHydrated } = useProfileStore();
+    const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
 
     useEffect(() => {
-      const hydrate = async () => {
-        await loadAuth();
-        setIsHydrated(true);
+      const hydrateAll = async () => {
+        await Promise.all([
+          loadAuth(),
+          loadSettings(),
+          loadProfile(),
+          loadInsights()
+        ]);
       };
 
-      hydrate();
+      hydrateAll();
     }, []);
+
+    const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
   
     const updateTheme = (newTheme) => {
       let mode;
@@ -36,41 +50,45 @@ const App = ({ navigation }) => {
       setTheme(newTheme);
     };
 
-    if (!isHydrated) {
+    if (!allHydrated) {
       return (
-        <View style={styles.centered}>
-          <ActivityIndicator size="large" color="#007BFF" />
-        </View>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <View style={styles.centered}>
+            <ActivityIndicator size="large" color="#007BFF" />
+          </View>
+        </GestureHandlerRootView>
       );
     }
 
     return (
-      <ThemeContext.Provider value={{ theme, updateTheme }}>
-        <View style={styles.container}>
-          <View style={styles.row}>
-            <View style={styles.buttonContainer}>
-            <LoginButton/>
-            </View>
-            <View style={styles.buttonContainer}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ThemeContext.Provider value={{ theme, updateTheme }}>
+          <View style={styles.container}>
+            <View style={styles.row}>
+              <View style={styles.buttonContainer}>
+              <LoginButton/>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Button
+                  title="Show Settings"
+                  onPress={() => navigation.navigate('SettingsScreen')} 
+                />
+              </View>
+              <View style={styles.buttonContainer}>
               <Button
-                title="Show Settings"
-                onPress={() => navigation.navigate('SettingsScreen')} 
-              />
+                  title="Feed"
+                  onPress={() => navigation.navigate('Feed')}
+                />
+              </View>
             </View>
-            <View style={styles.buttonContainer}>
-            <Button
-                title="Feed"
-                onPress={() => navigation.navigate('Feed')}
-              />
-            </View>
-          </View>
-          <View style={styles.row}>
-            <View style={styles.buttonContainer}>
-              <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
+            <View style={styles.row}>
+              <View style={styles.buttonContainer}>
+                <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
+              </View>
             </View>
           </View>
-        </View>
-      </ThemeContext.Provider>
+        </ThemeContext.Provider>
+      </GestureHandlerRootView>
     );
   };
 

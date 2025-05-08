@@ -16,19 +16,8 @@ const SettingsScreen = ({ navigation }) => {
         language,
         notificationsEnabled,
         toggleNotifications,
-        loadSettings,
+        hydrated
     } = useSettingsStore();
-
-    const [hydrated, setHydrated] = useState(false);
-
-    useEffect(() => {
-        const hydrate = async () => {
-            await loadSettings();
-            setHydrated(true);
-        };
-
-        hydrate();
-    }, []);
 
     if (!hydrated) {
         return (

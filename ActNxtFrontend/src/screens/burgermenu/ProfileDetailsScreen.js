@@ -18,7 +18,7 @@ import useProfileStore from '../../store/useProfileStore';
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const { logout, user } = useAuth0();
-    const { profile, updateProfile, resetProfile, loadProfile } = useProfileStore();
+    const { profile, updateProfile, resetProfile, hydrated } = useProfileStore();
 
     // Code and password is the same
     // Called different things to know which is shown on the profile description,
@@ -28,15 +28,6 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const [isEditingPassword, setIsEditingPassword] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [hydrated, setHydrated] = useState(false);
-
-    useEffect(() => {
-        const hydrate = async () => {
-            await loadProfile();
-            setHydrated(true);
-        }
-        hydrate();
-    }, []);
 
     useEffect(() => {
         if (hydrated && user) {

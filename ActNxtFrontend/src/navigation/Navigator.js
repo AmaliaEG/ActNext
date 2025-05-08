@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import { NavigationContainer, ThemeContext } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import App from '../screens/demo menu/App'; // Your main screen with the buttons
+import App from '../screens/demo_menu/App'; // Your main screen with the buttons
 // import SettingsPage from '../screens/Settings/Settings'; // Your settings page
 import Feed from '../screens/mainPage/Feed'; // Your Feed page
 import LanguageScreen from '../screens/burgermenu/LanguageScreen';
