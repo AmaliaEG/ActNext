@@ -68,7 +68,7 @@ describe('useInsightsStore', () => {
     });
 
     it('adds feedback to the queue when queueFeedback() is called', () => {
-        useInsightsStore.getState().queuedFeedback({ id: 1, vote: 'like' });
+        useInsightsStore.getState().queueFeedback({ id: 1, vote: 'like' });
 
         const { queuedFeedback } = useInsightsStore.getState();
         expect(queuedFeedback).toEqual([{ id:1, vote: 'like' }]);

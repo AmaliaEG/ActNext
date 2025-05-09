@@ -30,6 +30,8 @@ jest.mock('../src/store/useInsightsStore', () => ({
         ],
         addFeedback: jest.fn(),
         queuedFeedback: [],
+        hydrated: true,
+        loadInsights: jest.fn(),
     }),
 }));
 
@@ -50,7 +52,10 @@ describe('TaskExpansion', () => {
         fireEvent.press(likeBtn);
         fireEvent.press(dislikeBtn); // Should remove like and set dislike
         fireEvent.press(likeBtn); 
-        fireEvent.press(likeBtn);
+        
+        // Checks if addFeedback() is called
+        const store = require('../src/store/useInsightsStore').default();
+        expect(store.addFeedback).toHaveBeenCalled();
     });
 
     it('navigates to Feed when "Finished" is pressed', () => {
@@ -67,7 +72,7 @@ describe('TaskExpansion', () => {
         expect(flatStyle.backgroundColor).toBe('#E862AE');
     });
 
-    it('shows loading state id task not found', () => {
+    it('shows loading state if task not found', () => {
         const badRoute = { params: { taskId: 'nonexistent' } };
         const { getByText } = render(<TaskExpansion route={badRoute} />);
         expect(getByText('Loading...')).toBeTruthy();

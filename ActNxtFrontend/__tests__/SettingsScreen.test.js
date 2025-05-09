@@ -15,7 +15,8 @@ jest.mock('../src/store/useSettingsStore', () => {
             language: 'en',
             setLanguage: jest.fn(),
             notificationsEnabled: true,
-            toggleNotifications: jest.fn()
+            toggleNotifications: jest.fn(),
+            hydrated: true
         })
     }
 })
@@ -29,7 +30,6 @@ const menuItems = [
     { title: 'Themes', screen: 'Themes' },
     { title: 'Language', screen: 'Language' },
     { title: 'Notifications', screen: 'Notifications' },
-    { title: 'Storage and Data', screen: 'StorageAndData' },
     { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
 ];
 
@@ -54,5 +54,15 @@ describe('SettingsScreen', () => {
             fireEvent.press(getByText(item.title));
             expect(mockNavigate).toHaveBeenCalledWith(item.screen);
         });
+    });
+
+    it('toggles notifications when pressed', () => {
+        const { getByRole } = render(<SettingsScreen navigation={mockNavigation}/>);
+        const toggleInput = getByRole('switch');
+
+        fireEvent(toggleInput, 'valueChange', false);
+
+        const store = require('../src/store/useSettingsStore').default();
+        expect(store.toggleNotifications).toHaveBeenCalled();
     });
 });

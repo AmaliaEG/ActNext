@@ -15,7 +15,7 @@ describe('useAuthStore', () => {
     });
 
     it('loads auth state from AsyncStorage and sets hydrated', async () => {
-        AsyncStorage.getItem.mockResolvedValue(JSON.stringify({
+        AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify({
             isLoggedIn: true,
             userInfo: { name: 'Tester' },
         }));
@@ -29,12 +29,12 @@ describe('useAuthStore', () => {
     });
 
     it('handles null from AsyncStorage and sets default values', async () => {
-        AsyncStorage.getItem.mockResolvedValue(null);
+        AsyncStorage.getItem.mockResolvedValueOnce(null);
 
         const store = useAuthStore.getState();
         await store.loadAuth();
 
-        expect(store.isLoggedIn).toBe(true);
+        expect(store.isLoggedIn).toBe(false);
         expect(store.userInfo).toBe(null);
         expect(store.hydrated).toBe(true);
     });

@@ -30,7 +30,8 @@ jest.mock('../src/store/useProfileStore', () => {
                 birthDate: '01/01/1990',
                 gender: 'Male',
                 email: 'john@example.com',  
-                code: '123456'
+                code: '123456',
+                hydrated: true,
             },
             updateProfile: mockUpdateProfile,
             resetProfile: mockResetProfile,
@@ -112,7 +113,7 @@ describe('ProfileDetailsScreen', () => {
         });
     });
 
-    it('shows error when new password and confirm password fo not match', async () => {
+    it('shows error when "new password" and "confirm password" do not match', async () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
 
         // Test
