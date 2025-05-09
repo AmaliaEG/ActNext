@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import SettingsList from '../Settings/SettingsList';
 import useSettingsStore from '../../store/useSettingsStore';
 

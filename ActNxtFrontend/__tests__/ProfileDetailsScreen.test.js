@@ -25,15 +25,17 @@ jest.mock('../src/store/useProfileStore', () => {
     return {
         __esModule: true,
         default: () => ({
+            hydrated: true,
             profile: {
                 name: 'John Doe',
                 birthDate: '01/01/1990',
                 gender: 'Male',
                 email: 'john@example.com',  
-                code: '123456'
+                code: '123456',
             },
             updateProfile: mockUpdateProfile,
             resetProfile: mockResetProfile,
+            loadProfile: jest.fn()
         }),
     };
 });
@@ -112,8 +114,9 @@ describe('ProfileDetailsScreen', () => {
         });
     });
 
-    it('shows error when new password and confirm password fo not match', async () => {
+    it('shows error when "new password" and "confirm password" do not match', async () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
+        mockUpdateProfile.mockClear();
 
         // Test
         fireEvent.changeText(getByPlaceholderText('Enter your name'), 'John');
@@ -132,6 +135,7 @@ describe('ProfileDetailsScreen', () => {
 
     it('shows alert for invalid email', async () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
+        mockUpdateProfile.mockClear();
 
         // Test
         fireEvent.changeText(getByPlaceholderText('Enter your name'), 'John');
@@ -188,6 +192,7 @@ describe('ProfileDetailsScreen', () => {
 
     it('does not save if required field are empty', async () => {
         const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
+        mockUpdateProfile.mockClear();
 
         fireEvent.changeText(getByPlaceholderText('Enter your name'), '');
         fireEvent.changeText(getByPlaceholderText('Enter your email'), '');

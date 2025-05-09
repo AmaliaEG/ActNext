@@ -13,7 +13,7 @@ const useAuthStore = create((set) => ({
             if (stored) {
                 const parsed = JSON.parse(stored);
                 set({
-                    isLoggenIn: parsed.isLoggenIn,
+                    isLoggedIn: parsed.isLoggedIn,
                     userInfo: parsed.userInfo 
                 });
             }
@@ -26,7 +26,7 @@ const useAuthStore = create((set) => ({
 
     login: async (userInfo) => {
         try {
-            const newState = { isLoggenIn: true, userInfo };
+            const newState = { isLoggedIn: true, userInfo };
             await AsyncStorage.setItem('auth-state', JSON.stringify(newState));
             set(newState);
         } catch (error) {
@@ -37,7 +37,7 @@ const useAuthStore = create((set) => ({
     logout: async () => {
         try {
             await AsyncStorage.removeItem('auth-state');
-            set({ isLoggenIn: false, userInfo: null });
+            set({ isLoggedIn: false, userInfo: null });
         } catch (error) {
             console.error('Failed to log out:', error);
         }

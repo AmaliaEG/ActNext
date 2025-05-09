@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
 import Navigator from '../src/navigation/Navigator';
 import {  GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -79,12 +78,6 @@ jest.mock('../src/screens/burgermenu/NotificationsScreen', () => {
     return () => <Text>Notifications</Text>;
 });
 
-jest.mock('../src/screens/burgermenu/StorageAndDataScreen', () => {
-    const React = require('react');
-    const { Text } = require('react-native');
-    return () => <Text>Storage & Data</Text>;
-});
-
 jest.mock('../src/screens/burgermenu/AboutACTNXTAppScreen', () => {
     const React = require('react');
     const { Text } = require('react-native');
@@ -97,7 +90,6 @@ const testScreens = [
     { label: 'Themes', expectedText: 'Themes' },
     { label: 'Language', expectedText: 'Language' },
     { label: 'Notifications', expectedText: 'Notifications' },
-    { label: 'Storage & Data', expectedText: 'Storage & Data' },
     { label: 'About', expectedText: 'About ACTNXT App' },
 ];
 

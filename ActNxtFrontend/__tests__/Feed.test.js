@@ -1,7 +1,7 @@
 import Feed from '../src/screens/mainPage/Feed';
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
-import MockTasks from '../src/screens/mainPage/JSON_Mockdata.json';
+
 
 // Making mock navigation from the navigations used in Feed.js
 const mockOpenDrawer = jest.fn();
@@ -19,51 +19,70 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 // Helper function
-const getTheFirstSentence = (description) => {
-    if (!description) return '';
-    const sentences = description.split('.');
-    return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-};
+const firstSentence = txt =>
+    txt.split('.').map(s => s.trim()).filter(Boolean)[0] + '.';
 
-describe('Feed', () => {
-    it('shows overdue warning if task is overdue', () => {
-        const { queryAllByText } = render(<Feed />);
 
-        const overdueTask = MockTasks.find(task => new Date(task.DtCreate) < new Date());
-        if (overdueTask) {
-            const overdueWarnings = queryAllByText('Overdue!');
-            expect(overdueWarnings.length).toBeGreaterThan(0);
-        }
+jest.mock('../src/store/useInsightsStore', () => {
+    const rawInsights = require('../src/screens/mainPage/JSON_Mockdata.json');
+
+    const processedInsights = rawInsights.map(t => {
+        const dateAssigned = new Date(t.DtCreate);
+        return {
+            ...t,
+            dateAssigned,
+            isOverdue: dateAssigned < new Date(),
+            firstSentence: firstSentence(t.Description),
+        };
     });
 
-    it('renders task title, description, and due date', () => {
-        const { getAllByText } = render(<Feed />);
-        const firstTask = MockTasks
-            .map(task => ({...task, dateAssigned: new Date(task.DtCreate) }))
-            .sort((a, b) => a.dateAssigned - b.dateAssigned)[0];
+    return {
+        __esModule: true,
+        default: () => ({
+            hydrated: true,
+            insights: processedInsights,
+            setInsights: jest.fn(),
+        }),
+    };
+});
 
+const getMockedStore = () => require('../src/store/useInsightsStore').default();
+
+
+// TESTS FOR Feed
+describe('Feed', () => {
+    it('shows an "Overdue!" label for overdue tasks', () => {
+        const { queryAllByText } = render(<Feed />);
+        const overdueBadges = queryAllByText('Overdue!');
+        expect(overdueBadges.length).toBeGreaterThan(0);
+    });
+
+    it('renders without crashing', () => {
+        const { getByTestId } = render(<Feed />);
+        expect(getByTestId('burger-menu')).toBeTruthy();
+    });
+
+    it('renders task title, description, and due-date text', () => {
+        const firstTask = getMockedStore().insights[0];
         const expectedDate = `Due: ${firstTask.dateAssigned.toLocaleDateString()}`;
         
+        const { getAllByText } = render(<Feed />);
         expect(getAllByText(firstTask.Title)).toBeTruthy();
-        expect(getAllByText(getTheFirstSentence(firstTask.Description))).toBeTruthy();
+        expect(getAllByText(firstSentence(firstTask.Description))).toBeTruthy();
         expect(getAllByText(expectedDate).length).toBeGreaterThan(0);
     });
     
     // User Interaction tests
-    it('navigates to task details on press', () => {
-        const { getAllByText } = render(<Feed />);
-        const firstTask = MockTasks
-            .map(task => ({...task, dateAssigned: new Date(task.DtCreate) }))
-            .sort((a, b) => a.dateAssigned - b.dateAssigned)[0];
-        
-        fireEvent.press(getAllByText(firstTask.Title)[0]);
+    it('navigates to details screen when a task is pressed', () => {
+        const firstTask = getMockedStore().insights[0];
+        const { getByText } = render(<Feed />);
+        fireEvent.press(getByText(firstTask.Title));
         expect(mockNavigate).toHaveBeenCalledWith('Details', { taskId: firstTask.Id });
     });
     
-    it('opens drawer on burger menu press', () => {
+    it('opens the drawer when burger menu is pressed', () => {
         const { getByTestId } = render(<Feed />);
         const menuIcon = getByTestId('burger-menu');
-    
         fireEvent.press(menuIcon);
         expect(mockOpenDrawer).toHaveBeenCalled();
     });

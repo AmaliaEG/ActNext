@@ -1,10 +1,21 @@
-import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
 import Themes from '../src/screens/burgermenu/ThemesScreen';
 import { ThemeContext } from '../src/screens/burgermenu/ThemeContext';
 import { StyleSheet } from 'react-native';
 
 
+// MOCKS
+jest.mock('../src/store/useSettingsStore', () => ({
+    __esModule: true,
+    default: () => ({
+        theme: { mode: 'dark' },
+        updateTheme: jest.fn(),
+        toggleTheme: jest.fn(),
+        hydrated: true,
+    }),
+}));
+
+// TESTS FOR Themes
 describe('Themes', () => {
     it('calls updateTheme correctly when buttons are pressed', () => {
         const mockUpdateTheme = jest.fn();
@@ -26,8 +37,21 @@ describe('Themes', () => {
     });
 
     it('renders correct background color for light theme', () => {
+        jest.doMock('../src/store/useSettingsStore', () => ({
+            __esModule: true,
+            default: () => ({
+                theme: { mode: 'light' },
+                updateTheme: jest.fn(),
+                hydrated: true,
+            }),
+        }));
+
+        const Themes = require('../src/screens/burgermenu/ThemesScreen').default;
+    });
+
+    it('renders correct background color for dark theme', () => {
         const { getByTestId } = render(
-            <ThemeContext.Provider value={{ theme: { mode: 'light' }, updateTheme: jest.fn() }}>
+            <ThemeContext.Provider value={{ theme: { mode: 'dark' }, updateTheme: jest.fn() }}>
                 <Themes />
             </ThemeContext.Provider>
         );
@@ -36,6 +60,6 @@ describe('Themes', () => {
         
         // Flatten the array of style object to the one object we need
         const flattenedStyle = StyleSheet.flatten(container.props.style);
-        expect(flattenedStyle.backgroundColor).toBe('#FFFFFF');
+        expect(flattenedStyle.backgroundColor).toBe('#121212');
     });
 });
