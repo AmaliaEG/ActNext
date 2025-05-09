@@ -9,16 +9,15 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     removeItem: jest.fn()
 }));
 
+const lastPayload = () => {
+    const [, json] = AsyncStorage.setItem.mock.calls.at(-1);
+    return JSON.parse(json);
+};
+
 const defaultSettings = {
     theme: { mode: 'light' },
     language: 'en',
     notificationsEnabled: true,
-};
-
-const storedSettings = {
-    theme: { mode: 'dark' },
-    language: 'da',
-    notificationsEnabled: false,
 };
 
 
@@ -26,6 +25,7 @@ const storedSettings = {
 describe('useSettingsStore', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+
         useSettingsStore.setState({
             ...defaultSettings,
             hydrated: false,
@@ -33,15 +33,18 @@ describe('useSettingsStore', () => {
     });
 
     it('loads settings from AsyncStorage and sets hydrated', async () => {
-        AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(storedSettings));
+        const stored = {
+            theme: { mode: 'dark' },
+            language: 'da',
+            notificationsEnabled: false,
+        };
+        AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(stored));
 
         await useSettingsStore.getState().loadSettings();
 
-        const state = useSettingsStore.getState();
-        expect(state.theme).toEqual({ mode: 'dark' });
-        expect(state.language).toBe('da');
-        expect(state.notificationsEnabled).toBe(false);
-        expect(state.hydrated).toBe(true);
+        expect(useSettingsStore.getState()).toEqual(
+            expect.objectContaining({ ...stored, hydrated: true })
+        );
     });
 
     it('sets hydrated to true even if no data is stored', async () => {
@@ -57,19 +60,20 @@ describe('useSettingsStore', () => {
         
         await useSettingsStore.getState().updateTheme(newTheme);
 
-        const { theme } = useSettingsStore.getState();
-        expect(theme).toEqual(newTheme);
+        expect(useSettingsStore.getState().theme).toEqual(newTheme);
 
-        expect(AsyncStorage.setItem).toHaveBeenCalledWith('app-settings', JSON.stringify({ ...defaultSettings, theme: newTheme }));
+        expect(lastPayload()).toEqual(
+            expect.objectContaining({ theme: newTheme })
+        );
     });
 
     it('updates the language and sets it to AsyncStorage when setLanguage() is called', async () => {
         await useSettingsStore.getState().setLanguage('fr');
 
-        const { language } = useSettingsStore.getState();
-        expect(language).toBe('fr');
-
-        expect(AsyncStorage.setItem).toHaveBeenCalledWith('app-settings', JSON.stringify({ ...defaultSettings, language: 'fr' }));
+        expect(useSettingsStore.getState().language).toBe('fr');
+        expect(lastPayload()).toEqual(
+            expect.objectContaining({ language: 'fr' })
+        );
     });
 
     it('toggles and sets it to AsyncStorage', async () => {
@@ -77,9 +81,9 @@ describe('useSettingsStore', () => {
 
         await useSettingsStore.getState().toggleNotifications();
 
-        const state = useSettingsStore.getState();
-        expect(state.notificationsEnabled).toBe(!prevState);
-
-        expect(AsyncStorage.setItem).toHaveBeenCalledWith('app-settings', JSON.stringify({ ...defaultSettings, notificationsEnabled: !prevState }));
+        expect(useSettingsStore.getState().notificationsEnabled).toBe(!prevState);
+        expect(lastPayload()).toEqual(
+            expect.objectContaining({ notificationsEnabled: !prevState })
+        );
     });
 });

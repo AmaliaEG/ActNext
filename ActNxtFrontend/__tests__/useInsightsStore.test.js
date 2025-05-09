@@ -62,7 +62,7 @@ describe('useInsightsStore', () => {
         const { insights } = useInsightsStore.getState();
         expect(insights.find(i => i.id === 1).feedback).toBe('like');
         expect(AsyncStorage.setItem).toHaveBeenCalledWith('insights', JSON.stringify([
-            { id: 1, title: 'Insight 1', feedback: null },
+            { id: 1, title: 'Insight 1', feedback: 'like' },
             { id: 2, title: 'Insight 2', feedback: null },
         ]));
     });

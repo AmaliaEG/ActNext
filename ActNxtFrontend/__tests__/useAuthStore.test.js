@@ -8,20 +8,28 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     removeItem: jest.fn()
 }));
 
+const freshState = () => useAuthStore.getState();
+
+beforeEach(() => {
+    jest.clearAllMocks();
+
+    useAuthStore.setState({ 
+        isLoggedIn: false,
+        userInfo: null,
+        hydrated: false 
+    });
+});
+
 // TESTS FOR useAuthStore
 describe('useAuthStore', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
-
     it('loads auth state from AsyncStorage and sets hydrated', async () => {
         AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify({
             isLoggedIn: true,
             userInfo: { name: 'Tester' },
         }));
 
-        const store = useAuthStore.getState();
-        await store.loadAuth();
+        await freshState().loadAuth();
+        const store = freshState();
 
         expect(store.isLoggedIn).toBe(true);
         expect(store.userInfo.name).toBe('Tester');
@@ -31,8 +39,8 @@ describe('useAuthStore', () => {
     it('handles null from AsyncStorage and sets default values', async () => {
         AsyncStorage.getItem.mockResolvedValueOnce(null);
 
-        const store = useAuthStore.getState();
-        await store.loadAuth();
+        await freshState().loadAuth();
+        const store = freshState();
 
         expect(store.isLoggedIn).toBe(false);
         expect(store.userInfo).toBe(null);
@@ -40,25 +48,26 @@ describe('useAuthStore', () => {
     });
 
     it('saves to AsyncStorage and updates state, when login() is called', async () => {
-        const store = useAuthStore.getState();
+        const store = freshState();
         const userInfo = { name: 'LoginUser' };
 
         await store.login(userInfo);
 
         expect(AsyncStorage.setItem).toHaveBeenCalledWith('auth-state', JSON.stringify({ isLoggedIn: true, userInfo }));
-        expect(store.isLoggedIn).toBe(true);
-        expect(store.userInfo).toEqual(userInfo);
+        const updated = freshState();
+        expect(updated.isLoggedIn).toBe(true);
+        expect(updated.userInfo).toEqual(userInfo);
     });
 
     it('removes auth-state from AsyncStorage and clears store, when logout() is called', async () => {
-        const store = useAuthStore.getState();
-        store.isLoggedIn = true;
-        store.userInfo = { name: 'LogoutUser' };
+        useAuthStore.setState({ isLoggedIn: true, userInfo: { name: 'LogoutUser' } });
 
-        await store.logout();
+        await freshState().logout();
 
         expect(AsyncStorage.removeItem).toHaveBeenCalledWith('auth-state');
-        expect(store.isLoggedIn).toBe(false);
-        expect(store.userInfo).toBe(null);
+
+        const updated = freshState();
+        expect(updated.isLoggedIn).toBe(false);
+        expect(updated.userInfo).toBe(null);
     });
 });

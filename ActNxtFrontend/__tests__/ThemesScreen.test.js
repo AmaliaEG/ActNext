@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
 import Themes from '../src/screens/burgermenu/ThemesScreen';
 import { ThemeContext } from '../src/screens/burgermenu/ThemeContext';

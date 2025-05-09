@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import LanguageScreen from '../src/screens/burgermenu/LanguageScreen';
 
@@ -54,6 +53,6 @@ describe('LanguageScreen', () => {
 
         fireEvent.press(getByTestId('row-Language'));
 
-        expect(mockSetLangauge).toHaveBeenCalledWith('Danish');
+        expect(mockSetLanguage).toHaveBeenCalledWith('Danish');
     });
 });

@@ -13,9 +13,19 @@ jest.mock('../src/store/useSettingsStore', () => {
         __esModule: true,
         default: () => {
             const [theme, setTheme] = React.useState({ mode: 'light' });
+
+            const toggleTheme = (newMode) => {
+                const mode = newMode ?? (theme.mode === 'light' ? 'dark' : 'light');
+
+                if (mode !== theme.mode) {
+                    mockUpdateTheme({ mode });
+                    setTheme({ mode });
+                }
+            };
+
             return {
                 theme,
-                toggleTheme: () => setTheme({ mode: theme.mode === 'light' ? 'dark' : 'light' }),
+                toggleTheme,
                 updateTheme: mockUpdateTheme,
                 language: 'en',
                 setLanguage: jest.fn(),
@@ -23,17 +33,18 @@ jest.mock('../src/store/useSettingsStore', () => {
                 toggleNotifications: jest.fn(),
                 hydrated: true
             };
-        }
+        },
     };
 });
 
 // The helper component allows us to trigger a theme change
 const TestComponent = () => {
-    const { theme, toggleTheme, updateTheme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
 
     return (
         <View>
             <Text testID='theme-text'>{theme.mode}</Text>
+
             <Button title='Switch to Dark' onPress={() => toggleTheme('dark')} />
             <Button title='Switch to Light' onPress={() => toggleTheme('light')} />
             <Button title='Toggle Theme' onPress={() => toggleTheme()} />

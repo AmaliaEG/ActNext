@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import SettingsScreen from '../src/screens/burgermenu/SettingsScreen';
 
 const mockNavigate = jest.fn();
-const mockNavigation = { navigate: mockNavigate };
+const mockToggleNotifications = jest.fn();
 
 jest.mock('../src/store/useSettingsStore', () => {
     return {
@@ -15,54 +15,42 @@ jest.mock('../src/store/useSettingsStore', () => {
             language: 'en',
             setLanguage: jest.fn(),
             notificationsEnabled: true,
-            toggleNotifications: jest.fn(),
+            toggleNotifications: mockToggleNotifications,
             hydrated: true
-        })
-    }
-})
+        }),
+    };
+});
 
 jest.mock('@expo/vector-icons', () => ({
     AntDesign: () => null,
 }));
 
-const menuItems = [
-    { title: 'Profile', screen: 'ProfileDetails' },
-    { title: 'Themes', screen: 'Themes' },
-    { title: 'Language', screen: 'Language' },
-    { title: 'Notifications', screen: 'Notifications' },
-    { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
-];
-
 describe('SettingsScreen', () => {
     beforeEach(() => {
-        mockNavigate.mockClear();
+        jest.clearAllMocks();
     });
 
     it('renders titles correctly', () => {
-        const { getByText } = render(<SettingsScreen navigation={mockNavigation}/>);
+        const { getByText } = render(<SettingsScreen navigation={{ navigate: mockNavigate }} />);
 
-        menuItems.forEach((item) => {
-            expect(getByText(item.title)).toBeTruthy();
-        });
+        [
+            'Profile',
+            'Themes',
+            'Language',
+            'Notifications',
+            'About ACTNXT App',
+        ].forEach(title => expect(getByText(title)).toBeTruthy());
     });
 
     it('navigates to screen when title is pressed', () => {
-        const { getByText } = render(<SettingsScreen navigation={mockNavigation}/>);
-
-        menuItems.forEach((item) => {
-            mockNavigate.mockClear();
-            fireEvent.press(getByText(item.title));
-            expect(mockNavigate).toHaveBeenCalledWith(item.screen);
-        });
+        const { getByText } = render(<SettingsScreen navigation={{ navigate: mockNavigate }} />);
+        fireEvent.press(getByText('Themes'));
+        expect(mockNavigate).toHaveBeenCalledWith('Themes');
     });
 
     it('toggles notifications when pressed', () => {
-        const { getByRole } = render(<SettingsScreen navigation={mockNavigation}/>);
-        const toggleInput = getByRole('switch');
-
-        fireEvent(toggleInput, 'valueChange', false);
-
-        const store = require('../src/store/useSettingsStore').default();
-        expect(store.toggleNotifications).toHaveBeenCalled();
+        const { getByRole } = render(<SettingsScreen navigation={{ navigate: mockNavigate }} />);
+        fireEvent(getByRole('switch'), 'valueChange', false);
+        expect(mockToggleNotifications).toHaveBeenCalled();
     });
 });

@@ -4,6 +4,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import { StyleSheet } from 'react-native';
 
 const mockNavigate = jest.fn();
+
 jest.mock('@react-navigation/native', () => ({
     useNavigation: () => ({
         navigate: mockNavigate,
@@ -15,24 +16,26 @@ jest.mock('@expo/vector-icons', () => ({
     Ionicons: () => null,
 }));
 
+const mockStore = {
+    insights: [
+        {
+            Id: '1',
+            Title: 'Mock Task Title',
+            CompanyName: 'Mock Company',
+            SalesAnalysisId: 1,
+            Description: 'Mock task description',
+            DtCreate: '2024-05-01T00:00:00.007'
+        },
+    ],
+    addFeedback: jest.fn(),
+    queuedFeedback: [],
+    hydrated: true,
+    loadInsights: jest.fn(),
+};
+
 jest.mock('../src/store/useInsightsStore', () => ({
     __esModule: true,
-    default: () => ({
-        insights: [
-            {
-                Id: '1',
-                Title: 'Mock Task Title',
-                CompanyName: 'Mock Company',
-                SalesAnalysisId: 1,
-                Description: 'Mock task description',
-                DtCreate: '2024-05-01T00:00:00.007'
-            }
-        ],
-        addFeedback: jest.fn(),
-        queuedFeedback: [],
-        hydrated: true,
-        loadInsights: jest.fn(),
-    }),
+    default: () => mockStore,
 }));
 
 describe('TaskExpansion', () => {
@@ -51,11 +54,10 @@ describe('TaskExpansion', () => {
 
         fireEvent.press(likeBtn);
         fireEvent.press(dislikeBtn); // Should remove like and set dislike
-        fireEvent.press(likeBtn); 
+        fireEvent.press(likeBtn); // back to like
         
         // Checks if addFeedback() is called
-        const store = require('../src/store/useInsightsStore').default();
-        expect(store.addFeedback).toHaveBeenCalled();
+        expect(mockStore.addFeedback).toHaveBeenCalled();
     });
 
     it('navigates to Feed when "Finished" is pressed', () => {
@@ -67,6 +69,7 @@ describe('TaskExpansion', () => {
     it('displays the correct group label and color', () => {
         const { getByText, getByTestId } = render(<TaskExpansion route={route} />);
         expect(getByText('Win Back Plan')).toBeTruthy(); // testing for group 1
+
         const colorCircle = getByTestId('color-circle');
         const flatStyle = StyleSheet.flatten(colorCircle.props.style);
         expect(flatStyle.backgroundColor).toBe('#E862AE');
@@ -75,6 +78,6 @@ describe('TaskExpansion', () => {
     it('shows loading state if task not found', () => {
         const badRoute = { params: { taskId: 'nonexistent' } };
         const { getByText } = render(<TaskExpansion route={badRoute} />);
-        expect(getByText('Loading...')).toBeTruthy();
-    })
+        expect(getByText('Loading task...')).toBeTruthy();
+    });
 });
