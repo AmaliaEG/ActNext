@@ -47,21 +47,15 @@ describe('ProfileDetailsScreen', () => {
     };
 
     beforeEach(() => {
-        mockUpdateProfile.mockClear();
-        mockResetProfile.mockClear();
-        Alert.alert.mockClear();
+        jest.clearAllMocks();
         SecureStore.setItemAsync.mockResolvedValue();
 
         // Mock Auth0 hooks
         useAuth0.mockReturnValue({
             user: mockUser,
             error: null,
-            clearSession: jest.fn().mockResolvedValue(true)
+            logout: jest.fn().mockResolvedValue(true)
         });
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
     });
 
     it('renders correctly', async () => {
@@ -165,14 +159,15 @@ describe('ProfileDetailsScreen', () => {
     });
 
     it('calls logout and navigates to home when logout button is pressed', async () => {
-        const mockLogout = jest.fn();
+        const mockLogout = jest.fn().mockResolvedValue(true);
         const mockNavigate = jest.fn();
         const mockCloseModal = jest.fn();
 
+        global.clearSession = mockLogout;
+
         useAuth0.mockReturnValue({
+            user: mockUser,
             logout: mockLogout,
-            user: { email: 'test@example.com' },
-            isAuthenticated: true,
         });
 
         const { getByText } = render(
@@ -188,6 +183,8 @@ describe('ProfileDetailsScreen', () => {
             expect(mockNavigate).toHaveBeenCalledWith('Home');
             expect(mockCloseModal).toHaveBeenCalled();
         });
+
+        delete global.clearSession;
     });
 
     it('does not save if required field are empty', async () => {
