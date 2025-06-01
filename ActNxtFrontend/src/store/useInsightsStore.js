@@ -1,22 +1,46 @@
 import { create } from "zustand";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 // Sales Insights
 const useInsightStore = create((set, get) => ({
         insights: [],
         queuedFeedback: [],
         hydrated: false,
 
+        // Initialize store with mock data
+        initializeWithMockData: async () => {
+            const mockData = require('../screens/mainPage/JSON_Mockdata.json');
+            try {
+            // Only initialize if no data exists
+            const existing = await AsyncStorage.getItem('insights');
+            if (!existing) {
+                await AsyncStorage.setItem('insights', JSON.stringify(mockData));
+                set({ insights: mockData, hydrated: true });
+            }
+            } catch (error) {
+            console.error('Initialization failed:', error);
+            set({ insights: mockData, hydrated: true }); // Fallback
+            }
+        },
+
         loadInsights: async () => {
             try {
-                const stored = await AsyncStorage.getItem('insights');
-                if (stored) {
-                    set({ insights: JSON.parse(stored) });
+                const mockData = require('../screens/mainPage/JSON_Mockdata.json')
+
+                if (forceRefresh){
+                    await AsyncStorage.setItem('insights', JSON.stringify(mockData));
+                    set({insights: mockData, hydrated: true});
+                    return;
                 }
+                const stored = await AsyncStorage.getItem('insights');
+                set({ 
+                    insights: stored ? JSON.parse(stored) : mockData,
+                    hydrated: true 
+                });
             } catch (error) {
                 console.error('Failed to load insights:', error);
-            } finally {
-                set({ hydrated: true });
+                set({ insights: mockData, hydrated: true });
             }
         },
 
@@ -29,16 +53,41 @@ const useInsightStore = create((set, get) => ({
             }
         },
 
-        addFeedback: async (insightId, feedback) => {
+        addFeedback: async (insightId, feedbackType) => {
             try {
-                const updated = get().insights.map((item) => 
-                item.id === insightId ? { ...item, feedback } : item
-                );
+                const currentInsights = get().insights;
+                const updated = currentInsights.map((item) => {
+                    if (item.Id === insightId) {
+                        const currentFeedback = item.feedback || {};
+                        let newFeedback = {};
+
+                        if (feedbackType === 'like') {
+                            newFeedback = {
+                                liked: !currentFeedback.liked,
+                                disliked: currentFeedback.liked ? false: currentFeedback.disliked
+                        };
+                    } else if (feedbackType === 'dislike'){ 
+                        newFeedback = {
+                                disliked: !currentFeedback.liked,
+                                liked: currentFeedback.liked ? false: currentFeedback.liked
+                        };
+                    }
+                    return {...item, feedback: newFeedback};
+                }
+                return item;
+                });
+                
                 await AsyncStorage.setItem('insights', JSON.stringify(updated));
                 set({ insights: updated });
             } catch (error) {
                 console.error('Failed to add feedback:', error);
             }
+        },
+
+        // Helper method
+        getFeedback: (insightId) => {
+            const insight = get().insights.find(item => item.Id === insightId);
+            return insight?.feedback || {liked: false, disliked: false};
         },
 
         queueFeedback: (feedback) => {

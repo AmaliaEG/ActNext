@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 //import mockTasks from './MockTasks.json'; // Import JSON data
-// import mockTasks from './JSON_Mockdata.json'; // Import JSON data
+import mockTasks from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
 
 // Target group dictionary
@@ -24,55 +24,41 @@ const Groups = {
 
 const TaskExpansion = ({ route }) => {
   const { taskId } = route.params;
-  const { insights, addFeedback, loadInsights, hydrated } = useInsightsStore();
-
+  const { insights, addFeedback, getFeedback, hydrated } = useInsightsStore();
   const navigation = useNavigation();
-  const [task, setTask] = useState(null);
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
 
-  useEffect(() => {
-    if (!hydrated) {
-      loadInsights();
-    }
-  }, [hydrated]);
+  const [feedback, setFeedback] = useState({liked: false, disliked: false});
 
   useEffect(() => {
     if (hydrated) {
-      const foundTask = insights.find(t => t.Id === taskId);
-      if (foundTask) {
-        setTask({
-          ...foundTask,
-          dateAssigned: new Date(foundTask.DtCreate)
-        });
-      }
+      setFeedback(getFeedback(taskId));
     }
-  }, [taskId, insights, hydrated]);
+  }, [taskId, hydrated, insights]);
 
-  if (!hydrated || !task) {
+  const handleReaction = (type) => {
+    // Optimistic UI update
+    setFeedback(prev => {
+      const newState = type === 'like' 
+        ? { liked: !prev.liked, disliked: false }
+        : { disliked: !prev.disliked, liked: false };
+      return newState;
+    });
+    
+    // Update in store
+    addFeedback(taskId, type);
+  };
+
+  if (!hydrated || !insights.find(t => t.Id === taskId)) {
     return (
-      <View style={styles.container}>
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
         <Text>Loading task...</Text>
       </View>
     );
   }
 
-  const targetGroup = Groups[task.SalesAnalysisId] || Groups[1]; // Fallback to group 1
-
-  // Like system
-  const handleLike = () => {
-    setLiked(!liked);
-    if (disliked) setDisliked(false);
-
-    addFeedback(taskId, 'like');
-  };
-
-  const handleDislike = () => {
-    setDisliked(!disliked);
-    if (liked) setLiked(false);
-
-    addFeedback(taskId, 'dislike');
-  };
+  const task = insights.find(t => t.Id === taskId);
+  const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
 
   return (
     <View style={styles.container}>
@@ -106,24 +92,24 @@ const TaskExpansion = ({ route }) => {
         <View style={styles.rightAlignedButtonContainer}>
           <TouchableOpacity
             testID='like-button'
-            style={[styles.button, liked && styles.likedButton]}
-            onPress={handleLike}
+            style={[styles.button, feedback.liked && styles.likedButton]}
+            onPress={() => handleReaction('like')}
           >
             <Ionicons
-              name={liked ? "thumbs-up" : "thumbs-up-outline"}
+              name={feedback.liked ? "thumbs-up" : "thumbs-up-outline"}
               size={20}
-              color={liked ? "white" : "#666"}
+              color={feedback.liked ? "white" : "#666"}
             />
           </TouchableOpacity>
           <TouchableOpacity
             testID='dislike-button'
-            style={[styles.button, disliked && styles.dislikedButton]}
-            onPress={handleDislike}
+            style={[styles.button, feedback.disliked && styles.dislikedButton]}
+            onPress={() => handleReaction('dislike')}
           >
             <Ionicons
-              name = {disliked ? "thumbs-down" : "thumbs-down-outline"}
+              name = {feedback.disliked ? "thumbs-down" : "thumbs-down-outline"}
               size={20}
-              color={disliked ? "white" : "#666"}
+              color={feedback.disliked ? "white" : "#666"}
             />
           </TouchableOpacity>
         </View>
