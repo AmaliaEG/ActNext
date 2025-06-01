@@ -28,11 +28,11 @@ const useInsightStore = create((set, get) => ({
             try {
                 const mockData = require('../screens/mainPage/JSON_Mockdata.json')
 
-                if (forceRefresh){
-                    await AsyncStorage.setItem('insights', JSON.stringify(mockData));
-                    set({insights: mockData, hydrated: true});
-                    return;
-                }
+                // if (forceRefresh){
+                //     await AsyncStorage.setItem('insights', JSON.stringify(mockData));
+                //     set({insights: mockData, hydrated: true});
+                //     return;
+                // }
                 const stored = await AsyncStorage.getItem('insights');
                 set({ 
                     insights: stored ? JSON.parse(stored) : mockData,
