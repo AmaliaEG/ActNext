@@ -17,6 +17,7 @@ import TaskExpansion from '../screens/mainPage/TaskExpansion';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 import ThemesScreen from '../screens/burgermenu/ThemesScreen';
 import { ThemeProvider } from '../screens/burgermenu/ThemeContext'; // Import your ThemeProvider
+import StarredTasks from '../screens/burgermenu/StarredTasks';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -54,7 +55,7 @@ const CustomDrawerContent = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
-        <DrawerItem label="Filter 1" onPress={() => alert('Filter 1')}/>
+        <DrawerItem label="Starred" onPress={() => props.navigation.navigate('StarredTasks')}/>
         <DrawerItem label="Filter 2" onPress={() => alert('Filter 2')}/>
         <DrawerItem label="Filter 3" onPress={() => alert('Filter 3')}/>
       </DrawerContentScrollView>
@@ -113,6 +114,7 @@ const Navigator = () => {
             <Drawer.Screen name="Language" component={LanguageScreen} />
             <Drawer.Screen name="Notifications" component={NotificationsScreen} />
             <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
+            <Drawer.Screen name="StarredTasks" component={StarredTasks} />
           </Drawer.Navigator>
         </NavigationContainer>
        {/* <- Close it here */}
