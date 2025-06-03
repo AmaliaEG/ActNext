@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 //import mockTasks from './MockTasks.json'; // Import JSON data
@@ -24,16 +24,29 @@ const Groups = {
 
 const TaskExpansion = ({ route }) => {
   const { taskId } = route.params;
-  const { insights, addFeedback, getFeedback, hydrated } = useInsightsStore();
+  const { insights, addFeedback, getFeedback, hydrated, updateTaskComment, getTaskComment, toggleStar, getStarStatus } = useInsightsStore();
   const navigation = useNavigation();
-
   const [feedback, setFeedback] = useState({liked: false, disliked: false});
+  const [comment, setComment] = useState('');
+   const [isStarred, setIsStarred] = useState(false);
 
   useEffect(() => {
     if (hydrated) {
       setFeedback(getFeedback(taskId));
+      const taskComment = getTaskComment(taskId);
+      setComment(taskComment);
+      setIsStarred(getStarStatus(taskId));
     }
   }, [taskId, hydrated, insights]);
+
+  if (!hydrated || !insights.find(t => t.Id === taskId)) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+        <Text>Loading task...</Text>
+      </View>
+    );
+  }
 
   const handleReaction = (type) => {
     // Optimistic UI update
@@ -48,14 +61,15 @@ const TaskExpansion = ({ route }) => {
     addFeedback(taskId, type);
   };
 
-  if (!hydrated || !insights.find(t => t.Id === taskId)) {
-    return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" />
-        <Text>Loading task...</Text>
-      </View>
-    );
-  }
+  const handleCommentSubmit = async () => {
+    await updateTaskComment(taskId, comment);
+  };
+
+  const handleStarPress = async () => {
+    const newStarStatus = !isStarred;
+    setIsStarred(newStarStatus);
+    await toggleStar(taskId, newStarStatus);
+  };
 
   const task = insights.find(t => t.Id === taskId);
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
@@ -73,9 +87,19 @@ const TaskExpansion = ({ route }) => {
 
       {/*Main content */}
       <View style = {styles.contentContainer}>
-        {/*Company name*/}
-        <View style={styles.companyNameContainer}>
-          <Text style={styles.companyName}>{task.CompanyName}</Text>
+        <View style={styles.companyRow}>
+          {/*Company name*/}
+          <View style={styles.companyNameContainer}>
+            <Text style={styles.companyName}>{task.CompanyName}</Text>
+          </View>
+          {/*Star*/}
+          <TouchableOpacity onPress={handleStarPress} style={styles.starButton}>
+            <Ionicons 
+              name={isStarred ? "star" : "star-outline"} 
+              size={24} 
+              color={isStarred ? "#FFD700" : "#666"} 
+            />
+          </TouchableOpacity>
         </View>
         
         
@@ -113,6 +137,30 @@ const TaskExpansion = ({ route }) => {
             />
           </TouchableOpacity>
         </View>
+      </View>
+
+      {/* Comment Section - integrated with the input */}
+      <View style={styles.commentSection}>
+        <Text style={styles.commentTitle}>My Notes</Text>
+        <TextInput
+          style={styles.commentInput}
+          placeholder="Type your notes here..."
+          placeholderTextColor="#999"
+          multiline
+          value={comment}
+          onChangeText={setComment}
+          onSubmitEditing={handleCommentSubmit}
+          blurOnSubmit={false}
+        />
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={handleCommentSubmit}
+          disabled={!comment.trim()}
+        >
+          <Text style={styles.saveButtonText}>
+            {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* Finish button */}
@@ -179,6 +227,13 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexShrink: 1,
   },
+  companyRow: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+  marginBottom: 10,
+  },
   companyNameContainer: {
     borderWidth: 1,
     borderColor: '#f2f4f5', // Light gray border
@@ -192,6 +247,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'regular',
     marginBottom: 3,
+  },
+  starButton: {
+    padding: 8,
+    marginRight: -8,
   },
   targetGroupContainer: {
     flexDirection: 'row',
@@ -257,9 +316,37 @@ const styles = StyleSheet.create({
   dislikedText: {
       color: 'white',
   },
+  commentSection: {
+    marginTop: 30,
+    marginHorizontal: 25,
+    marginBottom: 20,
+  },
+  commentTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 10,
+    color: '#333',
+  },
+  commentInput: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 15,
+    minHeight: 100,
+    textAlignVertical: 'top',
+    backgroundColor: '#fff',
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  commentHint: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 5,
+    fontStyle: 'italic',
+  },
   finishedButtonContainer: {
     position: 'absolute',
-    bottom: 170,
+    bottom: 100,
     left: 20,
     right: 20,
   },

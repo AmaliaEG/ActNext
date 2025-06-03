@@ -99,6 +99,99 @@ const useInsightStore = create((set, get) => ({
         clearQueuedFeedback: () => {
             set({ queuedFeedback: [] });
         },
+
+        // Update or add a single comment
+        updateComment: async (insightId, commentText) => {
+            try {
+            const currentInsights = [...get().insights];
+            const index = currentInsights.findIndex(item => item.Id === insightId);
+            
+            if (index !== -1) {
+                currentInsights[index] = { 
+                ...currentInsights[index],
+                comment: commentText.trim() ? { // Store as single comment object
+                    text: commentText.trim(),
+                    updatedAt: new Date().toISOString()
+                } : null
+                };
+                
+                await AsyncStorage.setItem('insights', JSON.stringify(currentInsights));
+                set({ insights: currentInsights });
+                return true;
+            }
+            return false;
+            } catch (error) {
+            console.error('Failed to update comment:', error);
+            return false;
+            }
+        },
+
+        // Get the single comment
+        getComment: (insightId) => {
+            const insight = get().insights.find(item => item.Id === insightId);
+            return insight?.comment || null;
+        },
+        // Update the comment for a specific task
+        updateTaskComment: async (taskId, commentText) => {
+            try {
+            const currentInsights = [...get().insights];
+            const taskIndex = currentInsights.findIndex(task => task.Id === taskId);
+            
+            if (taskIndex !== -1) {
+                currentInsights[taskIndex] = { 
+                ...currentInsights[taskIndex],
+                userComment: commentText.trim() // Store comment directly on the task
+                };
+                
+                await AsyncStorage.setItem('insights', JSON.stringify(currentInsights));
+                set({ insights: currentInsights });
+                return true;
+            }
+            return false;
+            } catch (error) {
+            console.error('Failed to update task comment:', error);
+            return false;
+            }
+        },
+
+        // Get the comment for a specific task
+        getTaskComment: (taskId) => {
+            const task = get().insights.find(task => task.Id === taskId);
+            return task?.userComment || '';
+        },
+        // Toggle star status for a task
+        toggleStar: async (taskId, starStatus) => {
+            try {
+            const currentInsights = [...get().insights];
+            const index = currentInsights.findIndex(item => item.Id === taskId);
+            
+            if (index !== -1) {
+                currentInsights[index] = { 
+                ...currentInsights[index],
+                isStarred: starStatus
+                };
+                
+                await AsyncStorage.setItem('insights', JSON.stringify(currentInsights));
+                set({ insights: currentInsights });
+                return true;
+            }
+            return false;
+            } catch (error) {
+            console.error('Failed to toggle star:', error);
+            return false;
+            }
+        },
+
+        // Get star status for a task
+        getStarStatus: (taskId) => {
+            const insight = get().insights.find(item => item.Id === taskId);
+            return insight?.isStarred || false;
+        },
+
+        // Get all starred tasks
+        getStarredTasks: () => {
+            return get().insights.filter(item => item.isStarred);
+        },
     }));
 
 export default useInsightStore;
