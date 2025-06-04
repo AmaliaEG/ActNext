@@ -192,6 +192,50 @@ const useInsightStore = create((set, get) => ({
         getStarredTasks: () => {
             return get().insights.filter(item => item.isStarred);
         },
+
+        archiveTask: async (taskId) => {
+            try {
+                const currentInsights = [...get().insights];
+                const index = currentInsights.findIndex(item => item.Id === taskId);
+            
+                if (index !== -1) {
+                    currentInsights[index] = { 
+                    ...currentInsights[index],
+                    isArchived: true,
+                    };
+                
+                    await AsyncStorage.setItem('insights', JSON.stringify(currentInsights));
+                    set({ insights: currentInsights });
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Failed to archive task:', error);
+                return false;
+            }
+        },
+
+        unarchiveTask: async (taskId) => {
+            try {
+                const currentInsights = [...get().insights];
+                const index = currentInsights.findIndex(item => item.Id === taskId);
+            
+                if (index !== -1) {
+                    currentInsights[index] = { 
+                    ...currentInsights[index],
+                    isArchived: false,
+                    };
+                
+                    await AsyncStorage.setItem('insights', JSON.stringify(currentInsights));
+                    set({ insights: currentInsights });
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Failed to unarchive task:', error);
+                return false;
+            }
+        },
     }));
 
 export default useInsightStore;

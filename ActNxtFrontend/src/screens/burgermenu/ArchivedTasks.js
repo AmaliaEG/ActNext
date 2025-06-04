@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-//import Mock from './MockTasks.json'; // Import JSON data
-import Mock from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
 
 const GroupColours = {
@@ -12,39 +10,29 @@ const GroupColours = {
   3: '#5CD2CD'  // Pale green for Growth
 };
 
-const Feed = () => {
+const ArchivedTasks = () => {
   const navigation = useNavigation();
-  const { insights, setInsights, hydrated } = useInsightsStore();
+  const { insights, hydrated, unarchiveTask } = useInsightsStore();
+  const [starredTasks, setStarredTasks] = useState([]);
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
     const sentences = description.split('.');
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-  };  
+  }; 
 
   useEffect(() => {
-    if (hydrated && insights.length === 0) {
-      const currentDate = new Date();
-      const processedTasks = Mock.map((task) => {
-        const dateAssigned = new Date(task.DtCreate);
-        return {
-          ...task,
-          dateAssigned,
-          isOverdue: dateAssigned < currentDate,
-          firstSentence: getTheFirstSentence(task.Description),
-        };
-      // Sorts by date (earliest first)
-      }).sort((a, b) => a.dateAssigned - b.dateAssigned);
-      
-      setInsights(processedTasks.slice(0, 3));
+    if (hydrated) {
+      const filtered = insights.filter(task => task.isArchived);
+      setStarredTasks(filtered);
     }
-  }, [hydrated]);
+  }, [hydrated, insights]);
 
   if (!hydrated) {
       return (
         <View style={styles.centered}>
             <ActivityIndicator size="large" />
-            <Text>Loading insights...</Text>
+            <Text>Loading archived insights...</Text>
         </View>
       );
   }
@@ -59,7 +47,7 @@ const Feed = () => {
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
-        data={insights.filter(task => !task.isArchived)}
+        data={starredTasks}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>
             <View style={styles.item}>
@@ -69,18 +57,27 @@ const Feed = () => {
               </View>
               
               <Text style={styles.text}>{item.Title}</Text>
-              <Text style={styles.descriptionText}>{item.firstSentence}</Text>
+              <Text style={styles.descriptionText}>{getTheFirstSentence(item.Description)}</Text>
               <Text style={styles.dateText}>Due: {new Date(item.dateAssigned).toLocaleDateString()}</Text>
 
-              {item.isOverdue && (
-                <View style={styles.warningContainer}>
-                  <Ionicons name="warning" size={20} color="yellow" />
-                  <Text style={styles.warningText}>Overdue!</Text>
-                </View>
-              )}
+              {/* Unarchive Button */}
+              <Pressable
+                onPress={ async () => {
+                    const success = await unarchiveTask(item.Id);
+                    if (success) {
+                        console.log('Unarchived:', item.Id);
+                    }
+                }}
+                style={styles.unarchiveButton}
+            >
+                <Text style={styles.unarchiveButtonText}>Unarchive</Text>
+            </Pressable>
             </View>
           </Pressable>
         )}
+        ListEmptyComponent={
+          <Text style={{ textAlign: 'center', marginTop: 30 }}>No archived tasks yet.</Text>
+        }
       />
     </View>
   );
@@ -96,6 +93,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  backButton: {
+    marginRight: 15,
+    padding: 5,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   item: {
     padding: 20,
@@ -135,30 +145,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 20, 
   },
-  menuContainer: {
-    marginBottom: 10,
-  },
-  menuButton: {
-    padding: 10,
-    marginTop: 20,
-  },
-  warningContainer: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    borderRadius: 5,
-  },
-  warningText: {
-    color: 'yellow',
-    marginLeft: 5,
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
   descriptionText: {
     color: 'gray',
     fontSize: 12,
@@ -166,6 +152,25 @@ const styles = StyleSheet.create({
     marginLeft: 20, 
     fontStyle: 'italic', 
   },
+  menuContainer: {
+    marginBottom: 10,
+  },
+  menuButton: {
+    padding: 10,
+    marginTop: 20,
+  },
+  unarchiveButton: {
+    marginTop: 10,
+    alignSelf: 'flex-end',
+    backgroundColor: '#eee',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+  },
+  unarchiveButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
 });
 
-export default Feed;
+export default ArchivedTasks;
