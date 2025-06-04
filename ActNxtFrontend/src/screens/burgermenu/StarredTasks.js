@@ -40,10 +40,9 @@ const StarredTasks = () => {
   return (
     <View style={styles.container}>
       <View style={styles.menuContainer}>
-        <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+        <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
+          <Ionicons name="menu" size={30} color="black" />
         </Pressable>
-        <Text style={styles.title}>Starred</Text>
       </View>
 
       <FlatList
@@ -139,6 +138,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 20, 
     fontStyle: 'italic', 
+  },
+  menuContainer: {
+    marginBottom: 10,
+  },
+  menuButton: {
+    padding: 10,
+    marginTop: 20,
   },
 });
 

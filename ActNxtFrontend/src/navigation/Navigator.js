@@ -55,8 +55,8 @@ const CustomDrawerContent = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
+        <DrawerItem label="Insights" onPress={() => props.navigation.navigate('Feed')}/>
         <DrawerItem label="Starred" onPress={() => props.navigation.navigate('StarredTasks')}/>
-        <DrawerItem label="Filter 2" onPress={() => alert('Filter 2')}/>
         <DrawerItem label="Filter 3" onPress={() => alert('Filter 3')}/>
       </DrawerContentScrollView>
 
