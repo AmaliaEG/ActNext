@@ -15,9 +15,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "runtimeVersion": {
-        "policy": "appVersion"
-      },
+      "runtimeVersion": "1.0.0"
+    },
       "bundleIdentifier": "com.anonymous.actnxtfrontend",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -55,4 +54,3 @@
       "**/*"
     ]
   }
-}
