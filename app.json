@@ -1,0 +1,8 @@
+{
+  "android": {
+    "package": "com.actnxt.ubifine"
+  },
+  "ios": {
+    "bundleIdentifier": "com.actnxt.ubifine"
+  }
+}
