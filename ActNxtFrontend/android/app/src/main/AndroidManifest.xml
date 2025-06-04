@@ -38,6 +38,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.anonymous.actnxtfrontend.auth0" android:host="dev-actnxt.eu.auth0.com"/>
+        <data android:scheme="com.anonymous.actnxtfrontend.auth0" android:host="dev-actnxt.eu.auth0.com"/>
       </intent-filter>
     </activity>
   </application>
