@@ -55,6 +55,7 @@ const Feed = () => {
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color="black" />
         </Pressable>
+        <Text style={styles.screenTitle}>Insights</Text>
       </View>
 
       <FlatList
@@ -136,11 +137,13 @@ const styles = StyleSheet.create({
     marginLeft: 20, 
   },
   menuContainer: {
-    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 20,
   },
   menuButton: {
-    padding: 10,
-    marginTop: 20,
+    padding: 1,
   },
   warningContainer: {
     position: 'absolute',
@@ -165,6 +168,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 20, 
     fontStyle: 'italic', 
+  },
+  screenTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    color: 'black'
   },
 });
 

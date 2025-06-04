@@ -43,6 +43,7 @@ const ArchivedTasks = () => {
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color="black" />
         </Pressable>
+        <Text style={styles.screenTitle}>Archive</Text>
       </View>
 
       <FlatList
@@ -153,11 +154,13 @@ const styles = StyleSheet.create({
     fontStyle: 'italic', 
   },
   menuContainer: {
-    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 20,
   },
   menuButton: {
-    padding: 10,
-    marginTop: 20,
+    padding: 1,
   },
   unarchiveButton: {
     marginTop: 10,
@@ -170,6 +173,12 @@ const styles = StyleSheet.create({
   unarchiveButtonText: {
     color: 'black',
     fontWeight: 'bold',
+  },
+  screenTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    color: 'black'
   },
 });
 
