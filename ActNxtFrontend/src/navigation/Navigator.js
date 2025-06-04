@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import { NavigationContainer, ThemeContext } from '@react-navigation/native';
@@ -56,6 +56,15 @@ const CustomDrawerContent = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
+        {/* Header with logo and name */}
+        <View style={styles.drawerHeader}>
+          <Image source={require('../../assets/icon.png')} style={styles.drawerLogo} resizeMode="contain" />
+          <Text style={styles.drawerTitle}>
+            <Text style={styles.drawerTitleAct}>act</Text>
+            <Text style={styles.drawerTitleNxt}>nxt</Text>
+          </Text>
+        </View>
+
         <DrawerItem label="Insights" onPress={() => props.navigation.navigate('Feed')}/>
         <DrawerItem label="Starred" onPress={() => props.navigation.navigate('StarredTasks')}/>
         <DrawerItem label="Archive" onPress={() => props.navigation.navigate('ArchivedTasks')}/>
@@ -156,6 +165,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
     color: '#007AFF'
+  },
+  drawerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 40,
+    paddingBottom: 30,
+    gap: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    marginBottom: 10,
+    paddingBottom: 30,
+  },
+  drawerLogo: {
+    width: 48,
+    height: 48,
+  },
+  drawerTitle: {
+    fontSize: 30,
+    flexDirection: 'row',
+  },
+  drawerTitleAct: {
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  drawerTitleNxt: {
+    fontWeight: 'normal',
+    color: 'black',
   },
 });
 

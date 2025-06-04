@@ -43,6 +43,7 @@ const StarredTasks = () => {
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color="black" />
         </Pressable>
+        <Text style={styles.screenTitle}>Starred</Text>
       </View>
 
       <FlatList
@@ -140,11 +141,19 @@ const styles = StyleSheet.create({
     fontStyle: 'italic', 
   },
   menuContainer: {
-    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 20,
   },
   menuButton: {
-    padding: 10,
-    marginTop: 20,
+    padding: 1,
+  },
+  screenTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    color: 'black'
   },
 });
 
