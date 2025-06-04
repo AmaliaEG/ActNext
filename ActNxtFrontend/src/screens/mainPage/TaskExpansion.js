@@ -24,11 +24,11 @@ const Groups = {
 
 const TaskExpansion = ({ route }) => {
   const { taskId } = route.params;
-  const { insights, addFeedback, getFeedback, hydrated, updateTaskComment, getTaskComment, toggleStar, getStarStatus } = useInsightsStore();
+  const { insights, addFeedback, getFeedback, hydrated, updateTaskComment, getTaskComment, toggleStar, getStarStatus, archiveTask } = useInsightsStore();
   const navigation = useNavigation();
   const [feedback, setFeedback] = useState({liked: false, disliked: false});
   const [comment, setComment] = useState('');
-   const [isStarred, setIsStarred] = useState(false);
+  const [isStarred, setIsStarred] = useState(false);
 
   useEffect(() => {
     if (hydrated) {
@@ -167,7 +167,15 @@ const TaskExpansion = ({ route }) => {
       <View style={styles.finishedButtonContainer}>
         <TouchableOpacity
           style={styles.finishedButton}
-          onPress={() => navigation.navigate('Feed')}
+          onPress={ async () => {
+            const success = await archiveTask(taskId);
+            if (success) {
+              console.log('Task archived successfully');
+              navigation.navigate('Feed');
+            } else {
+              console.warn('Archiving failed');
+            }
+          }}
         >
           <Text style={styles.finishedButtonText}>Finished</Text>
         </TouchableOpacity>
