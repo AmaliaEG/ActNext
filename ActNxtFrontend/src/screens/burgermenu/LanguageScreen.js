@@ -2,32 +2,33 @@ import React from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import SettingsList from '../Settings/SettingsList';
 import useSettingsStore from '../../store/useSettingsStore';
+import { useTheme } from './ThemeContext';
+import LanguagePickerInput from './LanguagePickerInput';
 
 const LanguageScreen = () => {
     const { language, setLanguage, hydrated } = useSettingsStore();
+    const { resolvedTheme } = useTheme();
+    const isDarkMode = resolvedTheme === 'dark';
+
+    // Colors
+    const bgColor = isDarkMode ? '#1E1E1E' : '#FFFFFF';
+    const textColor = isDarkMode ? '#FFFFFF' : '#000000';
 
     if (!hydrated) {
         return (
-            <View style={styles.centered}>
-                <ActivityIndicator size="large" />
-                <Text>Loading language settings...</Text>
+            <View style={[styles.centered, { backgroundColor: bgColor }]}>
+                <ActivityIndicator size="large" color={textColor} />
+                <Text style={{ color: textColor, marginTop: 8 }}>Loading language settings...</Text>
             </View>
         );
     }
     
 
     return (
-        <View style={styles.container}>
-            <SettingsList
-                settings={[
-                    {
-                        name: 'Language',
-                        value: language,
-                        function: setLanguage,
-                        type: 'dropdown',
-                        options: ['English', 'Danish', 'Lorem Ipsum'],
-                    },
-                ]}
+        <View style={[styles.container, { backgroundColor: bgColor }]}>
+            <LanguagePickerInput
+                value={language}
+                onChange={(newLang) => setLanguage(newLang)}
             />
         </View>
     );
