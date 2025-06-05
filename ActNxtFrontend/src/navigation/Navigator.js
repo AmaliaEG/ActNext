@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
-import { NavigationContainer, ThemeContext } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import App from '../screens/demo_menu/App'; // Your main screen with the buttons
-// import SettingsPage from '../screens/Settings/Settings'; // Your settings page
 import Feed from '../screens/mainPage/Feed'; // Your Feed page
 import LanguageScreen from '../screens/burgermenu/LanguageScreen';
 import NotificationsScreen from '../screens/burgermenu/NotificationsScreen';
@@ -14,16 +13,31 @@ import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
 import TaskExpansion from '../screens/mainPage/TaskExpansion';
-import {useAuth0, Auth0Provider} from 'react-native-auth0';
 import ThemesScreen from '../screens/burgermenu/ThemesScreen';
-import { ThemeProvider } from '../screens/burgermenu/ThemeContext'; // Import your ThemeProvider
 import StarredTasks from '../screens/burgermenu/StarredTasks';
 import ArchivedTasks from '../screens/burgermenu/ArchivedTasks';
+import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import { ThemeProvider, useTheme } from '../screens/burgermenu/ThemeContext'; // Import your ThemeProvider
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props) => {
+  // Get the resolved theme
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === 'dark';
+
+  // Colors
+  const bgColor = isDarkMode ? '#121212' : '#FFFFFF';
+  const itemTextColor = isDarkMode ? '#FFFFFF' : '#000000';
+  const borderColor = isDarkMode ? '#333333' : '#CCCCCC';
+  const rightArrowColor = isDarkMode ? '#BBBBBB' : '#333333';
+  const gearBg = isDarkMode ? '#2A2A2A' : '#EEEEEE';
+  const gearIconColor = isDarkMode ? '#FFFFFF' : '#000000';
+  const modalBg = isDarkMode ? '#1E1E1E' : '#FFFFFF';
+  const modalText = isDarkMode ? '#FFFFFF' : '#000000';
+  const backTextColor = isDarkMode ? '#BBBBBB' : '#007AFF';
+
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
   const [activeSettingScreen, setActiveSettingScreen] = useState(null);
 
@@ -43,31 +57,31 @@ const CustomDrawerContent = (props) => {
       default:
         return (
           <>
-            <DrawerItem label="Profile" onPress={() => setActiveSettingScreen('Profile')} />
-            <DrawerItem label="Themes" onPress={() => setActiveSettingScreen('Themes')} />
-            <DrawerItem label="Language" onPress={() => setActiveSettingScreen('Language')} />
-            <DrawerItem label="Notifications" onPress={() => setActiveSettingScreen('Notifications')} />
-            <DrawerItem label="About" onPress={() => setActiveSettingScreen('About')} />
+            <DrawerItem label="Profile" labelStyle={{ color: itemTextColor }} onPress={() => setActiveSettingScreen('Profile')} />
+            <DrawerItem label="Themes" labelStyle={{ color: itemTextColor }} onPress={() => setActiveSettingScreen('Themes')} />
+            <DrawerItem label="Language" labelStyle={{ color: itemTextColor }} onPress={() => setActiveSettingScreen('Language')} />
+            <DrawerItem label="Notifications" labelStyle={{ color: itemTextColor }} onPress={() => setActiveSettingScreen('Notifications')} />
+            <DrawerItem label="About" labelStyle={{ color: itemTextColor }} onPress={() => setActiveSettingScreen('About')} />
           </>
         );
     }
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <DrawerContentScrollView {...props}>
+    <View style={{ flex: 1, backgroundColor: bgColor }}>
+      <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: bgColor }}>
         {/* Header with logo and name */}
-        <View style={styles.drawerHeader}>
+        <View style={[styles.drawerHeader, { borderBottomColor: borderColor }]}>
           <Image source={require('../../assets/icon.png')} style={styles.drawerLogo} resizeMode="contain" />
-          <Text style={styles.drawerTitle}>
-            <Text style={styles.drawerTitleAct}>act</Text>
-            <Text style={styles.drawerTitleNxt}>nxt</Text>
+          <Text style={[styles.drawerTitle, { color: itemTextColor }]}>
+            <Text style={[styles.drawerTitleAct, { color: itemTextColor }]}>act</Text>
+            <Text style={[styles.drawerTitleNxt, { color: itemTextColor }]}>nxt</Text>
           </Text>
         </View>
 
-        <DrawerItem label="Insights" onPress={() => props.navigation.navigate('Feed')}/>
-        <DrawerItem label="Starred" onPress={() => props.navigation.navigate('StarredTasks')}/>
-        <DrawerItem label="Archive" onPress={() => props.navigation.navigate('ArchivedTasks')}/>
+        <DrawerItem label="Insights" labelStyle={{ color: itemTextColor }} onPress={() => props.navigation.navigate('Feed')}/>
+        <DrawerItem label="Starred" labelStyle={{ color: itemTextColor }} onPress={() => props.navigation.navigate('StarredTasks')}/>
+        <DrawerItem label="Archive" labelStyle={{ color: itemTextColor }} onPress={() => props.navigation.navigate('ArchivedTasks')}/>
       </DrawerContentScrollView>
 
       <View style={styles.gearWrapper}>
@@ -76,10 +90,10 @@ const CustomDrawerContent = (props) => {
             setSettingsModalVisible(true);
             setActiveSettingScreen(null); // Reset screen
           }}
-          style={styles.gearButton}
+          style={[styles.gearButton, {backgroundColor: gearBg, shadowColor: isDarkMode ? '#000' : '#CCC'}]}
           testID='settings-button'
         >
-          <MaterialIcons name="settings" size={24} color="black" testID="icon-settings"/>
+          <MaterialIcons name="settings" size={24} color={gearIconColor} testID="icon-settings"/>
         </TouchableOpacity>
       </View>
 
@@ -88,14 +102,14 @@ const CustomDrawerContent = (props) => {
         onBackdropPress={() => setSettingsModalVisible(false)}
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
-        <View style={styles.modalContainer}>
+        <View style={[styles.modalContainer, { backgroundColor: modalBg, borderTopColor: borderColor }]}>
           <ScrollView contentContainerStyle={styles.modalContent}>
             {activeSettingScreen ? (
               <TouchableOpacity onPress={() => setActiveSettingScreen(null)}>
-                <Text style={styles.backButton}>Back</Text>
+                <Text style={[styles.backButton, { color: backTextColor }]}>Back</Text>
               </TouchableOpacity>
             ) : (
-              <Text style={styles.modalTitle}>Settings</Text>
+              <Text style={[styles.modalTitle, { color: modalText }]}>Settings</Text>
             )}
             {renderSettingComponent()}
           </ScrollView>
@@ -148,7 +162,6 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     height: '80%',
-    backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     overflow: 'hidden',
@@ -164,7 +177,6 @@ const styles = StyleSheet.create({
   backButton: {
     fontSize: 16,
     marginBottom: 10,
-    color: '#007AFF'
   },
   drawerHeader: {
     flexDirection: 'row',
@@ -174,9 +186,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     gap: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
     marginBottom: 10,
-    paddingBottom: 30,
+    // paddingBottom: 30,
   },
   drawerLogo: {
     width: 48,
@@ -188,11 +199,9 @@ const styles = StyleSheet.create({
   },
   drawerTitleAct: {
     fontWeight: 'bold',
-    color: 'black',
   },
   drawerTitleNxt: {
     fontWeight: 'normal',
-    color: 'black',
   },
 });
 
