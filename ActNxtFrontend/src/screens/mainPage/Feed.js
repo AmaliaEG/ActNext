@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-//import Mock from './MockTasks.json'; // Import JSON data
 import Mock from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
+import { useTheme } from '../burgermenu/ThemeContext';
 
 const GroupColours = {
   1: '#E862AE', // Light salmon for Win Back
@@ -15,6 +15,16 @@ const GroupColours = {
 const Feed = () => {
   const navigation = useNavigation();
   const { insights, setInsights, hydrated } = useInsightsStore();
+
+  const { resolvedTheme } = useTheme();
+  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#FFFFFF';
+  const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
+
+  const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
+  const subTextColor = resolvedTheme === 'dark' ? '#BBBBBB' : '#666666';
+
+  const shadowColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
+  const shadowOpacity = resolvedTheme === 'dark' ? 0.10 : 0.10;
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
@@ -42,20 +52,20 @@ const Feed = () => {
 
   if (!hydrated) {
       return (
-        <View style={styles.centered}>
-            <ActivityIndicator size="large" />
-            <Text>Loading insights...</Text>
+        <View style={[styles.centered, { backgroundColor }]}>
+            <ActivityIndicator size="large" color="#007BFF" />
+            <Text style={{ color: textColor, marginTop: 8 }}>Loading insights...</Text>
         </View>
       );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <View style={styles.menuContainer}>
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
-          <Ionicons name="menu" size={30} color="black" />
+          <Ionicons name="menu" size={30} color={textColor} />
         </Pressable>
-        <Text style={styles.screenTitle}>Insights</Text>
+        <Text style={[styles.screenTitle, { color: textColor }]}>Insights</Text>
       </View>
 
       <FlatList
@@ -63,15 +73,15 @@ const Feed = () => {
         data={insights.filter(task => !task.isArchived)}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>
-            <View style={styles.item}>
+            <View style={[styles.item, { backgroundColor: insightBackground, shadowColor: shadowColor, shadowOpacity: shadowOpacity }]}>
               <View style={styles.info}>
                 <View style={[styles.colorDot, { backgroundColor: GroupColours[item.SalesAnalysisId] }]} />
-                <Text style={styles.CompanyNameText}>{item.CompanyName}</Text>
+                <Text style={[styles.CompanyNameText, { color: textColor }]}>{item.CompanyName}</Text>
               </View>
               
-              <Text style={styles.text}>{item.Title}</Text>
-              <Text style={styles.descriptionText}>{item.firstSentence}</Text>
-              <Text style={styles.dateText}>Due: {new Date(item.dateAssigned).toLocaleDateString()}</Text>
+              <Text style={[styles.text, { color: textColor }]}>{item.Title}</Text>
+              <Text style={[styles.descriptionText, { color: subTextColor }]}>{item.firstSentence}</Text>
+              <Text style={[styles.dateText, { color: subTextColor }]}>Due: {new Date(item.dateAssigned).toLocaleDateString()}</Text>
 
               {item.isOverdue && (
                 <View style={styles.warningContainer}>
@@ -91,7 +101,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
-    backgroundColor: '#f5f5f5',
   },
   centered: {
     flex: 1,
@@ -102,12 +111,9 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     borderRadius: 10,
-    backgroundColor: 'white',
     position: 'relative',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
     elevation: 3,
   },
   info: {
@@ -125,13 +131,11 @@ const styles = StyleSheet.create({
     marginTop: -7,
   },
   text: {
-    color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 20, 
   },
   dateText: {
-    color: 'gray',
     fontSize: 12,
     marginTop: 5,
     marginLeft: 20, 
@@ -163,7 +167,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   descriptionText: {
-    color: 'gray',
     fontSize: 12,
     marginTop: 5,
     marginLeft: 20, 
@@ -173,7 +176,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginLeft: 10,
-    color: 'black'
   },
 });
 

@@ -16,9 +16,12 @@ const Themes = () => {
     return theme.mode === mode ? '#007AFF' : '#CCCCCC';
   };
 
+  const backgroundColor = theme.mode === 'dark' ? '#121212' : '#FFFFFF';
+  const textColor = theme.mode === 'dark' ? '#FFFFFF' : '#000000';
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.mode === 'dark' ? '#121212' : '#FFFFFF' }]} testID='themes-container'>
-      <Text style={[styles.title, { color: theme.mode === 'dark' ? '#FFFFFF' : '#000000'}]}>Theme Settings</Text>
+    <View style={[styles.container, { backgroundColor }]} testID='themes-container'>
+      <Text style={[styles.title, { color: textColor }]}>Theme Settings</Text>
       
       <View style={styles.buttonContainer}>
         <Button 
@@ -54,17 +57,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  // centered: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
   title: {
     fontSize: 24,
     marginBottom: 30,
   },
   buttonContainer: {
-    marginBottom: 10, 
+    marginBottom: 12, 
     width: '60%', 
   },
 });

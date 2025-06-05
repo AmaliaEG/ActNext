@@ -1,9 +1,8 @@
 import { Button, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import React from 'react';
 import { useAuth0 } from 'react-native-auth0';
-import { ThemeContext } from '@react-navigation/native';
-import { Appearance } from 'react-native';
+import { useTheme } from '../burgermenu/ThemeContext';
 import useAuthStore from '../../store/useAuthStore';
 import useSettingsStore from '../../store/useSettingsStore';
 import useProfileStore from '../../store/useProfileStore';
@@ -11,9 +10,9 @@ import useInsightsStore from '../../store/useInsightsStore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = ({ navigation }) => {
-    const [theme, setTheme] = useState({ mode: 'light' });
+    const { resolvedTheme } = useTheme();
 
-    // Stores
+    // Zustand Hydration
     const { loadAuth, hydrated: authHydrated } = useAuthStore();
     const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
     const { loadProfile, hydrated: profileHydrated } = useProfileStore();
@@ -33,22 +32,6 @@ const App = ({ navigation }) => {
     }, []);
 
     const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
-  
-    const updateTheme = (newTheme) => {
-      let mode;
-      if (!newTheme) {
-        mode = theme.mode == 'dark' ? 'light' : 'dark';
-        newTheme = { mode };
-      } else if (newTheme.system) {
-        const systemColorScheme = Appearance.getColorScheme();
-        mode = systemColorScheme === 'dark' ? 'dark' : 'light';
-        newTheme = {...newTheme, mode };
-      } else {
-        newTheme = {...newTheme, system: false};
-      }
-
-      setTheme(newTheme);
-    };
 
     if (!allHydrated) {
       return (
@@ -62,32 +45,26 @@ const App = ({ navigation }) => {
 
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <ThemeContext.Provider value={{ theme, updateTheme }}>
-          <View style={styles.container}>
-            <View style={styles.row}>
-              <View style={styles.buttonContainer}>
+        <View style={[styles.container, { backgroundColor: resolvedTheme === 'dark' ? '#000' : '#fff' }]}>
+          {/* Buttons and UI */}
+          <View style={styles.row}>
+            <View style={styles.buttonContainer}>
               <LoginButton/>
-              </View>
-              <View style={styles.buttonContainer}>
-                <Button
-                  title="Show Settings"
-                  onPress={() => navigation.navigate('SettingsScreen')} 
-                />
-              </View>
-              <View style={styles.buttonContainer}>
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                title="Show Settings"
+                onPress={() => navigation.navigate('SettingsScreen')} 
+              />
+            </View>
+            <View style={styles.buttonContainer}>
               <Button
                   title="Feed"
                   onPress={() => navigation.navigate('Feed')}
-                />
-              </View>
-            </View>
-            <View style={styles.row}>
-              <View style={styles.buttonContainer}>
-                <Button title="Button 4" onPress={() => alert('Button 4 pressed')} />
-              </View>
+              />
             </View>
           </View>
-        </ThemeContext.Provider>
+        </View>
       </GestureHandlerRootView>
     );
   };
@@ -130,7 +107,7 @@ const App = ({ navigation }) => {
   return (
     <View>
       {error && <Text>{error.message}</Text>}
-      {currentUser && (<Text>Logged in as {currentUser.name}</Text>)}
+      {currentUser && (<Text style={{ color: resolvedTheme === 'dark' ? '#fff' : '#000' }}>Logged in as {currentUser.name}</Text>)}
       {currentUser ? (
         <Button onPress={onLogout} title="Log out" />
       ) : (
