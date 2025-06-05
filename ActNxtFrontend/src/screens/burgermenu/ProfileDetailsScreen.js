@@ -22,7 +22,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const isDarkMode = resolvedTheme === 'dark';
 
     // Colors
-    const bgColor = isDarkMode ? '#121212' : '#FFFFFF';
+    const bgColor = isDarkMode ? '#1E1E1E' : '#FFFFFF';
     const textColor = isDarkMode ? '#FFFFFF' : '#000000';
     const borderColor = isDarkMode ? '#444444' : '#CCCCCC';
     const inputBg = isDarkMode ? '#1E1E1E' : '#F9F9F9';

@@ -16,7 +16,7 @@ const Themes = () => {
     return theme.mode === mode ? '#007AFF' : '#CCCCCC';
   };
 
-  const backgroundColor = theme.mode === 'dark' ? '#121212' : '#FFFFFF';
+  const backgroundColor = theme.mode === 'dark' ? '#1E1E1E' : '#FFFFFF';
   const textColor = theme.mode === 'dark' ? '#FFFFFF' : '#000000';
 
   return (

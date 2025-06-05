@@ -35,38 +35,89 @@ const SettingItem = ({ setting }) => {
 
   switch (type) {
     case 'switch':
-      return <SwitchSetting name={name} onToggle={onSettingChange} />;
+      return (
+        <SwitchSetting
+          name={name}
+          onToggle={onSettingChange}
+          labelStyle={setting.labelStyle}
+          trackColor={setting.trackColor}
+          thumbColor={setting.thumbColor}
+        />
+      );
     case 'dropdown':
       return (
         <DropdownSetting
           name={name}
           onSelect={onSettingChange}
           options={options}
+          labelStyle={setting.labelStyle}
+          containerStyle={setting.containerStyle}
+          pickerStyle={setting.pickerStyle}
+          placeholderTextColor={setting.placeholderTextColor}
+          valueTextStyle={setting.valueTextStyle}
         />
       );
     case 'button':
-      return <ButtonSetting name={name} onPress={onSettingChange} buttonText={options} />;
+      return (
+        <ButtonSetting
+          name={name}
+          onPress={onSettingChange}
+          buttonText={options}
+          labelStyle={setting.labelStyle}
+          buttonStyle={setting.buttonStyle}
+          buttonTextStyle={setting.buttonTextStyle}
+        />
+      );
     case 'textinput':
-      return <TextInputSetting name={name} onChangeText={onSettingChange} />;
+      return (
+        <TextInputSetting
+          name={name}
+          onChangeText={onSettingChange}
+          labelStyle={setting.labelStyle}
+          inputStyle={setting.inputStyle}
+          placeholder={setting.placeholder}
+          placeholderTextColor={setting.placeholderTextColor}
+        />
+      );
     case 'checkbox':
-      return <CheckboxSetting name={name} onToggle={onSettingChange} />;
+      return (
+        <CheckboxSetting
+          name={name}
+          onToggle={onSettingChange}
+          labelStyle={setting.labelStyle}
+          boxStyle={setting.boxStyle}
+          checkmarkStyle={setting.checkmarkStyle}
+        />
+      );
     case 'radio':
       return (
         <RadioSetting
           name={name}
           onSelect={onSettingChange}
           options={options}
+          labelStyle={setting.labelStyle}
         />
       );
     case 'slider':
-      return <SliderSetting name={name} onValueChange={onSettingChange} />;
+      return (
+        <SliderSetting
+          name={name}
+          onValueChange={onSettingChange}
+          labelStyle={setting.labelStyle}
+          value={setting.value}
+          sliderStyle={setting.sliderStyle}
+          minimumTrackTintColor={setting.minimumTrackTintColor}
+          maximumTrackTintColor={setting.maximumTrackTintColor}
+          thumbTintColor={setting.thumbTintColor}
+        />
+      );
     default:
       return null; // Handle unknown types gracefully
   }
 };
 
 // Switch Setting
-const SwitchSetting = ({ name, onToggle }) => {
+const SwitchSetting = ({ name, onToggle, labelStyle }) => {
   const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
@@ -94,7 +145,7 @@ const SwitchSetting = ({ name, onToggle }) => {
 
   return (
     <View style={styles.settingItem}>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={[styles.text, labelStyle]}>{name}</Text>
       <Switch
         value={isEnabled}
         onValueChange={handleToggle}
@@ -106,7 +157,16 @@ const SwitchSetting = ({ name, onToggle }) => {
 };
 
 // Dropdown Setting
-const DropdownSetting = ({ name, onSelect, options }) => {
+const DropdownSetting = ({
+    name,
+    onSelect,
+    options, 
+    labelStyle, 
+    containerStyle,
+    pickerStyle,
+    placeholderTextColor,
+    valueTextStyle,
+  }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   useEffect(() => {
@@ -136,34 +196,60 @@ const DropdownSetting = ({ name, onSelect, options }) => {
   };
 
   return (
-    <View style={styles.settingItem}>
-      <Text style={styles.text}>{name}</Text>
-      <Picker
-        selectedValue={selectedValue}
-        onValueChange={handleValueChange}
-        style={styles.picker}
-        // dropdownIconColor="#000"
-      >
-        {options.map((option, index) => (
-          <Picker.Item key={index} label={option} value={option} />
-        ))}
-      </Picker>
+    <View style={[styles.settingItem, containerStyle]}>
+      <Text style={[styles.text, labelStyle]}>{name}</Text>
+      <View style={styles.pickerWrapper}>
+        <Picker
+          selectedValue={selectedValue}
+          onValueChange={handleValueChange}
+          style={[styles.picker, pickerStyle]}
+          dropdownIconColor={valueTextStyle?.color}
+          placeholderTextColor={placeholderTextColor}
+        >
+          {options.map((option, index) => (
+            <Picker.Item
+              key={index}
+              label={option}
+              value={option}
+              color={valueTextStyle?.color}
+            />
+          ))}
+        </Picker>
+      </View>
     </View>
   );
 };
 
 // Button Setting
-const ButtonSetting = ({ name, onPress, buttonText }) => {
+const ButtonSetting = ({
+    name,
+    onPress,
+    buttonText,
+    labelStyle,
+    buttonStyle,
+    buttonTextStyle,
+  }) => {
   return (
     <View style={styles.settingItem}>
-      <Text style={styles.text}>{name}</Text>
-      <RNButton title={buttonText} onPress={onPress} />
+      <Text style={[styles.text, labelStyle]}>{name}</Text>
+      <RNButton
+        title={buttonText} 
+        onPress={onPress}
+        color={buttonStyle?.backgroundColor}
+      />
     </View>
   );
 };
 
 // Text Input Setting
-const TextInputSetting = ({ name, onChangeText }) => {
+const TextInputSetting = ({
+    name,
+    onChangeText,
+    labelStyle,
+    inputStyle,
+    placeholder,
+    placeholderTextColor,
+  }) => {
   const [text, setText] = useState('');
 
   useEffect(() => {
@@ -191,19 +277,25 @@ const TextInputSetting = ({ name, onChangeText }) => {
 
   return (
     <View style={styles.settingItem}>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={[styles.text, labelStyle]}>{name}</Text>
       <TextInput
         style={styles.textInput}
         value={text}
         onChangeText={handleTextChange}
-        placeholder="Enter text"
+        placeholder={placeholder}
+        placeholderTextColor={placeholderTextColor}
       />
     </View>
   );
 };
 
 // Custom Checkbox Setting
-const CheckboxSetting = ({ name, onToggle }) => {
+const CheckboxSetting = ({
+    name,
+    onToggle,
+    labelStyle,
+    boxStyle,checkmarkStyle,
+  }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
@@ -231,19 +323,19 @@ const CheckboxSetting = ({ name, onToggle }) => {
 
   return (
     <View style={styles.settingItem}>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={[styles.text, labelStyle]}>{name}</Text>
       <TouchableOpacity
-        style={[styles.checkbox, isChecked && styles.checkedBox]}
+        style={[styles.checkbox, boxStyle, isChecked && styles.checkedBox]}
         onPress={handleToggle}
       >
-        {isChecked && <Text style={styles.checkmark}>✓</Text>}
+        {isChecked && <Text style={[styles.checkmark, checkmarkStyle]}>✓</Text>}
       </TouchableOpacity>
     </View>
   );
 };
 
 // Radio Setting
-const RadioSetting = ({ name, onSelect, options }) => {
+const RadioSetting = ({ name, onSelect, options, labelStyle }) => {
   const [selectedId, setSelectedId] = useState(options[0].id);
 
   useEffect(() => {
@@ -270,7 +362,7 @@ const RadioSetting = ({ name, onSelect, options }) => {
 
   return (
     <View style={styles.settingItem}>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={[styles.text, labelStyle]}>{name}</Text>
       <RadioGroup
         radioButtons={options}
         onPress={handleSelect}
@@ -281,18 +373,25 @@ const RadioSetting = ({ name, onSelect, options }) => {
 };
 
 // Slider Setting
-const SliderSetting = ({ name, onValueChange, value }) => {
-  const [sliderValue, setSliderValue] = useState(null);
+const SliderSetting = ({
+    name,
+    onValueChange,
+    labelStyle,
+    value,
+    sliderStyle,
+    minimumTrackTintColor,
+    maximumTrackTintColor,
+    thumbTintColor,
+  }) => {
+  const [sliderValue, setSliderValue] = useState(value ?? 50);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const value = await AsyncStorage.getItem(`setting:${name}`);
-        if (value !== null && !isNaN(Number(value))) {
-          setSliderValue(Number(value));
-        } else {
-          setSliderValue(50);
-        }
+        const stored = await AsyncStorage.getItem(`setting:${name}`);
+        if (stored !== null && !isNaN(Number(stored))) {
+          setSliderValue(Number(stored));
+        } 
       } catch (e) {
         console.error(`Failed to load slider: ${name}`, e);
       }
@@ -314,20 +413,20 @@ const SliderSetting = ({ name, onValueChange, value }) => {
 
   return (
     <View style={styles.settingItem}>
-      <Text style={styles.text}>{name}</Text>
+      <Text style={[styles.text, labelStyle]}>{name}</Text>
       <Slider
-        style={styles.slider}
+        style={[styles.slider, sliderStyle]}
         minimumValue={0}
         maximumValue={100}
         step={1}
         value={sliderValue}
         onValueChange={setSliderValue}
         onSlidingComplete={handleSlidingComplete}
-        minimumTrackTintColor="#81b0ff"
-        maximumTrackTintColor="#767577"
-        thumbTintColor="#f5dd4b"
+        minimumTrackTintColor={minimumTrackTintColor}
+        maximumTrackTintColor={maximumTrackTintColor}
+        thumbTintColor={thumbTintColor}
       />
-      <Text>{sliderValue.toFixed(0)}</Text>
+      <Text style={[styles.text, labelStyle]}>{sliderValue.toFixed(0)}</Text>
     </View>
   );
 };
@@ -335,7 +434,6 @@ const SliderSetting = ({ name, onValueChange, value }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   contentContainer: {
     padding: 20, // Add padding to the content
@@ -344,7 +442,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 0,
+    marginBottom: 6,
   },
   text: {
     fontSize: 18,
@@ -354,9 +452,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     marginVertical: 10,
   },
+  pickerWrapper: {
+    flex: 1,
+    marginLeft: 12,
+  },
   picker: {
-    width: 150,
-    height: 60,
+    width: '100%',
+    height: 50,
   },
   textInput: {
     borderWidth: 1,
