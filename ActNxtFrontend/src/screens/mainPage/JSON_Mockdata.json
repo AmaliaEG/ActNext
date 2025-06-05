@@ -3,7 +3,7 @@
       "Id": 3,
       "Auth0UserId": "User1",
       "Title": "Urgent Action: Churn Risk Detected",
-      "CompanyName": "Bluewater Solutions tester",
+      "CompanyName": "Bluewater Solutions",
       "Description": "Customer has placed no orders in 45 days despite a previously consistent monthly pattern. Recommend follow-up call to investigate.",
       "DtCreate": "2025-05-01T12:06:46.807",
       "Source": "Business Central",
