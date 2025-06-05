@@ -23,6 +23,15 @@ const useInsightStore = create((set, get) => ({
             set({ insights: mockData, hydrated: true }); // Fallback
             }
         },
+        clearInsights: async () => {
+            try {
+                await AsyncStorage.removeItem('insights');
+                set({ insights: [] });
+            } catch (error) {
+                console.error('Failed to clear insights:', error);
+            }
+        },
+
 
         loadInsights: async () => {
             try {

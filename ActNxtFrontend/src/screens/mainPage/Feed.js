@@ -22,6 +22,14 @@ const Feed = () => {
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
   };  
 
+const [refreshing, setRefreshing] = useState(false);
+const onRefresh = async () => {
+  setRefreshing(true);
+  await useInsightsStore.getState().clearInsights(); // clear AsyncStorage
+  await useInsightsStore.getState().loadInsights();  // reload mock data
+  setRefreshing(false);
+};
+
   useEffect(() => {
     if (hydrated && insights.length === 0) {
       const currentDate = new Date();
@@ -55,12 +63,13 @@ const Feed = () => {
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color="black" />
         </Pressable>
-        <Text style={styles.screenTitle}>Insights</Text>
       </View>
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
         data={insights.filter(task => !task.isArchived)}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
         renderItem={({ item }) => (
           <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>
             <View style={styles.item}>
@@ -137,13 +146,11 @@ const styles = StyleSheet.create({
     marginLeft: 20, 
   },
   menuContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 30,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   menuButton: {
-    padding: 1,
+    padding: 10,
+    marginTop: 20,
   },
   warningContainer: {
     position: 'absolute',
@@ -168,12 +175,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 20, 
     fontStyle: 'italic', 
-  },
-  screenTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginLeft: 10,
-    color: 'black'
   },
 });
 
