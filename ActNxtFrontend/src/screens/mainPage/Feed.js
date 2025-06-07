@@ -32,6 +32,14 @@ const Feed = () => {
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
   };  
 
+  const [refreshing, setRefreshing] = useState(false);
+const onRefresh = async () => {
+  setRefreshing(true);
+  await useInsightsStore.getState().clearInsights(); // clear AsyncStorage
+  await useInsightsStore.getState().loadInsights();  // reload mock data
+  setRefreshing(false);
+};
+
   useEffect(() => {
     if (hydrated && insights.length === 0) {
       const currentDate = new Date();
