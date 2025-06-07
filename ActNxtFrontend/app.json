@@ -17,40 +17,45 @@
       "supportsTablet": true,
       "runtimeVersion": "1.0.0"
     },
-      "bundleIdentifier": "com.anonymous.actnxtfrontend",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+    "bundleIdentifier": "com.anonymous.actnxtfrontend",
+    "infoPlist": {
+      "ITSAppUsesNonExemptEncryption": false
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.anonymous.actnxtfrontend",
-      "runtimeVersion": "1.0.0"
-    },
-    "web": {
-      "favicon": "./assets/icon.png"
-    },
-    "plugins": [
-      [
-        "react-native-auth0",
-        {
-          "domain": "dev-actnxt.eu.auth0.com"
-        }
-      ],
-      "expo-secure-store"
-    ],
     "extra": {
       "eas": {
         "projectId": "df87c634-203c-4f76-8859-17be9871c290"
       }
+    }
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/icon.png",
+      "backgroundColor": "#ffffff"
     },
-    "updates": {
-      "url": "https://u.expo.dev/df87c634-203c-4f76-8859-17be9871c290"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  }
+    "package": "com.anonymous.actnxtfrontend",
+    "runtimeVersion": "1.0.0"
+  },
+  "web": {
+    "favicon": "./assets/icon.png"
+  },
+  "plugins": [
+    [
+      "react-native-auth0",
+      {
+        "domain": "dev-actnxt.eu.auth0.com"
+      }
+    ],
+    "expo-secure-store"
+  ],
+  "extra": {
+    "eas": {
+      "projectId": "df87c634-203c-4f76-8859-17be9871c290"
+    }
+  },
+  "updates": {
+    "url": "https://u.expo.dev/df87c634-203c-4f76-8859-17be9871c290"
+  },
+  "assetBundlePatterns": [
+    "**/*"
+  ]
+}
