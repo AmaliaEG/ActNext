@@ -41,22 +41,32 @@ const onRefresh = async () => {
 };
 
   useEffect(() => {
-    if (hydrated && insights.length === 0) {
+    const init = async () => {
+      await useInsightsStore.getState().clearInsights(); // Clear any stale cached insights
+
       const currentDate = new Date();
-      const processedTasks = Mock.map((task) => {
-        const dateAssigned = new Date(task.DtCreate);
-        return {
-          ...task,
-          dateAssigned,
-          isOverdue: dateAssigned < currentDate,
-          firstSentence: getTheFirstSentence(task.Description),
-        };
-      // Sorts by date (earliest first)
-      }).sort((a, b) => a.dateAssigned - b.dateAssigned);
-      
-      setInsights(processedTasks.slice(0, 3));
+     const processedTasks = Mock.map((task) => {
+      let dateAssigned = new Date(task.DtCreate);
+      if (isNaN(dateAssigned) && typeof task.DtCreate === 'string') {
+        dateAssigned = new Date(task.DtCreate.replace(' ', 'T'));
+      }
+      return {
+        ...task,
+        dateAssigned,
+        isOverdue: dateAssigned < new Date(),
+        firstSentence: getTheFirstSentence(task.Description),
+      };
+    }).sort((a, b) => a.dateAssigned - b.dateAssigned);
+
+
+      setInsights(processedTasks.slice(0, 3)); 
+    };
+
+    if (hydrated && insights.length === 0) {
+      init();
     }
   }, [hydrated]);
+
 
   if (!hydrated) {
       return (
@@ -81,17 +91,32 @@ const onRefresh = async () => {
         data={insights.filter(task => !task.isArchived)}
         refreshing={refreshing}
         onRefresh={onRefresh}
-        renderItem={({ item }) => (
-          <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>
-            <View style={[styles.item, { backgroundColor: insightBackground, shadowColor: shadowColor, shadowOpacity: shadowOpacity }]}>
+      renderItem={({ item }) => {
+      let assignedDate = new Date(item.dateAssigned);
+
+      // Fallback for iOS if format is invalid
+      if (assignedDate.toString() === 'Invalid Date' && typeof item.dateAssigned === 'string') {
+        const safeString = item.dateAssigned.replace(' ', 'T');
+        assignedDate = new Date(safeString);
+      }
+
+        return (
+          <Pressable onPress={() => navigation.navigate('Details', { taskId: item.Id })}>
+            <View style={[styles.item, { backgroundColor: insightBackground, shadowColor, shadowOpacity }]}>
               <View style={styles.info}>
                 <View style={[styles.colorDot, { backgroundColor: GroupColours[item.SalesAnalysisId] }]} />
                 <Text style={[styles.CompanyNameText, { color: textColor }]}>{item.CompanyName}</Text>
               </View>
-              
+
               <Text style={[styles.text, { color: textColor }]}>{item.Title}</Text>
               <Text style={[styles.descriptionText, { color: subTextColor }]}>{item.firstSentence}</Text>
-              <Text style={[styles.dateText, { color: subTextColor }]}>Due: {new Date(item.dateAssigned).toLocaleDateString()}</Text>
+
+              <Text style={[styles.dateText, { color: subTextColor }]}>
+              Due: {(() => {
+                const date = new Date(item.dateAssigned);
+                return isNaN(date) ? 'Unknown' : date.toISOString().split('T')[0]; })()}
+            </Text>
+
 
               {item.isOverdue && (
                 <View style={styles.warningContainer}>
@@ -101,7 +126,9 @@ const onRefresh = async () => {
               )}
             </View>
           </Pressable>
-        )}
+        );
+      }}
+
       />
     </View>
   );

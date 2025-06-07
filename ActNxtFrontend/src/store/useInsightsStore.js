@@ -1,7 +1,17 @@
 import { create } from "zustand";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const getTheFirstSentence = (description) => {
+  if (!description) return '';
+  const sentences = description.split('.');
+  return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
+};
 
+const ensureDate = (input) => {
+  if (!input) return null;
+  const parsed = new Date(typeof input === 'string' ? input.replace(' ', 'T') : input);
+  return isNaN(parsed) ? null : parsed;
+};
 // Sales Insights
 const useInsightStore = create((set, get) => ({
         insights: [],
@@ -10,18 +20,18 @@ const useInsightStore = create((set, get) => ({
 
         // Initialize store with mock data
         initializeWithMockData: async () => {
-            const mockData = require('../screens/mainPage/JSON_Mockdata.json');
-            try {
-            // Only initialize if no data exists
-            const existing = await AsyncStorage.getItem('insights');
-            if (!existing) {
-                await AsyncStorage.setItem('insights', JSON.stringify(mockData));
-                set({ insights: mockData, hydrated: true });
-            }
-            } catch (error) {
-            console.error('Initialization failed:', error);
-            set({ insights: mockData, hydrated: true }); // Fallback
-            }
+            const currentDate = new Date();
+            const formatted = mockData.map(item => {
+            const dateAssigned = ensureDate(item.dateAssigned || item.DtCreate);
+            return {
+                ...item,
+                dateAssigned,
+                isOverdue: dateAssigned ? dateAssigned < currentDate : false,
+                firstSentence: getTheFirstSentence(item.Description),
+            };
+            });
+            await AsyncStorage.setItem('insights', JSON.stringify(formatted));
+            set({ insights: formatted, hydrated: true });
         },
         clearInsights: async () => {
             try {
@@ -34,34 +44,47 @@ const useInsightStore = create((set, get) => ({
 
 
         loadInsights: async () => {
-            try {
-                const mockData = require('../screens/mainPage/JSON_Mockdata.json')
+        try {
+            const mockData = require('../screens/mainPage/JSON_Mockdata.json');
+            const stored = await AsyncStorage.getItem('insights');
+            const parsedData = stored ? JSON.parse(stored) : mockData;
 
-                // if (forceRefresh){
-                //     await AsyncStorage.setItem('insights', JSON.stringify(mockData));
-                //     set({insights: mockData, hydrated: true});
-                //     return;
-                // }
-                const stored = await AsyncStorage.getItem('insights');
-                set({ 
-                    insights: stored ? JSON.parse(stored) : mockData,
-                    hydrated: true 
-                });
-            } catch (error) {
-                console.error('Failed to load insights:', error);
-                set({ insights: mockData, hydrated: true });
-            }
+            const currentDate = new Date();
+            const processed = parsedData.map(item => {
+            const dateAssigned = ensureDate(item.dateAssigned || item.DtCreate);
+            return {
+                ...item,
+                dateAssigned,
+                isOverdue: dateAssigned ? dateAssigned < currentDate : false,
+                firstSentence: getTheFirstSentence(item.Description),
+            };
+            });
+
+            set({ insights: processed, hydrated: true });
+        } catch (error) {
+            console.error('Failed to load insights:', error);
+            set({ insights: [], hydrated: true });
+        }
         },
-
         setInsights: async (data) => {
             try {
-                await AsyncStorage.setItem('insights', JSON.stringify(data));
-                set({ insights: data });
+                const currentDate = new Date();
+                const formatted = data.map(item => {
+                const dateAssigned = ensureDate(item.dateAssigned || item.DtCreate);
+                return {
+                    ...item,
+                    dateAssigned,
+                    isOverdue: dateAssigned ? dateAssigned < currentDate : false,
+                    firstSentence: getTheFirstSentence(item.Description),
+                };
+                });
+
+                await AsyncStorage.setItem('insights', JSON.stringify(formatted));
+                set({ insights: formatted });
             } catch (error) {
                 console.error('Failed to set insights:', error);
-            }
-        },
-
+        }
+            },
         addFeedback: async (insightId, feedbackType) => {
             try {
                 const currentInsights = get().insights;
@@ -84,6 +107,7 @@ const useInsightStore = create((set, get) => ({
                     return {...item, feedback: newFeedback};
                 }
                 return item;
+                dateAssigned: ensureDate(item.dateAssigned)
                 });
                 
                 await AsyncStorage.setItem('insights', JSON.stringify(updated));
