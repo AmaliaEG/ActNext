@@ -9,7 +9,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 4,
@@ -17,11 +22,16 @@
       "Title": "Contract At Risk",
       "CompanyName": "Vejle Robotics",
       "Description": "AI flagged a major slowdown in Q2 compared to Q1. The account manager should check if procurement priorities have shifted.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-05T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 5,
@@ -29,11 +39,16 @@
       "Title": "Declining Engagement Warning",
       "CompanyName": "HolmTech Systems",
       "Description": "Engagement frequency and order size have dropped substantially. Consider scheduling a review meeting to understand their status.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-07T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 6,
@@ -41,11 +56,16 @@
       "Title": "Customer Relationship At Risk",
       "CompanyName": "Nordisk Steel",
       "Description": "Last 3 months show negative purchase trends. Recommend re-engagement with tailored offer or loyalty incentive.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-10T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 7,
@@ -53,11 +73,16 @@
       "Title": "Warning: Order Frequency Falling Rapidly",
       "CompanyName": "Jensen AutoParts",
       "Description": "Customer has gone from weekly to monthly purchases. Might be testing a competitor — immediate check-in advised.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-12T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 8,
@@ -65,23 +90,33 @@
       "Title": "Dormant But High-Value Account",
       "CompanyName": "MetroServ ApS",
       "Description": "No purchases since January, yet customer spent €180,000 last year. AI suggests targeted reactivation via email or call.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-15T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 9,
       "Auth0UserId": "User1",
       "Title": "Missed Revenue Opportunity",
       "CompanyName": "ScanNordic Freight",
-      "Description": "Customer hasn’t purchased in 90+ days despite prior high-volume history. Re-engagement offer could recover significant revenue.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "Description": "Customer hasn't purchased in 90+ days despite prior high-volume history. Re-engagement offer could recover significant revenue.",
+      "DtCreate": "2025-06-18T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 10,
@@ -89,11 +124,16 @@
       "Title": "Customer Slippage Alert",
       "CompanyName": "Telelogix Systems",
       "Description": "Customer is gradually slipping. Consider automated check-in or survey to understand cause of inactivity.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-20T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 11,
@@ -101,11 +141,16 @@
       "Title": "Past Top Buyer Gone Quiet",
       "CompanyName": "Helsinge Foods",
       "Description": "Large volume orders in Q3 last year. No activity since February. AI suggests sending a personalized promotion.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-22T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 12,
@@ -113,23 +158,33 @@
       "Title": "Follow-Up Needed: Performance Drop",
       "CompanyName": "Optimech Tools",
       "Description": "Revenue from this customer has fallen 68% over 6 months. Recommend manager outreach to identify friction.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-25T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 13,
       "Auth0UserId": "User1",
       "Title": "Upsell: Matching Product Opportunity",
-      "CompanyName": "FlexBuild A\/S",
+      "CompanyName": "FlexBuild A/S",
       "Description": "Customer frequently orders Product X. 80% of similar buyers added Product Y within 60 days. Suggest bundled promotion.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-28T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 14,
@@ -137,11 +192,16 @@
       "Title": "Cross-Sell Potential Identified",
       "CompanyName": "EverGreen HydroTech",
       "Description": "Buying behavior aligns with other customers who also purchased Service Z. Recommend trial offer or bundle.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-06-30T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 15,
@@ -149,11 +209,16 @@
       "Title": "Recurring Purchase Pattern Detected",
       "CompanyName": "Lumo Lighting",
       "Description": "Orders every 3 weeks show a consistent demand trend. Suggest auto-replenishment proposal or volume deal.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-07-02T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 16,
@@ -161,23 +226,33 @@
       "Title": "AI Suggests Repeat Order Nudge",
       "CompanyName": "Kronos Medical",
       "Description": "Customer has not reordered in expected time window. Send automated reminder with reorder link or incentive.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "DtCreate": "2025-07-05T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 17,
       "Auth0UserId": "User1",
       "Title": "Growth Insight: Segment Match Found",
       "CompanyName": "Danish BioPrint",
-      "Description": "This customer’s behavior matches high-growth clients in another segment. Consider suggesting new product line or consultation.",
-      "DtCreate": "2025-05-01T12:06:46.807",
+      "Description": "This customer's behavior matches high-growth clients in another segment. Consider suggesting new product line or consultation.",
+      "DtCreate": "2025-07-08T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 18,
@@ -185,11 +260,16 @@
       "Title": "Churn Risk: Response Required",
       "CompanyName": "BetaLogistics Group",
       "Description": "Significant decline in purchase activity suggests potential churn. Immediate outreach may recover the account.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-10T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 19,
@@ -197,11 +277,16 @@
       "Title": "High-Value Client Going Silent",
       "CompanyName": "Futura Materials",
       "Description": "Top-20 client has gone quiet for two months. Recommend senior sales call to realign expectations.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-12T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 20,
@@ -209,11 +294,16 @@
       "Title": "Sales Trend Warning Triggered",
       "CompanyName": "EltraTech",
       "Description": "Customer activity sharply down compared to historical trend. Opportunity to intervene before loss.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-15T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 21,
@@ -221,11 +311,16 @@
       "Title": "Contract Renewal Risk",
       "CompanyName": "Plantek Danmark",
       "Description": "No activity in 6 weeks and annual renewal is approaching. Review relationship and reengagement plan.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-18T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 22,
@@ -233,11 +328,16 @@
       "Title": "Alert: Diminished Engagement",
       "CompanyName": "GreenSpace Systems",
       "Description": "Purchase frequency and order size have dropped 70%. Consider initiating feedback or survey touchpoint.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-20T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 23,
@@ -245,23 +345,33 @@
       "Title": "Revive Dormant Client",
       "CompanyName": "AutoFast Parts",
       "Description": "No orders since Q1. Client previously generated €75K annually. Suggest a tailored reactivation deal.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-22T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 24,
       "Auth0UserId": "User2",
       "Title": "Missed Q2 Revenue Opportunity",
-      "CompanyName": "NetCable A\/S",
+      "CompanyName": "NetCable A/S",
       "Description": "Customer failed to place any Q2 orders despite strong Q1 activity. Review last communication and follow up.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-25T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 25,
@@ -269,11 +379,16 @@
       "Title": "Buyer Engagement Drop-Off",
       "CompanyName": "OrbiChem ApS",
       "Description": "Inactive since January. Historical volume justifies attempt to re-engage via loyalty or volume-based promo.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-28T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 26,
@@ -281,11 +396,16 @@
       "Title": "Old Customer, New Potential?",
       "CompanyName": "CityClean Supplies",
       "Description": "Last invoice was 8 months ago. Still within top 10% of historical spenders. Suggest reactivation call.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-07-30T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 27,
@@ -293,23 +413,33 @@
       "Title": "Silent But Strategic Account",
       "CompanyName": "Formex Steel",
       "Description": "Account spent over €100K in 2023, now inactive. Recommend personal outreach to assess situation.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-08-02T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 28,
       "Auth0UserId": "User2",
       "Title": "Upsell Triggered By Behavior Match",
       "CompanyName": "NovaCooling",
-      "Description": "This customer’s order pattern matches others who also purchased our upgraded cooling module. Recommend upsell offer.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "Description": "This customer's order pattern matches others who also purchased our upgraded cooling module. Recommend upsell offer.",
+      "DtCreate": "2025-08-05T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 29,
@@ -317,11 +447,16 @@
       "Title": "Cross-Sell Insight Available",
       "CompanyName": "Trafix Components",
       "Description": "Purchases in Category A typically indicate interest in complementary products. Suggest bundling options.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-08-08T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 30,
@@ -329,23 +464,33 @@
       "Title": "Likely Repeat Order Delay",
       "CompanyName": "PolarWave Equipment",
       "Description": "Customer usually reorders every 6 weeks — current gap is 9 weeks. Reminder email could trigger purchase.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-08-10T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 31,
       "Auth0UserId": "User2",
       "Title": "AI Suggests New Product Match",
       "CompanyName": "SpeedRail Logistics",
-      "Description": "Customer’s segment and behavior align with high adopters of Product Z. Propose an introductory trial.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "Description": "Customer's segment and behavior align with high adopters of Product Z. Propose an introductory trial.",
+      "DtCreate": "2025-08-12T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 32,
@@ -353,11 +498,16 @@
       "Title": "Revenue Expansion Opportunity",
       "CompanyName": "ThermoScan Group",
       "Description": "Recent buying behavior shows readiness for add-on package. Propose bundle during next conversation.",
-      "DtCreate": "2025-05-01T12:08:21.610",
+      "DtCreate": "2025-08-15T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 33,
@@ -365,11 +515,16 @@
       "Title": "Customer Inactivity Alert",
       "CompanyName": "EcoGenics Ltd",
       "Description": "Purchases have decreased by over 60% in the past quarter. Customer may be disengaging — follow-up needed.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-08-18T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 34,
@@ -377,11 +532,16 @@
       "Title": "Engagement Decline Detected",
       "CompanyName": "VitaNova ApS",
       "Description": "Steady reduction in purchase frequency from this account. AI flags it as at risk — consider personal outreach.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-08-20T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 35,
@@ -389,11 +549,16 @@
       "Title": "Key Client Showing Downtrend",
       "CompanyName": "StormTech Systems",
       "Description": "Monthly spend has dropped sharply. Possible churn risk — reach out before competitor steps in.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-08-22T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 36,
@@ -401,11 +566,16 @@
       "Title": "Flagged for Relationship Review",
       "CompanyName": "Brightware AB",
       "Description": "This client had regular orders and suddenly stopped. Might signal dissatisfaction or internal change.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-08-25T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 37,
@@ -413,11 +583,16 @@
       "Title": "Urgent Retention Opportunity",
       "CompanyName": "DeltaRig Supplies",
       "Description": "No orders for 7 weeks, abnormal for this customer. Suggest retention call or discount offer.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-08-28T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 38,
@@ -425,11 +600,16 @@
       "Title": "Reconnect With Dormant Buyer",
       "CompanyName": "CleanNova ApS",
       "Description": "Customer inactive for 5 months, but high historical value. Offer a loyalty-based incentive to re-engage.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-08-30T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 39,
@@ -437,11 +617,16 @@
       "Title": "Potential Recovery Lead",
       "CompanyName": "NordGas Industries",
       "Description": "AI spotted value loss from this inactive customer. Recommend sending a targeted promotional email.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-02T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 40,
@@ -449,11 +634,16 @@
       "Title": "Lapsed Buyer - New Campaign Target",
       "CompanyName": "Ferrovia Parts",
       "Description": "Last invoice 6+ months ago. Suggest retargeting in next email campaign with bundled pricing.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-05T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 41,
@@ -461,11 +651,16 @@
       "Title": "Top-25 Client No Longer Active",
       "CompanyName": "MediSys Components",
       "Description": "Inactivity since early this year. Past purchase history justifies personal follow-up.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-08T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 42,
@@ -473,11 +668,16 @@
       "Title": "Customer Recovery Insight",
       "CompanyName": "AgriBoost AB",
       "Description": "Customer drifted away despite frequent orders in 2023. Offer time-limited discount to win them back.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-10T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 43,
@@ -485,11 +685,16 @@
       "Title": "Cross-Sell Based on Recent Orders",
       "CompanyName": "Hexatek Group",
       "Description": "Recent purchases suggest potential need for our calibration add-on product. Recommend test bundle.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-12T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 44,
@@ -497,11 +702,16 @@
       "Title": "Pattern Detected: New Product Fit",
       "CompanyName": "OmniFlow Solutions",
       "Description": "Invoice trends match others who upgraded to our premium line. Offer tailored upsell option.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-15T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 45,
@@ -509,11 +719,16 @@
       "Title": "Auto-Reorder Opportunity Identified",
       "CompanyName": "AquaTech Systems",
       "Description": "Customer has reordered every 30 days like clockwork. Offer auto-delivery subscription.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-18T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 46,
@@ -521,11 +736,16 @@
       "Title": "Suggest Product Upgrade",
       "CompanyName": "BuildCore AB",
       "Description": "Purchase of base model aligns with upgrade patterns. Recommend enhanced version via email.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-20T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 47,
@@ -533,10 +753,15 @@
       "Title": "AI Flags Complementary Product Match",
       "CompanyName": "BioComposites ApS",
       "Description": "Recent orders indicate interest in a related product line. Present upsell opportunity during next interaction.",
-      "DtCreate": "2025-05-01T12:09:23.030",
+      "DtCreate": "2025-09-22T12:09:23.030",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     }
-  ]
+]

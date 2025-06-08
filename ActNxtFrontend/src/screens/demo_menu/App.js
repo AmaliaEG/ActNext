@@ -13,7 +13,6 @@ const App = ({ navigation }) => {
 
   //theme 
   const { resolvedTheme } = useTheme();
-
   // Zustand Hydration
   const { loadAuth, hydrated: authHydrated, isLoggedIn } = useAuthStore();
   const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
