@@ -17,7 +17,7 @@ const Feed = () => {
   const { insights, setInsights, hydrated } = useInsightsStore();
 
   const { resolvedTheme } = useTheme();
-  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#FFFFFF';
+  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#EEEEEE';
   const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
 
   const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
@@ -79,7 +79,7 @@ const onRefresh = async () => {
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
-      <View style={styles.menuContainer}>
+      <View style={[styles.menuContainer, {backgroundColor: insightBackground}]}>
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color={textColor} />
         </Pressable>
@@ -137,7 +137,7 @@ const onRefresh = async () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 25,
+    padding: 0,
   },
   centered: {
     flex: 1,
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 20,
     marginVertical: 8,
+    marginHorizontal: 25,
     borderRadius: 10,
     position: 'relative',
     shadowColor: '#000',
@@ -179,6 +180,9 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     marginBottom: 10,
+    padding:25,
+    marginLeft: 0,
+    marginRight:0,
   },
   menuButton: {
     padding: 10,

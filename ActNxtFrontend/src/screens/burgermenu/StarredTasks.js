@@ -17,7 +17,7 @@ const StarredTasks = () => {
   const [starredTasks, setStarredTasks] = useState([]);
 
   const { resolvedTheme } = useTheme();
-  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#FFFFFF';
+  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#EEEEEE';
   const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
 
   const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
@@ -50,7 +50,7 @@ const StarredTasks = () => {
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
-      <View style={styles.menuContainer}>
+      <View style={[styles.menuContainer,{backgroundColor:insightBackground}]}>
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color={textColor} />
         </Pressable>
@@ -85,7 +85,7 @@ const StarredTasks = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 25,
+    padding: 0,
   },
   centered: {
     flex: 1,
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 20,
     marginVertical: 8,
+    marginHorizontal: 25,
     borderRadius: 10,
     position: 'relative',
     shadowColor: '#000',
@@ -147,8 +148,9 @@ const styles = StyleSheet.create({
   menuContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30,
-    marginBottom: 20,
+    padding:25,
+    paddingTop:55,
+    marginBottom: 10,
   },
   menuButton: {
     padding: 1,
