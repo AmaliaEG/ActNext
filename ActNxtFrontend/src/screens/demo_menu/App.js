@@ -10,86 +10,98 @@ import useInsightsStore from '../../store/useInsightsStore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = ({ navigation }) => {
-    const { resolvedTheme } = useTheme();
 
-    // Zustand Hydration
-    const { loadAuth, hydrated: authHydrated } = useAuthStore();
-    const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
-    const { loadProfile, hydrated: profileHydrated } = useProfileStore();
-    const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
+  //theme 
+  const { resolvedTheme } = useTheme();
 
-    useEffect(() => {
-      const hydrateAll = async () => {
-        await Promise.all([
-          loadAuth(),
-          loadSettings(),
-          loadProfile(),
-          loadInsights()
-        ]);
-      };
+  // Zustand Hydration
+  const { loadAuth, hydrated: authHydrated } = useAuthStore();
+  const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
+  const { loadProfile, hydrated: profileHydrated } = useProfileStore();
+  const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
 
-      hydrateAll();
-    }, []);
+  const { user:auth0User } = useAuth0();
 
-    const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
+  //loading all stored data from zustand
+  useEffect(() => {
+    const hydrateAll = async () => {
+      await Promise.all([
+        loadAuth(),
+        loadSettings(),
+        loadProfile(),
+        loadInsights()
+      ]);
+    };
 
-    if (!allHydrated) {
-      return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <View style={styles.centered}>
-            <ActivityIndicator size="large" color="#007BFF" />
-          </View>
-        </GestureHandlerRootView>
-      );
-    }
+    hydrateAll();
+  }, []);
 
+  const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
+
+  if (!allHydrated) {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={[styles.container, { backgroundColor: resolvedTheme === 'dark' ? '#000' : '#fff' }]}>
-          {/* Buttons and UI */}
-          <View style={styles.row}>
-            <View style={styles.buttonContainer}>
-              <LoginButton/>
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                title="Show Settings"
-                onPress={() => navigation.navigate('SettingsScreen')} 
-              />
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                  title="Feed"
-                  onPress={() => navigation.navigate('Feed')}
-              />
-            </View>
-          </View>
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color="#007BFF" />
         </View>
       </GestureHandlerRootView>
     );
+  }
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View style={[styles.container, { backgroundColor: resolvedTheme === 'dark' ? '#000' : '#fff' }]}>
+        {/* Buttons and UI */}
+        <View style={styles.row}>
+          <View style={styles.buttonContainer}>
+            <LoginButton/>
+            <Button
+              title="Show Settings"
+              onPress={() => navigation.navigate('SettingsScreen')} 
+            />
+            <Button
+                title="Feed"
+                onPress={() => navigation.navigate('Feed')}
+            />
+            <Button
+              title="test auth"
+              onPress={() => alert(auth0User.name)}
+            />
+          </View>
+        </View>
+      </View>
+    </GestureHandlerRootView>
+  );
+};
+
+
+
+const LoginButton = () => {
+  
+  // Auth0 hooks
+  const { authorize, user: auth0User, error, isLoading, clearSession } = useAuth0();
+
+  // Zustand store
+  const { login, logout, user: zustandUser, isLoggedIn } = useAuthStore();
+
+  // Fallback mechanism just in case
+  // Will get removed once Zustand is confirmed to work
+  const currentUser = zustandUser || auth0User;
+
+  const onLogin = async () => {
+    try {
+      await authorize();
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
-  const LoginButton = () => {
-    // Auth0 hooks
-    const { authorize, user: auth0User, error, isLoading, clearSession } = useAuth0();
-
-    // Zustand store
-    const { setAuth, logout, user: zustandUser } = useAuthStore();
-
-    // Fallback mechanism just in case
-    // Will get removed once Zustand is confirmed to work
-    const currentUser = zustandUser || auth0User;
-
-    const onLogin = async () => {
-      try {
-        const credentials = await authorize();
-        if (credentials) {
-          setAuth(credentials.accessToken, credentials.user);
-        }
-      } catch (error) {
-        console.error('Login failed:', error);
-      }
-    };
+  const populateStores = async () => {
+    if(!isLoggedIn && currentUser){
+      login(currentUser);
+      loadProfile();
+    }
+  }
 
   const onLogout = async () => {
     try {
@@ -107,7 +119,14 @@ const App = ({ navigation }) => {
   return (
     <View>
       {error && <Text>{error.message}</Text>}
-      {currentUser && (<Text style={{ color: resolvedTheme === 'dark' ? '#fff' : '#000' }}>Logged in as {currentUser.name}</Text>)}
+      {/*currentUser && (<Text style={{ color: resolvedTheme === 'dark' ? '#fff' : '#000' }}>Logged in as {currentUser.name}</Text>)*/}
+      
+      {currentUser && 
+      (<Text style={{ color:  '#000' }}>Logged in as {currentUser.name}</Text>) 
+      }
+      {currentUser && 
+      populateStores()
+      }
       {currentUser ? (
         <Button onPress={onLogout} title="Log out" />
       ) : (
@@ -135,6 +154,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 10, 
     alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   button: {
     padding: 15,
