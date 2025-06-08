@@ -1,127 +1,48 @@
-import {
-    Text,
-    View,
-    TouchableOpacity,
-    StyleSheet,
-    Switch,
-    ActivityIndicator,
-} from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import React from 'react';
-import useSettingsStore from "../../store/useSettingsStore";
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useTheme } from '../../Themes/ThemeContext'; 
 
-const SettingsScreen = ({ navigation }) => {
-    const {
-        theme,
-        language,
-        notificationsEnabled,
-        toggleNotifications,
-        hydrated
-    } = useSettingsStore();
+const ThemesScreen = () => {
+  const { mode, updateTheme, theme } = useTheme();
 
-    if (!hydrated) {
-        return (
-            <View style={styles.centered}>
-                <ActivityIndicator size="large" />
-                <Text>Loading settings...</Text>
-            </View>
-        )
-    }
+  const getColor = (currentMode) => {
+    return mode === currentMode ? '#007AFF' : '#CCCCCC';
+  };
 
-    const isDarkMode = theme.mode === 'dark';
-    
-    const menuItems = [
-        { title: 'Profile', screen: 'ProfileDetails' },
-        {
-            title: 'Themes', 
-            screen: 'Themes',
-            rightText: theme.mode === 'system' ? 'System' : theme.mode === 'dark' ? 'Dark' : 'Light'
-        },
-        {
-            title: 'Language',
-            screen: 'Language',
-            rightText: language.toUpperCase()
-        },
-        {
-            title: 'Notifications',
-            screen: 'Notifications',
-            rightComponent: (
-                <Switch
-                    value={notificationsEnabled}
-                    onValueChange={toggleNotifications}
-                />
-            )
-        },
-        { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
-    ];
+  const renderOption = (label, value) => (
+    <Pressable onPress={() => updateTheme(value)} style={styles.option}>
+      <Text style={[styles.optionText, { color: getColor(value) }]}>{label}</Text>
+    </Pressable>
+  );
 
-    return (
-        <View style={[styles.container, { backgroundColor: isDarkMode ? '#121212' : '#fff' }]}>
-            {menuItems.map((item, index) => (
-                <TouchableOpacity
-                    key={index}
-                    style={[styles.menuItem, {
-                        borderBottomColor: isDarkMode ? '#333' : '#ccc'
-                    }]}
-                    onPress={() => navigation.navigate(item.screen)}
-                >
-                    <Text style={[styles.menuText, {
-                        color: isDarkMode ? '#fff' : '#000'
-                    }]}>{item.title}</Text>
-
-                    <View style={styles.rightContent}>
-                        {item.rightText && (
-                            <Text style={[styles.rightText, {
-                                color: isDarkMode ? '#aaa' : '#666'
-                            }]}>
-                                {item.rightText}
-                            </Text>
-                        )}
-                        {item.rightComponent && item.rightComponent}
-                        {!item.rightText && !item.rightComponent && (
-                            <AntDesign
-                                name="right"
-                                size={20}
-                                color={isDarkMode ? '#aaa' : '#000'}
-                            />
-                        )}
-                    </View>
-                </TouchableOpacity>
-            ))}
-        
-        </View>
-    );
+  return (
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.text }]}>Theme Settings</Text>
+      {renderOption('Light', 'light')}
+      {renderOption('Dark', 'dark')}
+      {renderOption('System', 'system')}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-    },
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    menuItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
-    menuText: {
-        fontSize: 16,
-    },
-    rightContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-    },
-    rightText: {
-        fontSize: 14,
-    },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '600',
+    marginBottom: 40,
+  },
+  option: {
+    marginVertical: 12,
+  },
+  optionText: {
+    fontSize: 18,
+    fontWeight: '500',
+  },
 });
 
-export default SettingsScreen;
+export default ThemesScreen;

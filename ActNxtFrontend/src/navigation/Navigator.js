@@ -17,7 +17,7 @@ import ThemesScreen from '../screens/burgermenu/ThemesScreen';
 import StarredTasks from '../screens/burgermenu/StarredTasks';
 import ArchivedTasks from '../screens/burgermenu/ArchivedTasks';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
-import { ThemeProvider, useTheme } from '../screens/burgermenu/ThemeContext'; // Import your ThemeProvider
+import { ThemeProvider, useTheme } from '../Themes/ThemeContext';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

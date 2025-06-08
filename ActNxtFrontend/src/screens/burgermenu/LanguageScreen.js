@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import SettingsList from '../Settings/SettingsList';
 import useSettingsStore from '../../store/useSettingsStore';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
 import LanguagePickerInput from './LanguagePickerInput';
 
 const LanguageScreen = () => {

@@ -3,29 +3,30 @@ import { View, FlatList, Text, StyleSheet, Pressable, ActivityIndicator } from '
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useInsightsStore from '../../store/useInsightsStore';
-import { useTheme } from '../burgermenu/ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
 
-const GroupColours = {
-  1: '#E862AE', // Light salmon for Win Back
-  2: '#F8CF46', // Gold for Regain Performance
-  3: '#5CD2CD'  // Pale green for Growth
-};
 
-const ArchivedTasks = () => {
-  const navigation = useNavigation();
-  const { insights, hydrated, unarchiveTask } = useInsightsStore();
-  const [starredTasks, setStarredTasks] = useState([]);
+  const GroupColours = {
+    1: '#E862AE', // Light salmon for Win Back
+    2: '#F8CF46', // Gold for Regain Performance
+    3: '#5CD2CD'  // Pale green for Growth
+  };
 
-  const { resolvedTheme } = useTheme();
-  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#EEEEEE';
-  const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
+  const ArchivedTasks = () => {
+    const { theme } = useTheme();
+    const backgroundColor = theme.colors.background;
+    const textColor = theme.colors.text;
+    const subTextColor = theme.colors.subText;
+    const insightBackground = theme.colors.insightBackground;
+    const shadowColor = theme.colors.shadow;
+    const shadowOpacity = theme.colors.shadowOpacity;
+    const borderColor = theme.colors.border; 
 
-  const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const subTextColor = resolvedTheme === 'dark' ? '#BBBBBB' : '#666666';
+    const navigation = useNavigation();
+    const { insights, hydrated, unarchiveTask } = useInsightsStore();
+    const [starredTasks, setStarredTasks] = useState([]);
 
-  const shadowColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const shadowOpacity = resolvedTheme === 'dark' ? 0.10 : 0.10;
-
+    
   const getTheFirstSentence = (description) => {
     if (!description) return '';
     const sentences = description.split('.');
@@ -81,11 +82,13 @@ const ArchivedTasks = () => {
                     }
                 }}
                 style={[
-                  styles.unarchiveButton,
-                  resolvedTheme === 'dark' ? 
-                    { backgroundColor: 'transparent', borderColor: '#FFFFFF', borderWidth: 1 } : 
-                    { backgroundColor: '#EEEEEE', borderColor: '#000000', borderWidth: 1 }
-                ]}
+                    styles.unarchiveButton,
+                    {
+                      backgroundColor: insightBackground,
+                      borderColor: borderColor,
+                      borderWidth: 1,
+                    },
+                  ]}
             >
                 <Text style={[styles.unarchiveButtonText, { color: textColor }]}>Unarchive</Text>
             </Pressable>

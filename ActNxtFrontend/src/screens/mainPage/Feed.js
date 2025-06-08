@@ -4,7 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Mock from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
-import { useTheme } from '../burgermenu/ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
+
+
 
 const GroupColours = {
   1: '#E862AE', // Light salmon for Win Back
@@ -13,18 +15,16 @@ const GroupColours = {
 };
 
 const Feed = () => {
+  const { theme } = useTheme();
+  const backgroundColor = theme.colors.background;
+  const textColor = theme.colors.text;
+  const subTextColor = theme.colors.subText;
+  const insightBackground = theme.colors.insightBackground;
+  const shadowColor = theme.colors.shadow;
+  const shadowOpacity = theme.colors.shadowOpacity;
+
   const navigation = useNavigation();
   const { insights, setInsights, hydrated } = useInsightsStore();
-
-  const { resolvedTheme } = useTheme();
-  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#EEEEEE';
-  const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
-
-  const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const subTextColor = resolvedTheme === 'dark' ? '#BBBBBB' : '#666666';
-
-  const shadowColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const shadowOpacity = resolvedTheme === 'dark' ? 0.10 : 0.10;
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';

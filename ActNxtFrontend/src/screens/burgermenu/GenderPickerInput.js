@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, FlatList, Dimensions } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useTheme } from "./ThemeContext";
+import { useTheme } from '../../Themes/ThemeContext';
 import { MaterialIcons } from "@expo/vector-icons";
 
 const GENDERS = [

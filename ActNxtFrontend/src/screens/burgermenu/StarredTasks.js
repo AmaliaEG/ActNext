@@ -3,7 +3,8 @@ import { View, FlatList, Text, StyleSheet, Pressable, ActivityIndicator } from '
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useInsightsStore from '../../store/useInsightsStore';
-import { useTheme } from '../burgermenu/ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
+
 
 const GroupColours = {
   1: '#E862AE', // Light salmon for Win Back
@@ -16,15 +17,16 @@ const StarredTasks = () => {
   const { insights, hydrated, getStarStatus } = useInsightsStore();
   const [starredTasks, setStarredTasks] = useState([]);
 
-  const { resolvedTheme } = useTheme();
-  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#EEEEEE';
-  const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
+  const { theme } = useTheme();
+  const {
+    backgroundColor,
+    insightBackground,
+    textColor,
+    subTextColor,
+    shadowColor,
+    shadowOpacity,
+  } = theme.colors;
 
-  const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const subTextColor = resolvedTheme === 'dark' ? '#BBBBBB' : '#666666';
-
-  const shadowColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const shadowOpacity = resolvedTheme === 'dark' ? 0.10 : 0.10;
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';

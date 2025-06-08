@@ -10,7 +10,7 @@ import {
     Dimensions,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
 
 const OPTIONS = ['English', 'Danish', 'Lorem Ipsum'];
 

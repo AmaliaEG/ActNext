@@ -14,23 +14,24 @@ import { useAuth0 } from 'react-native-auth0';
 import DateTimePickerInput from './DateTimePickerInput';
 import GenderPickerInput from './GenderPickerInput';
 import useProfileStore from '../../store/useProfileStore';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
-    const { resolvedTheme } = useTheme();
-    const isDarkMode = resolvedTheme === 'dark';
-
-    // Colors
-    const bgColor = isDarkMode ? '#1E1E1E' : '#FFFFFF';
-    const textColor = isDarkMode ? '#FFFFFF' : '#000000';
-    const borderColor = isDarkMode ? '#444444' : '#CCCCCC';
-    const inputBg = isDarkMode ? '#1E1E1E' : '#F9F9F9';
-    const inputTextColor = isDarkMode ? '#FFFFFF' : '#000000';
-    const placeholderColor = isDarkMode ? '#AAAAAA' : '#666666';
-    const btnBg = isDarkMode ? '#2A2A2A' : '#FFFFFF';
-    const btnBorder = isDarkMode ? '#555555' : '#007BFF';
-    const btnTextColor = isDarkMode ? '#FFFFFF' : '#007BFF';
+    const { theme } = useTheme();   
+    const backgroundColor = theme.colors.background;
+    const textColor = theme.colors.text;
+    const subTextColor = theme.colors.subText;
+    const insightBackground = theme.colors.insightBackground;
+    const shadowColor = theme.colors.shadow;
+    const shadowOpacity = theme.colors.shadowOpacity;
+    const borderColor = theme.colors.border; 
+    const inputTextColor = theme.colors.inputText;
+    const inputBg = theme.colors.inputBg;
+    const placeholderColor = theme.colors.placeholder;
+    const btnBg = theme.colors.primary;
+    const btnBorder = theme.colors.border;
+    const btnTextColor = theme.colors.buttonText;
 
     const { logout, user } = useAuth0();
     const { profile, updateProfile, resetProfile, hydrated } = useProfileStore();
@@ -100,7 +101,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
 
     if (!hydrated) {
         return (
-            <View style={[styles.centered, { backgroundColor: bgColor }]}>
+            <View style={[styles.centered, { backgroundColor: backgroundColor }]}>
                 <ActivityIndicator size="large" color={textColor} />
                 <Text style={{ color: textColor, marginTop: 8 }}>Loading profile...</Text>
             </View>
@@ -108,7 +109,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     }
 
     return (
-        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: bgColor }]}>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: backgroundColor }]}>
                 <Text style={[styles.sectionTitle, { color: textColor }]}>Profile Details</Text>
                 <View style={styles.inputContainer}>
                     <Text style={[styles.label, { color: textColor }]}>Name</Text>

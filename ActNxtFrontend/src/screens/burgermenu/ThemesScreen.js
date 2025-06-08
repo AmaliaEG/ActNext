@@ -1,51 +1,28 @@
-import React, { useContext } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { ThemeContext } from './ThemeContext'; 
-import useSettingsStore from '../../store/useSettingsStore';
+import React from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useTheme } from '../../Themes/ThemeContext'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-// const colors = {
-//   light: '#FFFFFF',  
-//   dark: '#000000',   
-// };
 
-const Themes = () => {
-  const { updateTheme } = useContext(ThemeContext);
-  const { theme } = useSettingsStore(); // get theme from Zustand
+const ThemesScreen = () => {
+  const { mode, updateTheme, theme } = useTheme();
 
-  const getButtonColor = (mode) => {
-    return theme.mode === mode ? '#007AFF' : '#CCCCCC';
+  const getColor = (currentMode) => {
+    return mode === currentMode ? '#007AFF' : '#CCCCCC';
   };
 
-  const backgroundColor = theme.mode === 'dark' ? '#1E1E1E' : '#FFFFFF';
-  const textColor = theme.mode === 'dark' ? '#FFFFFF' : '#000000';
+  const renderOption = (label, value) => (
+    <Pressable onPress={() => updateTheme(value)} style={styles.option}>
+      <Text style={[styles.optionText, { color: getColor(value) }]}>{label}</Text>
+    </Pressable>
+  );
 
   return (
-    <View style={[styles.container, { backgroundColor }]} testID='themes-container'>
-      <Text style={[styles.title, { color: textColor }]}>Theme Settings</Text>
-      
-      <View style={styles.buttonContainer}>
-        <Button 
-          title="Light" 
-          // icon="lightbulb-on"
-          onPress={() => updateTheme({ mode: 'light' })}
-          color={getButtonColor('light')}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button 
-            title="Dark" 
-            // icon="weather-night"
-            onPress={() => updateTheme({ mode: 'dark' })}
-            color={getButtonColor('dark')}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-      <Button 
-        title="System" 
-        onPress={() => updateTheme({ mode: 'system' })}
-        color={getButtonColor('system')}
-      />
-      </View>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.title, { color: theme.text }]}>Theme Settings</Text>
+      {renderOption('Light', 'light')}
+      {renderOption('Dark', 'dark')}
+      {renderOption('System', 'system')}
     </View>
   );
 };
@@ -55,21 +32,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
-  // centered: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
   title: {
     fontSize: 24,
-    marginBottom: 30,
+    fontWeight: '600',
+    marginBottom: 40,
   },
-  buttonContainer: {
-    marginBottom: 12, 
-    width: '60%', 
+  option: {
+    marginVertical: 12,
+  },
+  optionText: {
+    fontSize: 18,
+    fontWeight: '500',
   },
 });
 
-export default Themes;
+export default ThemesScreen;

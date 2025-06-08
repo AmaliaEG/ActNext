@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, Text, Linking, Alert, Platform, TouchableOpacity } from 'react-native';
 import SettingsList from '../Settings/SettingsList';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
+
 
 const AboutACTNXTAppScreen = () => {
     // Implement logic for working link to ActNxt website, when website is made

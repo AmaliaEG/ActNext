@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { useEffect } from 'react';
 import React from 'react';
 import { useAuth0 } from 'react-native-auth0';
-import { useTheme } from '../burgermenu/ThemeContext';
+import { useTheme } from '../../Themes/ThemeContext';
 import useAuthStore from '../../store/useAuthStore';
 import useSettingsStore from '../../store/useSettingsStore';
 import useProfileStore from '../../store/useProfileStore';
