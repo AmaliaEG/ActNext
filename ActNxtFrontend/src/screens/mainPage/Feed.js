@@ -88,7 +88,7 @@ const onRefresh = async () => {
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
-        data={insights.filter(task => !task.isArchived)}
+        data={insights.filter(task => !task.isArchived).slice(0, 3)}
         refreshing={refreshing}
         onRefresh={onRefresh}
       renderItem={({ item }) => {
