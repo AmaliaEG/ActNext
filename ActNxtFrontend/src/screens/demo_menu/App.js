@@ -15,12 +15,12 @@ const App = ({ navigation }) => {
   const { resolvedTheme } = useTheme();
 
   // Zustand Hydration
-  const { loadAuth, hydrated: authHydrated } = useAuthStore();
+  const { loadAuth, hydrated: authHydrated, isLoggedIn } = useAuthStore();
   const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
   const { loadProfile, hydrated: profileHydrated } = useProfileStore();
   const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
 
-  const { user:auth0User } = useAuth0();
+  const {user} = useAuth0();
 
   //loading all stored data from zustand
   useEffect(() => {
@@ -33,8 +33,14 @@ const App = ({ navigation }) => {
       ]);
     };
 
-    hydrateAll();
+    hydrateAll();  
   }, []);
+
+  useEffect(() => {
+    if (allHydrated && isLoggedIn && user && navigation) {
+      navigation.navigate('Feed');
+    }
+  }, [allHydrated, isLoggedIn, user, navigation]);
 
   const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
 
@@ -55,18 +61,6 @@ const App = ({ navigation }) => {
         <View style={styles.row}>
           <View style={styles.buttonContainer}>
             <LoginButton/>
-            <Button
-              title="Show Settings"
-              onPress={() => navigation.navigate('SettingsScreen')} 
-            />
-            <Button
-                title="Feed"
-                onPress={() => navigation.navigate('Feed')}
-            />
-            <Button
-              title="test auth"
-              onPress={() => alert(auth0User.name)}
-            />
           </View>
         </View>
       </View>
@@ -79,10 +73,10 @@ const App = ({ navigation }) => {
 const LoginButton = () => {
   
   // Auth0 hooks
-  const { authorize, user: auth0User, error, isLoading, clearSession } = useAuth0();
+  const { authorize, user: auth0User, error, isLoading } = useAuth0();
 
   // Zustand store
-  const { login, logout, user: zustandUser, isLoggedIn } = useAuthStore();
+  const { login,  user: zustandUser, isLoggedIn } = useAuthStore();
 
   // Fallback mechanism just in case
   // Will get removed once Zustand is confirmed to work
@@ -99,18 +93,9 @@ const LoginButton = () => {
   const populateStores = async () => {
     if(!isLoggedIn && currentUser){
       login(currentUser);
-      loadProfile();
     }
   }
-
-  const onLogout = async () => {
-    try {
-      await clearSession();
-      logout();
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
+  
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -128,7 +113,7 @@ const LoginButton = () => {
       populateStores()
       }
       {currentUser ? (
-        <Button onPress={onLogout} title="Log out" />
+        <></>
       ) : (
         <Button onPress={onLogin} title="Log in" />
       )}

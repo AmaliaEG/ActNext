@@ -14,6 +14,7 @@ import { useAuth0 } from 'react-native-auth0';
 import DateTimePickerInput from './DateTimePickerInput';
 import GenderPickerInput from './GenderPickerInput';
 import useProfileStore from '../../store/useProfileStore';
+import useAuthStore from '../../store/useAuthStore';
 import { useTheme } from '../../Themes/ThemeContext';
 
 // State hooks for storing and updating user details
@@ -35,6 +36,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
 
     const { clearSession, user } = useAuth0();
     const { profile, updateProfile, resetProfile, hydrated } = useProfileStore();
+    const { logout} = useAuthStore();
 
     // Code and password is the same
     // Called different things to know which is shown on the profile description,
@@ -92,6 +94,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
         try {
             await clearSession();
             resetProfile();
+            logout();
             navigation.navigate('Home')
             closeModal?.();
         } catch (e) {
