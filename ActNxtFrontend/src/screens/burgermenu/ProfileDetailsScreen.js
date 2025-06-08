@@ -33,7 +33,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const btnBorder = theme.colors.border;
     const btnTextColor = theme.colors.buttonText;
 
-    const { logout, user } = useAuth0();
+    const { clearSession, user } = useAuth0();
     const { profile, updateProfile, resetProfile, hydrated } = useProfileStore();
 
     // Code and password is the same

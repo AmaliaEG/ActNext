@@ -9,7 +9,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 4,
@@ -21,7 +26,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 5,
@@ -33,7 +43,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 6,
@@ -45,7 +60,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 7,
@@ -57,7 +77,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 8,
@@ -69,19 +94,29 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 9,
       "Auth0UserId": "User1",
       "Title": "Missed Revenue Opportunity",
       "CompanyName": "ScanNordic Freight",
-      "Description": "Customer hasn’t purchased in 90+ days despite prior high-volume history. Re-engagement offer could recover significant revenue.",
+      "Description": "Customer hasn't purchased in 90+ days despite prior high-volume history. Re-engagement offer could recover significant revenue.",
       "DtCreate": "2025-05-01T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 10,
@@ -93,7 +128,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 11,
@@ -105,7 +145,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 12,
@@ -117,19 +162,29 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 13,
       "Auth0UserId": "User1",
       "Title": "Upsell: Matching Product Opportunity",
-      "CompanyName": "FlexBuild A\/S",
+      "CompanyName": "FlexBuild A/S",
       "Description": "Customer frequently orders Product X. 80% of similar buyers added Product Y within 60 days. Suggest bundled promotion.",
       "DtCreate": "2025-05-01T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 14,
@@ -141,7 +196,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 15,
@@ -153,7 +213,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 16,
@@ -165,19 +230,29 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 17,
       "Auth0UserId": "User1",
       "Title": "Growth Insight: Segment Match Found",
       "CompanyName": "Danish BioPrint",
-      "Description": "This customer’s behavior matches high-growth clients in another segment. Consider suggesting new product line or consultation.",
+      "Description": "This customer's behavior matches high-growth clients in another segment. Consider suggesting new product line or consultation.",
       "DtCreate": "2025-05-01T12:06:46.807",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 18,
@@ -189,7 +264,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 19,
@@ -201,7 +281,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 20,
@@ -213,7 +298,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 21,
@@ -225,7 +315,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 22,
@@ -237,7 +332,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 23,
@@ -249,19 +349,29 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 24,
       "Auth0UserId": "User2",
       "Title": "Missed Q2 Revenue Opportunity",
-      "CompanyName": "NetCable A\/S",
+      "CompanyName": "NetCable A/S",
       "Description": "Customer failed to place any Q2 orders despite strong Q1 activity. Review last communication and follow up.",
       "DtCreate": "2025-05-01T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 25,
@@ -273,7 +383,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 26,
@@ -285,7 +400,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 27,
@@ -297,19 +417,29 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 28,
       "Auth0UserId": "User2",
       "Title": "Upsell Triggered By Behavior Match",
       "CompanyName": "NovaCooling",
-      "Description": "This customer’s order pattern matches others who also purchased our upgraded cooling module. Recommend upsell offer.",
+      "Description": "This customer's order pattern matches others who also purchased our upgraded cooling module. Recommend upsell offer.",
       "DtCreate": "2025-05-01T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 29,
@@ -321,7 +451,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 30,
@@ -333,19 +468,29 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 31,
       "Auth0UserId": "User2",
       "Title": "AI Suggests New Product Match",
       "CompanyName": "SpeedRail Logistics",
-      "Description": "Customer’s segment and behavior align with high adopters of Product Z. Propose an introductory trial.",
+      "Description": "Customer's segment and behavior align with high adopters of Product Z. Propose an introductory trial.",
       "DtCreate": "2025-05-01T12:08:21.610",
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 32,
@@ -357,7 +502,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 33,
@@ -369,7 +519,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 34,
@@ -381,7 +536,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 35,
@@ -393,7 +553,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 36,
@@ -405,7 +570,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 37,
@@ -417,7 +587,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 1,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 38,
@@ -429,7 +604,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 39,
@@ -441,7 +621,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 40,
@@ -453,7 +638,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 41,
@@ -465,7 +655,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 42,
@@ -477,7 +672,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 2,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 43,
@@ -489,7 +689,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 44,
@@ -501,7 +706,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 45,
@@ -513,7 +723,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 46,
@@ -525,7 +740,12 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     },
     {
       "Id": 47,
@@ -537,6 +757,11 @@
       "Source": "Business Central",
       "SalesAnalysisId": 3,
       "ActionRequired": false,
-      "StarMarked": false
+      "isStarred": false,
+      "userComment": "",
+      "feedback": {
+        "liked": false,
+        "disliked": false
+      }
     }
-  ]
+]

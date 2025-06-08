@@ -26,8 +26,8 @@ const useAuthStore = create((set) => ({
 
     login: async (userInfo) => {
         try {
-            const newState = { isLoggedIn: true, userInfo };
-            await AsyncStorage.setItem('auth-state', JSON.stringify(newState));
+            const newState = { isLoggedIn: true,userInfo };
+            await AsyncStorage.setItem('user-profile', JSON.stringify(newState));
             set(newState);
         } catch (error) {
             console.error('Failed to log in:', error);
@@ -36,7 +36,7 @@ const useAuthStore = create((set) => ({
 
     logout: async () => {
         try {
-            await AsyncStorage.removeItem('auth-state');
+            await AsyncStorage.removeItem('user-profile');
             set({ isLoggedIn: false, userInfo: null });
         } catch (error) {
             console.error('Failed to log out:', error);
