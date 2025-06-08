@@ -13,21 +13,6 @@ const App = ({ navigation }) => {
 
   //theme 
   const { resolvedTheme } = useTheme();
-
-<<<<<<< HEAD
-    useEffect(() => {
-      const hydrateAll = async () => {
-        await Promise.all([
-          loadAuth(),
-          loadSettings(),
-          loadProfile(),
-          loadInsights()
-        ]);
-      };
-      hydrateAll();
-
-    }, []);
-=======
   // Zustand Hydration
   const { loadAuth, hydrated: authHydrated } = useAuthStore();
   const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
@@ -35,7 +20,6 @@ const App = ({ navigation }) => {
   const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
 
   const { user:auth0User } = useAuth0();
->>>>>>> 73adca19917de8f1e51e24ddf571efb15760d162
 
   //loading all stored data from zustand
   useEffect(() => {
