@@ -45,7 +45,7 @@ const useInsightStore = create((set, get) => ({
 
         loadInsights: async () => {
         try {
-            const mockData = require('../screens/mainPage/JSON_Mockdata.json');
+            const mockData = require('../screens/Pages/JSON_Mockdata.json');
             const stored = await AsyncStorage.getItem('insights');
             const parsedData = stored ? JSON.parse(stored) : mockData;
 

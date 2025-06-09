@@ -5,17 +5,17 @@ import Modal from 'react-native-modal';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import App from '../screens/demo_menu/App'; // Your main screen with the buttons
-import Feed from '../screens/mainPage/Feed'; // Your Feed page
+import App from '../screens/Pages/App'; // Your main screen with the buttons
+import Feed from '../screens/Pages/Feed'; // Your Feed page
 import LanguageScreen from '../screens/burgermenu/LanguageScreen';
 import NotificationsScreen from '../screens/burgermenu/NotificationsScreen';
 import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
-import TaskExpansion from '../screens/mainPage/TaskExpansion';
+import TaskExpansion from '../screens/Pages/TaskExpansion';
 import ThemesScreen from '../screens/burgermenu/ThemesScreen';
-import StarredTasks from '../screens/burgermenu/StarredTasks';
-import ArchivedTasks from '../screens/burgermenu/ArchivedTasks';
+import StarredTasks from '../screens/Pages/StarredTasks';
+import ArchivedTasks from '../screens/Pages/ArchivedTasks';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 import { ThemeProvider, useTheme } from '../Themes/ThemeContext';
 

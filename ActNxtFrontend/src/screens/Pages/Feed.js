@@ -6,8 +6,6 @@ import Mock from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
 import { useTheme } from '../../Themes/ThemeContext';
 
-
-
 const GroupColours = {
   1: '#E862AE', // Light salmon for Win Back
   2: '#F8CF46', // Gold for Regain Performance
@@ -15,16 +13,18 @@ const GroupColours = {
 };
 
 const Feed = () => {
-  const { theme } = useTheme();
-  const backgroundColor = theme.colors.background;
-  const textColor = theme.colors.text;
-  const subTextColor = theme.colors.subText;
-  const insightBackground = theme.colors.insightBackground;
-  const shadowColor = theme.colors.shadow;
-  const shadowOpacity = theme.colors.shadowOpacity;
-
   const navigation = useNavigation();
   const { insights, setInsights, hydrated } = useInsightsStore();
+
+  const { resolvedTheme } = useTheme();
+  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#FFFFFF';
+  const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
+
+  const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
+  const subTextColor = resolvedTheme === 'dark' ? '#BBBBBB' : '#666666';
+
+  const shadowColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
+  const shadowOpacity = resolvedTheme === 'dark' ? 0.10 : 0.10;
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
@@ -41,32 +41,22 @@ const onRefresh = async () => {
 };
 
   useEffect(() => {
-    const init = async () => {
-      await useInsightsStore.getState().clearInsights(); // Clear any stale cached insights
-
-      const currentDate = new Date();
-     const processedTasks = Mock.map((task) => {
-      let dateAssigned = new Date(task.DtCreate);
-      if (isNaN(dateAssigned) && typeof task.DtCreate === 'string') {
-        dateAssigned = new Date(task.DtCreate.replace(' ', 'T'));
-      }
-      return {
-        ...task,
-        dateAssigned,
-        isOverdue: dateAssigned < new Date(),
-        firstSentence: getTheFirstSentence(task.Description),
-      };
-    }).sort((a, b) => a.dateAssigned - b.dateAssigned);
-
-
-      setInsights(processedTasks.slice(0, 3)); 
-    };
-
     if (hydrated && insights.length === 0) {
-      init();
+      const currentDate = new Date();
+      const processedTasks = Mock.map((task) => {
+        const dateAssigned = new Date(task.DtCreate);
+        return {
+          ...task,
+          dateAssigned,
+          isOverdue: dateAssigned < currentDate,
+          firstSentence: getTheFirstSentence(task.Description),
+        };
+      // Sorts by date (earliest first)
+      }).sort((a, b) => a.dateAssigned - b.dateAssigned);
+      
+      setInsights(processedTasks.slice(0, 3));
     }
   }, [hydrated]);
-
 
   if (!hydrated) {
       return (
@@ -79,7 +69,7 @@ const onRefresh = async () => {
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
-      <View style={[styles.menuContainer, {backgroundColor: insightBackground}]}>
+      <View style={styles.menuContainer}>
         <Pressable onPress={() => navigation.openDrawer()} style={styles.menuButton} testID='burger-menu'>
           <Ionicons name="menu" size={30} color={textColor} />
         </Pressable>
@@ -91,32 +81,17 @@ const onRefresh = async () => {
         data={insights.filter(task => !task.isArchived).slice(0, 3)}
         refreshing={refreshing}
         onRefresh={onRefresh}
-      renderItem={({ item }) => {
-      let assignedDate = new Date(item.dateAssigned);
-
-      // Fallback for iOS if format is invalid
-      if (assignedDate.toString() === 'Invalid Date' && typeof item.dateAssigned === 'string') {
-        const safeString = item.dateAssigned.replace(' ', 'T');
-        assignedDate = new Date(safeString);
-      }
-
-        return (
-          <Pressable onPress={() => navigation.navigate('Details', { taskId: item.Id })}>
-            <View style={[styles.item, { backgroundColor: insightBackground, shadowColor, shadowOpacity }]}>
+        renderItem={({ item }) => (
+          <Pressable onPress={() => navigation.navigate('Details', {taskId: item.Id})}>
+            <View style={[styles.item, { backgroundColor: insightBackground, shadowColor: shadowColor, shadowOpacity: shadowOpacity }]}>
               <View style={styles.info}>
                 <View style={[styles.colorDot, { backgroundColor: GroupColours[item.SalesAnalysisId] }]} />
                 <Text style={[styles.CompanyNameText, { color: textColor }]}>{item.CompanyName}</Text>
               </View>
-
+              
               <Text style={[styles.text, { color: textColor }]}>{item.Title}</Text>
               <Text style={[styles.descriptionText, { color: subTextColor }]}>{item.firstSentence}</Text>
-
-              <Text style={[styles.dateText, { color: subTextColor }]}>
-              Due: {(() => {
-                const date = new Date(item.dateAssigned);
-                return isNaN(date) ? 'Unknown' : date.toISOString().split('T')[0]; })()}
-            </Text>
-
+              <Text style={[styles.dateText, { color: subTextColor }]}>Due: {new Date(item.dateAssigned).toLocaleDateString()}</Text>
 
               {item.isOverdue && (
                 <View style={styles.warningContainer}>
@@ -126,9 +101,7 @@ const onRefresh = async () => {
               )}
             </View>
           </Pressable>
-        );
-      }}
-
+        )}
       />
     </View>
   );
@@ -137,7 +110,7 @@ const onRefresh = async () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 0,
+    padding: 25,
   },
   centered: {
     flex: 1,
@@ -147,7 +120,6 @@ const styles = StyleSheet.create({
   item: {
     padding: 20,
     marginVertical: 8,
-    marginHorizontal: 25,
     borderRadius: 10,
     position: 'relative',
     shadowColor: '#000',
@@ -180,9 +152,6 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     marginBottom: 10,
-    padding:25,
-    marginLeft: 0,
-    marginRight:0,
   },
   menuButton: {
     padding: 10,
