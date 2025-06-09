@@ -123,12 +123,6 @@ const useInsightStore = create((set, get) => ({
             return insight?.feedback || {liked: false, disliked: false};
         },
 
-        queueFeedback: (feedback) => {
-            set((state) => ({
-                queuedFeedback: [...state.queuedFeedback, feedback]
-            }));
-        },
-
         clearQueuedFeedback: () => {
             set({ queuedFeedback: [] });
         },
