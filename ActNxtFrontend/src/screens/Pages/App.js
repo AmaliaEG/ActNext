@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View, ActivityIndicator, Dimensions,  Animated,  StatusBar, } from 'react-native';
+import { Pressable, StyleSheet, Text, View, ActivityIndicator, Dimensions,  Animated,  StatusBar, Button, } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { BlurView } from '@react-native-community/blur';
 import { useAuth0 } from 'react-native-auth0';
@@ -13,18 +13,20 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get('window');
 
 const IMAGES = [
-  'https://picsum.photos/800/600?random=1',
-  'https://picsum.photos/800/600?random=2',
-  'https://picsum.photos/800/600?random=3',
-  'https://picsum.photos/800/600?random=4',
-  'https://picsum.photos/800/600?random=5',
+  require('../../../assets/background1.jpg'),
+  require('../../../assets/background2.jpg'),
+  require('../../../assets/background3.jpg'),
+  require('../../../assets/background4.jpg'),
+  require('../../../assets/background5.jpg'),
+  require('../../../assets/background6.jpg'),
+  require('../../../assets/background7.jpg'),
 ];
 
 const BackgroundAnimation = ({ 
   children, 
   images = IMAGES, 
-  duration = 8000,
-  zoomDuration = 8000,
+  duration = 12000,
+  zoomDuration = 13000,
   fadeDuration = 1000,
   initialScale = 1.15,
   overlayOpacity = 0.2
@@ -87,7 +89,7 @@ const BackgroundAnimation = ({
     <View style={styles.container}>
       {/* Current Image */}
       <Animated.Image
-        source={{ uri: currentImage }}
+        source={ currentImage }
         style={[
           styles.backgroundImage,
           {
@@ -96,11 +98,12 @@ const BackgroundAnimation = ({
           },
         ]}
         resizeMode="cover"
+        pointerEvents="none"
       />
       
       {/* Next Image (for smooth transition) */}
       <Animated.Image
-        source={{ uri: nextImage }}
+        source={ nextImage }
         style={[
           styles.backgroundImage,
           styles.nextImage,
@@ -110,10 +113,11 @@ const BackgroundAnimation = ({
           },
         ]}
         resizeMode="cover"
+        pointerEvents="none"
       />
       
       {/* Overlay for better content visibility */}
-      <View style={[styles.overlay ]}>
+      <View style={[styles.content ]}>
         {children}
       </View>
     </View>
@@ -152,19 +156,6 @@ const App = ({ navigation }) => {
       navigation.navigate('Feed');
     }
   }, [auth0User, isLoggedIn, login, navigation]);
-
-  useEffect(() => {
-
-    const pageLoad =
-    navigation.addListener('focus', () => {
-      
-        login(currentUser);
-        navigation.navigate('Feed');
-      
-    });
-
-    return pageLoad;
-  }, [allHydrated, isLoggedIn, currentUser, navigation]);
 
   const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
 
@@ -205,9 +196,9 @@ const LoginButton = ({ onLoginPress, error, isLoading, currentUser, navigation }
   if (isLoading) {
     return (
       <View style={styles.loginButtonWrapper}>
-        <Pressable style={styles.transparentButton} onPress={navigateToFeed}>
-         <Text style={styles.buttonText}>auth0 error, navigate to Feed</Text>
-        </Pressable>
+        <View style={styles.blurContainer}>
+          <Button onPress={navigateToFeed} title='auth0 error, navigate to Feed'/>
+        </View>
       </View>
     );
   }
@@ -215,22 +206,18 @@ const LoginButton = ({ onLoginPress, error, isLoading, currentUser, navigation }
   return (
 
     <View style={styles.loginButtonWrapper}>
-      {error && <Text style={styles.errorText}>{error.message}</Text>}
-      {currentUser && (
-        <Text style={styles.loggedInText}>Logged in as {currentUser.name}</Text>
-      )}
-
+    <View style={styles.blurContainer}>
       <BlurView
         style={styles.blurButton}
-        blurType="dark"
+        blurType="light"
         blurAmount={10}
-        reducedTransparencyFallbackColor="rgba(0,0,0,0.3)"
+        reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.3)"
       >
         <Pressable style={styles.pressableArea} onPress={onLoginPress}>
-          <Text style={styles.buttonText}>Log In</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </Pressable>
       </BlurView>
-
+    </View>
     </View>
   );
 };
@@ -243,6 +230,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  //BACKGROUND
   backgroundImage: {
     position: 'absolute',
     width: width,
@@ -253,17 +242,11 @@ const styles = StyleSheet.create({
   nextImage: {
     zIndex: 1,
   },
-  overlay: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingVertical: 60,
-    paddingHorizontal: 20,
-    zIndex: 2,
-  },
   content: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    zIndex: 2,
   },
   centered: {
     flex: 1,
@@ -273,6 +256,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
+
+  //BUTTON
   loginButtonWrapper: {
     alignItems: 'center',
     alignSelf: 'center',
@@ -281,32 +266,30 @@ const styles = StyleSheet.create({
     top: '55%', // slightly below center
     left: 0,
     right: 0,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 6,
-    elevation: 8, // for Android shadow
+  },
+  blurContainer: {
+    borderRadius: 50,
+    overflow: 'hidden',
+    width: 250,
+    height: 80,
+    // Outline styling
+    borderWidth: 2,
+    borderColor: 'rgba(0, 0, 0, 0.15)',
   },
   blurButton: {
-    width: 250,
-    height: 60,
-    borderRadius: 20,
-    overflow: 'hidden', // ensures blur stays within border
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 6,
-    elevation: 8,
+  },
+  pressableArea: {
+    width: 250,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600',
+    color: 'rgba(0, 0, 0, 0.51)',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   errorText: {
     color: 'red',
