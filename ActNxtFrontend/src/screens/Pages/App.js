@@ -122,7 +122,7 @@ const BackgroundAnimation = ({
 
 const App = ({ navigation }) => {
 
-  // Theme 
+  //theme 
   const { resolvedTheme } = useTheme();
   // Zustand Hydration
   const { loadAuth, hydrated: authHydrated, login, user: zustandUser, isLoggedIn  } = useAuthStore();
@@ -152,6 +152,19 @@ const App = ({ navigation }) => {
       navigation.navigate('Feed');
     }
   }, [auth0User, isLoggedIn, login, navigation]);
+
+  useEffect(() => {
+
+    const pageLoad =
+    navigation.addListener('focus', () => {
+      
+        login(currentUser);
+        navigation.navigate('Feed');
+      
+    });
+
+    return pageLoad;
+  }, [allHydrated, isLoggedIn, currentUser, navigation]);
 
   const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
 
