@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { Button, Stylesheet, Text, View, ActivityIndicator } from 'react-native';
 import { useEffect } from 'react';
 import React from 'react';
 import { useAuth0 } from 'react-native-auth0';
@@ -8,6 +8,7 @@ import useSettingsStore from '../../store/useSettingsStore';
 import useProfileStore from '../../store/useProfileStore';
 import useInsightsStore from '../../store/useInsightsStore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Styles, GroupColours } from './Styles';
 
 const App = ({ navigation }) => {
 
@@ -57,7 +58,7 @@ const App = ({ navigation }) => {
   if (!allHydrated) {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={styles.centered}>
+        <View style={Styles.centered}>
           <ActivityIndicator size="large" color="#007BFF" />
         </View>
       </GestureHandlerRootView>
@@ -66,10 +67,10 @@ const App = ({ navigation }) => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={[styles.container, { backgroundColor: resolvedTheme === 'dark' ? '#000' : '#fff' }]}>
+      <View style={[Styles.container, { backgroundColor: resolvedTheme === 'dark' ? '#000' : '#fff' }]}>
         {/* Buttons and UI */}
-        <View style={styles.row}>
-          <View style={styles.buttonContainer}>
+        <View style={Styles.row}>
+          <View style={Styles.buttonContainer}>
             <LoginButton/>
           </View>
         </View>
@@ -130,40 +131,6 @@ const LoginButton = () => {
     </View>
   );
 };
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  buttonContainer: {
-    margin: 10, 
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  button: {
-    padding: 15,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-});
 
 export default App;
 export { LoginButton };

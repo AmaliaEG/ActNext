@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, Stylesheet, ActivityIndicator, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 //import mockTasks from './MockTasks.json'; // Import JSON data
 import mockTasks from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
 import { useTheme } from '../../Themes/ThemeContext';
+import { Styles, GroupColours } from './Styles';
 
 // Target group dictionary
 const Groups = {
@@ -42,7 +43,7 @@ const TaskExpansion = ({ route }) => {
 
   if (!hydrated || !insights.find(t => t.Id === taskId)) {
     return (
-      <View style={styles.centered}>
+      <View style={Styles.centered}>
         <ActivityIndicator size="large" />
         <Text>Loading task...</Text>
       </View>
@@ -76,25 +77,25 @@ const TaskExpansion = ({ route }) => {
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
 
   return (
-    <View style={styles.container}>
+    <View style={Styles.Taskcontainer}>
       {/* Head bar */}
-      <View style = {styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={styles.backButton}>
+      <View style = {Styles.Taskheader}>
+        <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={Styles.backButton}>
           <Ionicons name = "arrow-back" size = {24} color = "black" />
         </TouchableOpacity>
-        <Text style={styles.Title}>{task.Title ||"Task title"}</Text>
-        <View style={styles.rightSpacer} /> 
+        <Text style={Styles.TaskTitle}>{task.Title ||"Task title"}</Text>
+        <View style={Styles.rightSpacer} /> 
       </View>
 
       {/*Main content */}
-      <View style = {styles.contentContainer}>
-        <View style={styles.companyRow}>
+      <View style = {Styles.contentContainer}>
+        <View style={Styles.companyRow}>
           {/*Company name*/}
-          <View style={styles.companyNameContainer}>
-            <Text style={styles.companyName}>{task.CompanyName}</Text>
+          <View style={Styles.companyNameContainer}>
+            <Text style={Styles.companyName}>{task.CompanyName}</Text>
           </View>
           {/*Star*/}
-          <TouchableOpacity onPress={handleStarPress} style={styles.starButton}>
+          <TouchableOpacity onPress={handleStarPress} style={Styles.starButton}>
             <Ionicons 
               name={isStarred ? "star" : "star-outline"} 
               size={24} 
@@ -105,19 +106,19 @@ const TaskExpansion = ({ route }) => {
         
         
         {/* Target Group Row*/}
-        <View style={styles.targetGroupContainer}>
-          <View testID='color-circle' style={[styles.colorCircle, {backgroundColor: targetGroup.color}]}/>
-          <Text style={styles.groupNameText}>{targetGroup.name}</Text>
+        <View style={Styles.targetGroupContainer}>
+          <View testID='color-circle' style={[Styles.colorCircle, {backgroundColor: targetGroup.color}]}/>
+          <Text style={Styles.groupNameText}>{targetGroup.name}</Text>
         </View>
 
         {/* Detailed description of task*/}
-        <Text style={styles.contentText}>{task.Description}</Text>
+        <Text style={Styles.contentText}>{task.Description}</Text>
 
         {/* Like/Dislike Buttons*/}
-        <View style={styles.rightAlignedButtonContainer}>
+        <View style={Styles.rightAlignedButtonContainer}>
           <TouchableOpacity
             testID='like-button'
-            style={[styles.button, feedback.liked && styles.likedButton]}
+            style={[Styles.button, feedback.liked && Styles.likedButton]}
             onPress={() => handleReaction('like')}
           >
             <Ionicons
@@ -128,7 +129,7 @@ const TaskExpansion = ({ route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             testID='dislike-button'
-            style={[styles.button, feedback.disliked && styles.dislikedButton]}
+            style={[Styles.button, feedback.disliked && Styles.dislikedButton]}
             onPress={() => handleReaction('dislike')}
           >
             <Ionicons
@@ -141,10 +142,10 @@ const TaskExpansion = ({ route }) => {
       </View>
 
       {/* Comment Section - integrated with the input */}
-      <View style={styles.commentSection}>
-        <Text style={styles.commentTitle}>My Notes</Text>
+      <View style={Styles.commentSection}>
+        <Text style={Styles.commentTitle}>My Notes</Text>
         <TextInput
-          style={styles.commentInput}
+          style={Styles.commentInput}
           placeholder="Type your notes here..."
           placeholderTextColor="#999"
           multiline
@@ -154,20 +155,20 @@ const TaskExpansion = ({ route }) => {
           blurOnSubmit={false}
         />
         <TouchableOpacity
-          style={styles.saveButton}
+          style={Styles.saveButton}
           onPress={handleCommentSubmit}
           disabled={!comment.trim()}
         >
-          <Text style={styles.saveButtonText}>
+          <Text style={Styles.saveButtonText}>
             {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
           </Text>
         </TouchableOpacity>
       </View>
 
       {/* Finish button */}
-      <View style={styles.finishedButtonContainer}>
+      <View style={Styles.finishedButtonContainer}>
         <TouchableOpacity
-          style={styles.finishedButton}
+          style={Styles.finishedButton}
           onPress={ async () => {
             const success = await archiveTask(taskId);
             if (success) {
@@ -178,200 +179,12 @@ const TaskExpansion = ({ route }) => {
             }
           }}
         >
-          <Text style={styles.finishedButtonText}>Finished</Text>
+          <Text style={Styles.finishedButtonText}>Finished</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-      backgroundColor: "white",
-  },
-  centered: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 20,
-    paddingTop: 40,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0'
-  },
-  backButton: {
-    padding: 8,
-    marginLeft: -8,
-  },
-  Title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'center',
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-      fontSize: 18,
-      alignItems: 'center',
-      color: "Black",
-  },
-  contentContainer:{
-    padding: 25,
-    margin: 16,
-    marginTop: 60,
-    borderLeftWidth: 1, 
-    borderLeftColor: 'black',
-    alignSelf: 'flex-start',
-    width: 'auto',
-    flexGrow: 0,
-    flexShrink: 1,
-  },
-  companyRow: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
-  marginBottom: 10,
-  },
-  companyNameContainer: {
-    borderWidth: 1,
-    borderColor: '#f2f4f5', // Light gray border
-    borderRadius: 6,
-    padding: 3,
-    backgroundColor: '#f2f4f5',
-    alignSelf: 'flex-start',
-    width: 'auto',
-  },
-  companyName: {
-    fontSize: 16,
-    fontWeight: 'regular',
-    marginBottom: 3,
-  },
-  starButton: {
-    padding: 8,
-    marginRight: -8,
-  },
-  targetGroupContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  colorCircle: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    marginRight: 6,
-  },
-  groupNameText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  contentText: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: 'black',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    paddingTop: 16,
-    borderTopColor: '#eee',
-  },
-  rightAlignedButtonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      marginTop: 20,
-      paddingTop: 16,
-  },
-  button: {
-    width: 40, // Fixed width for circular buttons
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 20,
-  },
-  likedButton: {
-      backgroundColor: '#4CAF50',
-      borderColor: '#4CAF50',
-  },
-  dislikedButton: {
-      backgroundColor: '#F44336',
-      borderColor: '#F44336',
-  },
-  buttonText: {
-      marginLeft: 8,
-      color: '#666',
-      fontWeight: '500',
-  },
-  likedText: {
-      color: 'white',
-  },
-  dislikedText: {
-      color: 'white',
-  },
-  commentSection: {
-    marginTop: 30,
-    marginHorizontal: 25,
-    marginBottom: 20,
-  },
-  commentTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 10,
-    color: '#333',
-  },
-  commentInput: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 15,
-    minHeight: 100,
-    textAlignVertical: 'top',
-    backgroundColor: '#fff',
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  commentHint: {
-    fontSize: 12,
-    color: '#999',
-    marginTop: 5,
-    fontStyle: 'italic',
-  },
-  finishedButtonContainer: {
-    position: 'absolute',
-    bottom: 100,
-    left: 20,
-    right: 20,
-  },
-  finishedButton: {
-      backgroundColor: '#2196F3',
-      paddingVertical: 15,
-      borderRadius: 8,
-      alignItems: 'center',
-      justifyContent: 'center',
-  },
-  finishedButtonText: {
-      color: 'white',
-      fontSize: 16,
-      fontWeight: 'bold',
-  },
-});
 
 export default TaskExpansion;
 

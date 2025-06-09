@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Stylesheet, ScrollView, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import App from '../screens/Pages/App'; // Your main screen with the buttons
-import Feed from '../screens/Pages/Feed'; // Your Feed page
+import App from '../screens/Pages/App';
+import Feed from '../screens/Pages/Feed';
 import LanguageScreen from '../screens/burgermenu/LanguageScreen';
 import NotificationsScreen from '../screens/burgermenu/NotificationsScreen';
 import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
@@ -18,6 +18,7 @@ import StarredTasks from '../screens/Pages/StarredTasks';
 import ArchivedTasks from '../screens/Pages/ArchivedTasks';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 import { ThemeProvider, useTheme } from '../Themes/ThemeContext';
+import { Styles, GroupColours } from '../screens/Pages/Styles';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -71,11 +72,11 @@ const CustomDrawerContent = (props) => {
     <View style={{ flex: 1, backgroundColor: bgColor }}>
       <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: bgColor }}>
         {/* Header with logo and name */}
-        <View style={[styles.drawerHeader, { borderBottomColor: borderColor }]}>
-          <Image source={require('../../assets/icon.png')} style={styles.drawerLogo} resizeMode="contain" />
-          <Text style={[styles.drawerTitle, { color: itemTextColor }]}>
-            <Text style={[styles.drawerTitleAct, { color: itemTextColor }]}>act</Text>
-            <Text style={[styles.drawerTitleNxt, { color: itemTextColor }]}>nxt</Text>
+        <View style={[Styles.drawerHeader, { borderBottomColor: borderColor }]}>
+          <Image source={require('../../assets/icon.png')} style={Styles.drawerLogo} resizeMode="contain" />
+          <Text style={[Styles.drawerTitle, { color: itemTextColor }]}>
+            <Text style={[Styles.drawerTitleAct, { color: itemTextColor }]}>act</Text>
+            <Text style={[Styles.drawerTitleNxt, { color: itemTextColor }]}>nxt</Text>
           </Text>
         </View>
 
@@ -84,13 +85,13 @@ const CustomDrawerContent = (props) => {
         <DrawerItem label="Archive" labelStyle={{ color: itemTextColor }} onPress={() => props.navigation.navigate('ArchivedTasks')}/>
       </DrawerContentScrollView>
 
-      <View style={styles.gearWrapper}>
+      <View style={Styles.gearWrapper}>
         <TouchableOpacity
           onPress={() => {
             setSettingsModalVisible(true);
             setActiveSettingScreen(null); // Reset screen
           }}
-          style={[styles.gearButton, {backgroundColor: gearBg, shadowColor: isDarkMode ? '#000' : '#CCC'}]}
+          style={[Styles.gearButton, {backgroundColor: gearBg, shadowColor: isDarkMode ? '#000' : '#CCC'}]}
           testID='settings-button'
         >
           <MaterialIcons name="settings" size={24} color={gearIconColor} testID="icon-settings"/>
@@ -102,14 +103,14 @@ const CustomDrawerContent = (props) => {
         onBackdropPress={() => setSettingsModalVisible(false)}
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
-        <View style={[styles.modalContainer, { backgroundColor: modalBg, borderTopColor: borderColor }]}>
-          <ScrollView contentContainerStyle={styles.modalContent}>
+        <View style={[Styles.modalContainer, { backgroundColor: modalBg, borderTopColor: borderColor }]}>
+          <ScrollView contentContainerStyle={Styles.modalContent}>
             {activeSettingScreen ? (
               <TouchableOpacity onPress={() => setActiveSettingScreen(null)}>
-                <Text style={[styles.backButton, { color: backTextColor }]}>Back</Text>
+                <Text style={[Styles.backButton, { color: backTextColor }]}>Back</Text>
               </TouchableOpacity>
             ) : (
-              <Text style={[styles.modalTitle, { color: modalText }]}>Settings</Text>
+              <Text style={[Styles.modalTitle, { color: modalText }]}>Settings</Text>
             )}
             {renderSettingComponent()}
           </ScrollView>
@@ -147,63 +148,6 @@ const Navigator = () => {
     </ThemeProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  gearWrapper: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-  },
-  gearButton: {
-    backgroundColor: '#eee',
-    padding: 12,
-    borderRadius: 30,
-    elevation: 4,
-  },
-  modalContainer: {
-    height: '80%',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    overflow: 'hidden',
-  },
-  modalContent: {
-    padding: 20,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  backButton: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  drawerHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-    paddingBottom: 30,
-    gap: 14,
-    borderBottomWidth: 1,
-    marginBottom: 10,
-    // paddingBottom: 30,
-  },
-  drawerLogo: {
-    width: 48,
-    height: 48,
-  },
-  drawerTitle: {
-    fontSize: 30,
-    flexDirection: 'row',
-  },
-  drawerTitleAct: {
-    fontWeight: 'bold',
-  },
-  drawerTitleNxt: {
-    fontWeight: 'normal',
-  },
-});
 
 
 export { CustomDrawerContent };
