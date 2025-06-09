@@ -124,4 +124,4 @@ The state is determined by the values `theme`, `language`, `notificationsEnabled
 
 
 ### Components using useSettingsStore.js
-App.js, NotificationsScreen.js, and LanguageScreen.js.
+App.js and SettingsScreen.js.
