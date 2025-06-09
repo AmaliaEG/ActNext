@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
     Text,
     View,
@@ -5,19 +6,31 @@ import {
     StyleSheet,
     Switch,
     ActivityIndicator,
+    ScrollView,
+    StatusBar
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import React from 'react';
+import { Picker } from "@react-native-picker/picker";
 import useSettingsStore from "../../store/useSettingsStore";
 
-const SettingsScreen = ({ navigation }) => {
+// Screens
+import ProfileDetailsScreen from "./ProfileDetailsScreen";
+import ThemesScreen from "./ThemesScreen";
+import AboutACTNXTAppScreen from "./AboutACTNXTAppScreen";
+
+const SettingsScreen = ({ closeModal }) => {
     const {
         theme,
+        updateTheme,
         language,
+        setLanguage,
         notificationsEnabled,
         toggleNotifications,
         hydrated
     } = useSettingsStore();
+
+    const [activeScreen, setActiveScreen] = useState(null);
+    const [langOpen, setLangOpen] = useState('en');
 
     if (!hydrated) {
         return (
@@ -29,98 +42,202 @@ const SettingsScreen = ({ navigation }) => {
     }
 
     const isDarkMode = theme.mode === 'dark';
+    const bgColor = isDarkMode ? '#121212' : '#FFFFFF';
+    const textColor = isDarkMode ? '#FFFFFF' : '#000000';
+    const screens = isDarkMode ? '#AAAAAA' : "#666666";
+    const borderColor = isDarkMode ? '#333333' : '#CCCCCC';
+
+    const Header = ({ title }) => (
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setActiveScreen(null)}>
+          <Text style={[styles.backText, { color: textColor }]}>Back</Text>
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: textColor }]}>{title}</Text>
+      </View>
+    );
+
+    if (activeScreen === "Profile") {
+      return (
+        <View style={[styles.screen, { backgroundColor: bgColor }]}>
+          <Header />
+          <ScrollView contentContainerStyle={styles.subContainer}>
+            <ProfileDetailsScreen closeModal={closeModal} />
+          </ScrollView>
+        </View>
+      );
+    }
+
+    if (activeScreen === "Themes") {
+      return (
+        <View style={[styles.screen, { backgroundColor: bgColor }]}>
+          <Header />
+          <ScrollView contentContainerStyle={styles.subContainer}>
+            <ThemesScreen />
+          </ScrollView>
+        </View>
+      );
+    }
     
-    const menuItems = [
-        { title: 'Profile', screen: 'ProfileDetails' },
-        {
-            title: 'Themes', 
-            screen: 'Themes',
-            rightText: theme.mode === 'system' ? 'System' : theme.mode === 'dark' ? 'Dark' : 'Light'
-        },
-        {
-            title: 'Language',
-            screen: 'Language',
-            rightText: language.toUpperCase()
-        },
-        {
-            title: 'Notifications',
-            screen: 'Notifications',
-            rightComponent: (
-                <Switch
-                    value={notificationsEnabled}
-                    onValueChange={toggleNotifications}
-                />
-            )
-        },
-        { title: 'About ACTNXT App', screen: 'AboutACTNXTApp' },
-    ];
+    if (activeScreen === "About") {
+      return (
+        <View style={[styles.screen, { backgroundColor: bgColor }]}>
+          <Header />
+          <ScrollView contentContainerStyle={styles.subContainer}>
+            <AboutACTNXTAppScreen />
+          </ScrollView>
+        </View>
+      );
+    }
 
     return (
-        <View style={[styles.container, { backgroundColor: isDarkMode ? '#121212' : '#fff' }]}>
-            {menuItems.map((item, index) => (
-                <TouchableOpacity
-                    key={index}
-                    style={[styles.menuItem, {
-                        borderBottomColor: isDarkMode ? '#333' : '#ccc'
-                    }]}
-                    onPress={() => navigation.navigate(item.screen)}
-                >
-                    <Text style={[styles.menuText, {
-                        color: isDarkMode ? '#fff' : '#000'
-                    }]}>{item.title}</Text>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: bgColor }]}>
+          <Text style={[styles.title, { color: textColor }]}>Settings</Text>
+          
+          {/* Profile */}
+          <Row 
+            title="Profile"
+            value={null}
+            onPress={() => setActiveScreen("Profile")}
+            color={textColor}
+            subColor={screens}
+            border={borderColor}
+          />
 
-                    <View style={styles.rightContent}>
-                        {item.rightText && (
-                            <Text style={[styles.rightText, {
-                                color: isDarkMode ? '#aaa' : '#666'
-                            }]}>
-                                {item.rightText}
-                            </Text>
-                        )}
-                        {item.rightComponent && item.rightComponent}
-                        {!item.rightText && !item.rightComponent && (
-                            <AntDesign
-                                name="right"
-                                size={20}
-                                color={isDarkMode ? '#aaa' : '#000'}
-                            />
-                        )}
-                    </View>
-                </TouchableOpacity>
-            ))}
-        
-        </View>
+          {/* Themes */}
+          <Row 
+            title="Themes"
+            value={theme.mode.charAt(0).toUpperCase() + theme.mode.slice(1)}
+            onPress={() => setActiveScreen("Themes")}
+            color={textColor}
+            subColor={screens}
+            border={borderColor}
+          />
+
+          {/* Language */}
+          <TouchableOpacity style={[styles.row, { borderBottomColor: borderColor }]} onPress={() => setLangOpen(o => !o)}>
+            <Text style={[styles.label, { color: textColor }]}>Language</Text>
+            <View style={styles.valueContainer}>
+              <Text style={[styles.value, { color: screens }]}>{language.toUpperCase()}</Text>
+              <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={textColor} />
+            </View>
+          </TouchableOpacity>
+
+          {langOpen && (
+            <View style={[styles.nested, { borderBottomColor: borderColor }]}>
+              <Picker
+                selectedValue={language}
+                onValueChange={(val) => {
+                  setLanguage(val);
+                  setActiveScreen(false);
+                }}
+                style={styles.picker}
+                dropdownIconColor={textColor}
+              >
+                <Picker.Item label="English" value="en" />
+                <Picker.Item label="Danish" value="da" />
+                <Picker.Item label="Lorem Ipsum" value="li" />
+              </Picker>
+            </View>
+          )}
+
+          {/* Notifications */}
+          <View style={[styles.row, { borderBottomColor: borderColor }]}>
+            <Text style={[styles.label, { color: textColor }]}>Notifications</Text>
+            <Switch
+              value={notificationsEnabled}
+              onValueChange={toggleNotifications}
+              trackColor={{ false: isDarkMode ? '#444444' : '#CCCCCC', true: isDarkMode ? '#81b0ff' : '#007AFF' }} thumbColor="#FFFFFF" />
+          </View>
+
+          {/* About ActNxt */}
+          <Row 
+            title="About ActNxt App"
+            value={null}
+            onPress={() => setActiveScreen("About")}
+            color={textColor}
+            subColor={screens}
+            border={borderColor}
+          />
+        </ScrollView>
     );
 };
 
+function Row({ title, value, onPress, color, subColor, borderColor }) {
+  return (
+    <TouchableOpacity style={[styles.row, { borderBottomColor: borderColor }]} onPress={onPress}>
+      <Text style={[styles.label, { color }]}>{title}</Text>
+      <View style={styles.valueContainer}>
+        {value != null && (
+          <Text style={[styles.value, { color: subColor }]}>{value}</Text>
+        )}
+        <AntDesign name="right" size={18} color={color} />
+      </View>
+    </TouchableOpacity>
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
       padding: 20,
+  },
+  subContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  screen: {
+    flex: 1,
   },
   centered: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
   },
-  menuItem: {
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  row: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingVertical: 15,
+      paddingVertical: 12,
       borderBottomWidth: 1,
-      borderBottomColor: '#ccc',
+      borderBottomColor: '#CCCCCC',
   },
-  menuText: {
+  backText: {
       fontSize: 16,
+      marginRight: 20,
   },
-  rightContent: {
+  header: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 10,
+      paddingTop: StatusBar.currentHeight,
+      paddingHorizontal: 20,
+      marginBottom: 4,
   },
-  rightText: {
-      fontSize: 14,
+  label: {
+      fontSize: 16,
+  },
+  right: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  valueContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  nested: {
+    paddingLeft: 20,
+    borderBottomColor: '#CCCCCC',
+    borderBottomWidth: 1,
+  },
+  picker: {
+    width: '100%'
   },
 });
 
