@@ -14,12 +14,16 @@ const App = ({ navigation }) => {
   //theme 
   const { resolvedTheme } = useTheme();
   // Zustand Hydration
-  const { loadAuth, hydrated: authHydrated, isLoggedIn } = useAuthStore();
+  const { loadAuth, hydrated: authHydrated, isLoggedIn ,user: zustandUser, login  } = useAuthStore();
   const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
   const { loadProfile, hydrated: profileHydrated } = useProfileStore();
   const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
 
-  const {user} = useAuth0();
+  const {user: auth0User} = useAuth0();
+
+  // Fallback mechanism just in case
+  // Will get removed once Zustand is confirmed to work
+  const currentUser = zustandUser || auth0User;
 
   //loading all stored data from zustand
   useEffect(() => {
@@ -36,10 +40,17 @@ const App = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    if (allHydrated && isLoggedIn && user && navigation) {
-      navigation.navigate('Feed');
-    }
-  }, [allHydrated, isLoggedIn, user, navigation]);
+
+    const pageLoad =
+    navigation.addListener('focus', () => {
+      
+        login(currentUser);
+        navigation.navigate('Feed');
+      
+    });
+
+    return pageLoad;
+  }, [allHydrated, isLoggedIn, currentUser, navigation]);
 
   const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
 
