@@ -11,19 +11,13 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = ({ navigation }) => {
 
-  //theme 
+  // Theme 
   const { resolvedTheme } = useTheme();
   // Zustand Hydration
-  const { loadAuth, hydrated: authHydrated, isLoggedIn ,user: zustandUser, login  } = useAuthStore();
+  const { loadAuth, hydrated: authHydrated  } = useAuthStore();
   const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
   const { loadProfile, hydrated: profileHydrated } = useProfileStore();
   const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
-
-  const {user: auth0User} = useAuth0();
-
-  // Fallback mechanism just in case
-  // Will get removed once Zustand is confirmed to work
-  const currentUser = zustandUser || auth0User;
 
   //loading all stored data from zustand
   useEffect(() => {
@@ -38,19 +32,6 @@ const App = ({ navigation }) => {
 
     hydrateAll();  
   }, []);
-
-  useEffect(() => {
-
-    const pageLoad =
-    navigation.addListener('focus', () => {
-      
-        login(currentUser);
-        navigation.navigate('Feed');
-      
-    });
-
-    return pageLoad;
-  }, [allHydrated, isLoggedIn, currentUser, navigation]);
 
   const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
 
@@ -70,7 +51,7 @@ const App = ({ navigation }) => {
         {/* Buttons and UI */}
         <View style={styles.row}>
           <View style={styles.buttonContainer}>
-            <LoginButton/>
+            <LoginButton navigation={navigation}/>
           </View>
         </View>
       </View>
@@ -80,7 +61,7 @@ const App = ({ navigation }) => {
 
 
 
-const LoginButton = () => {
+const LoginButton = ({navigation}) => {
   
   // Auth0 hooks
   const { authorize, user: auth0User, error, isLoading } = useAuth0();
@@ -100,33 +81,36 @@ const LoginButton = () => {
     }
   };
 
-  const populateStores = async () => {
-    if(!isLoggedIn && currentUser){
-      login(currentUser);
+  useEffect(() => {
+    if (auth0User && !isLoggedIn) {
+      login(auth0User);
+      // Navigate to Feed after successful login
+      navigation.navigate('Feed');
     }
-  }
-  
+  }, [auth0User, isLoggedIn, login, navigation]);
+
+  const navigateToFeed =  () => {
+    navigation.navigate('Feed');
+  };
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return (
+    <View>
+      <Button onPress={navigateToFeed } title="auth0 error, navigate to Feed"/>
+    </View>
+    // <></>
+    );
   }
 
   return (
     <View>
-      {error && <Text>{error.message}</Text>}
-      {/*currentUser && (<Text style={{ color: resolvedTheme === 'dark' ? '#fff' : '#000' }}>Logged in as {currentUser.name}</Text>)*/}
+      {error && <Text style={{ color: 'red' }}>{error.message}</Text>}
       
-      {currentUser && 
-      (<Text style={{ color:  '#000' }}>Logged in as {currentUser.name}</Text>) 
-      }
-      {currentUser && 
-      populateStores()
-      }
-      {currentUser ? (
-        <></>
-      ) : (
-        <Button onPress={onLogin} title="Log in" />
+      {currentUser && (
+        <Text style={{ color: '#000' }}>Logged in as {currentUser.name}</Text>
       )}
+      
+      <Button onPress={onLogin} title="Log in" />
     </View>
   );
 };
