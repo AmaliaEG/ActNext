@@ -40,8 +40,7 @@ const StarredTasks = () => {
           testID='burger-menu'>
           <Ionicons 
             name="menu" 
-            size={Styles.menuIcon.size} 
-            color={textColor}
+            size={Styles.menuIcon.size}
           />
         </Pressable>
         <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Starred</Text>

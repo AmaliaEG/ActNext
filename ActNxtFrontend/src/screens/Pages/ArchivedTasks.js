@@ -50,8 +50,7 @@ import TaskCard from './TaskCard';
         <Pressable onPress={() => navigation.openDrawer()} style={Styles.menuButton} testID='burger-menu'>
           <Ionicons 
             name="menu" 
-            size={Styles.menuIcon.size} 
-            color={textColor}
+            size={Styles.menuIcon.size}
           />
         </Pressable>
         <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Archive</Text>
