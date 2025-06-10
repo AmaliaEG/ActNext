@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text, Pressable, ActivityIndicator } from 'react-native';
+import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Mock from './JSON_Mockdata.json'; // Import JSON data
@@ -70,6 +70,8 @@ const onRefresh = async () => {
         </Pressable>
         <Text style={[Styles.screenTitle, { color: textColor }]}>Insights</Text>
       </View>
+
+      <Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}

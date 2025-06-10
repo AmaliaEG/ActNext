@@ -35,6 +35,17 @@ export const Styles = StyleSheet.create({
     borderRadius: 50,
   },
 
+  
+  // ===== CARD BACKDROP STYLES ===== //
+  backgroundImage: {
+    position: 'absolute',
+    transform: [{scale:1.65}],
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '35%',
+  },
+
   // ===== TEXT STYLES ===== //
   CompanyNameText: {
     marginLeft: 15,
