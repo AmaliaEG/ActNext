@@ -132,7 +132,7 @@ const LoginPage = ({ navigation }) => {
   // Zustand Hydration
   const { loadAuth, hydrated: authHydrated, login, user: zustandUser, isLoggedIn  } = useAuthStore();
   const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
-  const { loadProfile, hydrated: profileHydrated } = useProfileStore();
+  const { loadProfile, hydrated: profileHydrated, updateProfile } = useProfileStore();
   const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
 
   //Auth0 access
@@ -153,7 +153,7 @@ const LoginPage = ({ navigation }) => {
 
     //behavior when user login is detected
     if (auth0User ) {
-      login(auth0User); //populate the zustand store with user information
+      updateProfile(auth0User);
       navigation.navigate('Feed');
     }
   }, [auth0User, isLoggedIn, login, navigation]);
@@ -169,6 +169,17 @@ const LoginPage = ({ navigation }) => {
       </GestureHandlerRootView>
     );
   }
+
+  const onLoginPress = async () => {
+    try{
+      const token = await authorize();
+      if (token){
+        login(token.accessToken);
+      }
+    } catch (e){
+      console.error('Login failed', e);
+    }
+  };
   
 
   return (
@@ -177,7 +188,7 @@ const LoginPage = ({ navigation }) => {
         <Logo/>
         <View style={Styles.buttonContainer} key="login-button-container">
           <LoginButton 
-            onLoginPress={authorize} //auth0 login
+            onLoginPress={onLoginPress} //auth0 login
             error={error}
             isLoading={isLoading}
             currentUser={zustandUser || auth0User}

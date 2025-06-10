@@ -50,10 +50,10 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     useEffect(() => {
         if (hydrated && user) {
             const updatedProfile = {
-                name: user.name || '',
+                name: profile?.name || '',
                 birthDate: profile?.birthDate || '',
                 gender: profile?.gender || '',
-                email: user.email || '',
+                email: profile?.email || '',
                 code: profile?.code || '',
                 ...profile
             };
