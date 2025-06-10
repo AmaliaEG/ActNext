@@ -76,7 +76,7 @@ const CustomDrawerContent = (props) => {
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
         <View style={[Styles.modalContainer, { backgroundColor: modalBg, borderTopColor: borderColor }]}>
-            <SettingsScreen closeModal={() => setSettingsModalVisible(false)} />
+            <SettingsScreen props={props} closeModal={() => setSettingsModalVisible(false)} />
         </View>
       </Modal>
     </View>

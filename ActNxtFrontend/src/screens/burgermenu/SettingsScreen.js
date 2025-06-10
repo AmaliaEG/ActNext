@@ -18,7 +18,7 @@ import ProfileDetailsScreen from "./ProfileDetailsScreen";
 import ThemesScreen from "./ThemesScreen";
 import AboutACTNXTAppScreen from "./AboutACTNXTAppScreen";
 
-const SettingsScreen = ({ closeModal }) => {
+const SettingsScreen = ({ props, closeModal }) => {
     const {
         theme,
         updateTheme,
@@ -61,7 +61,7 @@ const SettingsScreen = ({ closeModal }) => {
         <View style={[styles.screen, { backgroundColor: bgColor }]}>
           <Header />
           <ScrollView contentContainerStyle={styles.subContainer}>
-            <ProfileDetailsScreen closeModal={closeModal} />
+            <ProfileDetailsScreen navigation={props.navigation} closeModal={closeModal} />
           </ScrollView>
         </View>
       );
