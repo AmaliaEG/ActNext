@@ -8,7 +8,7 @@ import useSettingsStore from '../../store/useSettingsStore';
 import useProfileStore from '../../store/useProfileStore';
 import useInsightsStore from '../../store/useInsightsStore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Styles, GroupColours } from './Styles';
+import { Styles } from './Styles';
 
 
 const { width, height } = Dimensions.get('window');

@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Linking, Alert, Platform, TouchableOpacity } from 'react-native';
-import SettingsList from '../Settings/SettingsList';
+import { View, StyleSheet, Text, Linking, Alert, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../Themes/ThemeContext';
 
 

@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Stylesheet, ActivityIndicator, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-//import mockTasks from './MockTasks.json'; // Import JSON data
-import mockTasks from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
-import { useTheme } from '../../Themes/ThemeContext';
-import { Styles, GroupColours } from './Styles';
+import { Styles } from './Styles';
 
 // Target group dictionary
 const Groups = {

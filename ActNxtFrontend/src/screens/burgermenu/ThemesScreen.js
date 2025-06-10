@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTheme } from '../../Themes/ThemeContext'
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const ThemesScreen = () => {

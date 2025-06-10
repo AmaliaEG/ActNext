@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Stylesheet, ScrollView, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import LoginPage from '../screens/Pages/LoginPage'; // Your main screen with the buttons
-import Feed from '../screens/Pages/Feed'; // Your Feed page
+import LoginPage from '../screens/Pages/LoginPage'; 
+import Feed from '../screens/Pages/Feed'; 
 import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
 import SettingsScreen from '../screens/burgermenu/SettingsScreen';
@@ -14,9 +14,9 @@ import TaskExpansion from '../screens/Pages/TaskExpansion';
 import ThemesScreen from '../screens/burgermenu/ThemesScreen';
 import StarredTasks from '../screens/Pages/StarredTasks';
 import ArchivedTasks from '../screens/Pages/ArchivedTasks';
-import {useAuth0, Auth0Provider} from 'react-native-auth0';
+import { Auth0Provider} from 'react-native-auth0';
 import { ThemeProvider, useTheme } from '../Themes/ThemeContext';
-import { Styles, GroupColours } from '../screens/Pages/Styles';
+import { Styles } from '../screens/Pages/Styles';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

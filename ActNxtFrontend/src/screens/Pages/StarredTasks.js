@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
+import { View, FlatList, Text, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useInsightsStore from '../../store/useInsightsStore';
 import { useTheme } from '../../Themes/ThemeContext';
-import { Styles, GroupColours } from './Styles';
+import { Styles } from './Styles';
 import TaskCard from './TaskCard';
 
 const StarredTasks = () => {

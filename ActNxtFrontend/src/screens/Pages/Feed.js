@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text, Stylesheet, Pressable, ActivityIndicator } from 'react-native';
+import { View, FlatList, Text, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Mock from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
 import { useTheme } from '../../Themes/ThemeContext';
-import { Styles, GroupColours } from './Styles';
+import { Styles } from './Styles';
 import TaskCard from './TaskCard';
 
 const Feed = () => {
