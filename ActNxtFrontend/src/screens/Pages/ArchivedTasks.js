@@ -65,6 +65,8 @@ import TaskCard from './TaskCard';
             subTextColor={subTextColor}
             shadowColor={shadowColor}
             shadowOpacity={shadowOpacity}
+            showUnarchive={true}
+            onUnarchive={unarchiveTask}
           />
         )}
         ListEmptyComponent={

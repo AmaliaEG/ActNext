@@ -174,7 +174,7 @@ const App = ({ navigation }) => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BackgroundAnimation>
-        <View style={styles.buttonContainer} key="login-button-container">
+        <View style={Styles.buttonContainer} key="login-button-container">
           <LoginButton 
             onLoginPress={authorize} //auth0 login
             error={error}
