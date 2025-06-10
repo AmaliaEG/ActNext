@@ -16,6 +16,9 @@ export const lightTheme = {
     buttonText: '#FFFFFF',
     buttonBorder: '#CCCCCC',
     divider: '#EEEEEE',
+    cardBg: '#FFFFFF',
+    headerBg: '#FFFFFF',
+
 
     // Box-related
     boxBg: '#FFFFFF',
@@ -39,6 +42,13 @@ export const lightTheme = {
     modalBg: '#FFFFFF',
     modalText: '#000000',
     backTextColor: '#007AFF',
+
+    //dropdown
+    dropdownIcon: '#000000',
+
+    // task expansion
+    borderLeft: '#CCCCCC',
+
   },
 };
 
@@ -60,6 +70,8 @@ export const darkTheme = {
     buttonText: '#FFFFFF',
     buttonBorder: '#444444',
     divider: '#333333',
+    cardBg: '#1A1A1A',
+    headerBg: '#1A1A1A',
 
     // Box-related
     boxBg: '#1E1E1E',
@@ -83,6 +95,14 @@ export const darkTheme = {
     modalBg: '#1E1E1E',
     modalText: '#FFFFFF',
     backTextColor: '#BBBBBB',
+
+    //dropdown
+    dropdownIcon: '#FFFFFF',
+
+    // task expansion
+    borderLeft: '#666666',
+
+
   },
 };
 

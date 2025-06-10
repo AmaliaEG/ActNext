@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import useInsightsStore from '../../store/useInsightsStore';
 import { Styles } from './Styles';
+import { useTheme } from '../../Themes/ThemeContext';
 
 // Target group dictionary
 const Groups = {
@@ -28,6 +29,7 @@ const TaskExpansion = ({ route }) => {
   const [feedback, setFeedback] = useState({liked: false, disliked: false});
   const [comment, setComment] = useState('');
   const [isStarred, setIsStarred] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (hydrated) {
@@ -74,43 +76,52 @@ const TaskExpansion = ({ route }) => {
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
 
   return (
-    <View style={Styles.Taskcontainer}>
+    <View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}>
       {/* Head bar */}
-      <View style = {Styles.Taskheader}>
+      <View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
         <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={Styles.backButton}>
-          <Ionicons name = "arrow-back" size = {24} color = "black" />
+          <Ionicons name = "arrow-back" size = {24} color = {theme.colors.text} />
         </TouchableOpacity>
-        <Text style={Styles.TaskTitle}>{task.Title ||"Task title"}</Text>
+        <Text style={[Styles.TaskTitle, { color: theme.colors.text }]}>
+          {task.Title || "Task title"}
+        </Text>
         <View style={Styles.rightSpacer} /> 
       </View>
 
       {/*Main content */}
-      <View style = {Styles.contentContainer}>
+      <View style = {[Styles.contentContainer,{borderLeftColor: theme.colors.borderLeft}]}>
         <View style={Styles.companyRow}>
           {/*Company name*/}
-          <View style={Styles.companyNameContainer}>
-            <Text style={Styles.companyName}>{task.CompanyName}</Text>
+          <View style={[
+            Styles.companyNameContainer, 
+            {color: theme.colors.inputText}, 
+            {backgroundColor: theme.colors.inputBg}, 
+            {borderColor: theme.colors.border}]}>
+            <Text style={[Styles.companyName, {color: theme.colors.text}]}>{task.CompanyName} </Text>
           </View>
           {/*Star*/}
           <TouchableOpacity onPress={handleStarPress} style={Styles.starButton}>
             <Ionicons 
               name={isStarred ? "star" : "star-outline"} 
               size={24} 
-              color={isStarred ? "#FFD700" : "#666"} 
+              color={isStarred ? "#FFD700" : theme.colors.subText}
             />
           </TouchableOpacity>
         </View>
         
-        
         {/* Target Group Row*/}
         <View style={Styles.targetGroupContainer}>
-          <View testID='color-circle' style={[Styles.colorCircle, {backgroundColor: targetGroup.color}]}/>
-          <Text style={Styles.groupNameText}>{targetGroup.name}</Text>
-        </View>
+        <View
+          testID="color-circle"
+          style={[Styles.colorCircle, { backgroundColor: targetGroup.color }]}
+        />
+        <Text style={[Styles.groupNameText, { color: theme.colors.text }]}>
+          {targetGroup.name}
+        </Text>
+      </View>
 
         {/* Detailed description of task*/}
-        <Text style={Styles.contentText}>{task.Description}</Text>
-
+        <Text style={[Styles.contentText, {color: theme.colors.text}]}>{task.Description}</Text>
         {/* Like/Dislike Buttons*/}
         <View style={Styles.rightAlignedButtonContainer}>
           <TouchableOpacity
@@ -140,9 +151,10 @@ const TaskExpansion = ({ route }) => {
 
       {/* Comment Section - integrated with the input */}
       <View style={Styles.commentSection}>
-        <Text style={Styles.commentTitle}>My Notes</Text>
+        <Text style={[Styles.commentTitle, {color: theme.colors.text}]}>My Notes</Text>
         <TextInput
-          style={Styles.commentInput}
+          style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text },
+          ]}
           placeholder="Type your notes here..."
           placeholderTextColor="#999"
           multiline
@@ -184,6 +196,5 @@ const TaskExpansion = ({ route }) => {
 };
 
 export default TaskExpansion;
-
 
 
