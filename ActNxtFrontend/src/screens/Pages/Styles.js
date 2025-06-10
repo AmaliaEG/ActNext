@@ -14,15 +14,35 @@ export const Styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  // ===== BACKGROUND IMAGE ===== //
+  backgroundImage: {
+    position: 'absolute',
+    transform: [{scale:1.65}],
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '35%',
+    opacity: 0.5, 
+  },
+
   // ===== CARD STYLES ===== //
   item: {
+    backgroundColor: '#fcfcfc',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 25,
+    marginBottom: 20,
     borderRadius: 10,
     position: 'relative',
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
+    shadowOffset: { width: 0, height: 9 },
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4, 
+    },
+    shadowOpacity: 0.25, 
+    shadowRadius: 4,
   },
   info: {
     padding: 5,
@@ -34,66 +54,53 @@ export const Styles = StyleSheet.create({
     height: 15,
     borderRadius: 50,
   },
-
-  
-  // ===== CARD BACKDROP STYLES ===== //
-  backgroundImage: {
-    position: 'absolute',
-    transform: [{scale:1.65}],
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: '35%',
-  },
-
-  // ===== TEXT STYLES ===== //
   CompanyNameText: {
     marginLeft: 15,
     marginTop: -7,
+    fontSize: 17,
   },
   text: {
-    fontSize: 16,
+    fontSize: 19,
     fontWeight: 'bold',
     marginLeft: 20,
   },
-  dateText: {
-    fontSize: 12,
-    marginTop: 5,
-    marginLeft: 20,
-  },
   descriptionText: {
-    fontSize: 12,
+    fontSize: 13,
     marginTop: 5,
     marginLeft: 20,
     fontStyle: 'italic',
   },
-  screenTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    position: 'absolute',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
+  dateText: {
+    fontSize: 13,
+    marginTop: 5,
+    marginLeft: 20,
   },
 
-  // ===== HEADER/MENU STYLES ===== //
+  // ===== HEADER + MENU STYLES ===== //
   menuContainer: {
-    backgroundColor: '#f2f2f2', 
+    backgroundColor: '#f5f7f7', 
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 25,
+    padding: 35,
     paddingTop: 70,
-    marginBottom: 10,
+    marginBottom: 25,
     marginTop: 0,
     position: 'relative',
+  },
+  screenTitle: {
+    fontSize: 34,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    position: 'absolute',
   },
   menuButton: {
     padding: 1,
     position: 'absolute',
     left: 25,
+  },
+  menuIcon: {
+    size: 45,
   },
 
   // ===== WARNING STYLES ===== //
@@ -138,6 +145,10 @@ export const Styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#007BFF',
     borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 
   // ===== NAVIGATOR ===== //

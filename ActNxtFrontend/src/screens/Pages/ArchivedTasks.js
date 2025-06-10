@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text, Pressable, ActivityIndicator } from 'react-native';
+import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useInsightsStore from '../../store/useInsightsStore';
@@ -48,10 +48,16 @@ import TaskCard from './TaskCard';
     <View style={[Styles.container, { backgroundColor }]}>
       <View style={[Styles.menuContainer,{backgroundColor:insightBackground}]}>
         <Pressable onPress={() => navigation.openDrawer()} style={Styles.menuButton} testID='burger-menu'>
-          <Ionicons name="menu" size={30} color={textColor} />
+          <Ionicons 
+            name="menu" 
+            size={Styles.menuIcon.size} 
+            color={textColor}
+          />
         </Pressable>
         <Text style={[Styles.screenTitle, { color: textColor }]}>Archive</Text>
       </View>
+
+      <Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}

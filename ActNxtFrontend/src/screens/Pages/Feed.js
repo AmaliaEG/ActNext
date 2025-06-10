@@ -66,7 +66,11 @@ const onRefresh = async () => {
     <View style={[Styles.container, { backgroundColor }]}>
       <View style={Styles.menuContainer}>
         <Pressable onPress={() => navigation.openDrawer()} style={Styles.menuButton} testID='burger-menu'>
-          <Ionicons name="menu" size={30} color={textColor} />
+          <Ionicons 
+            name="menu" 
+            size={Styles.menuIcon.size} 
+            color={textColor}
+          />
         </Pressable>
         <Text style={[Styles.screenTitle, { color: textColor }]}>Insights</Text>
       </View>
@@ -75,7 +79,7 @@ const onRefresh = async () => {
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
-        data={insights.filter(task => !task.isArchived).slice(0, 3)}
+        data={insights.filter(task => !task.isArchived).slice(0, 4)}
         refreshing={refreshing}
         onRefresh={onRefresh}
         renderItem={({ item }) => (

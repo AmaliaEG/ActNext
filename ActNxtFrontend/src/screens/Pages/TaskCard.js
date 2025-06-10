@@ -20,7 +20,6 @@ const TaskCard = ({
       <View style={[
         Styles.item, 
         { 
-          backgroundColor: backgroundColor, 
           shadowColor: shadowColor, 
           shadowOpacity: shadowOpacity 
         }
