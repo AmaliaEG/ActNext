@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import App from '../screens/Pages/App'; // Your main screen with the buttons
+import LoginPage from '../screens/Pages/LoginPage'; // Your main screen with the buttons
 import Feed from '../screens/Pages/Feed'; // Your Feed page
 import AboutACTNXTAppScreen from '../screens/burgermenu/AboutACTNXTAppScreen';
 import ProfileDetailsScreen from '../screens/burgermenu/ProfileDetailsScreen';
@@ -93,7 +93,7 @@ const Navigator = () => {
             screenOptions={{ drawerType: 'slide', drawerStyle: { width: '75%' }, headerShown: false }}
             drawerContent={(props) => <CustomDrawerContent {...props} />}
           >
-            <Drawer.Screen name="Home" component={App} />
+            <Drawer.Screen name="Home" component={LoginPage} />
             <Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
             <Drawer.Screen name="Details" component={TaskExpansion} />
             <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
