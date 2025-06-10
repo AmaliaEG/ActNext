@@ -108,12 +108,12 @@ const SettingsScreen = ({ props, closeModal }) => {
           />
 
           {/* Language */}
-                <TouchableOpacity style={[styles.row, { borderBottomColor: theme.colors.border }]} onPress={() => setLangOpen(o => !o)}>
-        <Text style={[styles.label, { color: theme.colors.text }]}>Language</Text>
-        <View style={styles.valueContainer}>
-          <Text style={[styles.value, { color: theme.colors.screen }]}>{language.toUpperCase()}</Text>
-          <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.text} />
-        </View>
+        <TouchableOpacity style={[styles.row, { borderBottomColor: theme.colors.border }]} onPress={() => setLangOpen(o => !o)}>
+            <Text style={[styles.label, { color: theme.colors.text }]}>Language</Text>
+            <View style={styles.valueContainer}>
+              <Text style={[styles.value, { backgroundColor: theme.colors.sheetBorder }]}>{language.toUpperCase()}</Text>
+              <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.text} />
+            </View>
       </TouchableOpacity>
 
       {langOpen && (
@@ -134,12 +134,12 @@ const SettingsScreen = ({ props, closeModal }) => {
                 backgroundColor: theme.colors.inputBg,
               }
             ]}
-            dropdownIconColor={theme.colors.text}
+            dropdownIconColor={theme.colors.dropdownIconColor}
             itemStyle={{ color: theme.colors.inputText }}
           >
-            <Picker.Item label="English" value="en" color={theme.colors.inputText} />
-            <Picker.Item label="Danish" value="da" color={theme.colors.inputText} />
-            <Picker.Item label="Lorem Ipsum" value="li" color={theme.colors.inputText} />
+            <Picker.Item label="English" value="en" color={theme.colors.text} />
+            <Picker.Item label="Danish" value="da" color={theme.colors.text} />
+            <Picker.Item label="Lorem Ipsum" value="li" color={theme.colors.text} />
           </Picker>
         </View>
       )}

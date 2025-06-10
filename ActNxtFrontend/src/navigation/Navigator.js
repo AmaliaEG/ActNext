@@ -15,7 +15,7 @@ import ThemesScreen from '../screens/burgermenu/ThemesScreen';
 import StarredTasks from '../screens/Pages/StarredTasks';
 import ArchivedTasks from '../screens/Pages/ArchivedTasks';
 import { Auth0Provider} from 'react-native-auth0';
-import { ThemeProvider, useTheme } from '../Themes/ThemeContext';
+import { useTheme, ThemeProvider } from '../Themes/ThemeContext';
 import { Styles } from '../screens/Pages/Styles';
 
 const Stack = createStackNavigator();
@@ -23,38 +23,25 @@ const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props) => {
   // Get the resolved theme
-  const { resolvedTheme } = useTheme();
-  const isDarkMode = resolvedTheme === 'dark';
-
-  // Colors
-  const bgColor = isDarkMode ? '#121212' : '#FFFFFF';
-  const itemTextColor = isDarkMode ? '#FFFFFF' : '#000000';
-  const borderColor = isDarkMode ? '#333333' : '#CCCCCC';
-  const rightArrowColor = isDarkMode ? '#BBBBBB' : '#333333';
-  const gearBg = isDarkMode ? '#2A2A2A' : '#EEEEEE';
-  const gearIconColor = isDarkMode ? '#FFFFFF' : '#000000';
-  const modalBg = isDarkMode ? '#1E1E1E' : '#FFFFFF';
-  const modalText = isDarkMode ? '#FFFFFF' : '#000000';
-  const backTextColor = isDarkMode ? '#BBBBBB' : '#007AFF';
-
+  const { theme } = useTheme();
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
   const [activeSettingScreen, setActiveSettingScreen] = useState(null);
 
   return (
-    <View style={{ flex: 1, backgroundColor: bgColor }}>
-      <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: bgColor }}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: theme.colors.background }}>
         {/* Header with logo and name */}
-        <View style={[Styles.drawerHeader, { borderBottomColor: borderColor }]}>
+        <View style={[Styles.drawerHeader, { borderBottomColor: theme.colors.borderColor }]}>
           <Image source={require('../../assets/icon.png')} style={Styles.drawerLogo} resizeMode="contain" />
-          <Text style={[Styles.drawerTitle, { color: itemTextColor }]}>
-            <Text style={[Styles.drawerTitleAct, { color: itemTextColor }]}>act</Text>
-            <Text style={[Styles.drawerTitleNxt, { color: itemTextColor }]}>nxt</Text>
+          <Text style={[Styles.drawerTitle, { color: theme.colors.itemTextColor }]}>
+            <Text style={[Styles.drawerTitleAct, { color: theme.colors.itemTextColor }]}>act</Text>
+            <Text style={[Styles.drawerTitleNxt, { color: theme.colors.itemTextColor }]}>nxt</Text>
           </Text>
         </View>
 
-        <DrawerItem label="Insights" labelStyle={{ color: itemTextColor }} onPress={() => props.navigation.navigate('Feed')}/>
-        <DrawerItem label="Starred" labelStyle={{ color: itemTextColor }} onPress={() => props.navigation.navigate('StarredTasks')}/>
-        <DrawerItem label="Archive" labelStyle={{ color: itemTextColor }} onPress={() => props.navigation.navigate('ArchivedTasks')}/>
+        <DrawerItem label="Insights" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('Feed')}/>
+        <DrawerItem label="Starred" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('StarredTasks')}/>
+        <DrawerItem label="Archive" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('ArchivedTasks')}/>
       </DrawerContentScrollView>
 
       <View style={Styles.gearWrapper}>
@@ -63,10 +50,10 @@ const CustomDrawerContent = (props) => {
             setSettingsModalVisible(true);
             setActiveSettingScreen(null); // Reset screen
           }}
-          style={[Styles.gearButton, {backgroundColor: gearBg, shadowColor: isDarkMode ? '#000' : '#CCC'}]}
+          style={[Styles.gearButton, {backgroundColor: theme.colors.gearBg, shadowColor: theme.isDark}]}
           testID='settings-button'
         >
-          <MaterialIcons name="settings" size={24} color={gearIconColor} testID="icon-settings"/>
+          <MaterialIcons name="settings" size={24} color={theme.colors.gearIconColor} testID="icon-settings"/>
         </TouchableOpacity>
       </View>
 
@@ -75,7 +62,7 @@ const CustomDrawerContent = (props) => {
         onBackdropPress={() => setSettingsModalVisible(false)}
         style={{ margin: 0, justifyContent: 'flex-end' }}
       >
-        <View style={[Styles.modalContainer, { backgroundColor: modalBg, borderTopColor: borderColor }]}>
+        <View style={[Styles.modalContainer, { backgroundColor: theme.colors.background, borderTopColor: theme.colors.borderColor }]}>
             <SettingsScreen props={props} closeModal={() => setSettingsModalVisible(false)} />
         </View>
       </Modal>

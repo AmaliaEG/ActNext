@@ -13,21 +13,7 @@ const StarredTasks = () => {
   const [starredTasks, setStarredTasks] = useState([]);
 
   const { theme } = useTheme();
-  const {
-    backgroundColor,
-    insightBackground,
-    textColor,
-    subTextColor,
-    shadowColor,
-    shadowOpacity,
-  } = theme.colors;
 
-
-  const getTheFirstSentence = (description) => {
-    if (!description) return '';
-    const sentences = description.split('.');
-    return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-  }; 
 
   useEffect(() => {
     if (hydrated) {
@@ -38,23 +24,23 @@ const StarredTasks = () => {
 
   if (!hydrated) {
       return (
-        <View style={[Styles.centered, { backgroundColor }]}>
+        <View style={[Styles.centered, { backgroundColor: theme.colors.background }]}>
             <ActivityIndicator size="large" color="#007BFF" />
-            <Text style={{ color: textColor, marginTop: 8 }}>Loading starred insights...</Text>
+            <Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading starred insights...</Text>
         </View>
       );
   }
 
   return (
-    <View style={[Styles.container, { backgroundColor }]}>
-      <View style={[Styles.menuContainer, { backgroundColor: insightBackground }]}>
+    <View style={[Styles.container, { backgroundColor: theme.colors.background  }]}>
+      <View style={[Styles.menuContainer, { backgroundColor: theme.colors.insightBackground }]}>
         <Pressable 
           onPress={() => navigation.openDrawer()} 
           style={Styles.menuButton} 
           testID='burger-menu'>
-          <Ionicons name="menu" size={30} color={textColor} />
+          <Ionicons name="menu" size={30} color={theme.colors.text} />
         </Pressable>
-        <Text style={[Styles.screenTitle, { color: textColor }]}>Starred</Text>
+        <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Starred</Text>
       </View>
 
       <FlatList
@@ -64,20 +50,20 @@ const StarredTasks = () => {
           <TaskCard 
             item={item}
             navigation={navigation}
-            backgroundColor={insightBackground}
-            textColor={textColor}
-            subTextColor={subTextColor}
-            shadowColor={shadowColor}
-            shadowOpacity={shadowOpacity}
+            backgroundColor={theme.colors.insightBackground}
+            textColor={theme.colors.text}
+            subTextColor={theme.colors.subText}
+            shadowColor={theme.colors.shadowColor}
+            shadowOpacity={theme.colors.shadowOpacity}
           />
         )}
         ListEmptyComponent={
           <Text style={[Styles.descriptionText, { 
             textAlign: 'center', 
             marginTop: 30, 
-            color: subTextColor 
+            color: theme.colors.shadowColor,
           }]}>
-            No starred tasks yet.
+            <Text style={[ { color: theme.colors.text }]}>No starred tasks yet.</Text>
           </Text>
         }
       />

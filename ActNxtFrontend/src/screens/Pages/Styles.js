@@ -236,7 +236,7 @@ export const Styles = StyleSheet.create({
     margin: 16,
     marginTop: 60,
     borderLeftWidth: 1, 
-    borderLeftColor: 'black',
+    //borderLeftColor: 'black',
     alignSelf: 'flex-start',
     width: 'auto',
     flexGrow: 0,

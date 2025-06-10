@@ -39,18 +39,18 @@ import TaskCard from './TaskCard';
       return (
         <View style={Styles.centered}>
             <ActivityIndicator size="large" color="#007BFF" />
-            <Text style={{ color: textColor, marginTop: 8 }}>Loading archived insights...</Text>
+            <Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading archived insights...</Text>
         </View>
       );
   }
 
   return (
     <View style={[Styles.container, { backgroundColor }]}>
-      <View style={[Styles.menuContainer,{backgroundColor:insightBackground}]}>
+      <View style={[Styles.menuContainer,{backgroundColor: theme.colors.insightBackground}]}>
         <Pressable onPress={() => navigation.openDrawer()} style={Styles.menuButton} testID='burger-menu'>
-          <Ionicons name="menu" size={30} color={textColor} />
+          <Ionicons name="menu" size={30} color={theme.colors.text} />
         </Pressable>
-        <Text style={[Styles.screenTitle, { color: textColor }]}>Archive</Text>
+        <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Archive</Text>
       </View>
 
       <FlatList
@@ -60,17 +60,17 @@ import TaskCard from './TaskCard';
           <TaskCard 
             item={item}
             navigation={navigation}
-            backgroundColor={insightBackground}
-            textColor={textColor}
-            subTextColor={subTextColor}
-            shadowColor={shadowColor}
-            shadowOpacity={shadowOpacity}
+            backgroundColor={theme.colors.insightBackground}
+            textColor={theme.colors.text}
+            subTextColor={theme.colors.subText}
+            shadowColor={theme.colors.shadow}
+            shadowOpacity={theme.colors.shadowOpacity}
             showUnarchive={true}
             onUnarchive={unarchiveTask}
           />
         )}
         ListEmptyComponent={
-          <Text style={[{ textAlign: 'center', marginTop: 30 }, { color: textColor }]}>No archived tasks yet.</Text>
+          <Text style={[{ textAlign: 'center', marginTop: 30 }, { color: theme.colors.text }]}>No archived tasks yet.</Text>
         }
       />
     </View>

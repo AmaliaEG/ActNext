@@ -11,17 +11,7 @@ import TaskCard from './TaskCard';
 const Feed = () => {
   const navigation = useNavigation();
   const { insights, setInsights, hydrated } = useInsightsStore();
-
-  // Theme colours 
-  const { resolvedTheme } = useTheme();
-  const backgroundColor = resolvedTheme === 'dark' ? '#000000' : '#FFFFFF';
-  const insightBackground = resolvedTheme === 'dark' ? '#1E1E1E' : '#FFFFFF';
-
-  const textColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const subTextColor = resolvedTheme === 'dark' ? '#BBBBBB' : '#666666';
-
-  const shadowColor = resolvedTheme === 'dark' ? '#FFFFFF' : '#000000';
-  const shadowOpacity = resolvedTheme === 'dark' ? 0.10 : 0.10;
+  const { theme } = useTheme();
 
   const getTheFirstSentence = (description) => {
     if (!description) return '';
@@ -30,12 +20,12 @@ const Feed = () => {
   };  
 
   const [refreshing, setRefreshing] = useState(false);
-const onRefresh = async () => {
-  setRefreshing(true);
-  await useInsightsStore.getState().clearInsights(); // clear AsyncStorage
-  await useInsightsStore.getState().loadInsights();  // reload mock data
-  setRefreshing(false);
-};
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await useInsightsStore.getState().clearInsights(); // clear AsyncStorage
+    await useInsightsStore.getState().loadInsights();  // reload mock data
+    setRefreshing(false);
+  };
 
   useEffect(() => {
     if (hydrated && insights.length === 0) {
@@ -55,20 +45,20 @@ const onRefresh = async () => {
 
   if (!hydrated) {
       return (
-        <View style={[Styles.centered, { backgroundColor }]}>
+        <View style={[Styles.centered, { backgroundColor: theme.colors.background }]}>
             <ActivityIndicator size="large" color="#007BFF" />
-            <Text style={{ color: textColor, marginTop: 8 }}>Loading insights...</Text>
+            <Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading insights...</Text>
         </View>
       );
   }
 
   return (
-    <View style={[Styles.container, { backgroundColor }]}>
-      <View style={Styles.menuContainer}>
+    <View style={[Styles.container, { backgroundColor: theme.colors.background  }]}>
+      <View style={[Styles.menuContainer, { backgroundColor: theme.colors.headerBg }]}>
         <Pressable onPress={() => navigation.openDrawer()} style={Styles.menuButton} testID='burger-menu'>
-          <Ionicons name="menu" size={30} color={textColor} />
+          <Ionicons name="menu" size={30} color={theme.colors.text} />
         </Pressable>
-        <Text style={[Styles.screenTitle, { color: textColor }]}>Insights</Text>
+        <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Insights</Text>
       </View>
 
       <Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
@@ -82,11 +72,11 @@ const onRefresh = async () => {
           <TaskCard 
             item={item}
             navigation={navigation}
-            backgroundColor={insightBackground}
-            textColor={textColor}
-            subTextColor={subTextColor}
-            shadowColor={shadowColor}
-            shadowOpacity={shadowOpacity}
+            backgroundColor={theme.colors.cardBg}
+            textColor={theme.colors.text}
+            subTextColor={theme.colors.subText}
+            shadowColor={theme.colors.shadowColor}
+            shadowOpacity={theme.colors.shadowOpacity}
           />
         )}
       />
