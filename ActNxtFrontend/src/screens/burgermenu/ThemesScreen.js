@@ -18,7 +18,7 @@ const ThemesScreen = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.text }]}>Theme Settings</Text>
+      <Text style={[styles.title, { color: theme.colors.text }]}>Theme Settings</Text>
       {renderOption('Light', 'light')}
       {renderOption('Dark', 'dark')}
       {renderOption('System', 'system')}

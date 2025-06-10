@@ -15,7 +15,30 @@ export const lightTheme = {
     placeholder: '#999999',
     buttonText: '#FFFFFF',
     buttonBorder: '#CCCCCC',
-    inputBg: '#FFFFFF',
+    divider: '#EEEEEE',
+
+    // Box-related
+    boxBg: '#FFFFFF',
+    boxText: '#000000',
+    boxTextPlaceholder: '#666666',
+    boxBorder: '#CCCCCC',
+    arrow: '#555',
+
+    // Dropdown sheet
+    sheetBg: '#FFFFFF',
+    sheetText: '#000000',
+    sheetBorder: '#DDDDDD',
+
+    // modal (navigator)
+    bgColor: '#FFFFFF',
+    itemTextColor: '#000000',
+    borderColor: '#CCCCCC',
+    rightArrowColor: '#333333',
+    gearBg: '#EEEEEE',
+    gearIconColor: '#000000',
+    modalBg: '#FFFFFF',
+    modalText: '#000000',
+    backTextColor: '#007AFF',
   },
 };
 
@@ -24,7 +47,6 @@ export const darkTheme = {
   isDark: true,
   colors: {
     background: '#000000',
-    backgroundColor: '##FFFFFF',
     insightBackground: '#1E1E1E',
     text: '#FFFFFF',
     subText: '#BBBBBB',
@@ -37,8 +59,30 @@ export const darkTheme = {
     placeholder: '#AAAAAA',
     buttonText: '#FFFFFF',
     buttonBorder: '#444444',
-    inputBg: '#1E1E1E',
+    divider: '#333333',
 
+    // Box-related
+    boxBg: '#1E1E1E',
+    boxText: '#FFFFFF',
+    boxTextPlaceholder: '#AAAAAA',
+    boxBorder: '#444444',
+    arrow: '#AAA',
+
+    // Dropdown sheet
+    sheetBg: '#2A2A2A',
+    sheetText: '#FFFFFF',
+    sheetBorder: '#444444',
+
+    // modal (navigator)
+    bgColor: '#121212',
+    itemTextColor: '#FFFFFF',
+    borderColor: '#333333',
+    rightArrowColor: '#BBBBBB',
+    gearBg: '#2A2A2A',
+    gearIconColor: '#FFFFFF',
+    modalBg: '#1E1E1E',
+    modalText: '#FFFFFF',
+    backTextColor: '#BBBBBB',
   },
 };
 
@@ -46,4 +90,5 @@ const themes = {
   light: lightTheme,
   dark: darkTheme,
 };
+
 export default themes;

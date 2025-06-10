@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,15 +13,17 @@ import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import RadioGroup from 'react-native-radio-buttons-group';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {useTheme} from '../../Themes/ThemeContext';
 const SettingsList = ({ settings }) => {
+  const { theme } = useTheme();
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer} // Add padding to the content
     >
       {settings.map((setting, index) => (
-        <View key={index}>
+        <View key={index} style={[styles.item, { borderBottomColor: theme.colors.divider }]}>
+          <Text style={[styles.text, { color: theme.colors.text }]}>{setting.name}</Text>
           <SettingItem setting={setting} />
           {index < settings.length - 1 && <View style={styles.separator} />}
         </View>
@@ -55,6 +57,7 @@ const SettingItem = ({ setting }) => {
           pickerStyle={setting.pickerStyle}
           placeholderTextColor={setting.placeholderTextColor}
           valueTextStyle={setting.valueTextStyle}
+          theme={useTheme().theme}
         />
       );
     case 'button':
@@ -197,21 +200,20 @@ const DropdownSetting = ({
 
   return (
     <View style={[styles.settingItem, containerStyle]}>
-      <Text style={[styles.text, labelStyle]}>{name}</Text>
-      <View style={styles.pickerWrapper}>
+      <Text style={[styles.text, labelStyle, { color: theme.colors.text }]}>{name}</Text>
+      <View style={[styles.pickerWrapper, { backgroundColor: theme.colors.inputBg, borderColor: theme.colors.border, borderWidth: 1, borderRadius: 5 }]}>
         <Picker
           selectedValue={selectedValue}
           onValueChange={handleValueChange}
-          style={[styles.picker, pickerStyle]}
-          dropdownIconColor={valueTextStyle?.color}
-          placeholderTextColor={placeholderTextColor}
+          style={[styles.picker, pickerStyle, { color: theme.colors.inputText }]}
+          dropdownIconColor={theme.colors.text}
         >
           {options.map((option, index) => (
             <Picker.Item
               key={index}
               label={option}
               value={option}
-              color={valueTextStyle?.color}
+              color={theme.colors.inputText}
             />
           ))}
         </Picker>

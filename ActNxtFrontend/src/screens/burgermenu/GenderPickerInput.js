@@ -13,20 +13,7 @@ const GENDERS = [
 ];
 
 const GenderPickerInput = ({ value, onChange }) => {
-    const { resolvedTheme } = useTheme();
-    const isDarkMode = resolvedTheme === 'dark';
-
-    // Colors for the box
-    const boxBgColor = isDarkMode ? '#1E1E1E' : '#FFFFFF';
-    const boxTextColor = value ? (isDarkMode ? '#FFFFFF' : '#000000') : (isDarkMode ? '#AAAAAA' : '#666666') ;
-    const boxBorderColor = isDarkMode ? '#444444' : '#CCCCCC';
-    const arrowColor = isDarkMode ? '#AAA' : '#555';
-    
-    // Colors for the dropdown sheet
-    const sheetBg = isDarkMode ? '#2A2A2A' : '#FFFFFF';
-    const sheetTextColor = isDarkMode ? '#FFFFFF' : '#000000';
-    const sheetBorderColor = isDarkMode ? '#444444' : '#DDDDDD';
-    const dividerColor = isDarkMode ? '#333333': '#EEEEEE';
+    const { theme } = useTheme();
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -42,15 +29,15 @@ const GenderPickerInput = ({ value, onChange }) => {
                 }}
                 style={[
                     styles.row,
-                    { borderBottomColor: dividerColor },
+                    { borderBottomColor: theme.colors.divider},
                 ]}
                 testID={`gender-option-${item.value || 'placeholder'}`}
             >
-                <Text style={[styles.rowText, { color: sheetTextColor }]}>
+                <Text style={[styles.rowText, { color: theme.colors.sheetText }]}>
                     {item.label}
                 </Text>
                 {isSelected && (
-                    <MaterialIcons name="check" size={20} color={sheetTextColor} />
+                    <MaterialIcons name="check" size={20} color={theme.colors.sheetBg} />
                 )}
             </TouchableOpacity>
         );
@@ -58,14 +45,16 @@ const GenderPickerInput = ({ value, onChange }) => {
 
     return (
         <View style={styles.wrapper}>
-            <Text style={[styles.label, { color: isDarkMode ? '#FFFFFF' : '#000000' }]}>Select Gender</Text>
+            <Text style={[styles.label, { color: theme.colors.text }]}>Select Gender</Text>
             <TouchableOpacity
                 onPress={() => setModalVisible(true)}
-                style={[styles.picker, { backgroundColor: boxBgColor, borderColor: boxBorderColor }]}>
-                    <Text style={{ color: boxTextColor, flex: 1 }}>
+                style={[styles.picker, { 
+                    backgroundColor: theme.colors.boxBg,
+                     borderColor: theme.colors.boxBorder, }]}>
+                    <Text style={{ color: theme.colors.text, flex: 1 }}>
                         {value ? value : '-- Select Gender --'}
                     </Text>
-                    <MaterialIcons name="keyboard-arrow-down" size={20} color={arrowColor} />
+                    <MaterialIcons name="keyboard-arrow-down" size={20} color={theme.colors.arrow} />
                 </TouchableOpacity>
 
                 <Modal
@@ -80,13 +69,15 @@ const GenderPickerInput = ({ value, onChange }) => {
                     />
 
                     <View style={styles.centeredView}>
-                        <View style={[styles.sheetContainer, { backgroundColor: sheetBg, borderColor: sheetBorderColor }]}>
+                        <View style={[styles.sheetContainer, { 
+                            backgroundColor: theme.colors.sheetBg, 
+                            borderColor: theme.colors.sheetBorder }]}>
                             <FlatList
                                 data={GENDERS}
                                 keyExtractor={(item) => item.value + item.label}
                                 renderItem={_renderItem}
                                 ItemSeparatorComponent={() => (
-                                    <View style={{ height: 1, backgroundColor: dividerColor }} />
+                                    <View style={{ height: 1, backgroundColor: theme.colors.sheetBg }} />
                                 )}
                                 ListFooterComponent={<View style={{ height: 8 }} />}
                                 style={{ width: '100%' }}
