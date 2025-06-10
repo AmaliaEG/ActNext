@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View, ActivityIndicator, Dimensions,  Animated,  StatusBar, Button, } from 'react-native';
+import { Pressable, StyleSheet, Text, View, ActivityIndicator, Dimensions,  Animated,  Button, Image } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { BlurView } from '@react-native-community/blur';
 import { useAuth0 } from 'react-native-auth0';
@@ -125,7 +125,7 @@ const BackgroundAnimation = ({
   );
 };
 
-const App = ({ navigation }) => {
+const LoginPage = ({ navigation }) => {
 
   //theme 
   const { resolvedTheme } = useTheme();
@@ -174,6 +174,7 @@ const App = ({ navigation }) => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BackgroundAnimation>
+        <Logo/>
         <View style={Styles.buttonContainer} key="login-button-container">
           <LoginButton 
             onLoginPress={authorize} //auth0 login
@@ -185,6 +186,57 @@ const App = ({ navigation }) => {
         </View>
       </BackgroundAnimation>
     </GestureHandlerRootView>
+  );
+};
+
+const Logo = () => {
+  const tintColor = "rgba(0, 0, 0, 0.25)";
+  return(
+    <View style={styles.logo}>
+            <Image 
+              source={require('../../../assets/icon.png')}
+              style={{
+                  position: 'absolute',
+                  tintColor: tintColor, // outline color
+                  transform: [{ translateX: -2 }, { translateY: -2 }],
+              }}
+              resizeMode="contain"
+          />
+          <Image 
+              source={require('../../../assets/icon.png')}
+              style={{
+                  position: 'absolute',
+                  tintColor: tintColor,
+                  transform: [{ translateX: 2 }, { translateY: -2 }],
+              }}
+              resizeMode="contain"
+          />
+          <Image 
+              source={require('../../../assets/icon.png')}
+              style={{
+                  position: 'absolute',
+                  tintColor: tintColor,
+                  transform: [{ translateX: -2 }, { translateY: 2 }],
+              }}
+              resizeMode="contain"
+          />
+          <Image 
+              source={require('../../../assets/icon.png')}
+              style={{
+                  position: 'absolute',
+                  tintColor: tintColor,
+                  transform: [{ translateX: 2 }, { translateY: 2 }],
+              }}
+              resizeMode="contain"
+          />
+          
+          {/* Original image on top */}
+          <Image 
+              source={require('../../../assets/icon.png')}
+              resizeMode="contain"
+          />
+          {/* <Image source={require('../../../assets/icon.png')} style={styles.imageOutline}  resizeMode="contain" /> */}
+    </View>
   );
 };
 
@@ -246,6 +298,7 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     justifyContent: 'center',
+    top:'-10%',
     flex: 1,
     zIndex: 2,
   },
@@ -303,5 +356,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default LoginPage;
 export { LoginButton };
