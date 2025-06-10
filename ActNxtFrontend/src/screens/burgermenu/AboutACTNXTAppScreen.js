@@ -5,16 +5,8 @@ import { useTheme } from '../../Themes/ThemeContext';
 
 const AboutACTNXTAppScreen = () => {
     // Implement logic for working link to ActNxt website, when website is made
-    const { resolvedTheme } = useTheme();
-    const isDarkMode = resolvedTheme === 'dark';
+    const { theme } = useTheme();
 
-    // Colors
-    const bgColor = isDarkMode ? '#1E1E1E' : '#FFFFFF';
-    const textColor = isDarkMode ? '#FFFFFF' : '#000000';
-    const sectionBg = isDarkMode ? '#1E1E1E' : '#F9F9F9';
-    const sectionBorder = isDarkMode ? '#333333' : '#CCCCCC';
-    const btnBg = isDarkMode ? '#2A2A2A' : '#007BFF';
-    const buttonTextCol = isDarkMode ? '#FFFFFF' : '#000000';
 
     const SUPPORT_URL = 'https://actnxt.com/';
 
@@ -40,8 +32,8 @@ const AboutACTNXTAppScreen = () => {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: bgColor }]}>
-            <Text style={[styles.title, { color: textColor }]}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            <Text style={[styles.title, { color: theme.colors.text }]}>
                 About ActNxt
             </Text>
 
@@ -49,12 +41,12 @@ const AboutACTNXTAppScreen = () => {
                 style={[
                     styles.descriptionContainer,
                     {
-                        backgroundColor: sectionBg,
-                        borderColor: sectionBorder
+                        backgroundColor: theme.colors.boxBg,
+                        borderColor: theme.colors.boxBorder,
                     },
                 ]}
             >
-                <Text style={[styles.descriptionText, { color: textColor }]}>
+                <Text style={[styles.descriptionText, { color: theme.colors.text  }]}>
                     Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium
                     tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa
                     nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
@@ -63,27 +55,27 @@ const AboutACTNXTAppScreen = () => {
             </View>
 
             <View style={styles.supportRow}>
-                <Text style={[styles.supportLabel, { color: textColor }]}>
+                <Text style={[styles.supportLabel, { color: theme.colors.text  }]}>
                     Help and Support
                 </Text>
                 <TouchableOpacity
                     style={[
                         styles.supportButton,
-                        { backgroundColor: btnBg },
+                        { backgroundColor: theme.colors.primary },
                     ]}
                     onPress={handleContactSupport}
                 >
                     <Text
                         style={[
                             styles.supportButtonText,
-                            { color: buttonTextCol },
+                            { color: theme.colors.buttonText },
                         ]}
                     >
                         CONTACT SUPPORT
                     </Text>
                 </TouchableOpacity>
             </View>
-            <Text style={[styles.versionText, { color: isDarkMode ? '#AAAAAA' : '#666666' }]}>
+            <Text style={[styles.versionText, { color: theme.colors.buttonText }]}> 
                 Version 1.0.0
             </Text>
         </View>

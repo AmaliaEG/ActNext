@@ -19,20 +19,7 @@ import { useTheme } from '../../Themes/ThemeContext';
 
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
-    const { theme } = useTheme();   
-    const backgroundColor = theme.colors.background;
-    const textColor = theme.colors.text;
-    const subTextColor = theme.colors.subText;
-    const insightBackground = theme.colors.insightBackground;
-    const shadowColor = theme.colors.shadow;
-    const shadowOpacity = theme.colors.shadowOpacity;
-    const borderColor = theme.colors.border; 
-    const inputTextColor = theme.colors.inputText;
-    const inputBg = theme.colors.inputBg;
-    const placeholderColor = theme.colors.placeholder;
-    const btnBg = theme.colors.primary;
-    const btnBorder = theme.colors.border;
-    const btnTextColor = theme.colors.buttonText;
+    const {theme} = useTheme();   
 
     const { clearSession, user } = useAuth0();
     const { profile, updateProfile, resetProfile, hydrated } = useProfileStore();
@@ -104,139 +91,164 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
 
     if (!hydrated) {
         return (
-            <View style={[styles.centered, { backgroundColor: backgroundColor }]}>
-                <ActivityIndicator size="large" color={textColor} />
-                <Text style={{ color: textColor, marginTop: 8 }}>Loading profile...</Text>
+            <View style={[styles.centered, { backgroundColor: theme.colors.background }]}>
+                <ActivityIndicator size="large" color={theme.colors.text} />
+                <Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading profile...</Text>
             </View>
         );
     }
-
     return (
-        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: backgroundColor }]}>
-                <Text style={[styles.sectionTitle, { color: textColor }]}>Profile Details</Text>
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.label, { color: textColor }]}>Name</Text>
-                    <TextInput
-                        style={[styles.input, { backgroundColor: inputBg, color: inputTextColor, borderColor: borderColor }]}
-                        value={localEdits.name}
-                        onChangeText={(text) => {
-                            const cleaned = text.replace(/[0-9]/g, ''); // Removes all digits
-                            setLocalEdits({...localEdits, name: cleaned});
-                        }}
-                        placeholder="Enter your name"
-                        placeholderTextColor={placeholderColor}
-                    />
-                </View>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.backgroundColor }]}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Profile Details</Text>
+            <View style={styles.inputContainer}>
+                <Text style={[styles.label, { color: theme.colors.text }]}>Name</Text>
+                <TextInput
+                    style={[styles.input, {
+                        backgroundColor: theme.colors.inputBg,
+                        color: theme.colors.inputText,
+                        borderColor: theme.colors.border
+                    }]}
+                    value={localEdits.name}
+                    onChangeText={(text) => {
+                        const cleaned = text.replace(/[0-9]/g, ''); // Remove digits
+                        setLocalEdits({ ...localEdits, name: cleaned });
+                    }}
+                    placeholder="Enter your name"
+                    placeholderTextColor={theme.colors.placeholder}
+                />
+            </View>
     
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.label, { color: textColor }]}>Birth Date</Text>
-                    <DateTimePickerInput
-                        value={localEdits.birthDate}
-                        onChange={(date) => setLocalEdits({...localEdits, birthDate: date})}
-                        mode="date"
-                        textStyle={{ color: inputTextColor }}
-                        placeholderTextColor={placeholderColor}
-                    />
-                </View>
+            <View style={styles.inputContainer}>
+                <Text style={[styles.label, { color: theme.colors.text }]}>Birth Date</Text>
+                <DateTimePickerInput
+                    value={localEdits.birthDate}
+                    onChange={(date) => setLocalEdits({ ...localEdits, birthDate: date })}
+                    mode="date"
+                    textStyle={{ color: theme.colors.inputText }}
+                    placeholderTextColor={theme.colors.placeholder}
+                />
+            </View>
     
                 <View style={styles.inputContainer}>
                     <GenderPickerInput
                         value={localEdits.gender}
                         onChange={(gender) => setLocalEdits({...localEdits, gender})}
-                        textStyle={{ color: inputTextColor }}
+                        textStyle={{ color: theme.colors.inputText }}
                     />
                 </View>
-    
+
                 <View style={styles.inputContainer}>
-                    <Text style={[styles.label, { color: textColor }]}>Email</Text>
+                    <Text style={[styles.label, { color: theme.colors.text }]}>Email</Text>
                     <TextInput
-                        style={[styles.input, { backgroundColor: inputBg, color: inputTextColor, borderColor: borderColor }]}
+                        style={[styles.input, {
+                            backgroundColor: theme.colors.inputBg,
+                            color: theme.colors.inputText,
+                            borderColor: theme.colors.border
+                        }]}
                         value={localEdits.email}
-                        onChangeText={(text) => setLocalEdits({...localEdits, email: text})}
-                        placeholder='Enter your email'
-                        placeholderTextColor={placeholderColor}
-                        keyboardType='email-address'
-                        autoCapitalize='none'
+                        onChangeText={(text) => setLocalEdits({ ...localEdits, email: text })}
+                        placeholder="Enter your email"
+                        placeholderTextColor={theme.colors.placeholder}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
                     />
                 </View>
-    
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.label, { color: textColor }]}>Code</Text>
-                    <View style={[styles.codeContainer, { backgroundColor: inputBg, borderColor: borderColor }]}>
-                        <TextInput
-                            testID='password-input'
-                            style={[styles.codeInput, { backgroundColor: inputBg, borderColor: borderColor, color: inputTextColor }]}
-                            value={showCode ? 
-                                (isEditingPassword ? localEdits.code : profile.code)
-                                 : '*'.repeat((profile.code || '').length)
-                            }
-                            onChangeText={(text) => setLocalEdits({...localEdits, code: text})}
-                            editable={isEditingPassword}
-                            secureTextEntry={!showCode}
-                            placeholder='******'
-                            placeholderTextColor={placeholderColor}
-                        />
-                        <TouchableOpacity 
-                            testID='eye-icon'
-                            style={styles.eyeIcon}
-                            onPress={() => setShowCode(!showCode)}
-                        >
-                            <Feather name={showCode ? 'eye-off' : 'eye'} size={20} color={inputTextColor} />
-                        </TouchableOpacity>
-                    </View>
+        
+              <View style={styles.inputContainer}>
+                <Text style={[styles.label, { color: theme.colors.text }]}>Code</Text>
+                <View style={[styles.codeContainer, {
+                    backgroundColor: theme.colors.inputBg,
+                    borderColor: theme.colors.border
+                }]}>
+                    <TextInput
+                        testID="password-input"
+                        style={[styles.codeInput, {
+                            backgroundColor: theme.colors.inputBg,
+                            borderColor: theme.colors.border,
+                            color: theme.colors.inputText
+                        }]}
+                        value={showCode ? (isEditingPassword ? localEdits.code : profile.code) : '*'.repeat((profile.code || '').length)}
+                        onChangeText={(text) => setLocalEdits({ ...localEdits, code: text })}
+                        editable={isEditingPassword}
+                        secureTextEntry={!showCode}
+                        placeholder="******"
+                        placeholderTextColor={theme.colors.placeholder}
+                    />
+                    <TouchableOpacity
+                        testID="eye-icon"
+                        style={styles.eyeIcon}
+                        onPress={() => setShowCode(!showCode)}
+                    >
+                        <Feather name={showCode ? 'eye-off' : 'eye'} size={20} color={theme.colors.inputText} />
+                    </TouchableOpacity>
                 </View>
-    
+            </View>
+
                 <TouchableOpacity
-                    style={[styles.newPasswordSection, {backgroundColor: inputBg, borderColor: borderColor }]}
+                    style={[styles.newPasswordSection, {
+                        backgroundColor: theme.colors.inputBg, 
+                        borderColor: theme.colors.border }]}
                     onPress={() => setIsEditingPassword(!isEditingPassword)}
                 >
-                    <Text style={[styles.newPasswordLabel, { color: textColor }]}>New Password</Text>
+                    <Text style={[styles.newPasswordLabel, { color: theme.colors.text }]}>New Password</Text>
                     {isEditingPassword && (
                         <>
                             <View style={styles.inputContainer}>
-                                <Text style={[styles.label, { color: textColor }]}>New Password</Text>
+                                <Text style={[styles.label, { color: theme.colors.text }]}>New Password</Text>
                                 <TextInput
-                                    style={[styles.input, { backgroundColor: inputBg, color: inputTextColor, borderColor: borderColor }]}
+                                    style={[styles.input, { 
+                                        backgroundColor: theme.colors.inputBg, 
+                                        color: theme.colors.inputText, 
+                                        borderColor: theme.colors.border }]}
                                     value={newPassword}
                                     onChangeText={setNewPassword}
                                     secureTextEntry
                                     placeholder='New Password'
-                                    placeholderTextColor={placeholderColor}
+                                    placeholderTextColor={theme.colors.placeholder}
                                 />
                             </View>
     
                             <View style={styles.inputContainer}>
-                                <Text style={[styles.label, { color: textColor }]}>Confirm New Password</Text>
+                                <Text style={[styles.label, { color: theme.colors.text }]}>Confirm New Password</Text>
                                 <TextInput
-                                    style={[styles.input, { backgroundColor: inputBg, color: inputTextColor, borderColor: borderColor }]}
+                                    style={[styles.input, { 
+                                        backgroundColor: theme.colors.inputBg, 
+                                        color: theme.colors.inputText, 
+                                        borderColor: theme.colors.border }]}
                                     value={confirmPassword}
                                     onChangeText={setConfirmPassword}
                                     secureTextEntry
                                     placeholder='Confirm New Password'
-                                    placeholderTextColor={placeholderColor}
+                                    placeholderTextColor={theme.colors.placeholder}
                                 />
                             </View>
                         </>
                     )}
                 </TouchableOpacity>
                 
-                <TouchableOpacity style={[styles.saveButton, { backgroundColor: btnBg, borderColor: btnBorder }]} onPress={handleSaveChanges}>
-                    <Text style={[styles.saveButtonText, { color: btnTextColor }]}>Save Changes</Text>
+                <TouchableOpacity style={[styles.saveButton, { 
+                    backgroundColor: theme.colors.primary, 
+                    borderColor: theme.colors.buttonBorder }]}
+                    onPress={handleSaveChanges}>
+                    <Text style={[styles.saveButtonText, { color: theme.colors.buttonText }]}>Save Changes</Text>
                 </TouchableOpacity>
                 
                 <View>
                     {user ? (
                         <>
                             <TouchableOpacity
-                                style={[styles.saveButton, { backgroundColor: btnBg, borderColor: btnBorder, marginTop: 12 }]}
+                                style={[styles.saveButton, { 
+                                    backgroundColor: theme.colors.primary, 
+                                    borderColor: theme.colors.buttonBorder, 
+                                    marginTop: 12 }]}
                                 onPress={LogoutFunc}
                             >
-                            <Text style={[styles.saveButtonText, { color: btnTextColor }]}>Log Out</Text>
+                            <Text style={[styles.saveButtonText, { color: theme.colors.buttonText }]}>Log Out</Text>
                             </TouchableOpacity>
                         </>
                     ):(
                         <>
-                            <Text style={{ color: textColor, marginTop: 12 }}> Not logged in to any user </Text>
+                            <Text style={{ color: theme.colors.text, marginTop: 12 }}> Not logged in to any user </Text>
                         </>
                     )}
                 </View>

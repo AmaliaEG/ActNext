@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import SettingsList from './SettingsList';
+import { useTheme } from '../../Themes/ThemeContext';
 
 const Settings = () => {
+  const { theme } = useTheme();
   // Define any number of settings with names, functions and types (right now just switch and dropdown)
   const settings = [
     {
@@ -90,8 +92,8 @@ const Settings = () => {
   ];
 
   return (
-    <View style={styles.container}>
-      <SettingsList settings={settings} />
+    <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
+      <SettingsList settings={settings} theme = {theme} />
     </View>
   );
 };

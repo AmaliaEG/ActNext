@@ -6,15 +6,7 @@ import { useTheme } from '../../Themes/ThemeContext';
 
 
 const DateTimePickerInput = ({ value, onChange }) => {
-    const { resolvedTheme } = useTheme();
-    const isDarkMode = resolvedTheme === 'dark';
-
-    // Colors
-    const bgColor = isDarkMode ? '#1E1E1E' : '#FFFFFF';
-    const textColor = isDarkMode ? '#FFFFFF' : '#000000';
-    const borderColor = isDarkMode ? '#444444' : '#CCCCCC';
-    const placeholderColor = isDarkMode ? '#AAAAAA' : '#666666';
-
+    const { theme } = useTheme();
     const [show, setShow] = useState(false);
 
     const handleChange = (event, selectedDate) => {
@@ -29,11 +21,14 @@ const DateTimePickerInput = ({ value, onChange }) => {
         <View>
             <TouchableOpacity onPress={() => setShow(true)} testID="datepicker-button" >
                 <TextInput
-                    style={[styles.input, { backgroundColor: bgColor, color: textColor, borderColor: borderColor }]}
+                    style={[styles.input, { 
+                        backgroundColor: theme.colors.boxBg, 
+                        color: theme.colors.text, 
+                        borderColor: theme.colors.border }]}
                     value={value || ''}
                     editable={false}
                     placeholder="DD/MM/YYYY"
-                    placeholderTextColor={placeholderColor}
+                    placeholderTextColor={theme.colors.placeholder}
                 />
             </TouchableOpacity>
 
