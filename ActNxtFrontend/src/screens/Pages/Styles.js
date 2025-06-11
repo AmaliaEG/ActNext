@@ -82,9 +82,8 @@ export const Styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 35,
-    paddingTop: 70,
+    paddingTop: '20%',
     marginBottom: 25,
-    marginTop: '10%',
     position: 'relative',
   },
   screenTitle: {
@@ -92,8 +91,10 @@ export const Styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center',
     position: 'absolute',
+    paddingTop: '10%',
   },
   menuButton: {
+    paddingTop: '10%',
     padding: 1,
     position: 'absolute',
     left: 25,
