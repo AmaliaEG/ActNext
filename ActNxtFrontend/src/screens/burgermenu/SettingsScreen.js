@@ -120,6 +120,7 @@ const SettingsScreen = ({ props, closeModal }) => {
         <View style={[styles.nested, {
           borderBottomColor: theme.colors.border,
           backgroundColor: theme.colors.inputBg,
+          color: theme.colors.inputText,
 
         }]}>
           <Picker

@@ -84,7 +84,7 @@ export const Styles = StyleSheet.create({
     padding: 35,
     paddingTop: 70,
     marginBottom: 25,
-    marginTop: 0,
+    marginTop: '10%',
     position: 'relative',
   },
   screenTitle: {

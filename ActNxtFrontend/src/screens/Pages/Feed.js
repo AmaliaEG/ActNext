@@ -59,6 +59,7 @@ const Feed = () => {
           <Ionicons 
             name="menu" 
             size={Styles.menuIcon.size}
+            color={theme.colors.text}
           />
         </Pressable>
         <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Insights</Text>

@@ -44,6 +44,7 @@ const SettingItem = ({ setting }) => {
           labelStyle={setting.labelStyle}
           trackColor={setting.trackColor}
           thumbColor={setting.thumbColor}
+          color={theme.color.text}
         />
       );
     case 'dropdown':
@@ -58,6 +59,7 @@ const SettingItem = ({ setting }) => {
           placeholderTextColor={setting.placeholderTextColor}
           valueTextStyle={setting.valueTextStyle}
           theme={useTheme().theme}
+          color={theme.color.text}
         />
       );
     case 'button':
@@ -69,6 +71,7 @@ const SettingItem = ({ setting }) => {
           labelStyle={setting.labelStyle}
           buttonStyle={setting.buttonStyle}
           buttonTextStyle={setting.buttonTextStyle}
+          color={theme.color.text}
         />
       );
     case 'textinput':

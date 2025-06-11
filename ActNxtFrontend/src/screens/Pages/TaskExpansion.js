@@ -177,7 +177,7 @@ const TaskExpansion = ({ route }) => {
               onPress={handleCommentSubmit}
               disabled={!comment.trim()}
             >
-              <Text style={Styles.saveButtonText}>
+              <Text style={[Styles.saveButtonText, {color: theme.colors.text}]}>
                 {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
               </Text>
             </TouchableOpacity>
