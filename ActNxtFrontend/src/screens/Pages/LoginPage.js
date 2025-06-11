@@ -27,7 +27,7 @@ const BackgroundAnimation = ({
   children, 
   images = IMAGES, 
   duration = 12000,
-  zoomDuration = 13000,
+  zoomDuration = 12000,
   fadeDuration = 1000,
   initialScale = 1.15,
   overlayOpacity = 0.2

@@ -27,7 +27,6 @@ export const Styles = StyleSheet.create({
 
   // ===== CARD STYLES ===== //
   item: {
-    backgroundColor: '#fcfcfc',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 25,

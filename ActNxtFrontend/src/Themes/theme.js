@@ -2,8 +2,8 @@ export const lightTheme = {
   mode: 'light',
   isDark: false,
   colors: {
-    background: '#FFFFFF',
-    insightBackground: '#F9F9F9',
+    background: '#E9E9E9',
+    insightBackground: '#FFFFFF',
     text: '#000000',
     subText: '#666666',
     shadow: '#000000',
@@ -56,8 +56,8 @@ export const darkTheme = {
   mode: 'dark',
   isDark: true,
   colors: {
-    background: '#000000',
-    insightBackground: '#1E1E1E',
+    background: '#1E1E1E',
+    insightBackground: '#0E0E0E',
     text: '#FFFFFF',
     subText: '#BBBBBB',
     shadow: '#FFFFFF',
@@ -70,7 +70,7 @@ export const darkTheme = {
     buttonText: '#FFFFFF',
     buttonBorder: '#444444',
     divider: '#333333',
-    cardBg: '#1A1A1A',
+    cardBg: '#000000',
     headerBg: '#1A1A1A',
 
     // Box-related
