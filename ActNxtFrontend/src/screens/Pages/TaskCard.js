@@ -3,6 +3,8 @@ import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Styles, GroupColours } from './Styles';
+import { useTheme } from '../../Themes/ThemeContext';
+
 
 const TaskCard = ({ 
   item, 
@@ -15,6 +17,7 @@ const TaskCard = ({
   showUnarchive = false,
   onUnarchive = null
 }) => {
+  const { theme } = useTheme();
   return (
     <Pressable onPress={() => navigation.navigate('Details', { taskId: item.Id })}>
       <View style={[
@@ -27,14 +30,14 @@ const TaskCard = ({
       ]}>
         <View style={Styles.info}>
           <View style={[Styles.colorDot, { backgroundColor: GroupColours[item.SalesAnalysisId] }]} />
-          <Text style={[Styles.CompanyNameText, { color: textColor }]}>{item.CompanyName}</Text>
+          <Text style={[Styles.CompanyNameText, { color: theme.colors.text }]}>{item.CompanyName}</Text>
         </View>
         
-        <Text style={[Styles.text, { color: textColor }]}>{item.Title}</Text>
-        <Text style={[Styles.descriptionText, { color: subTextColor }]}>
+        <Text style={[Styles.text, { color: theme.colors.text }]}>{item.Title}</Text>
+        <Text style={[Styles.descriptionText, { color: theme.colors.subText }]}>
           {item.firstSentence || item.Description.split('.')[0].trim() + '.'}
         </Text>
-        <Text style={[Styles.dateText, { color: subTextColor }]}>
+        <Text style={[Styles.dateText, { color: theme.colors.subText }]}>
           Due: {new Date(item.dateAssigned).toLocaleDateString()}
         </Text>
 
@@ -51,13 +54,13 @@ const TaskCard = ({
             style={[
               Styles.unarchiveButton,
               {
-                backgroundColor: backgroundColor,
-                borderColor: subTextColor,
+                backgroundColor: theme.colors.backgroundColor,
+                borderColor: theme.colors.subText,
                 borderWidth: 1,
               },
             ]}
           >
-            <Text style={[Styles.unarchiveButtonText, { color: textColor }]}>Unarchive</Text>
+            <Text style={[Styles.unarchiveButtonText, { color: theme.colors.text }]}>Unarchive</Text>
           </Pressable>
         )}
       </View>

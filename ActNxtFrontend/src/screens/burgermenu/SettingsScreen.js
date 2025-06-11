@@ -109,10 +109,10 @@ const SettingsScreen = ({ props, closeModal }) => {
 
           {/* Language */}
         <TouchableOpacity style={[styles.row, { borderBottomColor: theme.colors.border }]} onPress={() => setLangOpen(o => !o)}>
-            <Text style={[styles.label, { color: theme.colors.text }]}>Language</Text>
+            <Text style={[styles.label, { color: theme.colors.inputText }]}>Language</Text>
             <View style={styles.valueContainer}>
-              <Text style={[styles.value, { backgroundColor: theme.colors.sheetBorder }]}>{language.toUpperCase()}</Text>
-              <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.text} />
+              <Text style={[styles.value, { backgroundColor: theme.colors.inputBg }]}>{language.toUpperCase()}</Text>
+              <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.inputTexta} />
             </View>
       </TouchableOpacity>
 
@@ -120,6 +120,7 @@ const SettingsScreen = ({ props, closeModal }) => {
         <View style={[styles.nested, {
           borderBottomColor: theme.colors.border,
           backgroundColor: theme.colors.inputBg,
+
         }]}>
           <Picker
             selectedValue={language}
@@ -134,12 +135,12 @@ const SettingsScreen = ({ props, closeModal }) => {
                 backgroundColor: theme.colors.inputBg,
               }
             ]}
-            dropdownIconColor={theme.colors.dropdownIconColor}
+            dropdownIconColor={theme.colors.inputText}
             itemStyle={{ color: theme.colors.inputText }}
           >
-            <Picker.Item label="English" value="en" color={theme.colors.text} />
-            <Picker.Item label="Danish" value="da" color={theme.colors.text} />
-            <Picker.Item label="Lorem Ipsum" value="li" color={theme.colors.text} />
+            <Picker.Item label="English" value="en" backgroundColor={theme.colors.background}/>
+            <Picker.Item label="Danish" value="da"   />
+            <Picker.Item label="Lorem Ipsum" value="li" />
           </Picker>
         </View>
       )}
