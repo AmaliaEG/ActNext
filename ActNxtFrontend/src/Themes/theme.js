@@ -59,7 +59,7 @@ export const darkTheme = {
     background: '#1E1E1E',
     insightBackground: '#0E0E0E',
     text: '#FFFFFF',
-    subText: '#444444',
+    subText: '#BBBBBB',
     shadow: '#FFFFFF',
     shadowOpacity: 0.1,
     border: '#444444',

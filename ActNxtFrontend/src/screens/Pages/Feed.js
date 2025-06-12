@@ -54,7 +54,7 @@ const Feed = () => {
 
   return (
     <View style={[Styles.container, { backgroundColor: theme.colors.background  }]}>
-      <View style={[Styles.menuContainer, { backgroundColor: theme.colors.insightBackground }]}>
+      <View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>
         <Pressable onPress={() => navigation.openDrawer()} style={Styles.menuButton} testID='burger-menu'>
           <Ionicons 
             name="menu" 
