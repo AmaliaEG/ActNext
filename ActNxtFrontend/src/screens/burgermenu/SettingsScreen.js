@@ -113,7 +113,7 @@ const SettingsScreen = ({ props, closeModal }) => {
             <Text style={[styles.label, { color: theme.colors.inputText }]}>Language</Text>
             <View style={styles.valueContainer}>
               <Text style={[styles.value, { backgroundColor: theme.colors.background }, {color: theme.colors.text}]}>{language.toUpperCase()}</Text>
-              <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.inputTexta} />
+              <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.inputText} />
             </View>
       </TouchableOpacity>
 
