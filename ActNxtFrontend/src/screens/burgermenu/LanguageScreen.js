@@ -22,7 +22,6 @@ const LanguagesScreen = () => {
       <Text style={[styles.title, { color: theme.colors.text }]}>Language Settings</Text>
       {renderOption('English', 'en')}
       {renderOption('Danish', 'da')}
-      {renderOption('Lorem Ipsum', 'li')}
     </View>
   );
 };
