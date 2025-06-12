@@ -10,9 +10,10 @@ import {
     StatusBar
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
 import useSettingsStore from "../../store/useSettingsStore";
 import { useTheme } from '../../Themes/ThemeContext';
+import LanguagesScreen from "./LanguageScreen";
+
 
 // Screens
 import ProfileDetailsScreen from "./ProfileDetailsScreen";
@@ -60,6 +61,7 @@ const SettingsScreen = ({ props, closeModal }) => {
         </View>
       );
     }
+    
 
     if (activeScreen === "Themes") {
       return (
@@ -67,6 +69,17 @@ const SettingsScreen = ({ props, closeModal }) => {
           <Header />
           <ScrollView contentContainerStyle={styles.subContainer}>
             <ThemesScreen />
+          </ScrollView>
+        </View>
+      );
+    }
+
+    if (activeScreen === "Languages") {
+      return (
+        <View style={[styles.screen, { backgroundColor: theme.colors.background }]}>
+          <Header title/>
+          <ScrollView contentContainerStyle={styles.subContainer}>
+            <LanguagesScreen />
           </ScrollView>
         </View>
       );
@@ -86,6 +99,7 @@ const SettingsScreen = ({ props, closeModal }) => {
     return (
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.background }]}>
           <Text style={[styles.title, { color: theme.colors.text }]}>Settings</Text>
+          
           
           {/* Profile */}
           <Row 
@@ -108,45 +122,14 @@ const SettingsScreen = ({ props, closeModal }) => {
              
           />
 
-          {/* Language */}
-        <TouchableOpacity style={[styles.row, { borderBottomColor: theme.colors.border }]} onPress={() => setLangOpen(o => !o)}>
-            <Text style={[styles.label, { color: theme.colors.inputText }]}>Language</Text>
-            <View style={styles.valueContainer}>
-              <Text style={[styles.value, { backgroundColor: theme.colors.background }, {color: theme.colors.text}]}>{language.toUpperCase()}</Text>
-              <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.inputText} />
-            </View>
-      </TouchableOpacity>
-
-      {langOpen && (
-        <View style={[styles.nested, {
-          borderBottomColor: theme.colors.border,
-          backgroundColor: theme.colors.background,
-          color: theme.colors.inputText,
-
-        }]}>
-          <Picker
-            selectedValue={language}
-            onValueChange={(val) => {
-              setLanguage(val);
-              setLangOpen(false);
-            }}
-            style={[
-              styles.picker,
-              {
-                color: theme.colors.inputText,
-                backgroundColor: theme.colors.background,
-              }
-            ]}
-            dropdownIconColor={theme.colors.inputText}
-            itemStyle={{ color: theme.colors.inputText }}
-          >
-            <Picker.Item label="English" value="en" backgroundColor={theme.colors.background}/>
-            <Picker.Item label="Danish" value="da"   />
-            <Picker.Item label="Lorem Ipsum" value="li" />
-          </Picker>
-        </View>
-      )}
-
+          <Row 
+            title="Language"
+            value={language.toUpperCase()}
+            onPress={() => setActiveScreen("Languages")}
+            color={theme.colors.text}
+            subColor={theme.colors.text}
+            border={theme.colors.text}
+        />
           {/* Notifications */}
           <View style={[styles.row, { borderBottomColor: theme.colors.border }]}>
             <Text style={[styles.label, { color: theme.colors.text }]}>Notifications</Text>
