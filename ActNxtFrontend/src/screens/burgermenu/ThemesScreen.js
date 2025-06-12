@@ -7,7 +7,7 @@ const ThemesScreen = () => {
   const { mode, updateTheme, theme } = useTheme();
 
   const getColor = (currentMode) => {
-    return mode === currentMode ? '#007AFF' : '#CCCCCC';
+    return mode === currentMode ? theme.colors.text : theme.colors.subText;
   };
 
   const renderOption = (label, value) => (
@@ -17,7 +17,7 @@ const ThemesScreen = () => {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Text style={[styles.title, { color: theme.colors.text }]}>Theme Settings</Text>
       {renderOption('Light', 'light')}
       {renderOption('Dark', 'dark')}

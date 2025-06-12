@@ -59,17 +59,17 @@ export const darkTheme = {
     background: '#1E1E1E',
     insightBackground: '#0E0E0E',
     text: '#FFFFFF',
-    subText: '#BBBBBB',
+    subText: '#444444',
     shadow: '#FFFFFF',
     shadowOpacity: 0.1,
-    border: '#333333',
+    border: '#444444',
     primary: '#0A84FF',
     inputText: '#FFFFFF',
     inputBg: '#1E1E1E',
     placeholder: '#AAAAAA',
     buttonText: '#FFFFFF',
     buttonBorder: '#444444',
-    divider: '#333333',
+    divider: '#444444',
     cardBg: '#000000',
     headerBg: '#1A1A1A',
 
@@ -101,6 +101,7 @@ export const darkTheme = {
 
     // task expansion
     borderLeft: '#666666',
+    cardBg : '#2A2A2A',
 
 
   },

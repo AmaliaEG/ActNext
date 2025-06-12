@@ -47,7 +47,7 @@ const Feed = () => {
       return (
         <View style={[Styles.centered, { backgroundColor: theme.colors.background }]}>
             <ActivityIndicator size="large" color="#007BFF" />
-            <Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading insights...</Text>
+            <Text style={{ color: theme.colors.subText, marginTop: 8 }}>Loading insights...</Text>
         </View>
       );
   }

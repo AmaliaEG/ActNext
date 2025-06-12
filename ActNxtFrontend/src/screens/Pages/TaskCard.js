@@ -9,11 +9,6 @@ import { useTheme } from '../../Themes/ThemeContext';
 const TaskCard = ({ 
   item, 
   navigation,
-  backgroundColor,
-  textColor,
-  subTextColor,
-  shadowColor,
-  shadowOpacity,
   showUnarchive = false,
   onUnarchive = null
 }) => {
@@ -22,10 +17,10 @@ const TaskCard = ({
     <Pressable onPress={() => navigation.navigate('Details', { taskId: item.Id })}>
       <View style={[
         Styles.item, 
-        { 
-          shadowColor: shadowColor, 
-          shadowOpacity: shadowOpacity, 
-          backgroundColor: backgroundColor
+        {
+          insightBackground: theme.colors.insightBackground,
+          backgroundColor: theme.colors.background,
+          borderColor: theme.colors.border
         }
       ]}>
         <View style={Styles.info}>
@@ -54,7 +49,7 @@ const TaskCard = ({
             style={[
               Styles.unarchiveButton,
               {
-                backgroundColor: theme.colors.backgroundColor,
+                backgroundColor: theme.colors.background,
                 borderColor: theme.colors.subText,
                 borderWidth: 1,
               },

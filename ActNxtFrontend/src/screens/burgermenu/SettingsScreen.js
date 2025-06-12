@@ -103,15 +103,16 @@ const SettingsScreen = ({ props, closeModal }) => {
             value={theme.mode.charAt(0).toUpperCase() + theme.mode.slice(1)}
             onPress={() => setActiveScreen("Themes")}
             color={theme.colors.text}
-            subColor={theme.colors.screen}
             border={theme.colors.border}
+            subColor={theme.colors.text}
+             
           />
 
           {/* Language */}
         <TouchableOpacity style={[styles.row, { borderBottomColor: theme.colors.border }]} onPress={() => setLangOpen(o => !o)}>
             <Text style={[styles.label, { color: theme.colors.inputText }]}>Language</Text>
             <View style={styles.valueContainer}>
-              <Text style={[styles.value, { backgroundColor: theme.colors.inputBg }]}>{language.toUpperCase()}</Text>
+              <Text style={[styles.value, { backgroundColor: theme.colors.background }, {color: theme.colors.text}]}>{language.toUpperCase()}</Text>
               <AntDesign name={langOpen ? 'down' : 'right'} size={18} color={theme.colors.inputTexta} />
             </View>
       </TouchableOpacity>
@@ -119,7 +120,7 @@ const SettingsScreen = ({ props, closeModal }) => {
       {langOpen && (
         <View style={[styles.nested, {
           borderBottomColor: theme.colors.border,
-          backgroundColor: theme.colors.inputBg,
+          backgroundColor: theme.colors.background,
           color: theme.colors.inputText,
 
         }]}>
@@ -133,7 +134,7 @@ const SettingsScreen = ({ props, closeModal }) => {
               styles.picker,
               {
                 color: theme.colors.inputText,
-                backgroundColor: theme.colors.inputBg,
+                backgroundColor: theme.colors.background,
               }
             ]}
             dropdownIconColor={theme.colors.inputText}
@@ -165,21 +166,21 @@ const SettingsScreen = ({ props, closeModal }) => {
             value={null}
             onPress={() => setActiveScreen("About")}
             color={theme.colors.text}
-            subColor={theme.colors.screen}
+            subColor={theme.colors.text}
             border={theme.colors.border}
           />
         </ScrollView>
     );
 };
 
-function Row({ title, value, onPress, color, subColor, borderColor }) {
+function Row({ title, value, onPress, color, subColor }) {
   const { theme } = useTheme();
   return (
-    <TouchableOpacity style={[styles.row, { borderBottomColor: theme.colors.border }]} onPress={onPress}>
+    <TouchableOpacity style={[styles.row, { borderBottomColor: theme.colors.border }, {color: theme.colors.text}]} onPress={onPress}>
       <Text style={[styles.label, { color }]}>{title}</Text>
       <View style={styles.valueContainer}>
         {value != null && (
-          <Text style={[styles.value, { color: theme.colors.subColor }]}>{value}</Text>
+          <Text style={[styles.value, { color: subColor }]}>{value}</Text>
         )}
         <AntDesign name="right" size={18} color={theme.colors.text} />
       </View>
