@@ -29,7 +29,6 @@ const useAuthStore = create((set) => ({
             const newState = { isLoggedIn: true,userInfo };
             await AsyncStorage.setItem('auth-state', JSON.stringify(newState));
             set(newState);
-            alert(JSON.stringify(newState))
         } catch (error) {
             console.error('Failed to log in:', error);
         }

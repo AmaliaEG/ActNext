@@ -31,7 +31,6 @@
     "expo-dev-client": "~5.2.0",
     "expo-secure-store": "~14.2.3",
     "expo-status-bar": "~2.2.3",
-    "expo-updates": "~0.28.14",
     "firebase": "^11.6.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
