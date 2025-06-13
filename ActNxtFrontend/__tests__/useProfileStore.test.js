@@ -4,9 +4,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // MOCK
 jest.mock('@react-native-async-storage/async-storage', () => ({
-    setItem: jest.fn(),
-    getItem: jest.fn(),
-    removeItem: jest.fn()
+    setItem: jest.fn().mockResolvedValue(null),
+    getItem: jest.fn().mockResolvedValue(null),
+    removeItem: jest.fn().mockResolvedValue(null)
 }));
 
 const mockProfile = {
@@ -17,28 +17,33 @@ const mockProfile = {
     code: '123456'
 };
 
+const emptyProfile = {
+    name: '',
+    birthDate: '',
+    gender: '',
+    email: '',
+    code: ''
+};
+
+const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+beforeEach(() => {
+    jest.clearAllMocks();
+    useProfileStore.setState({ profile: { ...emptyProfile }, hydrated: false });
+});
+
+afterAll(() => {
+    consoleErrorSpy.mockRestore();
+});
+
 // TESTS FOR useProfileStore
 describe('useProfileStore', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-        useProfileStore.setState({
-            profile: {
-                name: '',
-                birthDate: '',
-                gender: '',
-                email: '',
-                code: ''
-            },
-            hydrated: false,
-        });
-    });
-
     it('loads profile from AsyncStorage and sets hydrated', async () => {
         AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(mockProfile));
 
         await useProfileStore.getState().loadProfile();
-
         const { profile, hydrated } = useProfileStore.getState();
+
         expect(profile).toEqual(mockProfile);
         expect(hydrated).toBe(true);
     });
@@ -47,24 +52,20 @@ describe('useProfileStore', () => {
         AsyncStorage.getItem.mockResolvedValueOnce(null);
 
         await useProfileStore.getState().loadProfile();
-
         const { profile, hydrated } = useProfileStore.getState();
-        expect(profile).toEqual({
-            name: '',
-            birthDate: '',
-            gender: '',
-            email: '',
-            code: ''
-        });
+
+        expect(profile).toEqual(emptyProfile);
         expect(hydrated).toBe(true);
     });
 
-    it('updates profile and sets it to AsyncStorage', async () => {
+    it('updates profile and persists it to AsyncStorage', async () => {
         await useProfileStore.getState().updateProfile(mockProfile);
 
-        const { profile } = useProfileStore.getState();
-        expect(AsyncStorage.setItem).toHaveBeenCalledWith('user-profile', JSON.stringify(mockProfile));
-        expect(profile).toEqual(mockProfile);
+        expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+            'user-profile',
+            JSON.stringify(mockProfile)
+        );
+        expect(useProfileStore.getState().profile).toEqual(mockProfile);
     });
 
     it('resets profile and removes from AsyncStorage', async () => {
@@ -72,8 +73,29 @@ describe('useProfileStore', () => {
 
         await useProfileStore.getState().resetProfile();
 
-        const { profile } = useProfileStore.getState();
         expect(AsyncStorage.removeItem).toHaveBeenCalledWith('user-profile');
-        expect(profile).toEqual({});
+        expect(useProfileStore.getState().profile).toEqual({});
+    });
+
+    // If we can't read the profile from the disk, the app shouldn't get stuck in a "loading" state
+    it('handles storage read errors', async () => {
+        AsyncStorage.getItem.mockRejectedValue(new Error('disk full'));
+
+        await useProfileStore.getState().loadProfile();
+
+        expect(useProfileStore.getState().hydrated).toBe(true);
+        expect(console.error).toHaveBeenCalled();
+    });
+
+    // This test guarentees that an unexpected write error can't wipe ther user's data
+    it('does not overwrite state when updateProfile fails', async () => {
+        useProfileStore.setState({ profile: mockProfile });
+
+        AsyncStorage.setItem.mockRejectedValueOnce(new Error('write fail'));
+        const result = await useProfileStore.getState().updateProfile({ name: 'Broken' });
+
+        expect(result).toBeUndefined();
+        expect(useProfileStore.getState().profile).toEqual(mockProfile);
+        expect(console.error).toHaveBeenCalled();
     });
 });
