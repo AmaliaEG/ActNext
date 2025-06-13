@@ -7,32 +7,62 @@ import { Alert } from 'react-native';
 
 jest.spyOn(Alert, 'alert');
 
+const mockAuthStoreLogout = jest.fn().mockResolvedValue();
+const mockUpdateProfile = jest.fn();
+const mockResetProfile = jest.fn();
+
+let mockHydrated = true;
+let mockProfile = {
+    name: 'John Doe',
+    birthDate: '01/01/1990',
+    gender: 'Male',
+    email: 'john@example.com',  
+    code: '123456',
+};
+
+jest.mock('../src/store/useProfileStore', () => {
+    // const React = require('react');
+
+    const useProfileStore = () => ({
+        hydrated: mockHydrated,
+        profile: mockProfile,
+        updateProfile: mockUpdateProfile,
+        resetProfile: mockResetProfile,
+        loadProfile: jest.fn(),
+    });
+
+    useProfileStore.__setHydrated = v => { mockHydrated = v };
+    useProfileStore.__setProfile = v => { mockProfile = v };
+
+    return { __esModule: true, default: useProfileStore };
+});
+
+import useProfileStore from '../src/store/useProfileStore';
+const setHydrated = useProfileStore.__setHydrated;
+const setProfile = useProfileStore.__setProfile;
+
+
 // Mock external dependencies
 jest.mock('expo-secure-store');
 
 // Auth0
 jest.mock('react-native-auth0', () => ({
-    useAuth0: () => ({
-        clearSession: jest.fn().mockResolvedValue(true),
-        user: { email: 'test@gmail.com' },
-        error: null,
-    })
-}));
+    useAuth0: jest.fn()
+}));    
 
 // useAuthStore
-const mockAuthStoreLogout = jest.fn().mockResolvedValue();
 jest.mock('../src/store/useAuthStore', () => ({
     __esModule: true,
     default: () => ({
         logout: mockAuthStoreLogout
-    }),
-}));
+    }),    
+}));    
 
 jest.mock('../src/screens/burgermenu/DateTimePickerInput', () => () => null);
 jest.mock('../src/screens/burgermenu/GenderPickerInput', () => () => null);
 jest.mock('@expo/vector-icons', () => ({
     Feather: () => null
-}));
+}));    
 
 jest.mock('../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
@@ -47,51 +77,59 @@ jest.mock('../src/Themes/ThemeContext', () => ({
                 primary: '#007AFF',
                 buttonBorder: '#DDDDDD',
                 buttonText: '#000000',
-            },
-        },
-    }),
-}));
-
-let mockUpdateProfile = jest.fn();
-let mockResetProfile = jest.fn();
-
-jest.mock('../src/store/useProfileStore', () => {
-    const React = require('react');
-
-    return {
-        __esModule: true,
-        default: () => ({
-            hydrated: true,
-            profile: {
-                name: 'John Doe',
-                birthDate: '01/01/1990',
-                gender: 'Male',
-                email: 'john@example.com',  
-                code: '123456',
-            },
-            updateProfile: mockUpdateProfile,
-            resetProfile: mockResetProfile,
-            loadProfile: jest.fn()
-        }),
-    };
-});
+            },    
+        },    
+    }),    
+}));    
 
 
 describe('ProfileDetailsScreen', () => {
-    const mockUser = {
-        email: 'test@example.com'
-    };
-
     beforeEach(() => {
         jest.clearAllMocks();
         SecureStore.setItemAsync.mockResolvedValue();
 
-        // Mock Auth0 hooks
-        useAuth0.mockReturnValue({
-            user: mockUser,
-            error: null,
-            logout: jest.fn().mockResolvedValue(true)
+        setHydrated(true);
+        setProfile({
+            name: 'John Doe',
+            birthDate: '01/01/1990',
+            gender: 'Male',
+            email: 'john@example.com',  
+            code: '123456',
         });
+
+        useAuth0.mockReturnValue ({
+            clearSession: jest.fn().mockResolvedValue(true),
+            user: { email: 'test@example.com' },
+            error: null,
+        });
+    });
+
+    it('shows loading indicator until store hydrates', async () => {
+        setHydrated(false);
+        const { getByText, queryByText, rerender } = render(<ProfileDetailsScreen />);
+        expect(getByText('Loading profile...')).toBeTruthy();
+
+        setHydrated(true);
+        rerender(<ProfileDetailsScreen />);
+
+        expect(queryByText('Loading profile...')).toBeNull();
+        expect(getByText('Profile Details')).toBeTruthy();
+    });
+
+    it('persists to store and UI shows updated name', async () => {
+        mockUpdateProfile.mockImplementation(async updated => {
+            setProfile(updated);
+            return true;
+        });
+
+        const { getByText, getByPlaceholderText } = render(<ProfileDetailsScreen />);
+
+        fireEvent.changeText(getByPlaceholderText('Enter your name'), 'Jane');
+        fireEvent.press(getByText('Save Changes'));
+
+        await waitFor(() =>
+            expect(getByPlaceholderText('Enter your name').props.value).toBe('Jane')
+        );
     });
 
     it('renders correctly', async () => {
@@ -101,11 +139,9 @@ describe('ProfileDetailsScreen', () => {
         expect(await findByText('Profile Details')).toBeTruthy();
     });
 
-    it('updates name field and removes digits', async () => {
+    it('updates name field and removes digits', () => {
         const { getByPlaceholderText } = render(<ProfileDetailsScreen />);
-        const nameInput = await waitFor(() =>
-            getByPlaceholderText('Enter your name')
-        );
+        const nameInput = getByPlaceholderText('Enter your name');
 
         fireEvent.changeText(nameInput, 'Jane123 Doe');
         expect(nameInput.props.value).toBe('Jane Doe');
@@ -113,17 +149,9 @@ describe('ProfileDetailsScreen', () => {
 
     it('toggles password visibility', async () => {
         const { getByTestId, getByDisplayValue } = render(<ProfileDetailsScreen />);
-        
-        // Password should be hidden initially
-        await waitFor(() => 
-            expect(getByDisplayValue('******')).toBeTruthy()
-        );
+        expect(getByDisplayValue('******')).toBeTruthy();
+        fireEvent.press(getByTestId('eye-icon'));
 
-        // Press eye icon
-        const eyeIcon = getByTestId('eye-icon');
-        fireEvent.press(eyeIcon);
-
-        // Password should now be visible
         await waitFor(() => 
             expect(getByDisplayValue('123456')).toBeTruthy()
         );
@@ -137,10 +165,12 @@ describe('ProfileDetailsScreen', () => {
         fireEvent.press(getByText('Save Changes'));
 
         await waitFor(() => {
-            expect(mockUpdateProfile).toHaveBeenCalledWith(expect.objectContaining({
-                name: 'Jane',
-                email: 'jane@example.com'
-            }));
+            expect(mockUpdateProfile).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'Jane',
+                    email: 'jane@example.com'
+                }),
+            );
         });
     });
 
