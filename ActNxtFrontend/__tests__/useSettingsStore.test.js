@@ -4,10 +4,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // MOCK
 jest.mock('@react-native-async-storage/async-storage', () => ({
-    setItem: jest.fn(),
-    getItem: jest.fn(),
-    removeItem: jest.fn()
+    setItem: jest.fn().mockResolvedValue(null),
+    getItem: jest.fn().mockResolvedValue(null),
+    removeItem: jest.fn().mockResolvedValue(null)
 }));
+
+const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+afterAll(() => errorSpy.mockRestore());
 
 const lastPayload = () => {
     const [, json] = AsyncStorage.setItem.mock.calls.at(-1);
@@ -85,5 +88,24 @@ describe('useSettingsStore', () => {
         expect(lastPayload()).toEqual(
             expect.objectContaining({ notificationsEnabled: !prevState })
         );
+    });
+
+    it('marks hydrated even when loadSettings() encounters a read error', async () => {
+        AsyncStorage.getItem.mockRejectedValueOnce(new Error('disk fail'));
+
+        await useSettingsStore.getState().loadSettings();
+
+        expect(useSettingsStore.getState().hydrated).toBe(true);
+        expect(console.error).toHaveBeenCalled();
+    });
+
+    it('does not clobber state when updateTheme write fails', async () => {
+        const originalTheme = useSettingsStore.getState().theme;
+        AsyncStorage.setItem.mockRejectedValueOnce(new Error('write fail'));
+
+        await useSettingsStore.getState().updateTheme({ theme: 'dark' });
+
+        expect(useSettingsStore.getState().theme).toEqual(originalTheme);
+        expect(console.error).toHaveBeenCalled();
     });
 });
