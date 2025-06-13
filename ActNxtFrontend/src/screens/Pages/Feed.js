@@ -13,12 +13,14 @@ const Feed = () => {
   const { insights, setInsights, hydrated } = useInsightsStore();
   const { theme } = useTheme();
 
+  // Function to extract the first sentence from the description
   const getTheFirstSentence = (description) => {
     if (!description) return '';
     const sentences = description.split('.');
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
   };  
 
+  // State for pull-to-refresh functionality
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);
@@ -29,17 +31,6 @@ const Feed = () => {
 
   useEffect(() => {
     if (hydrated && insights.length === 0) {
-      const currentDate = new Date();
-      const processedTasks = Mock.map((task) => {
-        const dateAssigned = new Date(task.DtCreate);
-        return {
-          ...task,
-          dateAssigned,
-          isOverdue: dateAssigned < currentDate,
-          firstSentence: getTheFirstSentence(task.Description),
-        };
-      // Sorts by date (earliest first)
-      }).sort((a, b) => a.dateAssigned - b.dateAssigned);
     }
   }, [hydrated]);
 
@@ -51,7 +42,7 @@ const Feed = () => {
         </View>
       );
   }
-
+  
   return (
     <View style={[Styles.container, { backgroundColor: theme.colors.background  }]}>
       <View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>

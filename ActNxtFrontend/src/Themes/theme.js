@@ -2,6 +2,7 @@ export const lightTheme = {
   mode: 'light',
   isDark: false,
   colors: {
+    // General colors 
     background: '#E9E9E9',
     insightBackground: '#FFFFFF',
     text: '#000000',
@@ -56,6 +57,7 @@ export const darkTheme = {
   mode: 'dark',
   isDark: true,
   colors: {
+    // General colors
     background: '#1E1E1E',
     insightBackground: '#0E0E0E',
     text: '#FFFFFF',
