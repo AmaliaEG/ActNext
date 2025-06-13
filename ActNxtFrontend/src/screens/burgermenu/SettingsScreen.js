@@ -100,7 +100,6 @@ const SettingsScreen = ({ props, closeModal }) => {
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.background }]}>
           <Text style={[styles.title, { color: theme.colors.text }]}>Settings</Text>
           
-          
           {/* Profile */}
           <Row 
             title="Profile"
@@ -121,7 +120,7 @@ const SettingsScreen = ({ props, closeModal }) => {
             subColor={theme.colors.text}
              
           />
-
+          {/* Language */}
           <Row 
             title="Language"
             value={language.toUpperCase()}

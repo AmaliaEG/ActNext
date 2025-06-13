@@ -17,6 +17,7 @@ const ThemesScreen = () => {
   );
 
   return (
+    // Define the main container with background options from the theme
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Text style={[styles.title, { color: theme.colors.text }]}>Theme Settings</Text>
       {renderOption('Light', 'light')}
