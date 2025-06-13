@@ -1,5 +1,5 @@
 import { render, waitFor } from "@testing-library/react-native";
-import App from "../src/screens/demo_menu/App"
+import LoginPage from "../src/screens/Pages/LoginPage"
 import { useAuth0 as mockUseAuth0 } from "react-native-auth0";
 
 
@@ -42,8 +42,8 @@ jest.mock('../src/store/useInsightsStore', () => ({
 }));
 
 
-// TESTS FOR App
-describe("App", () => {
+// TESTS FOR LoginPage
+describe("LoginPage", () => {
     beforeEach(() => {
         mockUseAuth0.mockReturnValue({
             authorize: jest.fn(),
@@ -56,7 +56,7 @@ describe("App", () => {
 
     it('renders buttons correctly', async () => {
         const navigation = { navigate: jest.fn() }; // Needed when navigation is used
-        const { getByText } = render(<App navigation={navigation} />);
+        const { getByText } = render(<LoginPage navigation={navigation} />);
 
         await waitFor(() => {
             expect(getByText('Show Settings')).toBeTruthy();

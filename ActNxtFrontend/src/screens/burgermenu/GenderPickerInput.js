@@ -24,8 +24,10 @@ const GenderPickerInput = ({ value, onChange }) => {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    onChange(item.value);
                     setModalVisible(false);
+                    if (item.value && item.value !== value) {
+                        onChange(item.value);
+                    }
                 }}
                 style={[
                     styles.row,
@@ -47,6 +49,7 @@ const GenderPickerInput = ({ value, onChange }) => {
         <View style={styles.wrapper}>
             <Text style={[styles.label, { color: theme.colors.text }]}>Select Gender</Text>
             <TouchableOpacity
+                testID='gender-picker-button'
                 onPress={() => setModalVisible(true)}
                 style={[styles.picker, { 
                     backgroundColor: theme.colors.boxBg,

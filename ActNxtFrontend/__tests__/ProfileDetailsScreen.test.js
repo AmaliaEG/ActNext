@@ -9,11 +9,47 @@ jest.spyOn(Alert, 'alert');
 
 // Mock external dependencies
 jest.mock('expo-secure-store');
-jest.mock('react-native-auth0');
+
+// Auth0
+jest.mock('react-native-auth0', () => ({
+    useAuth0: () => ({
+        clearSession: jest.fn().mockResolvedValue(true),
+        user: { email: 'test@gmail.com' },
+        error: null,
+    })
+}));
+
+// useAuthStore
+const mockAuthStoreLogout = jest.fn().mockResolvedValue();
+jest.mock('../src/store/useAuthStore', () => ({
+    __esModule: true,
+    default: () => ({
+        logout: mockAuthStoreLogout
+    }),
+}));
+
 jest.mock('../src/screens/burgermenu/DateTimePickerInput', () => () => null);
 jest.mock('../src/screens/burgermenu/GenderPickerInput', () => () => null);
 jest.mock('@expo/vector-icons', () => ({
     Feather: () => null
+}));
+
+jest.mock('../src/Themes/ThemeContext', () => ({
+    useTheme: () => ({
+        theme: {
+            colors: {
+                background: '#E9E9E9',
+                text: '#000000',
+                inputBg: '#FFFFFF',
+                inputText: '#000000',
+                border: '#DDDDDD',
+                placeholder: '#555555',
+                primary: '#007AFF',
+                buttonBorder: '#DDDDDD',
+                buttonText: '#000000',
+            },
+        },
+    }),
 }));
 
 let mockUpdateProfile = jest.fn();
@@ -158,17 +194,9 @@ describe('ProfileDetailsScreen', () => {
         });
     });
 
-    it('calls logout and navigates to home when logout button is pressed', async () => {
-        const mockLogout = jest.fn().mockResolvedValue(true);
+    it('calls clearSession, resetProfile, logout, navigates home and closes modal when logout button is pressed', async () => {
         const mockNavigate = jest.fn();
         const mockCloseModal = jest.fn();
-
-        global.clearSession = mockLogout;
-
-        useAuth0.mockReturnValue({
-            user: mockUser,
-            logout: mockLogout,
-        });
 
         const { getByText } = render(
             <ProfileDetailsScreen
@@ -179,12 +207,18 @@ describe('ProfileDetailsScreen', () => {
 
         fireEvent.press(getByText('Log Out'));
         await waitFor(() => {
-            expect(mockLogout).toHaveBeenCalled();
+            // Comes from useAuth0
+            expect(useAuth0().clearSession).toHaveBeenCalled();
+
+            // From useProfileStore
+            expect(mockResetProfile).toHaveBeenCalled();
+
+            // From useAuthStore
+            expect(mockAuthStoreLogout).toHaveBeenCalled();
+            
             expect(mockNavigate).toHaveBeenCalledWith('Home');
             expect(mockCloseModal).toHaveBeenCalled();
         });
-
-        delete global.clearSession;
     });
 
     it('does not save if required field are empty', async () => {

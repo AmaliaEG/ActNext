@@ -98,7 +98,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
         );
     }
     return (
-        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.backgroundColor }]}>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.background }]}>
             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Profile Details</Text>
             <View style={styles.inputContainer}>
                 <Text style={[styles.label, { color: theme.colors.text }]}>Name</Text>

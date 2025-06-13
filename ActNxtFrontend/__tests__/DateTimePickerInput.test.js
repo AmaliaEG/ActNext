@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
 import DateTimePickerInput from '../src/screens/burgermenu/DateTimePickerInput';
-import { View } from 'react-native';
 
 jest.mock('@react-native-community/datetimepicker', () => {
     const React = require('react');
@@ -11,6 +10,19 @@ jest.mock('@react-native-community/datetimepicker', () => {
             onChange,
         });
 });
+
+jest.mock('../src/Themes/ThemeContext', () => ({
+    useTheme: () => ({
+        theme: {
+            colors: {
+                boxBg: '#FFFFFF',
+                text: '#000000',
+                placeholder: '#666666',
+                border: '#CCCCCC'
+            },
+        },
+    }),
+}));
 
 describe('DateTimePickerInput', () => {
     const mockValue = "01/01/2000";
@@ -58,5 +70,21 @@ describe('DateTimePickerInput', () => {
         fireEvent.press(getByTestId('datepicker-button'));
         fireEvent(getByTestId('datepicker'), 'onChange', null, undefined);
         expect(mockOnChange).not.toHaveBeenCalled();
+    });
+
+    it('applies the theme colors', () => {
+        const { getByTestId } = render(
+            <DateTimePickerInput value={mockValue} onChange={mockOnChange} />
+        );
+        const input = getByTestId('datepicker-button').findByType('TextInput');
+
+        expect(input).toHaveStyle({
+            backgroundColor: '#FFFFFF',
+            color: '#000000',
+            borderColor: '#CCCCCC',
+        });
+
+        // Check placeholder value
+        expect(input.props.placeholderTextColor).toBe('#666666');
     });
 });
