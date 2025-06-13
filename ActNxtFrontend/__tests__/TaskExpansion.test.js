@@ -1,4 +1,4 @@
-import TaskExpansion from '../src/screens/mainPage/TaskExpansion';
+import TaskExpansion from '../src/screens/Pages/TaskExpansion';
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
 import { StyleSheet } from 'react-native';

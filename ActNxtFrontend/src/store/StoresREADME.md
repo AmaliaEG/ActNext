@@ -25,7 +25,7 @@ Updating the state is done by calling the provided `set` function with a new sta
 
 The store is used in the LoginPage.js file, specifically under the function `LoginButton`. It is also used in the ProfileDetailsScreen.js file.
 
-It holds the users access token from auth0, more on access tokens at https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles
+It holds the users access token from auth0, which among other things holds the auth0 users id, more on access tokens at https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles
 
 #####################################################################################################
 

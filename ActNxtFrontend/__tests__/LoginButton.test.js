@@ -1,6 +1,6 @@
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { useAuth0 as mockUseAuth0 } from "react-native-auth0";
-import { LoginButton } from "../src/screens/demo_menu/App";
+import { LoginButton } from "../src/screens/Pages/LoginPage";
 
 // MOCKS
 jest.mock('react-native-auth0', () => ({

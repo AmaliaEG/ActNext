@@ -26,11 +26,11 @@ const IMAGES = [
 const BackgroundAnimation = ({ 
   children, 
   images = IMAGES, 
-  duration = 12000,
-  zoomDuration = 11000,
+  duration = 10000,
+  zoomDuration = 12000,
   fadeDuration = 1000,
   initialScale = 1.15,
-  overlayOpacity = 0.2
+  overlayOpacity = 0.5
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const fadeAnim = useRef(new Animated.Value(1)).current;
@@ -38,6 +38,11 @@ const BackgroundAnimation = ({
   const nextFadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    // Preload all images when component mounts
+    const preloadImages = async () => {
+      await Promise.all(images.map(img => Asset.loadAsync(img)));
+    };
+    preloadImages();
     // Start the zoom out animation immediately when component mounts or image changes
     startZoomOutAnimation();
     
@@ -46,7 +51,7 @@ const BackgroundAnimation = ({
     }, duration);
 
     return () => clearTimeout(timeout);
-  }, [currentIndex]);
+  }, [currentIndex, images]);
 
   const startZoomOutAnimation = () => {
     // Reset scale to zoomed in position
