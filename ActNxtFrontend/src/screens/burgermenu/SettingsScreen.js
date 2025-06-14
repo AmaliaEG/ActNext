@@ -20,6 +20,31 @@ import ProfileDetailsScreen from "./ProfileDetailsScreen";
 import ThemesScreen from "./ThemesScreen";
 import AboutACTNXTAppScreen from "./AboutACTNXTAppScreen";
 
+/**
+ * SettingsScreen.js
+ *
+ * Displays a settings screen allowing the user to configure:
+ * - Profile information
+ * - Theme selection (Light, Dark, System)
+ * - Language
+ * - Notification toggle
+ * - About the application
+ */
+
+
+/**
+ * Main SettingsScreen component
+ * Allosws the user to navigate through different settings options.
+ * Uses the useSettingsStore for state management and useTheme for theming.
+ * @param {Object} props - The component props.
+ * @param {Function} closeModal - Function to close the modal.
+ * @returns {JSX.Element} The rendered settings screen.
+ * @component
+ * @example
+ * return (
+ *   <SettingsScreen closeModal={() => console.log('Modal closed')} />
+ * )
+ */
 const SettingsScreen = ({ props, closeModal }) => {
     const {
         language,
@@ -154,6 +179,17 @@ const SettingsScreen = ({ props, closeModal }) => {
         </ScrollView>
     );
 };
+/**
+ * Row component used inside Settings screen to display each setting option.
+ * It is a touchable row that displays a title, an optional value, and an arrow icon.
+ * @param {object} props - Row props.
+ * @param {string} props.title - The label.
+ * @param {string} [props.value] - Optional value on the right side.
+ * @param {Function} props.onPress - Click handler.
+ * @param {string} props.color - Text color.
+ * @param {string} props.subColor - Subtext color.
+ * @returns {JSX.Element}
+ */
 
 function Row({ title, value, onPress, color, subColor }) {
   const { theme } = useTheme();

@@ -2,20 +2,46 @@ import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTheme } from '../../Themes/ThemeContext'
 
-
+/**
+ * A screen component for selecting the app's theme (light, dark, or system).
+ * Uses the current theme context to update and reflect theme changes.
+ *
+ * @component
+ * @example
+ * return (
+ *   <ThemesScreen />
+ * )
+ */
 const ThemesScreen = () => {
   const { mode, updateTheme, theme } = useTheme();
 
+  /**
+   * Gets the appropriate text color based on the selected theme mode.
+   *
+   * @param {string} currentMode - The theme mode being rendered (e.g., 'light', 'dark', 'system').
+   * @returns {string} - The color value to apply to the option text.
+   */
   const getColor = (currentMode) => {
     return mode === currentMode ? theme.colors.text : theme.colors.subText;
   };
 
+  /**
+   * Renders a pressable theme option.
+   *
+   * @param {string} label - Display name of the theme option.
+   * @param {string} value - Internal value of the theme mode.
+   * @returns {JSX.Element} - A Pressable React Native element for the theme option.
+   */
   const renderOption = (label, value) => (
     <Pressable onPress={() => updateTheme(value)} style={styles.option}>
       <Text style={[styles.optionText, { color: getColor(value) }]}>{label}</Text>
     </Pressable>
   );
 
+  /**
+ * A screen that allows the user to select a theme.
+ * @returns {JSX.Element} A view with theme options.
+ */
   return (
     // Define the main container with background options from the theme
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>

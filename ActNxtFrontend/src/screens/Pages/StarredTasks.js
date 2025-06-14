@@ -33,7 +33,7 @@ const StarredTasks = () => {
 
   return (
     <View style={[Styles.container, { backgroundColor: theme.colors.background  }]}>
-      <View style={[Styles.menuContainer, { backgroundColor: theme.colors.insightBackground }]}>
+      <View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>
         <Pressable 
           onPress={() => navigation.openDrawer()} 
           style={Styles.menuButton} 
@@ -41,6 +41,7 @@ const StarredTasks = () => {
           <Ionicons 
             name="menu" 
             size={Styles.menuIcon.size}
+            color={theme.colors.text}
           />
         </Pressable>
         <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Starred</Text>

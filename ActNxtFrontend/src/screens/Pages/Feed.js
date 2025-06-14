@@ -8,19 +8,29 @@ import { useTheme } from '../../Themes/ThemeContext';
 import { Styles } from './Styles';
 import TaskCard from './TaskCard';
 
+/**
+ * Displays a feed of insights with pull-to-refresh functionality.
+ * Uses `useInsightsStore` for state management and `useTheme` for theming.
+ * @returns {JSX.Element} A screen with a list of the 4 most recent insights, a menu button, and pull-to-refresh functionality.
+ * @component
+ * @example
+ * return (
+ *   <Feed />
+ * )
+ */
 const Feed = () => {
   const navigation = useNavigation();
   const { insights, setInsights, hydrated } = useInsightsStore();
   const { theme } = useTheme();
 
-  // Function to extract the first sentence from the description
-  const getTheFirstSentence = (description) => {
-    if (!description) return '';
-    const sentences = description.split('.');
-    return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-  };  
 
-  // State for pull-to-refresh functionality
+/**
+ * Triggers when the user pulls down to refresh is pulled to refresh.
+ * @type {boolean}
+ * @default false
+ * @description Indicates whether the feed is currently refreshing.
+ * @function onRefresh
+ */
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);

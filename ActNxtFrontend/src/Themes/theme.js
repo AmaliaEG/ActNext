@@ -1,3 +1,8 @@
+/**
+ * Light theme configuration object.
+ * Defines the color palette and UI styles for light mode.
+ * @type {Object}
+ */
 export const lightTheme = {
   mode: 'light',
   isDark: false,
@@ -52,7 +57,11 @@ export const lightTheme = {
 
   },
 };
-
+/**
+ * Dark theme configuration object.
+ * Defines the color palette and UI styles for dark mode.
+ * @type {Object}
+ */
 export const darkTheme = {
   mode: 'dark',
   isDark: true,
@@ -109,6 +118,10 @@ export const darkTheme = {
   },
 };
 
+/**
+ * A theme map that groups both light and dark themes.
+ * @type {{light: Object, dark: Object}}
+ */
 const themes = {
   light: lightTheme,
   dark: darkTheme,
