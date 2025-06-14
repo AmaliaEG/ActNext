@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Mock from './JSON_Mockdata.json'; // Import JSON data
 import useInsightsStore from '../../store/useInsightsStore';
 import { useTheme } from '../../Themes/ThemeContext';
 import { Styles } from './Styles';
