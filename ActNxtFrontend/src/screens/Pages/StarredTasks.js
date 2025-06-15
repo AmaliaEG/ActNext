@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,17 +10,34 @@ import TaskCard from './TaskCard';
 const StarredTasks = () => {
   const navigation = useNavigation();
   const { insights, hydrated, getStarStatus } = useInsightsStore();
-  const [starredTasks, setStarredTasks] = useState([]);
-
+  // const [starredTasks, setStarredTasks] = useState([]);
   const { theme } = useTheme();
 
+  // const starredTasks = useMemo(() => {
+  //     if (!hydrated) return [];
+  //     return insights.filter(task => getStarStatus(task.Id));
+  //   }, [hydrated, insights, getStarStatus]);
 
-  useEffect(() => {
-    if (hydrated) {
-      const filtered = insights.filter(task => getStarStatus(task.Id));
-      setStarredTasks(filtered);
-    }
-  }, [hydrated, insights]);
+  // Memoize the filtering function
+  // const filterStarredTasks = useCallback(() => {
+  //   try {
+  //     if (!hydrated || !insights || !getStarStatus) return [];
+  //     return insights.filter(task => task && getStarStatus(task.Id));
+  //   } catch (error) {
+  //     console.error('Error filtering starred tasks:', error);
+  //     return [];
+  //   }
+  // }, [hydrated, insights, getStarStatus]);
+
+  const starredTasks = useMemo(() => {
+    if (!hydrated || !insights) return [];
+    return insights.filter(task => getStarStatus(task.Id));
+  }, [hydrated, insights, getStarStatus]);
+
+  // useEffect(() => {
+  //     const filtered = filterStarredTasks();
+  //     setStarredTasks(filtered);
+  // }, [filterStarredTasks]);
 
   if (!hydrated) {
       return (
@@ -44,7 +61,7 @@ const StarredTasks = () => {
             color={theme.colors.text}
           />
         </Pressable>
-        <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Starred</Text>
+        <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Favorites</Text>
       </View>
 
       <Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
