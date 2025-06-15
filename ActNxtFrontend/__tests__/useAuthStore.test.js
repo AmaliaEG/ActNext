@@ -16,7 +16,7 @@ beforeEach(() => {
 
     useAuthStore.setState({ 
         isLoggedIn: false,
-        userInfo: null,
+        token: null,
         hydrated: false 
     });
 });
@@ -30,14 +30,14 @@ describe('useAuthStore', () => {
     it('loads auth state from AsyncStorage and sets hydrated', async () => {
         AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify({
             isLoggedIn: true,
-            userInfo: { name: 'Tester' },
+            token: { name: 'Tester' },
         }));
 
         await freshState().loadAuth();
         const store = freshState();
 
         expect(store.isLoggedIn).toBe(true);
-        expect(store.userInfo.name).toBe('Tester');
+        expect(store.token.name).toBe('Tester');
         expect(store.hydrated).toBe(true);
     });
 
@@ -48,32 +48,32 @@ describe('useAuthStore', () => {
         const store = freshState();
 
         expect(store.isLoggedIn).toBe(false);
-        expect(store.userInfo).toBe(null);
+        expect(store.token).toBe(null);
         expect(store.hydrated).toBe(true);
     });
 
     it('saves to AsyncStorage and updates state, when login() is called', async () => {
-        const userInfo = { name: 'LoginUser' };
+        const token = { name: 'LoginUser' };
 
-        await freshState().login(userInfo);
+        await freshState().login(token);
 
         expect(AsyncStorage.setItem).toHaveBeenCalledWith(
             'auth-state', 
-            JSON.stringify({ isLoggedIn: true, userInfo })
+            JSON.stringify({ isLoggedIn: true, token })
         );
         const updated = freshState();
         expect(updated.isLoggedIn).toBe(true);
-        expect(updated.userInfo).toEqual(userInfo);
+        expect(updated.token).toEqual(token);
     });
 
     it('removes auth-state from AsyncStorage and clears store, when logout() is called', async () => {
-        useAuthStore.setState({ isLoggedIn: true, userInfo: { name: 'LogoutUser' } });
+        useAuthStore.setState({ isLoggedIn: true, token: { name: 'LogoutUser' } });
 
         await freshState().logout();
 
         expect(AsyncStorage.removeItem).toHaveBeenCalledWith('auth-state');
         const updated = freshState();
         expect(updated.isLoggedIn).toBe(false);
-        expect(updated.userInfo).toBe(null);
+        expect(updated.token).toBe(null);
     });
 });

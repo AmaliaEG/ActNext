@@ -135,7 +135,7 @@ const LoginPage = ({ navigation }) => {
   //theme 
   const { resolvedTheme } = useTheme();
   // Zustand Hydration
-  const { loadAuth, hydrated: authHydrated, login, user: zustandUser, isLoggedIn  } = useAuthStore();
+  const { loadAuth, hydrated: authHydrated, login, user: zustandUser, isLoggedIn, token  } = useAuthStore();
   const { loadSettings, hydrated: settingsHydrated } = useSettingsStore();
   const { loadProfile, hydrated: profileHydrated, updateProfile } = useProfileStore();
   const { loadInsights, hydrated: insightsHydrated } = useInsightsStore();
@@ -149,7 +149,7 @@ const LoginPage = ({ navigation }) => {
       await Promise.all([
         loadAuth(),
         loadSettings(),
-        loadProfile(),
+        loadProfile(auth0User),
         loadInsights()
       ]);
     };
@@ -158,7 +158,7 @@ const LoginPage = ({ navigation }) => {
 
     //behavior when user login is detected
     if (auth0User ) {
-      updateProfile(auth0User);
+      //updateProfile(auth0User);
       navigation.navigate('Feed');
     }
   }, [auth0User, isLoggedIn, login, navigation]);

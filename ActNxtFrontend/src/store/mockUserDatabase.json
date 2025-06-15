@@ -1,0 +1,26 @@
+[
+    {
+        "auth0ID": "example",
+        "name": "example",
+        "birthDate": "01/01/2000",
+        "gender": "Other",
+        "email": "example@example.com",
+        "code": 1234,
+        "theme": "System",
+        "language": "English",
+        "notifications": 1
+    },
+    {
+        "auth0ID":"auth0|67ed1aed756d21cb5497eb12",
+        "name":"Jonas",
+        "email":"s235251@student.dtu.dk",
+        "gender":"YES!",
+        "code": "DTU2025!!"
+    },
+    {
+        "auth0ID":"google-oauth2|118124938406688424711",
+        "name":"Frontend Actnxt",
+        "email":"frontend@gmail.com",
+        "code":"login from google"
+    }
+]

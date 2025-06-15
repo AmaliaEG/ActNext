@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Auth State
 const useAuthStore = create((set) => ({
     isLoggedIn: false,
-    userInfo: null,
+    token: null,
     hydrated: false,
 
     loadAuth: async () => {
@@ -14,7 +14,7 @@ const useAuthStore = create((set) => ({
                 const parsed = JSON.parse(stored);
                 set({
                     isLoggedIn: parsed.isLoggedIn,
-                    userInfo: parsed.userInfo 
+                    token: parsed.token 
                 });
             }
         } catch (error) {
@@ -24,9 +24,9 @@ const useAuthStore = create((set) => ({
         }
     },
 
-    login: async (userInfo) => {
+    login: async (accessToken) => {
         try {
-            const newState = { isLoggedIn: true,userInfo };
+            const newState = { isLoggedIn: true, token: accessToken };
             await AsyncStorage.setItem('auth-state', JSON.stringify(newState));
             set(newState);
         } catch (error) {
@@ -37,7 +37,7 @@ const useAuthStore = create((set) => ({
     logout: async () => {
         try {
             await AsyncStorage.removeItem('auth-state');
-            set({ isLoggedIn: false, userInfo: null });
+            set({ isLoggedIn: false, token: null });
         } catch (error) {
             console.error('Failed to log out:', error);
         }

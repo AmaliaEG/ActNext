@@ -8,6 +8,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     getItem: jest.fn().mockResolvedValue(null),
     removeItem: jest.fn().mockResolvedValue(null)
 }));
+jest.mock('../store/mockUserDatabase.json');
 
 const mockProfile = {
     name: 'Alice',
@@ -25,6 +26,30 @@ const emptyProfile = {
     code: ''
 };
 
+const mockAuth0Profile = {
+    auth0ID: "example",
+    name: "example",
+    birthDate: "01/01/2000",
+    gender: "Other",
+    email: "example@example.com",
+    code: 1234,
+    theme: "System",
+    language: "English",
+    notifications: 1    
+}
+
+const mockAuth0ID = {
+    sub: "example",
+    name: "example",
+    email: "example@example.com"
+}
+
+const mockNewAuth0ID = {
+    sub: "bobsID",
+    name: "bob",
+    email: "bob@mail.com"
+}
+
 const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 beforeEach(() => {
@@ -41,7 +66,7 @@ describe('useProfileStore', () => {
     it('loads profile from AsyncStorage and sets hydrated', async () => {
         AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(mockProfile));
 
-        await useProfileStore.getState().loadProfile();
+        await useProfileStore.getState().loadProfile(null);
         const { profile, hydrated } = useProfileStore.getState();
 
         expect(profile).toEqual(mockProfile);
@@ -51,7 +76,7 @@ describe('useProfileStore', () => {
     it('sets hydrated even when no stored profile exists', async () => {
         AsyncStorage.getItem.mockResolvedValueOnce(null);
 
-        await useProfileStore.getState().loadProfile();
+        await useProfileStore.getState().loadProfile(null);
         const { profile, hydrated } = useProfileStore.getState();
 
         expect(profile).toEqual(emptyProfile);
@@ -81,7 +106,7 @@ describe('useProfileStore', () => {
     it('handles storage read errors', async () => {
         AsyncStorage.getItem.mockRejectedValue(new Error('disk full'));
 
-        await useProfileStore.getState().loadProfile();
+        await useProfileStore.getState().loadProfile(null);
 
         expect(useProfileStore.getState().hydrated).toBe(true);
         expect(console.error).toHaveBeenCalled();
@@ -97,5 +122,21 @@ describe('useProfileStore', () => {
         expect(result).toBeUndefined();
         expect(useProfileStore.getState().profile).toEqual(mockProfile);
         expect(console.error).toHaveBeenCalled();
+    });
+
+    it('queries user database for user profile when presented with a valid auth0ID', async () => {
+        await useProfileStore.getState().loadProfile(mockAuth0ID);
+
+        const { profile } = useProfileStore.getState();
+        
+        expect(profile).toEqual(mockAuth0Profile);
+    });
+
+    it('creates a new profile if auth0ID is not found in the database', async () =>{
+        await useProfileStore.getState.loadProfile(mockNewAuth0ID);
+
+        const { profile } = useProfileStore.getState();
+        
+        expect(profile).toEqual(mockNewAuth0ID);
     });
 });
