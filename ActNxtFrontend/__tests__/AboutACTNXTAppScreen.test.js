@@ -20,8 +20,10 @@ jest.mock('../src/Themes/ThemeContext', () => ({
 }));
 
 // mock for linking
-Linking.openURL = jest.fn();
-Linking.canOpenURL = jest.fn();
+jest.mock('react-native/Libraries/Linking/Linking', () => ({
+    openURL: jest.fn(),
+    canOpenURL: jest.fn(),
+}));
 
 jest.spyOn(Alert, 'alert');
 
