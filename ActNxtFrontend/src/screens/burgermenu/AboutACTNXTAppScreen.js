@@ -2,6 +2,18 @@ import React from 'react';
 import { View, StyleSheet, Text, Linking, Alert, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../Themes/ThemeContext';
 
+/**
+ * This screen displays information about the ActNxt application, which includes a description and a button navigating to their website, where
+ * the users can find support and additional information.
+ * 
+ * If unable to open the website an error alert is shown to the user.
+ * 
+ * @component
+ * @returns {JSX.Element} A screen with app description, support link and version info.
+ * 
+ * @example
+ * <AboutACTNXTAppScreen />
+ */
 
 const AboutACTNXTAppScreen = () => {
     // Implement logic for working link to ActNxt website, when website is made

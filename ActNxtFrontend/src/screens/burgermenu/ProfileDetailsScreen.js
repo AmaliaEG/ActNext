@@ -17,6 +17,26 @@ import useProfileStore from '../../store/useProfileStore';
 import useAuthStore from '../../store/useAuthStore';
 import { useTheme } from '../../Themes/ThemeContext';
 
+/**
+ * ProfileDetailsScreen allows the user to view and update their profile information, including name, birth date, gender, email, and password.
+ * 
+ * It uses custom input components for birth date and gender, and handles both viewing and editing of a secure password.
+ * 
+ * Furthermore, the initial information is retrieved from the useProfileStore, to which the authentication has persisted there.
+ * 
+ * @component
+ * @param {Object} props - The props passed to the screen.
+ * @param {object} props.navigation - Navigation prop for screen transitions.
+ * @param {function} [props.closeModal] - Optional callback to close the Modal. 
+ * @returns {JSX.Element} A scrollable screen for managing user profile details.
+ * 
+ * @example
+ * <ProfileDetailsScreen
+ *    navigation={navigation}
+ *    closeModal={() => setModalVisible(false)}
+ * />
+ */
+
 // State hooks for storing and updating user details
 const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const {theme} = useTheme();   
@@ -49,10 +69,27 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
         }
     }, [hydrated, user]);
 
+    /**
+     * Validates an email address using a regular expression.
+     * 
+     * @param {string} email - The email address to validate. 
+     * @returns {boolean} Returns true if the email format is valid, false otherwise.
+     */
+
     const isValidEmail = (email) => {
         let val = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         return val.test(email);
     };
+
+    /**
+     * Saves changes made to the user profile.
+     * 
+     * Performs validation on email and password confirmation. If valid, it updates the profile using the local edits and clears any
+     * temporary password fields.
+     * 
+     * @async
+     * @returns {Promise<void>}
+     */
 
     const handleSaveChanges = async () => {
         // Check for valid email
@@ -76,6 +113,16 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
             setConfirmPassword('');
         }
     };
+
+    /**
+     * Logs the user out of the application.
+     * 
+     * Clears the Auth0 session, resets the local profile store, logs out from the auth store, navigates to the Home screen, and optionally
+     * closes the Modal.
+     * 
+     * @async
+     * @returns {Promise<void>}
+     */
 
     const LogoutFunc= async () => {
         try {

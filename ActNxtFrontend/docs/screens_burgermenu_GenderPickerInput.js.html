@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/burgermenu/GenderPickerInput.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/burgermenu/GenderPickerInput.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, FlatList, Dimensions } from 'react-native';
+import { useTheme } from '../../Themes/ThemeContext';
+import { MaterialIcons } from "@expo/vector-icons";
+
+const GENDERS = [
+    {label: "-- Select Gender --", value: ""},
+    {label: "Male", value: "Male"},
+    {label: "Female", value: "Female"},
+    {label: "Non-binary", value: "Non-binary"},
+    {label: "Prefer not to say", value: "Prefer not to say"},
+    {label: "Other", value: "Other"},
+];
+
+/**
+ * GenderPickerInput is another custom React Native component that allows users to select their gender from a predefined list using a 
+ * modal-based dropdown.
+ * 
+ * The selected gender is then displayed in a touchable field. When pressed, a modal opens showing all gender options. Selecting one updates
+ * the selected value and closes the modal.
+ * 
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.value - The currently selected gender value.
+ * @param {function} props.onChange - Callback to update gender.
+ * @returns {JSX.Element} A gender picker input component with modal dropdown.
+ * 
+ * @example 
+ * &lt;GenderPickInput 
+ *    value={localEdits.gender}
+ *    onChange={(selected) =>
+ *        setLocalEdits({ ...localEdits, gender: selected })
+ *    }
+ * />
+ */
+
+const GenderPickerInput = ({ value, onChange }) => {
+    const { theme } = useTheme();
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    /**
+     * Renders a single gender option row inside the modal list.
+     * 
+     * @param {Object} item - The gender option to render.
+     * @param {string} item.label - The label shown to the user.
+     * @param {string} item.value - The gender value. 
+     * @returns {JSX.Element} A row with the gender label and optional checkmark.
+     */
+
+    const _renderItem = ({ item }) => {
+        const isSelected = item.value === value;
+
+        return (
+            &lt;TouchableOpacity
+                onPress={() => {
+                    setModalVisible(false);
+                    if (item.value &amp;&amp; item.value !== value) {
+                        onChange(item.value);
+                    }
+                }}
+                style={[
+                    styles.row,
+                    { borderBottomColor: theme.colors.divider},
+                ]}
+                testID={`gender-option-${item.value || 'placeholder'}`}
+            >
+                &lt;Text style={[styles.rowText, { color: theme.colors.sheetText }]}>
+                    {item.label}
+                &lt;/Text>
+                {isSelected &amp;&amp; (
+                    &lt;MaterialIcons name="check" size={20} color={theme.colors.sheetBg} />
+                )}
+            &lt;/TouchableOpacity>
+        );
+    };
+
+    return (
+        &lt;View style={styles.wrapper}>
+            &lt;Text style={[styles.label, { color: theme.colors.text }]}>Select Gender&lt;/Text>
+            &lt;TouchableOpacity
+                testID='gender-picker-button'
+                onPress={() => setModalVisible(true)}
+                style={[styles.picker, { 
+                    backgroundColor: theme.colors.boxBg,
+                     borderColor: theme.colors.boxBorder, }]}>
+                    &lt;Text style={{ color: theme.colors.text, flex: 1 }}>
+                        {value ? value : '-- Select Gender --'}
+                    &lt;/Text>
+                    &lt;MaterialIcons name="keyboard-arrow-down" size={20} color={theme.colors.arrow} />
+                &lt;/TouchableOpacity>
+
+                &lt;Modal
+                    transparent={true}
+                    visible={modalVisible}
+                    animationType='fade'
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    &lt;Pressable
+                        style={styles.backdrop}
+                        onPress={() => setModalVisible(false)}
+                    />
+
+                    &lt;View style={styles.centeredView}>
+                        &lt;View style={[styles.sheetContainer, { 
+                            backgroundColor: theme.colors.sheetBg, 
+                            borderColor: theme.colors.sheetBorder }]}>
+                            &lt;FlatList
+                                data={GENDERS}
+                                keyExtractor={(item) => item.value + item.label}
+                                renderItem={_renderItem}
+                                ItemSeparatorComponent={() => (
+                                    &lt;View style={{ height: 1, backgroundColor: theme.colors.sheetBg }} />
+                                )}
+                                ListFooterComponent={&lt;View style={{ height: 8 }} />}
+                                style={{ width: '100%' }}
+                            />
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/Modal>
+        &lt;/View>
+    );
+};
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+    sheetContainer: {
+        width: SCREEN_WIDTH * 0.8, 
+        maxHeight: '60%',
+        borderRadius: 8,
+        borderWidth: 1,
+        overflow: 'hidden',
+        elevation: 6,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+    },
+    wrapper: {
+        marginBottom: 5,
+    },
+    label: {
+        fontSize: 16,
+        paddingBottom: 5
+    },
+    picker: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 12,
+        borderWidth: 1,
+        borderRadius: 5,
+    },
+    backdrop: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+    },
+    centeredView: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    row: {
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        flexDirection: 'row',
+        alignContent: 'center',
+        justifyContent: 'space-between',
+    },
+    rowText: {
+        fontSize: 16,
+    },
+});
+
+export default GenderPickerInput;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="ThemeContext%250D);module_.html">ThemeContext);</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutACTNXTAppScreen">AboutACTNXTAppScreen</a></li><li><a href="global.html#DateTimePickerInput">DateTimePickerInput</a></li><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#GenderPickerInput">GenderPickerInput</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ProfileDetailsScreen">ProfileDetailsScreen</a></li><li><a href="global.html#Row">Row</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Jun 15 2025 08:30:56 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

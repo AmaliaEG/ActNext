@@ -12,12 +12,42 @@ const GENDERS = [
     {label: "Other", value: "Other"},
 ];
 
+/**
+ * GenderPickerInput is another custom React Native component that allows users to select their gender from a predefined list using a 
+ * modal-based dropdown.
+ * 
+ * The selected gender is then displayed in a touchable field. When pressed, a modal opens showing all gender options. Selecting one updates
+ * the selected value and closes the modal.
+ * 
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.value - The currently selected gender value.
+ * @param {function} props.onChange - Callback to update gender.
+ * @returns {JSX.Element} A gender picker input component with modal dropdown.
+ * 
+ * @example 
+ * <GenderPickInput 
+ *    value={localEdits.gender}
+ *    onChange={(selected) =>
+ *        setLocalEdits({ ...localEdits, gender: selected })
+ *    }
+ * />
+ */
+
 const GenderPickerInput = ({ value, onChange }) => {
     const { theme } = useTheme();
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    // Render a single row in the sheet
+    /**
+     * Renders a single gender option row inside the modal list.
+     * 
+     * @param {Object} item - The gender option to render.
+     * @param {string} item.label - The label shown to the user.
+     * @param {string} item.value - The gender value. 
+     * @returns {JSX.Element} A row with the gender label and optional checkmark.
+     */
+
     const _renderItem = ({ item }) => {
         const isSelected = item.value === value;
 
