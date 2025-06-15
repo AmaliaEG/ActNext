@@ -45,7 +45,7 @@ const GenderPickerInput = ({ value, onChange }) => {
      * @param {Object} item - The gender option to render.
      * @param {string} item.label - The label shown to the user.
      * @param {string} item.value - The gender value. 
-     * @returns {JSX.Element} A row with the gender label and optional checkmark.
+     * @returns {JSX.Element} A row with the gender label.
      */
 
     const _renderItem = ({ item }) => {
