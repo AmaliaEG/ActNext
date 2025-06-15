@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -28,12 +28,16 @@ import TaskCard from './TaskCard';
     return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
   }; 
 
-  useEffect(() => {
-    if (hydrated) {
-      const filtered = insights.filter(task => task.isArchived);
-      setStarredTasks(filtered);
-    }
-  }, [hydrated, insights]);
+  // useEffect(() => {
+  //   if (hydrated) {
+  //     const filtered = insights.filter(task => task.isArchived);
+  //     setStarredTasks(filtered);
+  //   }
+  // }, [hydrated, insights]);
+  const archivedTasks = useMemo(() => {
+      if (!hydrated || !insights) return [];
+      return insights.filter(task => task.isArchived);
+    }, [hydrated, insights]);
 
   if (!hydrated) {
       return (

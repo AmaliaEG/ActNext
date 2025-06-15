@@ -10,34 +10,12 @@ import TaskCard from './TaskCard';
 const StarredTasks = () => {
   const navigation = useNavigation();
   const { insights, hydrated, getStarStatus } = useInsightsStore();
-  // const [starredTasks, setStarredTasks] = useState([]);
   const { theme } = useTheme();
-
-  // const starredTasks = useMemo(() => {
-  //     if (!hydrated) return [];
-  //     return insights.filter(task => getStarStatus(task.Id));
-  //   }, [hydrated, insights, getStarStatus]);
-
-  // Memoize the filtering function
-  // const filterStarredTasks = useCallback(() => {
-  //   try {
-  //     if (!hydrated || !insights || !getStarStatus) return [];
-  //     return insights.filter(task => task && getStarStatus(task.Id));
-  //   } catch (error) {
-  //     console.error('Error filtering starred tasks:', error);
-  //     return [];
-  //   }
-  // }, [hydrated, insights, getStarStatus]);
 
   const starredTasks = useMemo(() => {
     if (!hydrated || !insights) return [];
     return insights.filter(task => getStarStatus(task.Id));
   }, [hydrated, insights, getStarStatus]);
-
-  // useEffect(() => {
-  //     const filtered = filterStarredTasks();
-  //     setStarredTasks(filtered);
-  // }, [filterStarredTasks]);
 
   if (!hydrated) {
       return (
