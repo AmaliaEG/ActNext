@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/Pages/LoginPage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/Pages/LoginPage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file LoginPage.js
  * @description The main login page component featuring animated backgrounds, Login Button and Auth0 authentication.
  * @module LoginPage
@@ -60,15 +88,15 @@ const LoginPage = ({ navigation }) => {
     }
   }, [auth0User, isLoggedIn, login, navigation]);
 
-  const allHydrated = authHydrated && settingsHydrated && profileHydrated && insightsHydrated;
+  const allHydrated = authHydrated &amp;&amp; settingsHydrated &amp;&amp; profileHydrated &amp;&amp; insightsHydrated;
 
   if (!allHydrated) {
     return (
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={Styles.centered}>
-          <ActivityIndicator size="large" color="#007BFF" />
-        </View>
-      </GestureHandlerRootView>
+      &lt;GestureHandlerRootView style={{ flex: 1 }}>
+        &lt;View style={Styles.centered}>
+          &lt;ActivityIndicator size="large" color="#007BFF" />
+        &lt;/View>
+      &lt;/GestureHandlerRootView>
     );
   }
 
@@ -85,27 +113,27 @@ const LoginPage = ({ navigation }) => {
   
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <BackgroundAnimation>
-        <Logo/>
-        <View style={Styles.buttonContainer} key="login-button-container">
-          <LoginButton 
+    &lt;GestureHandlerRootView style={{ flex: 1 }}>
+      &lt;BackgroundAnimation>
+        &lt;Logo/>
+        &lt;View style={Styles.buttonContainer} key="login-button-container">
+          &lt;LoginButton 
             onLoginPress={onLoginPress} //auth0 login
             error={error}
             isLoading={isLoading}
             currentUser={zustandUser || auth0User}
             navigation={navigation}
           />
-        </View>
-      </BackgroundAnimation>
-    </GestureHandlerRootView>
+        &lt;/View>
+      &lt;/BackgroundAnimation>
+    &lt;/GestureHandlerRootView>
   );
 };
 
 /**
- * Array of background images for the login page animation.<br/>
+ * Array of background images for the login page animation.&lt;br/>
  * Currently 7 images (background{1..7}.jpg) located in the assets folder.
- * @constant {Array<number>} IMAGES
+ * @constant {Array&lt;number>} IMAGES
  */
 const IMAGES = [
   require('../../../assets/background1.jpg'),
@@ -118,11 +146,11 @@ const IMAGES = [
 ];
 
 /**
- * BackgroundAnimation component that handles the animated background transitions.<br/> Hosts children which are displayed as content infront of the background.
+ * BackgroundAnimation component that handles the animated background transitions.&lt;br/> Hosts children which are displayed as content infront of the background.
  * @component
  * @param {Object} props - Component props
  * @param {React.ReactNode} props.children - Child components to render
- * @param {Array<number>} [props.images=IMAGES] - Array of image sources
+ * @param {Array&lt;number>} [props.images=IMAGES] - Array of image sources
  * @param {number} [props.duration=10000] - Duration between image transitions (ms)
  * @param {number} [props.zoomDuration=12000] - Duration of zoom animation (ms)
  * @param {number} [props.fadeDuration=1000] - Duration of fade transition (ms)
@@ -199,9 +227,9 @@ const BackgroundAnimation = ({
   const nextImage = images[(currentIndex + 1) % images.length];
 
   return (
-    <View style={styles.container}>
+    &lt;View style={styles.container}>
       {/* Current Image */}
-      <Animated.Image
+      &lt;Animated.Image
         source={ currentImage }
         style={[
           styles.backgroundImage,
@@ -215,7 +243,7 @@ const BackgroundAnimation = ({
       />
       
       {/* Next Image (for smooth transition) */}
-      <Animated.Image
+      &lt;Animated.Image
         source={ nextImage }
         style={[
           styles.backgroundImage,
@@ -230,10 +258,10 @@ const BackgroundAnimation = ({
       />
       
       {/* Overlay for better content visibility */}
-      <View style={[styles.content ]}>
+      &lt;View style={[styles.content ]}>
         {children}
-      </View>
-    </View>
+      &lt;/View>
+    &lt;/View>
   );
 };
 
@@ -245,9 +273,9 @@ const BackgroundAnimation = ({
 const Logo = () => {
   const tintColor = "rgba(0, 0, 0, 0.25)";
   return(
-    <View style={styles.logo}>
+    &lt;View style={styles.logo}>
           {/* Logo outline made from tinted copies of original image */ }
-          <Image 
+          &lt;Image 
               source={require('../../../assets/icon.png')}
               style={{
                   position: 'absolute',
@@ -256,7 +284,7 @@ const Logo = () => {
               }}
               resizeMode="contain"
           />
-          <Image 
+          &lt;Image 
               source={require('../../../assets/icon.png')}
               style={{
                   position: 'absolute',
@@ -265,7 +293,7 @@ const Logo = () => {
               }}
               resizeMode="contain"
           />
-          <Image 
+          &lt;Image 
               source={require('../../../assets/icon.png')}
               style={{
                   position: 'absolute',
@@ -274,7 +302,7 @@ const Logo = () => {
               }}
               resizeMode="contain"
           />
-          <Image 
+          &lt;Image 
               source={require('../../../assets/icon.png')}
               style={{
                   position: 'absolute',
@@ -285,11 +313,11 @@ const Logo = () => {
           />
           
           {/* Original image on top */}
-          <Image 
+          &lt;Image 
               source={require('../../../assets/icon.png')}
               resizeMode="contain"
           />
-    </View>
+    &lt;/View>
   );
 };
 
@@ -313,30 +341,30 @@ const LoginButton = ({ onLoginPress, error, isLoading, currentUser, navigation }
   {/* isLoading is true while application can't reach auth0 server */}
   if (isLoading) {
     return (
-      <View style={styles.loginButtonWrapper}>
-        <View style={styles.blurContainer}>
-          <Button onPress={navigateToFeed} title='auth0 error, navigate to Feed'/>
-        </View>
-      </View>
+      &lt;View style={styles.loginButtonWrapper}>
+        &lt;View style={styles.blurContainer}>
+          &lt;Button onPress={navigateToFeed} title='auth0 error, navigate to Feed'/>
+        &lt;/View>
+      &lt;/View>
     );
   }
 
   return (
 
-    <View style={styles.loginButtonWrapper}>
-    <View style={styles.blurContainer}>
-      <BlurView
+    &lt;View style={styles.loginButtonWrapper}>
+    &lt;View style={styles.blurContainer}>
+      &lt;BlurView
         style={styles.blurButton}
         blurType="light"
         blurAmount={10}
         reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.3)"
       >
-        <Pressable testID="login-button" style={styles.pressableArea} onPress={onLoginPress}>
-          <Text style={styles.buttonText}>Login</Text>
-        </Pressable>
-      </BlurView>
-    </View>
-    </View>
+        &lt;Pressable testID="login-button" style={styles.pressableArea} onPress={onLoginPress}>
+          &lt;Text style={styles.buttonText}>Login&lt;/Text>
+        &lt;/Pressable>
+      &lt;/BlurView>
+    &lt;/View>
+    &lt;/View>
   );
 };
 
@@ -422,4 +450,27 @@ const styles = StyleSheet.create({
 });
 
 export default LoginPage;
-export { LoginButton };
+export { LoginButton };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="ThemeContext%250A);module_.html">ThemeContext
+);</a></li><li><a href="module-LoginPage.html">LoginPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutACTNXTAppScreen">AboutACTNXTAppScreen</a></li><li><a href="global.html#DateTimePickerInput">DateTimePickerInput</a></li><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#GenderPickerInput">GenderPickerInput</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ProfileDetailsScreen">ProfileDetailsScreen</a></li><li><a href="global.html#Row">Row</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Jun 16 2025 19:14:31 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
