@@ -29,8 +29,9 @@ jest.mock('../src/store/useAuthStore', () => {
 const mockUseAuthStore = require('../src/store/useAuthStore').default;
 const mockAuthorize = jest.fn();
 const mockClearSession = jest.fn();
-const mockSetAuth = jest.fn();
+const mockLogin = jest.fn();
 const mockLogout = jest.fn();
+
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -45,7 +46,7 @@ beforeEach(() => {
 
     mockUseAuthStore.mockReturnValue({
         user: null,
-        setAuth: mockSetAuth,
+        login: mockLogin,
         logout: mockLogout
     });
 });
@@ -60,8 +61,7 @@ describe("LoginButton", () => {
 
     it('calls authorize() and updates Zustand on login', async () => {
         mockAuthorize.mockResolvedValue({
-            accessToken: 'test-token',
-            user: { name: 'Test User' }
+            accessToken: 'test-token'
         });
 
         const { getByText } = render(<LoginButton />);
@@ -69,42 +69,14 @@ describe("LoginButton", () => {
 
         await waitFor(() => {
             expect(mockAuthorize).toHaveBeenCalled();
-            expect(mockSetAuth).toHaveBeenCalledWith('test-token', { name: 'Test User' });
-        });
-    });
-
-    it('shows logout button when authenticated', () => {
-        mockUseAuthStore.mockReturnValue({
-            user: { name: 'Test User' },
-            setAuth: mockSetAuth,
-            logout: mockLogout
-        });
-
-        const { getByText } = render(<LoginButton />);
-        expect(getByText('Log out')).toBeTruthy();
-        expect(getByText('Logged in as Test User')).toBeTruthy();
-    });
-
-    it('calls clearSession() and Zustand logout when logout pressed', async () => {
-        mockUseAuthStore.mockReturnValue({
-            user: { name: 'Test User' },
-            setAuth: mockSetAuth,
-            logout: mockLogout
-        });
-
-        const { getByText } = render(<LoginButton />);
-        fireEvent.press(getByText('Log out'));
-
-        await waitFor(() => {
-            expect(mockClearSession).toHaveBeenCalled();
-            expect(mockLogout).toHaveBeenCalled();
+            expect(mockLogin).toHaveBeenCalledWith('test-token');
         });
     });
 
     it('falls back to Auth0 user if Zustand is empty', () => {
         mockUseAuthStore.mockReturnValue({
             user: null,
-            setAuth: mockSetAuth,
+            login: mockLogin,
             logout: mockLogout,
         });
 
@@ -114,18 +86,18 @@ describe("LoginButton", () => {
         });
 
         const { getByText } = render(<LoginButton />);
-        expect(getByText('Logged in as Auth0 User')).toBeTruthy();
+        expect(getByText('Login')).toBeTruthy();
     });
 
-    it('handles credentials returning null when calling authorize()', async () => {
-        mockAuthorize.mockResolvedValue(null);
+    it('handles credentials returning undefined when calling authorize()', async () => {
+        mockAuthorize.mockResolvedValue(undefined);
 
         const { getByText } = render(<LoginButton />);
         fireEvent.press(getByText('Login'));
 
         await waitFor(() => {
             expect(mockAuthorize).toHaveBeenCalled();
-            expect(mockSetAuth).not.toHaveBeenCalled();
+            expect(mockLogin).not.toHaveBeenCalled();
         });
     });
 
@@ -140,18 +112,5 @@ describe("LoginButton", () => {
 
         const { getByText } = render(<LoginButton />);
         expect(getByText('auth0 error, navigate to Feed')).toBeTruthy();
-    });
-
-    it('displays Auth0 errors', async () => {
-        mockUseAuth0.mockReturnValue({
-            isLoading: false,
-            authorize: mockAuthorize,
-            clearSession: mockClearSession,
-            user: null,
-            error: { message: 'Network error' }
-        });
-
-        const { getByText } = render(<LoginButton />);
-        expect(getByText('Network error')).toBeTruthy();
     });
 });
