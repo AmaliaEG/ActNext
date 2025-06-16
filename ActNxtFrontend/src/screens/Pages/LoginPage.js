@@ -282,7 +282,7 @@ const LoginButton = ({ onLoginPress, error, isLoading, currentUser, navigation }
         blurAmount={10}
         reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.3)"
       >
-        <Pressable style={styles.pressableArea} onPress={onLoginPress}>
+        <Pressable testID="login-button" style={styles.pressableArea} onPress={onLoginPress}>
           <Text style={styles.buttonText}>Login</Text>
         </Pressable>
       </BlurView>

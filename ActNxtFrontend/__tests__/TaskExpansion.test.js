@@ -15,7 +15,28 @@ jest.mock('@react-navigation/native', () => ({
 jest.mock('@expo/vector-icons', () => ({
     Ionicons: () => null,
 }));
-
+jest.mock('../src/Themes/ThemeContext', () => ({
+    useTheme: () => ({
+        theme: {
+            colors: {
+                background: '#FFFFFF',
+                text: '#000000',
+                subText: '#666666',
+                inputBackground: '#F0F0F0',
+                borderLeft: '#CCCCCC',
+                border: '#CCCCCC',
+                inputText: '#000000',
+            },
+        },
+        resolvedTheme: 'light',
+    }),
+}));
+jest.mock('../src/screens/Pages/Styles', () => ({
+    Styles: {
+        centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+        buttonContainer: { marginTop: 20 }
+    }
+}));
 const mockStore = {
     insights: [
         {
@@ -28,7 +49,12 @@ const mockStore = {
         },
     ],
     addFeedback: jest.fn(),
-    queuedFeedback: [],
+    getFeedback: jest.fn(() => ({ liked: false, disliked: false })),
+    getTaskComment: jest.fn(() => ''),
+    updateTaskComment: jest.fn(() => Promise.resolve()),
+    getStarStatus: jest.fn(() => false),
+    toggleStar: jest.fn(() => Promise.resolve()),
+    archiveTask: jest.fn(() => Promise.resolve(true)),
     hydrated: true,
     loadInsights: jest.fn(),
 };
@@ -62,8 +88,14 @@ describe('TaskExpansion', () => {
 
     it('navigates to Feed when "Finished" is pressed', () => {
         const { getByText } = render(<TaskExpansion route={route} />);
-        fireEvent.press(getByText('Finished'));
-        expect(mockNavigate).toHaveBeenCalledWith('Feed');
+        const finishedBtn = getByText('Finished');
+
+        fireEvent.press(finishedBtn);
+
+        // Wait for async actions to complete
+        setImmediate(() => {
+            expect(mockNavigate).toHaveBeenCalledWith('Feed');
+        });
     });
 
     it('displays the correct group label and color', () => {
