@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -7,33 +7,11 @@ import { useTheme } from '../../Themes/ThemeContext';
 import { Styles } from './Styles';
 import TaskCard from './TaskCard';
 
-  const ArchivedTasks = () => {
-    const { theme } = useTheme();
-    const backgroundColor = theme.colors.background;
-    const textColor = theme.colors.text;
-    const subTextColor = theme.colors.subText;
-    const insightBackground = theme.colors.insightBackground;
-    const shadowColor = theme.colors.shadow;
-    const shadowOpacity = theme.colors.shadowOpacity;
-    const borderColor = theme.colors.border; 
+const ArchivedTasks = () => {
+  const { theme } = useTheme();
+  const navigation = useNavigation();
+  const { insights, hydrated, unarchiveTask } = useInsightsStore();
 
-    const navigation = useNavigation();
-    const { insights, hydrated, unarchiveTask } = useInsightsStore();
-    const [starredTasks, setStarredTasks] = useState([]);
-
-    
-  const getTheFirstSentence = (description) => {
-    if (!description) return '';
-    const sentences = description.split('.');
-    return sentences[0].trim() + (sentences.length > 1 ? '.' : '');
-  }; 
-
-  // useEffect(() => {
-  //   if (hydrated) {
-  //     const filtered = insights.filter(task => task.isArchived);
-  //     setStarredTasks(filtered);
-  //   }
-  // }, [hydrated, insights]);
   const archivedTasks = useMemo(() => {
       if (!hydrated || !insights) return [];
       return insights.filter(task => task.isArchived);
@@ -64,7 +42,7 @@ import TaskCard from './TaskCard';
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
-        data={starredTasks}
+        data={archivedTasks}
         renderItem={({ item }) => (
           <TaskCard 
             item={item}

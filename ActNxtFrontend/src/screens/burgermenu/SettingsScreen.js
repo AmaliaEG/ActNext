@@ -48,14 +48,12 @@ import AboutACTNXTAppScreen from "./AboutACTNXTAppScreen";
 const SettingsScreen = ({ props, closeModal }) => {
     const {
         language,
-        setLanguage,
         notificationsEnabled,
         toggleNotifications,
         hydrated
     } = useSettingsStore();
 
     const [activeScreen, setActiveScreen] = useState(null);
-    const [langOpen, setLangOpen] = useState('en');
     const {theme} = useTheme();
 
     if (!hydrated) {
