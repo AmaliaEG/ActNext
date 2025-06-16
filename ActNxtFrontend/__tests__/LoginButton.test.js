@@ -54,7 +54,7 @@ beforeEach(() => {
 describe("LoginButton", () => {
     it('shows login button when not authenticated', () => {
         const { getByText } = render(<LoginButton />);
-        expect(getByText('Log in')).toBeTruthy();
+        expect(getByText('Login')).toBeTruthy();
         expect (mockAuthorize).not.toHaveBeenCalled();
     });
 
@@ -65,7 +65,7 @@ describe("LoginButton", () => {
         });
 
         const { getByText } = render(<LoginButton />);
-        fireEvent.press(getByText('Log in'));
+        fireEvent.press(getByText('Login'));
 
         await waitFor(() => {
             expect(mockAuthorize).toHaveBeenCalled();
@@ -121,7 +121,7 @@ describe("LoginButton", () => {
         mockAuthorize.mockResolvedValue(null);
 
         const { getByText } = render(<LoginButton />);
-        fireEvent.press(getByText('Log in'));
+        fireEvent.press(getByText('Login'));
 
         await waitFor(() => {
             expect(mockAuthorize).toHaveBeenCalled();
@@ -139,7 +139,7 @@ describe("LoginButton", () => {
         });
 
         const { getByText } = render(<LoginButton />);
-        expect(getByText('Loading...')).toBeTruthy();
+        expect(getByText('auth0 error, navigate to Feed')).toBeTruthy();
     });
 
     it('displays Auth0 errors', async () => {

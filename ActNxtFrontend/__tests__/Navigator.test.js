@@ -1,7 +1,6 @@
 import { render, fireEvent } from "@testing-library/react-native";
 import Navigator from '../src/navigation/Navigator';
 import {  GestureHandlerRootView } from 'react-native-gesture-handler';
-
 jest.mock('react-native-modal', () => {
     const React = require('react');
     const { Text } = require('react-native');
@@ -54,31 +53,25 @@ jest.mock('react-native-gesture-handler', () => {
 });
 
 // Mock for settings screens
-jest.mock('../src/screens/burgermenu/ProfileDetailsScreen', () => {
+jest.mock('../src/screens/burgermenu/ProfileDetailsScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Name</Text>;
 });
 
-jest.mock('../src/screens/burgermenu/ThemesScreen', () => {
+jest.mock('../src/screens/burgermenu/ThemesScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Themes</Text>;
 });
 
-jest.mock('../src/screens/burgermenu/LanguageScreen', () => {
+jest.mock('../src/screens/burgermenu/LanguageScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Language</Text>;
 });
 
-jest.mock('../src/screens/burgermenu/NotificationsScreen', () => {
-    const React = require('react');
-    const { Text } = require('react-native');
-    return () => <Text>Notifications</Text>;
-});
-
-jest.mock('../src/screens/burgermenu/AboutACTNXTAppScreen', () => {
+jest.mock('../src/screens/burgermenu/AboutACTNXTAppScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>About ACTNXT App</Text>;

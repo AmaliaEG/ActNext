@@ -8,7 +8,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     getItem: jest.fn().mockResolvedValue(null),
     removeItem: jest.fn().mockResolvedValue(null)
 }));
-jest.mock('../store/mockUserDatabase.json');
+jest.mock('../store/mockUserDatabase.json', () => jest.requireActual('../__mocks__/store/mockUserDatabase.json'), {virtual: true});
 
 const mockProfile = {
     name: 'Alice',
@@ -133,7 +133,7 @@ describe('useProfileStore', () => {
     });
 
     it('creates a new profile if auth0ID is not found in the database', async () =>{
-        await useProfileStore.getState.loadProfile(mockNewAuth0ID);
+        await useProfileStore.getState().loadProfile(mockNewAuth0ID);
 
         const { profile } = useProfileStore.getState();
         
