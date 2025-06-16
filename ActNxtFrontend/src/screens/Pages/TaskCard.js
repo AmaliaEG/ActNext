@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Styles, GroupColours } from './Styles';
 import { useTheme } from '../../Themes/ThemeContext';
 
-const TaskCard = ({ item, navigation }) => {
+const TaskCard = ({ item, navigation, showUnarchive = false, onUnarchive = null }) => {
   const { theme } = useTheme();
 
   return (
@@ -37,6 +37,23 @@ const TaskCard = ({ item, navigation }) => {
             <Text style={Styles.warningText}>Overdue!</Text>
           </View>
         )}
+
+        {showUnarchive && onUnarchive && (
+          <Pressable
+            onPress={() => onUnarchive(item.Id)}
+            style={[
+              Styles.unarchiveButton,
+              {
+                backgroundColor: theme.colors.background,
+                borderColor: theme.colors.subText,
+                borderWidth: 1,
+              },
+            ]}
+          >
+            <Text style={[Styles.unarchiveButtonText, { color: theme.colors.text }]}>Unarchive</Text>
+          </Pressable>
+        )}
+        
       </View>
     </Pressable>
   );
