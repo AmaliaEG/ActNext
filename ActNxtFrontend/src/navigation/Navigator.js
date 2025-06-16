@@ -40,7 +40,7 @@ const CustomDrawerContent = (props) => {
         </View>
 
         <DrawerItem label="Insights" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('Feed')}/>
-        <DrawerItem label="Starred" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('StarredTasks')}/>
+        <DrawerItem label="Favorites" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('StarredTasks')}/>
         <DrawerItem label="Archive" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('ArchivedTasks')}/>
       </DrawerContentScrollView>
 

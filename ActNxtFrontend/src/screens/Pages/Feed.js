@@ -19,7 +19,7 @@ import TaskCard from './TaskCard';
  */
 const Feed = () => {
   const navigation = useNavigation();
-  const { insights, setInsights, hydrated } = useInsightsStore();
+  const { insights, hydrated } = useInsightsStore();
   const { theme } = useTheme();
 
 
