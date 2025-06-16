@@ -8,7 +8,20 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     getItem: jest.fn().mockResolvedValue(null),
     removeItem: jest.fn().mockResolvedValue(null)
 }));
-jest.mock('../store/mockUserDatabase.json', () => jest.requireActual('../__mocks__/store/mockUserDatabase.json'), {virtual: true});
+
+jest.mock('../src/store/mockUserDatabase.json', () => [
+    {
+        auth0ID: "example",
+        name: "example",
+        birthDate: "01/01/2000",
+        gender: "Other",
+        email: "example@example.com",
+        code: 1234,
+        theme: "System",
+        language: "English",
+        notifications: 1    
+    }
+]);
 
 const mockProfile = {
     name: 'Alice',
@@ -125,18 +138,24 @@ describe('useProfileStore', () => {
     });
 
     it('queries user database for user profile when presented with a valid auth0ID', async () => {
+        AsyncStorage.getItem.mockResolvedValueOnce(null);
+        
         await useProfileStore.getState().loadProfile(mockAuth0ID);
 
         const { profile } = useProfileStore.getState();
-        
         expect(profile).toEqual(mockAuth0Profile);
     });
 
-    it('creates a new profile if auth0ID is not found in the database', async () =>{
+    it('creates a new profile if auth0ID is not found in the database', async () => {
+        AsyncStorage.getItem.mockResolvedValueOnce(null);
+
         await useProfileStore.getState().loadProfile(mockNewAuth0ID);
 
         const { profile } = useProfileStore.getState();
-        
-        expect(profile).toEqual(mockNewAuth0ID);
+        expect(profile).toEqual({
+            auth0ID: 'bobsID',
+            name: 'bob',
+            email: 'bob@mail.com'
+        });
     });
 });

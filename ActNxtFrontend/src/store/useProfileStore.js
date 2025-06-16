@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import mockUserDB from '../store/mockUserDatabase.json';
 
 const defaultProfile = {
     name: '',
@@ -16,29 +17,29 @@ const useProfileStore = create((set) => ({
 
     loadProfile: async (user) => {
         try {
-            const pathDB = '../store/mockUserDatabase.json';
-            const mockUserDB = require(pathDB);
+            // const pathDB = '../store/mockUserDatabase.json';
+            // const mockUserDB = require(pathDB);
             const stored = await AsyncStorage.getItem('user-profile');
             const findUser = (user) =>{
                 if(user){
                     const data = mockUserDB.find(item=> item.auth0ID === user.sub );
-                    return data
+                    return data || null;
                 };
                 return null;
-            }
+            };
+
             const distributeData = async (data) => {
                 if (data) {
                     await AsyncStorage.setItem('user-profile', JSON.stringify(data));
-                    set({profile: data})
-                }else{
-                    if(user){
+                    set({ profile: data })
+                } else {
+                    if(user) {
                     //alert("I was not in the local DB")
                     const newProfile = {
                         auth0ID: user.sub,
                         name: user.name,
                         email: user.email
                     }
-                    const updatedDB = [...mockUserDB, newProfile];
                     //No real Database, from this point send new profile to database
                     await AsyncStorage.setItem('user-profile', JSON.stringify(newProfile));
                     set({ profile: newProfile });

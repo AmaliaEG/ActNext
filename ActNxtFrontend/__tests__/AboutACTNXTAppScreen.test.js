@@ -19,14 +19,6 @@ jest.mock('../src/Themes/ThemeContext', () => ({
     }),
 }));
 
-// mock for linking
-jest.mock('react-native/Libraries/Linking/Linking', () => ({
-    openURL: jest.fn(),
-    canOpenURL: jest.fn(),
-}));
-
-jest.spyOn(Alert, 'alert');
-
 const SUPPORT_URL = 'https://actnxt.com/';
 
 
@@ -46,10 +38,11 @@ describe('AboutACTNXTAppScreen', () => {
     });
 
     it('opens the support URL when available', async () => {
-        Linking.canOpenURL.mockResolvedValue(true);
+        jest.spyOn(Linking, 'canOpenURL').mockResolvedValue(true);
+        jest.spyOn(Linking, 'openURL').mockResolvedValue();
+        jest.spyOn(Alert, 'alert').mockImplementation(() => {});
 
         const { getByText } = render(<AboutACTNXTAppScreen />);
-
         fireEvent.press(getByText('CONTACT SUPPORT'));
 
         await waitFor(() => {
@@ -60,10 +53,11 @@ describe('AboutACTNXTAppScreen', () => {
     });
 
     it('alerts the user when the URL cannot be opened', async () => {
-        Linking.canOpenURL.mockResolvedValue(false);
+        jest.spyOn(Linking, 'canOpenURL').mockResolvedValue(false);
+        jest.spyOn(Linking, 'openURL').mockResolvedValue();
+        jest.spyOn(Alert, 'alert').mockImplementation(() => {});
 
         const { getByText } = render(<AboutACTNXTAppScreen />);
-
         fireEvent.press(getByText('CONTACT SUPPORT'));
 
         await waitFor(() => {
