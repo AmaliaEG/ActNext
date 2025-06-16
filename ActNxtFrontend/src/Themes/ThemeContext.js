@@ -10,8 +10,6 @@ import themes from './theme';
  * and a function to update the theme mode. It listens for system theme changes and updates
  * the theme accordingly when the mode is set to 'system'.
  * @module ThemeContext
-
- * );
  */
 
 const ThemeContext = createContext();
