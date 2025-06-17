@@ -24,12 +24,14 @@ Before starting there is a number of prerequisites that need to be installed in 
 - npm (npm is the official package manager for Node.js.)
 - JavaJDK 
 - Python3
+  
 If using an android emulator (we recommend Android Studio as it sets up pretty much everything for you)
 - Android sdk
 - Android sdk tools
 - Android sdk build-tools
 - Android sdk Platform-tools
 - Android debug bridge (optional, but useful for installing build on the emulator)
+  
 If using ios emulator (xcode)
 - Ionno I dont have macOS
 
