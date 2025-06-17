@@ -158,25 +158,25 @@ jest.mock('../../src/screens/burgermenu/SettingsScreen.js', () => {
     };
 });
 
-jest.mock('../../src/screens/burgermenu/ProfileDetailsScreen.js', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/ProfileDetailsScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Profile</Text>;
 });
 
-jest.mock('../../src/screens/burgermenu/ThemesScreen.js', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/ThemesScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Theme</Text>;
 });
 
-jest.mock('../../src/screens/burgermenu/LanguageScreen.js', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/LanguageScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Language</Text>;
 });
 
-jest.mock('../../src/screens/burgermenu/AboutACTNXTAppScreen.js', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/AboutACTNXTAppScreen.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>About</Text>;

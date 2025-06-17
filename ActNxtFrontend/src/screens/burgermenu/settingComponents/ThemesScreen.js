@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useTheme } from '../../Themes/ThemeContext'
+import { useTheme } from '../../../Themes/ThemeContext'
 
 /**
  * A screen component for selecting the app's theme (light, dark, or system).

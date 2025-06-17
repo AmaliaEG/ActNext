@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useAuth0 } from 'react-native-auth0';
-import DateTimePickerInput from './DateTimePickerInput';
-import GenderPickerInput from './GenderPickerInput';
-import useProfileStore from '../../store/useProfileStore';
-import useAuthStore from '../../store/useAuthStore';
-import { useTheme } from '../../Themes/ThemeContext';
+import DateTimePickerInput from './profileInput/DateTimePickerInput';
+import GenderPickerInput from './profileInput/GenderPickerInput';
+import useProfileStore from '../../../store/useProfileStore';
+import useAuthStore from '../../../store/useAuthStore';
+import { useTheme } from '../../../Themes/ThemeContext';
 
 /**
  * ProfileDetailsScreen allows the user to view and update their profile information, including name, birth date, gender, email, and password.

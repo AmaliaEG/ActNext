@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import ProfileDetailsScreen from '../src/screens/burgermenu/ProfileDetailsScreen';
+import ProfileDetailsScreen from '../src/screens/burgermenu/settingComponents/ProfileDetailsScreen';
 import * as SecureStore from 'expo-secure-store';
 import { useAuth0 } from 'react-native-auth0';
 import { Alert } from 'react-native';
@@ -58,8 +58,8 @@ jest.mock('../src/store/useAuthStore', () => ({
     }),    
 }));    
 
-jest.mock('../src/screens/burgermenu/DateTimePickerInput', () => () => null);
-jest.mock('../src/screens/burgermenu/GenderPickerInput', () => () => null);
+jest.mock('../src/screens/burgermenu/settingComponents/profileInput/DateTimePickerInput', () => () => null);
+jest.mock('../src/screens/burgermenu/settingComponents/profileInput/GenderPickerInput', () => () => null);
 jest.mock('@expo/vector-icons', () => ({
     Feather: () => null
 }));    

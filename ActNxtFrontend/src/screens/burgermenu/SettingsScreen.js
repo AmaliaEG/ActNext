@@ -12,13 +12,13 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import useSettingsStore from "../../store/useSettingsStore";
 import { useTheme } from '../../Themes/ThemeContext';
-import LanguagesScreen from "./LanguageScreen";
+import LanguagesScreen from "./settingComponents/LanguageScreen";
 
 
 // Screens
-import ProfileDetailsScreen from "./ProfileDetailsScreen";
-import ThemesScreen from "./ThemesScreen";
-import AboutACTNXTAppScreen from "./AboutACTNXTAppScreen";
+import ProfileDetailsScreen from "./settingComponents/ProfileDetailsScreen";
+import ThemesScreen from "./settingComponents/ThemesScreen";
+import AboutACTNXTAppScreen from "./settingComponents/AboutACTNXTAppScreen";
 
 /**
  * SettingsScreen.js

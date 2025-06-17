@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, FlatList, Dimensions } from 'react-native';
-import { useTheme } from '../../Themes/ThemeContext';
+import { useTheme } from '../../../../Themes/ThemeContext';
 import { MaterialIcons } from "@expo/vector-icons";
 
 const GENDERS = [

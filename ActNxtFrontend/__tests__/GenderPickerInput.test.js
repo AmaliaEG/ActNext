@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react-native";
-import GenderPickerInput from '../src/screens/burgermenu/GenderPickerInput';
+import GenderPickerInput from '../src/screens/burgermenu/settingComponents/profileInput/GenderPickerInput';
 
 jest.mock('@expo/vector-icons', () => {
     const React = require('react');

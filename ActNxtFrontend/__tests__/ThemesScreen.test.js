@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import ThemesScreen from '../src/screens/burgermenu/ThemesScreen';
+import ThemesScreen from '../src/screens/burgermenu/settingComponents/ThemesScreen';
 
 // Mock updateTheme
 const mockUpdateTheme = jest.fn();

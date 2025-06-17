@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import LanguagesScreen from '../src/screens/burgermenu/LanguageScreen';
+import LanguagesScreen from '../src/screens/burgermenu/settingComponents/LanguageScreen';
 
 // Mock zustand store
 const mockSetLanguage = jest.fn();

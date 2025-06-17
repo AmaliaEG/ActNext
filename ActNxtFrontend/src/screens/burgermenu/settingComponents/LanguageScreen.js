@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useTheme } from '../../Themes/ThemeContext';
-import useSettingsStore from '../../store/useSettingsStore';
+import { useTheme } from '../../../Themes/ThemeContext';
+import useSettingsStore from '../../../store/useSettingsStore';
 
 /**
  * Screen component for selecting the app's language - English or Danish.

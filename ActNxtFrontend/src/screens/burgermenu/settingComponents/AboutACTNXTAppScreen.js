@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Linking, Alert, TouchableOpacity, ScrollView } from 'react-native';
-import { useTheme } from '../../Themes/ThemeContext';
+import { useTheme } from '../../../Themes/ThemeContext';
 
 /**
  * This screen displays information about the ActNxt application, including a scrollable description of the company's mission, approach,

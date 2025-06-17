@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { Alert, Linking } from 'react-native';
-import AboutACTNXTAppScreen from '../src/screens/burgermenu/AboutACTNXTAppScreen';
+import AboutACTNXTAppScreen from '../src/screens/burgermenu/settingComponents/AboutACTNXTAppScreen';
 
 // MOCKS
 jest.mock('../src/Themes/ThemeContext', () => ({
