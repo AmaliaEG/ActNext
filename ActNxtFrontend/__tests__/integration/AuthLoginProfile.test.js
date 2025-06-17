@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import ProfileDetailsScreen from '../../src/screens/burgermenu/ProfileDetailsScreen';
+import ProfileDetailsScreen from '../../src/screens/burgermenu/settingComponents/ProfileDetailsScreen';
 import useAuthStore from '../../src/store/useAuthStore';
 import useProfileStore from '../../src/store/useProfileStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
