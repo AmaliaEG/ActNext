@@ -104,8 +104,7 @@
 
 
 <div class="description">
-    Dark theme configuration object.
-Defines the color palette and UI styles for dark mode.
+    Dark theme configuration object.Defines the color palette and UI styles for dark mode.
 </div>
 
 
@@ -177,8 +176,7 @@ Defines the color palette and UI styles for dark mode.
 
 
 <div class="description">
-    Light theme configuration object.
-Defines the color palette and UI styles for light mode.
+    Light theme configuration object.Defines the color palette and UI styles for light mode.
 </div>
 
 
@@ -334,10 +332,7 @@ Defines the color palette and UI styles for light mode.
 
 
 <div class="description">
-    This screen displays information about the ActNxt application, which includes a description and a button navigating to their website, where
-the users can find support and additional information.
-
-If unable to open the website an error alert is shown to the user.
+    This screen displays information about the ActNxt application, including a scrollable description of the company's mission, approach,and focus. It also includes a button that navigates to the official ActNxt website for support and additional information.If unable to open the website an error alert is shown to the user.
 </div>
 
 
@@ -452,9 +447,7 @@ If unable to open the website an error alert is shown to the user.
 
 
 <div class="description">
-    A React Native input component for selecting date using a native date picker.
-
-The selected date is displayed in a formatted text input field (DD/MM/YYYY).
+    A React Native input component for selecting date using a native date picker.The selected date is displayed in a formatted text input field (DD/MM/YYYY).
 </div>
 
 
@@ -650,12 +643,7 @@ The selected date is displayed in a formatted text input field (DD/MM/YYYY).
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>&lt;DateTimePickerInput
-   value={localEdits.birthDate}
-   onChange={(date) => 
-       setLocalEdits({ ...localEdits, birthDate: date })
-   } 
-/></code></pre>
+    <pre class="prettyprint"><code>&lt;DateTimePickerInput   value={localEdits.birthDate}   onChange={(date) =>        setLocalEdits({ ...localEdits, birthDate: date })   } /></code></pre>
 
 
 
@@ -673,8 +661,7 @@ The selected date is displayed in a formatted text input field (DD/MM/YYYY).
 
 
 <div class="description">
-    Displays a feed of insights with pull-to-refresh functionality.
-Uses `useInsightsStore` for state management and `useTheme` for theming.
+    Displays a feed of insights with pull-to-refresh functionality.Uses `useInsightsStore` for state management and `useTheme` for theming.
 </div>
 
 
@@ -771,9 +758,7 @@ Uses `useInsightsStore` for state management and `useTheme` for theming.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>return (
-  &lt;Feed />
-)</code></pre>
+    <pre class="prettyprint"><code>return (  &lt;Feed />)</code></pre>
 
 
 
@@ -791,11 +776,7 @@ Uses `useInsightsStore` for state management and `useTheme` for theming.
 
 
 <div class="description">
-    GenderPickerInput is another custom React Native component that allows users to select their gender from a predefined list using a 
-modal-based dropdown.
-
-The selected gender is then displayed in a touchable field. When pressed, a modal opens showing all gender options. Selecting one updates
-the selected value and closes the modal.
+    GenderPickerInput is another custom React Native component that allows users to select their gender from a predefined list using a modal-based dropdown.The selected gender is then displayed in a touchable field. When pressed, a modal opens showing all gender options. Selecting one updatesthe selected value and closes the modal.
 </div>
 
 
@@ -1013,12 +994,7 @@ the selected value and closes the modal.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>&lt;GenderPickInput 
-   value={localEdits.gender}
-   onChange={(selected) =>
-       setLocalEdits({ ...localEdits, gender: selected })
-   }
-/></code></pre>
+    <pre class="prettyprint"><code>&lt;GenderPickInput    value={localEdits.gender}   onChange={(selected) =>       setLocalEdits({ ...localEdits, gender: selected })   }/></code></pre>
 
 
 
@@ -1036,9 +1012,7 @@ the selected value and closes the modal.
 
 
 <div class="description">
-    Screen component for selecting the app's language - English or Danish.
-
-Uses 'useTheme' for theming and 'useSettingsStore' for managing language settings.
+    Screen component for selecting the app's language - English or Danish.Uses 'useTheme' for theming and 'useSettingsStore' for managing language settings.
 </div>
 
 
@@ -1113,9 +1087,7 @@ Uses 'useTheme' for theming and 'useSettingsStore' for managing language setting
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>return (
-  &lt;LanguagesScreen />
-)</code></pre>
+    <pre class="prettyprint"><code>return (  &lt;LanguagesScreen />)</code></pre>
 
 
 
@@ -1133,11 +1105,7 @@ Uses 'useTheme' for theming and 'useSettingsStore' for managing language setting
 
 
 <div class="description">
-    ProfileDetailsScreen allows the user to view and update their profile information, including name, birth date, gender, email, and password.
-
-It uses custom input components for birth date and gender, and handles both viewing and editing of a secure password.
-
-Furthermore, the initial information is retrieved from the useProfileStore, to which the authentication has persisted there.
+    ProfileDetailsScreen allows the user to view and update their profile information, including name, birth date, gender, email, and password.It uses custom input components for birth date and gender, and handles both viewing and editing of a secure password.Furthermore, the initial information is retrieved from the useProfileStore, to which the authentication has persisted there.
 </div>
 
 
@@ -1375,10 +1343,7 @@ Furthermore, the initial information is retrieved from the useProfileStore, to w
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>&lt;ProfileDetailsScreen
-   navigation={navigation}
-   closeModal={() => setModalVisible(false)}
-/></code></pre>
+    <pre class="prettyprint"><code>&lt;ProfileDetailsScreen   navigation={navigation}   closeModal={() => setModalVisible(false)}/></code></pre>
 
 
 
@@ -1396,8 +1361,7 @@ Furthermore, the initial information is retrieved from the useProfileStore, to w
 
 
 <div class="description">
-    Row component used inside Settings screen to display each setting option.
-It is a touchable row that displays a title, an optional value, and an arrow icon.
+    Row component used inside Settings screen to display each setting option.It is a touchable row that displays a title, an optional value, and an arrow icon.
 </div>
 
 
@@ -1737,9 +1701,7 @@ It is a touchable row that displays a title, an optional value, and an arrow ico
 
 
 <div class="description">
-    Main SettingsScreen component
-Allosws the user to navigate through different settings options.
-Uses the useSettingsStore for state management and useTheme for theming.
+    Main SettingsScreen componentAllosws the user to navigate through different settings options.Uses the useSettingsStore for state management and useTheme for theming.
 </div>
 
 
@@ -1908,9 +1870,7 @@ Uses the useSettingsStore for state management and useTheme for theming.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>return (
-  &lt;SettingsScreen closeModal={() => console.log('Modal closed')} />
-)</code></pre>
+    <pre class="prettyprint"><code>return (  &lt;SettingsScreen closeModal={() => console.log('Modal closed')} />)</code></pre>
 
 
 
@@ -1928,8 +1888,7 @@ Uses the useSettingsStore for state management and useTheme for theming.
 
 
 <div class="description">
-    A screen component for selecting the app's theme (light, dark, or system).
-Uses the current theme context to update and reflect theme changes.
+    A screen component for selecting the app's theme (light, dark, or system).Uses the current theme context to update and reflect theme changes.
 </div>
 
 
@@ -2004,9 +1963,7 @@ Uses the current theme context to update and reflect theme changes.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>return (
-  &lt;ThemesScreen />
-)</code></pre>
+    <pre class="prettyprint"><code>return (  &lt;ThemesScreen />)</code></pre>
 
 
 
@@ -2119,14 +2076,13 @@ Uses the current theme context to update and reflect theme changes.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="ThemeContext%250A);module_.html">ThemeContext
-);</a></li><li><a href="module-LoginPage.html">LoginPage</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutACTNXTAppScreen">AboutACTNXTAppScreen</a></li><li><a href="global.html#DateTimePickerInput">DateTimePickerInput</a></li><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#GenderPickerInput">GenderPickerInput</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ProfileDetailsScreen">ProfileDetailsScreen</a></li><li><a href="global.html#Row">Row</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutACTNXTAppScreen">AboutACTNXTAppScreen</a></li><li><a href="global.html#DateTimePickerInput">DateTimePickerInput</a></li><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#GenderPickerInput">GenderPickerInput</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ProfileDetailsScreen">ProfileDetailsScreen</a></li><li><a href="global.html#Row">Row</a></li><li><a href="global.html#SettingsScreen">SettingsScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Jun 16 2025 19:14:31 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Jun 17 2025 10:45:16 GMT+0200 (Centraleuropæisk sommertid)
 </footer>
 
 <script> prettyPrint(); </script>

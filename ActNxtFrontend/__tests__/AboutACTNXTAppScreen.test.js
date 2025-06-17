@@ -34,7 +34,7 @@ describe('AboutACTNXTAppScreen', () => {
         expect(getByText('About ActNxt')).toBeTruthy();
         expect(getByText(/Version 1\.0\.0/i)).toBeTruthy();
         // A short substring is enough to prove that the description text is there
-        expect(getByText(/Lorem ipsum dolor sit amet/i)).toBeTruthy();
+        expect(getByText(/ActNxt is an innovative company/i)).toBeTruthy();
     });
 
     it('opens the support URL when available', async () => {

@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Text, Linking, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Linking, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '../../Themes/ThemeContext';
 
 /**
- * This screen displays information about the ActNxt application, which includes a description and a button navigating to their website, where
- * the users can find support and additional information.
+ * This screen displays information about the ActNxt application, including a scrollable description of the company's mission, approach,
+ * and focus. It also includes a button that navigates to the official ActNxt website for support and additional information.
  * 
  * If unable to open the website an error alert is shown to the user.
  * 
@@ -18,7 +18,6 @@ import { useTheme } from '../../Themes/ThemeContext';
 const AboutACTNXTAppScreen = () => {
     // Implement logic for working link to ActNxt website, when website is made
     const { theme } = useTheme();
-
 
     const SUPPORT_URL = 'https://actnxt.com/';
 
@@ -58,12 +57,31 @@ const AboutACTNXTAppScreen = () => {
                     },
                 ]}
             >
-                <Text style={[styles.descriptionText, { color: theme.colors.text  }]}>
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium
-                    tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa
-                    nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-                    inceptos himenaeos.
-                </Text>
+                <ScrollView>
+                    <Text style={[styles.italicText, { color: theme.colors.text }]}>
+                        Sales Instinct. Superpowered
+                    </Text>
+                    <Text style={[styles.descriptionText, { color: theme.colors.text  }]}>
+                        {'\n'}ActNxt is an innovative company that develops AI-powered solutions to solve the data overwhelm problem that sales 
+                        teams face every day. We believe businesses shouldn't struggle with decision paralysis when they have valuable 
+                        data at their fingertips.{'\n\n'}
+                        
+                        <Text style={styles.boldText}>Our Mission{'\n'}</Text>
+                        We transform complex invoice and sales data into clear, actionable insights that drive real business results. Our 
+                        goal is to help sales teams focus on what matters most - building relationships and growing revenue.{'\n\n'}
+
+                        <Text style={styles.boldText}>Our Approach{'\n'}</Text>
+                        Rather than adding another complex dashboard to your workflow, we deliver simple, targeted recommendations 
+                        directly to your team when action is needed. We've designed our platform to work seamlessly with existing 
+                        systems like SuperOffice, Microsoft Dynamics, and Visma.{'\n\n'}
+
+                        <Text style={styles.boldText}>Our Focus{'\n'}</Text>
+                        We specialize in serving small to medium-sized enterprises who want to leverage their existing data effectively 
+                        without the complexity of traditional analytics platforms.{'\n\n'}
+
+                        At ActNxt, we turn data into revenue-generating actions.
+                    </Text>
+                </ScrollView>
             </View>
 
             <View style={styles.supportRow}>
@@ -87,7 +105,7 @@ const AboutACTNXTAppScreen = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            <Text style={[styles.versionText, { color: theme.colors.buttonText }]}> 
+            <Text style={[styles.versionText, { color: theme.colors.text }]}> 
                 Version 1.0.0
             </Text>
         </View>
@@ -103,6 +121,14 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 16,
+    },
+    italicText: {
+        fontSize: 16,
+        fontStyle: 'italic',
+        marginBottom: 8,
+    },
+    boldText: {
+        fontWeight: 'bold'
     },
     descriptionContainer: {
         borderWidth: 1,
