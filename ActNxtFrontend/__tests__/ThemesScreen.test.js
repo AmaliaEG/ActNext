@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import ThemesScreen from '../src/screens/burgermenu/ThemesScreen';
 
-// ✅ Mock updateTheme
+// Mock updateTheme
 const mockUpdateTheme = jest.fn();
 
 //  Mock theme context
