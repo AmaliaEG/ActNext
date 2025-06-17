@@ -17,3 +17,28 @@ Use ```npm list``` for the list without the packages installed as dependencies.
 - run ```npm list``` to get a list of all installed packages and versions installed
 - run ```npm view {package name}``` to view details on a certain package. Usefull to see if there is a newer version available for install
 - run ```npx jsdoc -c jsdoc.json``` to automatically update the documentation website after creating jsdoc documentation for any code.
+
+## Setting up the project
+Before starting there is a number of prerequisites that need to be installed in order for everthing to work.
+- nodejs
+- npm (npm is the official package manager for Node.js.)
+- JavaJDK 
+- Python3
+If using an android emulator (we recommend Android Studio as it sets up pretty much everything for you)
+- Android sdk
+- Android sdk tools
+- Android sdk build-tools
+- Android sdk Platform-tools
+- Android debug bridge (optional, but useful for installing build on the emulator)
+If using ios emulator (xcode)
+- Ionno I dont have macOS
+
+## Usefull documentation
+- [npm](https://docs.npmjs.com/)
+- [expo](https://docs.expo.dev/)
+- [auth0](<auth0.com/docs#:~:text=Learn about Auth0>)
+- [jsDoc](https://jsdoc.app/)
+- [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)
+- [asyncstorage](https://reactnative.dev/docs/asyncstorage)
+- [Jest](https://jestjs.io/docs/getting-started)
+- [eas](https://docs.expo.dev/eas/)
