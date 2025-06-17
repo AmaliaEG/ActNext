@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import LoginPage from '../screens/Pages/LoginPage'; 
 import Feed from '../screens/Pages/Feed'; 
@@ -18,7 +17,6 @@ import { Auth0Provider} from 'react-native-auth0';
 import { useTheme, ThemeProvider } from '../Themes/ThemeContext';
 import { Styles } from '../screens/Pages/Styles';
 
-const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props) => {
