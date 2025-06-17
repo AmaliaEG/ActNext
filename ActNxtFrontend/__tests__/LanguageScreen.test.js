@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import LanguagesScreen from '../src/screens/burgermenu/LanguageScreen';
 
-// ✅ Mock zustand store
+// Mock zustand store
 const mockSetLanguage = jest.fn();
 
 jest.mock('../src/store/useSettingsStore.js', () => {
