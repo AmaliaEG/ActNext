@@ -82,9 +82,6 @@ const Navigator = () => {
             <Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
             <Drawer.Screen name="Details" component={TaskExpansion} />
             <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-            <Drawer.Screen name="Themes" component={ThemesScreen} />
-            <Drawer.Screen name="ProfileDetails" component={ProfileDetailsScreen} />
-            <Drawer.Screen name="AboutACTNXTApp" component={AboutACTNXTAppScreen} />
             <Drawer.Screen name="StarredTasks" component={StarredTasks} />
             <Drawer.Screen name="ArchivedTasks" component={ArchivedTasks} />
           </Drawer.Navigator>
