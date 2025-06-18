@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/Pages/TaskCard.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/Pages/TaskCard.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file TaskCard.js
+ * @description
+ * Reusable component that renders a single task/insight card, including the company name, title, a short description,
+ * due date, and optional status indicators such as "Overdue" and "Unarchive".
+ * Navigates to the TaskExpansion ("Details") screen when pressed.
+ * The card adapts to the current theme and displays a color dot based on the SalesAnalysisId group.
+ * @module TaskCard
+ * @author s235280
+ * @since 2025-09-06
+ */
+
+
+import React from 'react';
+import { View, Text, Pressable } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Styles, GroupColours } from './Styles';
+import { useTheme } from '../../Themes/ThemeContext';
+
+/**
+ * TaskCard component displays summary information about a task.
+ * Includes companu name, title, first sentence of the description, assigned date, and visual indicators.
+ * Optionally renders an "Unarchive" button if `showUnarchive` is true and `onUnarchive` is provided.
+ * 
+ * @component
+ * @param {Object} props - Component props. 
+ * @param {Object} props.item - The task object containing insight data.
+ * @param {Object} props.navigation - React Navigation object for navigation to details screen.
+ * @param {boolean} [props.showUnarchive=false] - Whether to display the unarchive button.
+ * @param {function} [props.onUnarchive=null] - Callback function when unarchive is pressed. Receives the task ID.
+ * @returns {JSX.Element} A themed, pressable card representing a task.
+ */
+const TaskCard = ({ item, navigation, showUnarchive = false, onUnarchive = null }) => {
+  const { theme } = useTheme();
+
+  return (
+    &lt;Pressable onPress={() => navigation.navigate('Details', { taskId: item.Id })}>
+      &lt;View style={[
+        Styles.item,
+        {
+          backgroundColor: theme.colors.cardBg,
+          borderColor: theme.colors.borderColor,
+          color: theme.colors.subText
+         
+        }
+      ]}>
+        &lt;View style={Styles.info}>
+          &lt;View style={[Styles.colorDot, { backgroundColor: GroupColours[item.SalesAnalysisId] }]} />
+          &lt;Text style={[Styles.CompanyNameText, { color: theme.colors.text }]}>{item.CompanyName}&lt;/Text>
+        &lt;/View>
+
+        &lt;Text style={[Styles.text, { color: theme.colors.text, fontWeight: 'bold' }]}>{item.Title}&lt;/Text>
+        &lt;Text style={[Styles.descriptionText, { color: theme.colors.subText, fontStyle: 'italic' }]}>
+          {item.firstSentence || item.Description.split('.')[0].trim() + '.'}
+        &lt;/Text>
+        &lt;Text style={[Styles.dateText, { color: theme.colors.subText }]}>
+          Due: {new Date(item.dateAssigned).toLocaleDateString()}
+        &lt;/Text>
+
+        {item.isOverdue &amp;&amp; (
+          &lt;View style={Styles.warningContainer}>
+            &lt;Ionicons name="warning" size={18} color="yellow" />
+            &lt;Text style={Styles.warningText}>Overdue!&lt;/Text>
+          &lt;/View>
+        )}
+
+        {showUnarchive &amp;&amp; onUnarchive &amp;&amp; (
+          &lt;Pressable
+            onPress={() => onUnarchive(item.Id)}
+            style={[
+              Styles.unarchiveButton,
+              {
+                backgroundColor: theme.colors.background,
+                borderColor: theme.colors.subText,
+                borderWidth: 1,
+              },
+            ]}
+          >
+            &lt;Text style={[Styles.unarchiveButtonText, { color: theme.colors.text }]}>Unarchive&lt;/Text>
+          &lt;/Pressable>
+        )}
+        
+      &lt;/View>
+    &lt;/Pressable>
+  );
+};
+
+export default TaskCard;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-Feed.html">Feed</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-Styles.html">Styles</a></li><li><a href="module-TaskCard.html">TaskCard</a></li><li><a href="module-TaskExpansion.html">TaskExpansion</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 23:05:29 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

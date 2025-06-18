@@ -1,9 +1,35 @@
+/**
+ * @file TaskCard.js
+ * @description
+ * Reusable component that renders a single task/insight card, including the company name, title, a short description,
+ * due date, and optional status indicators such as "Overdue" and "Unarchive".
+ * Navigates to the TaskExpansion ("Details") screen when pressed.
+ * The card adapts to the current theme and displays a color dot based on the SalesAnalysisId group.
+ * @module TaskCard
+ * @author s235280
+ * @since 2025-09-06
+ */
+
+
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Styles, GroupColours } from './Styles';
 import { useTheme } from '../../Themes/ThemeContext';
 
+/**
+ * TaskCard component displays summary information about a task.
+ * Includes companu name, title, first sentence of the description, assigned date, and visual indicators.
+ * Optionally renders an "Unarchive" button if `showUnarchive` is true and `onUnarchive` is provided.
+ * 
+ * @component
+ * @param {Object} props - Component props. 
+ * @param {Object} props.item - The task object containing insight data.
+ * @param {Object} props.navigation - React Navigation object for navigation to details screen.
+ * @param {boolean} [props.showUnarchive=false] - Whether to display the unarchive button.
+ * @param {function} [props.onUnarchive=null] - Callback function when unarchive is pressed. Receives the task ID.
+ * @returns {JSX.Element} A themed, pressable card representing a task.
+ */
 const TaskCard = ({ item, navigation, showUnarchive = false, onUnarchive = null }) => {
   const { theme } = useTheme();
 

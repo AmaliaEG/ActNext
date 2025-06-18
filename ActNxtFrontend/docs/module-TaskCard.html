@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: ProfileDetailsScreen</title>
+    <title>JSDoc: Module: TaskCard</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: ProfileDetailsScreen</h1>
+    <h1 class="page-title">Module: TaskCard</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">ProfileDetailsScreen allows the user to view and update their profile information, including name, birth date, gender, email, and password.It uses custom input components for birth date and gender, and handles both viewing and editing of a secure password.Furthermore, the initial information is retrieved from the useProfileStore, to which the authentication has persisted there.</div>
+            <div class="description">Reusable component that renders a single task/insight card, including the company name, title, a short description,due date, and optional status indicators such as "Overdue" and "Unarchive".Navigates to the TaskExpansion ("Details") screen when pressed.The card adapts to the current theme and displays a color dot based on the SalesAnalysisId group.</div>
         
 
         
@@ -64,7 +64,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2025-19-03</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>2025-09-06</li></ul></dd>
     
 
     
@@ -83,7 +83,7 @@
     <dt class="tag-author">Author:</dt>
     <dd class="tag-author">
         <ul>
-            <li>s224837</li>
+            <li>s235280</li>
         </ul>
     </dd>
     
@@ -97,7 +97,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="screens_burgermenu_settingComponents_ProfileDetailsScreen.js.html">screens/burgermenu/settingComponents/ProfileDetailsScreen.js</a>, <a href="screens_burgermenu_settingComponents_ProfileDetailsScreen.js.html#line1">line 1</a>
+        <a href="screens_Pages_TaskCard.js.html">screens/Pages/TaskCard.js</a>, <a href="screens_Pages_TaskCard.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -154,12 +154,16 @@
     
 
     
-    <h4 class="name" id="~ProfileDetailsScreen"><span class="type-signature">(inner) </span>ProfileDetailsScreen<span class="signature">(props)</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    <h4 class="name" id="~TaskCard"><span class="type-signature">(inner) </span>TaskCard<span class="signature">(props)</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    TaskCard component displays summary information about a task.Includes companu name, title, first sentence of the description, assigned date, and visual indicators.Optionally renders an "Unarchive" button if `showUnarchive` is true and `onUnarchive` is provided.
+</div>
 
 
 
@@ -210,7 +214,7 @@
 
             
 
-            <td class="description last">The props passed to the screen.
+            <td class="description last">Component props.
                 <h6>Properties</h6>
                 
 
@@ -228,6 +232,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -238,13 +244,13 @@
 
         <tr>
             
-                <td class="name"><code>navigation</code></td>
+                <td class="name"><code>item</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Object</span>
 
 
             
@@ -261,15 +267,93 @@
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last">Navigation prop for screen transitions.</td>
+            <td class="description last">The task object containing insight data.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>closeModal</code></td>
+                <td class="name"><code>navigation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">React Navigation object for navigation to details screen.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showUnarchive</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Whether to display the unarchive button.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onUnarchive</code></td>
             
 
             <td class="type">
@@ -294,8 +378,14 @@
             
 
             
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
 
-            <td class="description last">Optional callback to close the Modal.</td>
+            <td class="description last">Callback function when unarchive is pressed. Receives the task ID.</td>
         </tr>
 
     
@@ -343,7 +433,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="screens_burgermenu_settingComponents_ProfileDetailsScreen.js.html">screens/burgermenu/settingComponents/ProfileDetailsScreen.js</a>, <a href="screens_burgermenu_settingComponents_ProfileDetailsScreen.js.html#line50">line 50</a>
+        <a href="screens_Pages_TaskCard.js.html">screens/Pages/TaskCard.js</a>, <a href="screens_Pages_TaskCard.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -372,7 +462,7 @@
 
         
 <div class="param-desc">
-    A scrollable screen for managing user profile details.
+    A themed, pressable card representing a task.
 </div>
 
 
@@ -392,11 +482,6 @@
     
 
 
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>&lt;ProfileDetailsScreen   navigation={navigation}   closeModal={() => setModalVisible(false)}/></code></pre>
 
 
 
