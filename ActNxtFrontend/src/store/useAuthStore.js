@@ -57,6 +57,7 @@ const useAuthStore = create((set) => ({
      * @async
      * @param {string} accessToken - The auth token received upon login.
      * @author s235251
+     * @author s224837
      */
     login: async (accessToken) => {
         try {

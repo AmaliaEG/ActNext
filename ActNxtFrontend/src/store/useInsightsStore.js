@@ -66,6 +66,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Initializes store with mock data, processing dates and sentences, then persists.
          * @async
+         * @author s235280
          */
         initializeWithMockData: async () => {
             const currentDate = new Date();
@@ -85,6 +86,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Clears persisted insights and resets store state.
          * @async
+         * @author s235224
          */
         clearInsights: async () => {
             try {
@@ -98,6 +100,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Loads insights from storage or mock JSON, processes each entry, and sets hydrated.
          * @async
+         * @author s235280
          */
         loadInsights: async () => {
             try {
@@ -153,6 +156,7 @@ const useInsightStore = create((set, get) => ({
          * @async
          * @param {number} insightId 
          * @param {'like'|'dislike'} feedbackType 
+         * @author s235280
          */
         addFeedback: async (insightId, feedbackType) => {
             try {
@@ -190,6 +194,7 @@ const useInsightStore = create((set, get) => ({
          * Retrieves the feedback object for a given insight.
          * @param {number} insightId 
          * @returns {{liked: boolean, disliked: boolean}}
+         * @author s235280
          */
         getFeedback: (insightId) => {
             const insight = get().insights.find(item => item.Id === insightId);
@@ -209,6 +214,7 @@ const useInsightStore = create((set, get) => ({
          * @param {number} insightId 
          * @param {string} commentText 
          * @returns {Promise<boolean>}
+         * @author s235280
          */
         updateComment: async (insightId, commentText) => {
             try {
@@ -239,6 +245,7 @@ const useInsightStore = create((set, get) => ({
          * Retrieves the comment object for a given insigt.
          * @param {number} insightId 
          * @returns {{text: string, updatedAt: string}|null}
+         * @author s235280
          */
         getComment: (insightId) => {
             const insight = get().insights.find(item => item.Id === insightId);
@@ -251,6 +258,7 @@ const useInsightStore = create((set, get) => ({
          * @param {number} taskId 
          * @param {string} commentText 
          * @returns {Promise<boolean>}
+         * @author s235280
          */
         updateTaskComment: async (taskId, commentText) => {
             try {
@@ -278,6 +286,7 @@ const useInsightStore = create((set, get) => ({
          * Retrieves the user comment string for a specific task.
          * @param {number} taskId 
          * @returns {string}
+         * @author s235280
          */
         getTaskComment: (taskId) => {
             const task = get().insights.find(task => task.Id === taskId);
@@ -290,6 +299,7 @@ const useInsightStore = create((set, get) => ({
          * @param {number} taskId 
          * @param {boolean} starStatus 
          * @returns {Promise<boolean>}
+         * @author s235280
          */
         toggleStar: async (taskId, starStatus) => {
             try {
@@ -317,6 +327,7 @@ const useInsightStore = create((set, get) => ({
          * Returns whether a given task is starred.
          * @param {number} taskId 
          * @returns {boolean}
+         * @author s235280
          */
         getStarStatus: (taskId) => {
             const insight = get().insights.find(item => item.Id === taskId);
@@ -326,6 +337,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Returns all starred tasks.
          * @returns {Array<Object>}
+         * @author s235280
          */
         getStarredTasks: () => {
             return get().insights.filter(item => item.isStarred);

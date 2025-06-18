@@ -94,6 +94,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Initializes store with mock data, processing dates and sentences, then persists.
          * @async
+         * @author s235280
          */
         initializeWithMockData: async () => {
             const currentDate = new Date();
@@ -113,6 +114,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Clears persisted insights and resets store state.
          * @async
+         * @author s235224
          */
         clearInsights: async () => {
             try {
@@ -126,6 +128,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Loads insights from storage or mock JSON, processes each entry, and sets hydrated.
          * @async
+         * @author s235280
          */
         loadInsights: async () => {
             try {
@@ -181,6 +184,7 @@ const useInsightStore = create((set, get) => ({
          * @async
          * @param {number} insightId 
          * @param {'like'|'dislike'} feedbackType 
+         * @author s235280
          */
         addFeedback: async (insightId, feedbackType) => {
             try {
@@ -218,6 +222,7 @@ const useInsightStore = create((set, get) => ({
          * Retrieves the feedback object for a given insight.
          * @param {number} insightId 
          * @returns {{liked: boolean, disliked: boolean}}
+         * @author s235280
          */
         getFeedback: (insightId) => {
             const insight = get().insights.find(item => item.Id === insightId);
@@ -237,6 +242,7 @@ const useInsightStore = create((set, get) => ({
          * @param {number} insightId 
          * @param {string} commentText 
          * @returns {Promise&lt;boolean>}
+         * @author s235280
          */
         updateComment: async (insightId, commentText) => {
             try {
@@ -267,6 +273,7 @@ const useInsightStore = create((set, get) => ({
          * Retrieves the comment object for a given insigt.
          * @param {number} insightId 
          * @returns {{text: string, updatedAt: string}|null}
+         * @author s235280
          */
         getComment: (insightId) => {
             const insight = get().insights.find(item => item.Id === insightId);
@@ -279,6 +286,7 @@ const useInsightStore = create((set, get) => ({
          * @param {number} taskId 
          * @param {string} commentText 
          * @returns {Promise&lt;boolean>}
+         * @author s235280
          */
         updateTaskComment: async (taskId, commentText) => {
             try {
@@ -306,6 +314,7 @@ const useInsightStore = create((set, get) => ({
          * Retrieves the user comment string for a specific task.
          * @param {number} taskId 
          * @returns {string}
+         * @author s235280
          */
         getTaskComment: (taskId) => {
             const task = get().insights.find(task => task.Id === taskId);
@@ -318,6 +327,7 @@ const useInsightStore = create((set, get) => ({
          * @param {number} taskId 
          * @param {boolean} starStatus 
          * @returns {Promise&lt;boolean>}
+         * @author s235280
          */
         toggleStar: async (taskId, starStatus) => {
             try {
@@ -345,6 +355,7 @@ const useInsightStore = create((set, get) => ({
          * Returns whether a given task is starred.
          * @param {number} taskId 
          * @returns {boolean}
+         * @author s235280
          */
         getStarStatus: (taskId) => {
             const insight = get().insights.find(item => item.Id === taskId);
@@ -354,6 +365,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Returns all starred tasks.
          * @returns {Array&lt;Object>}
+         * @author s235280
          */
         getStarredTasks: () => {
             return get().insights.filter(item => item.isStarred);
@@ -426,21 +438,13 @@ export default useInsightStore;</code></pre>
 </div>
 
 <nav>
-<<<<<<< Updated upstream
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
-=======
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
->>>>>>> Stashed changes
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-<<<<<<< Updated upstream
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 20:37:00 GMT+0200 (Centraleuropæisk sommertid)
-=======
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 20:43:13 GMT+0200 (Central European Summer Time)
->>>>>>> Stashed changes
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 22:08:31 GMT+0200 (Centraleuropæisk sommertid)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -38,18 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Tracks the authentication state and user token, persists it in AsyncStorage, and provides actions to load, login, and logout.
-Hydration ensures the UI only renders when persisted state has been retrieved.
-
-State:
-- `isLoggedIn` (boolean): whether the user is currently authenticated.
-- `userInfo` (string|null): the stored auth token.
-- `hydrated` (boolean): indicates if the persisted state has been loaded from storage.
-
-Actions:
-- `loadAuth`: loads and persists the saved auth-state from AsyncStorage, then sets `hydrated` to true.
-- `login(accessToken)`: saves the new auth-state and updates the store.
-- `logout`: clears the stored auth-state and resets the store to initial values.</div>
+            <div class="description">Tracks the authentication state and user token, persists it in AsyncStorage, and provides actions to load, login, and logout.Hydration ensures the UI only renders when persisted state has been retrieved.State:- `isLoggedIn` (boolean): whether the user is currently authenticated.- `userInfo` (string|null): the stored auth token.- `hydrated` (boolean): indicates if the persisted state has been loaded from storage.Actions:- `loadAuth`: loads and persists the saved auth-state from AsyncStorage, then sets `hydrated` to true.- `login(accessToken)`: saves the new auth-state and updates the store.- `logout`: clears the stored auth-state and resets the store to initial values.</div>
         
 
         
@@ -173,9 +162,7 @@ Actions:
 
 
 <div class="description">
-    Loads persisted authentication state from AsyncStorage.
-Parses stored JSON and update `isLoggedIn` and `token`.
-Always sets `hydrated` to true once done.
+    Loads persisted authentication state from AsyncStorage.Parses stored JSON and update `isLoggedIn` and `token`.Always sets `hydrated` to true once done.
 </div>
 
 
@@ -263,8 +250,7 @@ Always sets `hydrated` to true once done.
 
 
 <div class="description">
-    Logs in the user by saving accessToken and setting state.
-Persists new state to AsyncStorage.
+    Logs in the user by saving accessToken and setting state.Persists new state to AsyncStorage.
 </div>
 
 
@@ -351,6 +337,8 @@ Persists new state to AsyncStorage.
     <dd class="tag-author">
         <ul>
             <li>s235251</li>
+        
+            <li>s224837</li>
         </ul>
     </dd>
     
@@ -364,7 +352,7 @@ Persists new state to AsyncStorage.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="store_useAuthStore.js.html">store/useAuthStore.js</a>, <a href="store_useAuthStore.js.html#line61">line 61</a>
+        <a href="store_useAuthStore.js.html">store/useAuthStore.js</a>, <a href="store_useAuthStore.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -452,7 +440,7 @@ Persists new state to AsyncStorage.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="store_useAuthStore.js.html">store/useAuthStore.js</a>, <a href="store_useAuthStore.js.html#line75">line 75</a>
+        <a href="store_useAuthStore.js.html">store/useAuthStore.js</a>, <a href="store_useAuthStore.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -498,21 +486,13 @@ Persists new state to AsyncStorage.
 </div>
 
 <nav>
-<<<<<<< Updated upstream
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
-=======
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
->>>>>>> Stashed changes
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-<<<<<<< Updated upstream
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 20:37:00 GMT+0200 (Centraleuropæisk sommertid)
-=======
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 20:43:13 GMT+0200 (Central European Summer Time)
->>>>>>> Stashed changes
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 22:08:31 GMT+0200 (Centraleuropæisk sommertid)
 </footer>
 
 <script> prettyPrint(); </script>

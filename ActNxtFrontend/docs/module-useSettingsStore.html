@@ -38,20 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Manages application settings (theme, language, notifications) with persistence via AsyncStorage.
-Ensures the UI only renders once settings have been loaded (hydrated).
-
-State:
-- `theme` (object): the current theme mode, e.g. `{ mode: 'light' }`.
-- `language` (string): two-letter language code, e.g. `'en'`.
-- `notificationsEnabled`(boolean): whether push notifications are enabled.
-- `hydrated` (boolean): indicates if settings have been loaded from storage.
-
-Actions:
-- `loadSettings`: loads and applies persisted settings from AsyncStorage, then marks `hydrated`.
-- `updateTheme(theme)`: updates the theme, persists new settings.
-- `setLanguage(lang)`: updates the language, persists new settings.
-- `toggleNotifications`: flips the notificationsEnabled flag, persist new settings.</div>
+            <div class="description">Manages application settings (theme, language, notifications) with persistence via AsyncStorage.Ensures the UI only renders once settings have been loaded (hydrated).State:- `theme` (object): the current theme mode, e.g. `{ mode: 'light' }`.- `language` (string): two-letter language code, e.g. `'en'`.- `notificationsEnabled`(boolean): whether push notifications are enabled.- `hydrated` (boolean): indicates if settings have been loaded from storage.Actions:- `loadSettings`: loads and applies persisted settings from AsyncStorage, then marks `hydrated`.- `updateTheme(theme)`: updates the theme, persists new settings.- `setLanguage(lang)`: updates the language, persists new settings.- `toggleNotifications`: flips the notificationsEnabled flag, persist new settings.</div>
         
 
         
@@ -175,9 +162,7 @@ Actions:
 
 
 <div class="description">
-    Loads persisted settings from AsyncStorage.
-Falls bavk to defaults if none are stored.
-Marks the store as hydrated when completed.
+    Loads persisted settings from AsyncStorage.Falls bavk to defaults if none are stored.Marks the store as hydrated when completed.
 </div>
 
 
@@ -629,21 +614,13 @@ Marks the store as hydrated when completed.
 </div>
 
 <nav>
-<<<<<<< Updated upstream
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
-=======
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
->>>>>>> Stashed changes
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-<<<<<<< Updated upstream
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 20:37:00 GMT+0200 (Centraleuropæisk sommertid)
-=======
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 20:43:13 GMT+0200 (Central European Summer Time)
->>>>>>> Stashed changes
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 22:08:31 GMT+0200 (Centraleuropæisk sommertid)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -34,6 +34,7 @@ const ArchivedTasks = () => {
   /**
    * Filters insights to include only those marked as archived.
    * Uses Zustand hydration and `task.isArchived` flag.
+   * @author s235280
    */
   const archivedTasks = useMemo(() => {
       if (!hydrated || !insights) return [];
