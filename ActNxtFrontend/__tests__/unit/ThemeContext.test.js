@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
-import { ThemeProvider, useTheme } from '../src/Themes/ThemeContext';
+import { ThemeProvider, useTheme } from '../../src/Themes/ThemeContext';
 import { Button, Text, View } from 'react-native';
 
 const TestComponent = () => {

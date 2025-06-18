@@ -1,4 +1,4 @@
-import useProfileStore from "../src/store/useProfileStore";
+import useProfileStore from "../../src/store/useProfileStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
@@ -9,7 +9,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     removeItem: jest.fn().mockResolvedValue(null)
 }));
 
-jest.mock('../src/store/mockUserDatabase.json', () => [
+jest.mock('../../src/store/mockUserDatabase.json', () => [
     {
         auth0ID: "example",
         name: "example",

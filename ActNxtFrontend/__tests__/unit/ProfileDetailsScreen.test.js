@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import ProfileDetailsScreen from '../src/screens/burgermenu/settingComponents/ProfileDetailsScreen';
+import ProfileDetailsScreen from '../../src/screens/burgermenu/settingComponents/ProfileDetailsScreen';
 import * as SecureStore from 'expo-secure-store';
 import { useAuth0 } from 'react-native-auth0';
 import { Alert } from 'react-native';
@@ -20,7 +20,7 @@ let mockProfile = {
     code: '123456',
 };
 
-jest.mock('../src/store/useProfileStore', () => {
+jest.mock('../../src/store/useProfileStore', () => {
     // const React = require('react');
 
     const useProfileStore = () => ({
@@ -37,7 +37,7 @@ jest.mock('../src/store/useProfileStore', () => {
     return { __esModule: true, default: useProfileStore };
 });
 
-import useProfileStore from '../src/store/useProfileStore';
+import useProfileStore from '../../src/store/useProfileStore';
 const setHydrated = useProfileStore.__setHydrated;
 const setProfile = useProfileStore.__setProfile;
 
@@ -51,20 +51,20 @@ jest.mock('react-native-auth0', () => ({
 }));    
 
 // useAuthStore
-jest.mock('../src/store/useAuthStore', () => ({
+jest.mock('../../src/store/useAuthStore', () => ({
     __esModule: true,
     default: () => ({
         logout: mockAuthStoreLogout
     }),    
 }));    
 
-jest.mock('../src/screens/burgermenu/settingComponents/profileInput/DateTimePickerInput', () => () => null);
-jest.mock('../src/screens/burgermenu/settingComponents/profileInput/GenderPickerInput', () => () => null);
+jest.mock('../../src/screens/burgermenu/settingComponents/profileInput/DateTimePickerInput', () => () => null);
+jest.mock('../../src/screens/burgermenu/settingComponents/profileInput/GenderPickerInput', () => () => null);
 jest.mock('@expo/vector-icons', () => ({
     Feather: () => null
 }));    
 
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
         theme: {
             colors: {

@@ -1,5 +1,5 @@
 import { render, waitFor } from "@testing-library/react-native";
-import LoginPage from "../src/screens/Pages/LoginPage"
+import LoginPage from "../../src/screens/Pages/LoginPage"
 import { useAuth0 as mockUseAuth0 } from "react-native-auth0";
 
 // Mock react-native components properly
@@ -62,7 +62,7 @@ jest.mock('react-native-gesture-handler', () => ({
 }));
 
 // Mock the Styles import
-jest.mock('../src/screens/Pages/Styles', () => ({
+jest.mock('../../src/screens/Pages/Styles', () => ({
     Styles: {
         centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
         buttonContainer: { marginTop: 20 }
@@ -83,7 +83,7 @@ const makeZustandMock = (extra = {}) => () => ({
     ...extra,
 });
 
-jest.mock('../src/store/useAuthStore', () => ({
+jest.mock('../../src/store/useAuthStore', () => ({
     __esModule: true,
     default: makeZustandMock({
         login: jest.fn(),
@@ -94,24 +94,24 @@ jest.mock('../src/store/useAuthStore', () => ({
     }),
 }));
 
-jest.mock('../src/store/useSettingsStore', () => ({
+jest.mock('../../src/store/useSettingsStore', () => ({
     __esModule: true,
     default: makeZustandMock(),
 }));
 
-jest.mock('../src/store/useProfileStore', () => ({
+jest.mock('../../src/store/useProfileStore', () => ({
     __esModule: true,
     default: makeZustandMock({
         updateProfile: jest.fn(),
     }),
 }));
 
-jest.mock('../src/store/useInsightsStore', () => ({
+jest.mock('../../src/store/useInsightsStore', () => ({
     __esModule: true,
     default: makeZustandMock(),
 }));
 
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
         resolvedTheme: 'light'
     })

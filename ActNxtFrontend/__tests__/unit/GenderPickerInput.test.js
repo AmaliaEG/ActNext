@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react-native";
-import GenderPickerInput from '../src/screens/burgermenu/settingComponents/profileInput/GenderPickerInput';
+import GenderPickerInput from '../../src/screens/burgermenu/settingComponents/profileInput/GenderPickerInput';
 
 jest.mock('@expo/vector-icons', () => {
     const React = require('react');
@@ -9,7 +9,7 @@ jest.mock('@expo/vector-icons', () => {
     };
 });
 
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
         theme: {
             colors: {

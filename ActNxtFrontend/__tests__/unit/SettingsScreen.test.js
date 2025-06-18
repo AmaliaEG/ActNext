@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
-import SettingsScreen from '../src/screens/burgermenu/SettingsScreen';
+import SettingsScreen from '../../src/screens/burgermenu/SettingsScreen';
 
 jest.mock('@expo/vector-icons', () => {
   const React = require('react');
@@ -14,7 +14,7 @@ jest.mock('@expo/vector-icons', () => {
 const mockToggleNotifications = jest.fn();
 const mockSetLanguage = jest.fn();
 
-jest.mock('../src/store/useSettingsStore', () => ({
+jest.mock('../../src/store/useSettingsStore', () => ({
   __esModule: true,
   default: () => ({
     language: 'en',
@@ -25,7 +25,7 @@ jest.mock('../src/store/useSettingsStore', () => ({
   }),
 }));
 
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
   useTheme: () => ({
     theme: {
       colors: {
@@ -41,25 +41,25 @@ jest.mock('../src/Themes/ThemeContext', () => ({
 }));
 
 // Mock sub screens
-jest.mock('../src/screens/burgermenu/settingComponents/ProfileDetailsScreen', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/ProfileDetailsScreen', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return () => <Text>Mock ProfileDetailsScreen</Text>;
 });
 
-jest.mock('../src/screens/burgermenu/settingComponents/ThemesScreen', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/ThemesScreen', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return () => <Text>Mock ThemesScreen</Text>;
 });
 
-jest.mock('../src/screens/burgermenu/settingComponents/AboutACTNXTAppScreen', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/AboutACTNXTAppScreen', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return () => <Text>Mock AboutACTNXTAppScreen</Text>;
 });
 
-jest.mock('../src/screens/burgermenu/settingComponents/LanguageScreen', () => {
+jest.mock('../../src/screens/burgermenu/settingComponents/LanguageScreen', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return () => <Text>Mock LanguagesScreen</Text>;

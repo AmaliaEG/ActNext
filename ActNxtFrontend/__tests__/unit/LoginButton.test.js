@@ -1,6 +1,6 @@
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { useAuth0 as mockUseAuth0 } from "react-native-auth0";
-import { LoginButton } from "../src/screens/Pages/LoginPage";
+import { LoginButton } from "../../src/screens/Pages/LoginPage";
 
 // MOCKS
 jest.mock('react-native-auth0', () => ({
@@ -17,7 +17,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
     }
 }));
 
-jest.mock('../src/store/useAuthStore', () => {
+jest.mock('../../src/store/useAuthStore', () => {
     return {
         __esModule: true,
         default: jest.fn()
@@ -25,7 +25,7 @@ jest.mock('../src/store/useAuthStore', () => {
 });
 
 // Mock additional dependencies for integration tests
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
         resolvedTheme: 'light'
     })
@@ -38,14 +38,14 @@ jest.mock('react-native-gesture-handler', () => ({
     }
 }));
 
-jest.mock('../src/screens/Pages/Styles', () => ({
+jest.mock('../../src/screens/Pages/Styles', () => ({
     Styles: {
         centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
         buttonContainer: { marginTop: 20 }
     }
 }));
 
-jest.mock('../src/store/useSettingsStore', () => ({
+jest.mock('../../src/store/useSettingsStore', () => ({
     __esModule: true,
     default: () => ({
         loadSettings: jest.fn().mockResolvedValue({}),
@@ -53,7 +53,7 @@ jest.mock('../src/store/useSettingsStore', () => ({
     })
 }));
 
-jest.mock('../src/store/useProfileStore', () => ({
+jest.mock('../../src/store/useProfileStore', () => ({
     __esModule: true,
     default: () => ({
         loadProfile: jest.fn().mockResolvedValue({}),
@@ -62,7 +62,7 @@ jest.mock('../src/store/useProfileStore', () => ({
     })
 }));
 
-jest.mock('../src/store/useInsightsStore', () => ({
+jest.mock('../../src/store/useInsightsStore', () => ({
     __esModule: true,
     default: () => ({
         loadInsights: jest.fn().mockResolvedValue({}),
@@ -126,7 +126,7 @@ jest.mock('react-native', () => ({
 
 
 // TESTS FOR LoginButton
-const mockUseAuthStore = require('../src/store/useAuthStore').default;
+const mockUseAuthStore = require('../../src/store/useAuthStore').default;
 const mockAuthorize = jest.fn();
 const mockClearSession = jest.fn();
 const mockLogin = jest.fn();
@@ -134,7 +134,7 @@ const mockLogout = jest.fn();
 const mockNavigation = {
     navigate: jest.fn()
 };
-const mockOnLoginPress = require('../src/screens/Pages/LoginPage').onLoginPress;
+const mockOnLoginPress = require('../../src/screens/Pages/LoginPage').onLoginPress;
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -249,7 +249,7 @@ describe("LoginPage Integration", () => {
         });
 
         // Import LoginPage after all mocks are set up
-        const LoginPage = require('../src/screens/Pages/LoginPage').default;
+        const LoginPage = require('../../src/screens/Pages/LoginPage').default;
         
         const { getByTestId } = render(<LoginPage navigation={mockNavigation} />);
         
@@ -266,7 +266,7 @@ describe("LoginPage Integration", () => {
     it('handles authorize returning undefined', async () => {
         mockAuthorize.mockResolvedValue(undefined);
 
-        const LoginPage = require('../src/screens/Pages/LoginPage').default;
+        const LoginPage = require('../../src/screens/Pages/LoginPage').default;
         
         const { getByTestId } = render(<LoginPage navigation={mockNavigation} />);
         

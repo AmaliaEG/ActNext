@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import ArchivedTasks from '../src/screens/Pages/ArchivedTasks';
+import ArchivedTasks from '../../src/screens/Pages/ArchivedTasks';
 
 // Mock dependencies
 jest.mock('react-native-vector-icons/Ionicons', () => 'Icon');
@@ -12,7 +12,7 @@ jest.mock('@react-navigation/native', () => ({
   }),
 }));
 
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
   useTheme: () => ({
     theme: {
       colors: {
@@ -32,30 +32,7 @@ jest.mock('../src/Themes/ThemeContext', () => ({
 
 // Main mock for useInsightsStore
 let mockStore = {};
-jest.mock('../src/store/useInsightsStore', () => () => mockStore);
-
-// jest.mock('../src/store/useInsightsStore', () => ({
-//   __esModule: true,
-//   default: () => ({
-//     insights: [{
-//       Id: 1,
-//       Title: 'Archived Task',
-//       Description: 'This is an archived task.',
-//       DtCreate: new Date().toISOString(),
-//       isArchived: true,
-//       isStarred: false,
-//     }, {
-//       Id: 2,
-//       Title: 'Active Task',
-//       Description: 'This is an active task.',
-//       DtCreate: new Date().toISOString(),
-//       isArchived: false,
-//       isStarred: true,
-//     }],
-//     hydrated: true,
-//     unarchiveTask: jest.fn(),
-//   }),
-// }));
+jest.mock('../../src/store/useInsightsStore', () => () => mockStore);
 
 describe('ArchivedTasks Screen', () => {
   beforeEach(() => {

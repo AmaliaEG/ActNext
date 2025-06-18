@@ -3,6 +3,11 @@ import { render, fireEvent } from "@testing-library/react-native";
 import TaskExpansion from "../../src/screens/Pages/TaskExpansion";
 import useInsightStore from "../../src/store/useInsightsStore";
 
+jest.mock('@expo/vector-icons/Ionicons', () => () => null);
+jest.mock('@expo/vector-icons', () => ({
+    Ionicons: () => null,
+}));
+
 jest.mock('../../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
         theme: {

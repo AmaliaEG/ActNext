@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import ThemesScreen from '../src/screens/burgermenu/settingComponents/ThemesScreen';
+import ThemesScreen from '../../src/screens/burgermenu/settingComponents/ThemesScreen';
 
 // Mock updateTheme
 const mockUpdateTheme = jest.fn();
 
 //  Mock theme context
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
   __esModule: true,
   useTheme: () => ({
     mode: 'light',

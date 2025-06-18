@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import Feed from '../src/screens/Pages/Feed';
+import Feed from '../../src/screens/Pages/Feed';
 
 
 jest.mock('react-native-vector-icons/Ionicons', () => {
@@ -19,7 +19,7 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 // Mock useTheme
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
   useTheme: () => ({
     theme: {
       colors: {
@@ -36,7 +36,7 @@ jest.mock('../src/Themes/ThemeContext', () => ({
 }));
 
 
-jest.mock('../src/store/useInsightsStore', () => {
+jest.mock('../../src/store/useInsightsStore', () => {
   const mockTask = {
     Id: 1,
     Title: 'Test Task',

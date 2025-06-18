@@ -1,4 +1,4 @@
-import TaskExpansion from '../src/screens/Pages/TaskExpansion';
+import TaskExpansion from '../../src/screens/Pages/TaskExpansion';
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
 import { StyleSheet } from 'react-native';
@@ -15,7 +15,7 @@ jest.mock('@react-navigation/native', () => ({
 jest.mock('@expo/vector-icons', () => ({
     Ionicons: () => null,
 }));
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
         theme: {
             colors: {
@@ -31,7 +31,7 @@ jest.mock('../src/Themes/ThemeContext', () => ({
         resolvedTheme: 'light',
     }),
 }));
-jest.mock('../src/screens/Pages/Styles', () => ({
+jest.mock('../../src/screens/Pages/Styles', () => ({
     Styles: {
         centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
         buttonContainer: { marginTop: 20 }
@@ -59,7 +59,7 @@ const mockStore = {
     loadInsights: jest.fn(),
 };
 
-jest.mock('../src/store/useInsightsStore', () => ({
+jest.mock('../../src/store/useInsightsStore', () => ({
     __esModule: true,
     default: () => mockStore,
 }));

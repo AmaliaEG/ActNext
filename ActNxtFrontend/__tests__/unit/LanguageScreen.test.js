@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import LanguagesScreen from '../src/screens/burgermenu/settingComponents/LanguageScreen';
+import LanguagesScreen from '../../src/screens/burgermenu/settingComponents/LanguageScreen';
 
 // Mock zustand store
 const mockSetLanguage = jest.fn();
 
-jest.mock('../src/store/useSettingsStore.js', () => {
+jest.mock('../../src/store/useSettingsStore.js', () => {
   return {
     __esModule: true,
     default: () => ({
@@ -17,7 +17,7 @@ jest.mock('../src/store/useSettingsStore.js', () => {
 });
 
 // for the theme context
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
   __esModule: true,
   useTheme: () => ({
     theme: {

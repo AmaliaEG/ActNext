@@ -1,11 +1,11 @@
 import { waitFor } from "@testing-library/react-native";
-import useInsightsStore from "../src/store/useInsightsStore";
+import useInsightsStore from "../../src/store/useInsightsStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 // MOCK
 jest.mock(
-    '../src/screens/Pages/JSON_Mockdata.json',
+    '../../src/screens/Pages/JSON_Mockdata.json',
     () => ([]),
     { virtual: true }
 );

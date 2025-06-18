@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import Navigator from '../src/navigation/Navigator';
+import Navigator from '../../src/navigation/Navigator';
 
 jest.mock('@react-navigation/drawer', () => {
     const React = require('react');
@@ -69,19 +69,19 @@ jest.mock('react-native-gesture-handler', () => {
 });
 
 // Mock for settings screens
-jest.mock('../src/screens/Pages/Feed.js', () => {
+jest.mock('../../src/screens/Pages/Feed.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Insights</Text>;
 });
 
-jest.mock('../src/screens/Pages/StarredTasks.js', () => {
+jest.mock('../../src/screens/Pages/StarredTasks.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Favorites</Text>;
 });
 
-jest.mock('../src/screens/Pages/ArchivedTasks.js', () => {
+jest.mock('../../src/screens/Pages/ArchivedTasks.js', () => {
     const React = require('react');
     const { Text } = require('react-native');
     return () => <Text>Archive</Text>;

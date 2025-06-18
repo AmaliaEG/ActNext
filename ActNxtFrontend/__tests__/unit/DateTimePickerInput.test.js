@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from "@testing-library/react-native";
-import DateTimePickerInput from '../src/screens/burgermenu/settingComponents/profileInput/DateTimePickerInput';
+import DateTimePickerInput from '../../src/screens/burgermenu/settingComponents/profileInput/DateTimePickerInput';
 
 jest.mock('@react-native-community/datetimepicker', () => {
     const React = require('react');
@@ -11,7 +11,7 @@ jest.mock('@react-native-community/datetimepicker', () => {
         });
 });
 
-jest.mock('../src/Themes/ThemeContext', () => ({
+jest.mock('../../src/Themes/ThemeContext', () => ({
     useTheme: () => ({
         theme: {
             colors: {
