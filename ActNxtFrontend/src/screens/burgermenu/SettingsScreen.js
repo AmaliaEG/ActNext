@@ -1,3 +1,17 @@
+/**
+ * @file SettingsScreen.js
+ * @description 
+ * Displays a settings screen allowing the user to configure:
+ * - Profile information
+ * - Theme selection (Light, Dark, System)
+ * - Language
+ * - Notification toggle
+ * - About the application
+ * @module SettingsScreen
+ * @author s224837
+ * @since 2025-19-03
+ */
+
 import React, { useState } from 'react';
 import {
     Text,
@@ -19,17 +33,6 @@ import LanguagesScreen from "./settingComponents/LanguageScreen";
 import ProfileDetailsScreen from "./settingComponents/ProfileDetailsScreen";
 import ThemesScreen from "./settingComponents/ThemesScreen";
 import AboutACTNXTAppScreen from "./settingComponents/AboutACTNXTAppScreen";
-
-/**
- * SettingsScreen.js
- *
- * Displays a settings screen allowing the user to configure:
- * - Profile information
- * - Theme selection (Light, Dark, System)
- * - Language
- * - Notification toggle
- * - About the application
- */
 
 
 /**

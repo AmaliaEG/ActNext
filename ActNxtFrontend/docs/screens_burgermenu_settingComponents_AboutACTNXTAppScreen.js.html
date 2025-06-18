@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/burgermenu/settingComponents/AboutACTNXTAppScreen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/burgermenu/settingComponents/AboutACTNXTAppScreen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file AboutACTNXTAppScreen.js
  * @description
  * This screen displays information about the ActNxt application, including a scrollable description of the company's mission, approach,
@@ -21,7 +49,7 @@ import { useTheme } from '../../../Themes/ThemeContext';
  * @returns {JSX.Element} A screen with app description, support link and version info.
  * 
  * @example
- * <AboutACTNXTAppScreen />
+ * &lt;AboutACTNXTAppScreen />
  */
 
 const AboutACTNXTAppScreen = () => {
@@ -52,12 +80,12 @@ const AboutACTNXTAppScreen = () => {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-            <Text style={[styles.title, { color: theme.colors.text }]}>
+        &lt;View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            &lt;Text style={[styles.title, { color: theme.colors.text }]}>
                 About ActNxt
-            </Text>
+            &lt;/Text>
 
-            <View
+            &lt;View
                 style={[
                     styles.descriptionContainer,
                     {
@@ -66,58 +94,58 @@ const AboutACTNXTAppScreen = () => {
                     },
                 ]}
             >
-                <ScrollView>
-                    <Text style={[styles.italicText, { color: theme.colors.text }]}>
+                &lt;ScrollView>
+                    &lt;Text style={[styles.italicText, { color: theme.colors.text }]}>
                         Sales Instinct. Superpowered
-                    </Text>
-                    <Text style={[styles.descriptionText, { color: theme.colors.text  }]}>
+                    &lt;/Text>
+                    &lt;Text style={[styles.descriptionText, { color: theme.colors.text  }]}>
                         {'\n'}ActNxt is an innovative company that develops AI-powered solutions to solve the data overwhelm problem that sales 
                         teams face every day. We believe businesses shouldn't struggle with decision paralysis when they have valuable 
                         data at their fingertips.{'\n\n'}
                         
-                        <Text style={styles.boldText}>Our Mission{'\n'}</Text>
+                        &lt;Text style={styles.boldText}>Our Mission{'\n'}&lt;/Text>
                         We transform complex invoice and sales data into clear, actionable insights that drive real business results. Our 
                         goal is to help sales teams focus on what matters most - building relationships and growing revenue.{'\n\n'}
 
-                        <Text style={styles.boldText}>Our Approach{'\n'}</Text>
+                        &lt;Text style={styles.boldText}>Our Approach{'\n'}&lt;/Text>
                         Rather than adding another complex dashboard to your workflow, we deliver simple, targeted recommendations 
                         directly to your team when action is needed. We've designed our platform to work seamlessly with existing 
                         systems like SuperOffice, Microsoft Dynamics, and Visma.{'\n\n'}
 
-                        <Text style={styles.boldText}>Our Focus{'\n'}</Text>
+                        &lt;Text style={styles.boldText}>Our Focus{'\n'}&lt;/Text>
                         We specialize in serving small to medium-sized enterprises who want to leverage their existing data effectively 
                         without the complexity of traditional analytics platforms.{'\n\n'}
 
                         At ActNxt, we turn data into revenue-generating actions.
-                    </Text>
-                </ScrollView>
-            </View>
+                    &lt;/Text>
+                &lt;/ScrollView>
+            &lt;/View>
 
-            <View style={styles.supportRow}>
-                <Text style={[styles.supportLabel, { color: theme.colors.text  }]}>
+            &lt;View style={styles.supportRow}>
+                &lt;Text style={[styles.supportLabel, { color: theme.colors.text  }]}>
                     Help and Support
-                </Text>
-                <TouchableOpacity
+                &lt;/Text>
+                &lt;TouchableOpacity
                     style={[
                         styles.supportButton,
                         { backgroundColor: theme.colors.primary },
                     ]}
                     onPress={handleContactSupport}
                 >
-                    <Text
+                    &lt;Text
                         style={[
                             styles.supportButtonText,
                             { color: theme.colors.buttonText },
                         ]}
                     >
                         CONTACT SUPPORT
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <Text style={[styles.versionText, { color: theme.colors.text }]}> 
+                    &lt;/Text>
+                &lt;/TouchableOpacity>
+            &lt;/View>
+            &lt;Text style={[styles.versionText, { color: theme.colors.text }]}> 
                 Version 1.0.0
-            </Text>
-        </View>
+            &lt;/Text>
+        &lt;/View>
     );
 };
 
@@ -174,4 +202,26 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AboutACTNXTAppScreen;
+export default AboutACTNXTAppScreen;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 17:40:36 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

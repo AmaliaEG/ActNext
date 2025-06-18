@@ -1,12 +1,22 @@
+/**
+ * @file DateTimePickerInput.js
+ * @description
+ * A React Native input component for selecting date using a native date picker.
+ * 
+ * The selected date is displayed in a formatted text input field (DD/MM/YYYY).
+ * 
+ * @module DateTimePickerInput
+ * @author s224837
+ * @since 2025-16-04
+ */
+
 import React, { useState } from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { View, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { useTheme } from '../../../../Themes/ThemeContext';
 
 /**
- * A React Native input component for selecting date using a native date picker.
  * 
- * The selected date is displayed in a formatted text input field (DD/MM/YYYY).
  * @component
  * @param {Object} props - The component props.
  * @param {string} props.value - The currently selected date as a string.

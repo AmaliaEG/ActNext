@@ -1,11 +1,39 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: store/useInsightsStore.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: store/useInsightsStore.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file useInsightStore.js
  * @description
  * Manages the list of sales insights (tasks), including loading, persisting, feedback flow, comments, starring, and archiving.
  * Persists state in AsyncStorage and ensures hydration before UI uses data.
  * 
  * State:
- * - `insights` (Array<Object>): list of insight objects, each with these fields (`dateAssigned`, `isOverdue`, `firstSentence`).
+ * - `insights` (Array&lt;Object>): list of insight objects, each with these fields (`dateAssigned`, `isOverdue`, `firstSentence`).
  * - `queuedFeedback` (Array): temporary queue for feedback actions before persistence.
  * - `hydrated` (boolean): indicates whether data has been loaded from storage.
  * 
@@ -74,7 +102,7 @@ const useInsightStore = create((set, get) => ({
             return {
                 ...item,
                 dateAssigned,
-                isOverdue: dateAssigned ? dateAssigned < currentDate : false,
+                isOverdue: dateAssigned ? dateAssigned &lt; currentDate : false,
                 firstSentence: getTheFirstSentence(item.Description),
             };
             });
@@ -111,7 +139,7 @@ const useInsightStore = create((set, get) => ({
                 return {
                     ...item,
                     dateAssigned,
-                    isOverdue: dateAssigned ? dateAssigned < currentDate : false,
+                    isOverdue: dateAssigned ? dateAssigned &lt; currentDate : false,
                     firstSentence: getTheFirstSentence(item.Description),
                 };
                 });
@@ -126,7 +154,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Replaces all insights with provided data after formatting and persists.
          * @async
-         * @param {Array<Object>} data 
+         * @param {Array&lt;Object>} data 
          */
         setInsights: async (data) => {
             try {
@@ -136,7 +164,7 @@ const useInsightStore = create((set, get) => ({
                 return {
                     ...item,
                     dateAssigned,
-                    isOverdue: dateAssigned ? dateAssigned < currentDate : false,
+                    isOverdue: dateAssigned ? dateAssigned &lt; currentDate : false,
                     firstSentence: getTheFirstSentence(item.Description),
                 };
                 });
@@ -208,7 +236,7 @@ const useInsightStore = create((set, get) => ({
          * @async
          * @param {number} insightId 
          * @param {string} commentText 
-         * @returns {Promise<boolean>}
+         * @returns {Promise&lt;boolean>}
          */
         updateComment: async (insightId, commentText) => {
             try {
@@ -250,7 +278,7 @@ const useInsightStore = create((set, get) => ({
          * @async
          * @param {number} taskId 
          * @param {string} commentText 
-         * @returns {Promise<boolean>}
+         * @returns {Promise&lt;boolean>}
          */
         updateTaskComment: async (taskId, commentText) => {
             try {
@@ -289,7 +317,7 @@ const useInsightStore = create((set, get) => ({
          * @async
          * @param {number} taskId 
          * @param {boolean} starStatus 
-         * @returns {Promise<boolean>}
+         * @returns {Promise&lt;boolean>}
          */
         toggleStar: async (taskId, starStatus) => {
             try {
@@ -325,7 +353,7 @@ const useInsightStore = create((set, get) => ({
 
         /**
          * Returns all starred tasks.
-         * @returns {Array<Object>}
+         * @returns {Array&lt;Object>}
          */
         getStarredTasks: () => {
             return get().insights.filter(item => item.isStarred);
@@ -335,7 +363,7 @@ const useInsightStore = create((set, get) => ({
          * Marks a task as archived and persists change.
          * @async
          * @param {number} taskId 
-         * @returns {Promise<boolean>}
+         * @returns {Promise&lt;boolean>}
          */
         archiveTask: async (taskId) => {
             try {
@@ -363,7 +391,7 @@ const useInsightStore = create((set, get) => ({
          * Unarchives a task and persists change.
          * @async
          * @param {number} taskId 
-         * @returns {Promise<boolean>}
+         * @returns {Promise&lt;boolean>}
          */
         unarchiveTask: async (taskId) => {
             try {
@@ -388,4 +416,26 @@ const useInsightStore = create((set, get) => ({
         },
     }));
 
-export default useInsightStore;
+export default useInsightStore;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 17:40:36 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

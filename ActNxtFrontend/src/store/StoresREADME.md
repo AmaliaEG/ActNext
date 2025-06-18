@@ -9,7 +9,7 @@ It tracks the login state and user info, and whether it is persisted in the Asyn
 
 ### State
 
-The state is determined by the values `isLoggedIn`, `userInfo` and `hydrated`. Hydrated tells us when our auth state is loaded s.t. when we are logged in, hydrated becomes true when we have successfully loaded/read the persisted values. The userInfo by default contains every auth0-profile field requested from the Auth0 flow. For more information yuo can check the [auth0 Docs](https://auth0.com/docs/manage-users/user-accounts/user-profiles/user-profile-structure).
+The state is determined by the values `isLoggedIn`, `token` and `hydrated`. Hydrated tells us when our auth state is loaded s.t. when we are logged in, hydrated becomes true when we have successfully loaded/read the persisted values. The userInfo by default contains every auth0-profile field requested from the Auth0 flow. For more information yuo can check the [auth0 Docs](https://auth0.com/docs/manage-users/user-accounts/user-profiles/user-profile-structure).
 
 Updating the state is done by calling the provided `set` function with a new state.
 
@@ -17,7 +17,7 @@ Updating the state is done by calling the provided `set` function with a new sta
 
 `loadAuth` tries to load the persisted valued from the storage, and converts the string values back into JavaScript objects, so we can use them accordingly. When all of this is done, hydrated is set to true, to tell the UI that it is safe to render.
 
-`login` takes userInfo as a parameter, which is persisted to the storage resulting in a new state.
+`login` takes accessToken as a parameter, which is persisted to the storage resulting in a new state.
 
 `logout` removes the persited data from the storage, and resets the store back to its initial state.
 
@@ -27,7 +27,7 @@ The store is used in the LoginPage.js file, specifically under the function `Log
 
 It holds the users access token from auth0, which among other things holds the auth0 users id, more on access tokens at https://auth0.com/docs/secure/tokens/access-tokens/access-token-profiles
 
-#####################################################################################################
+<!-- ##################################################################################################### -->
 
 ## useInsightsStore.js
 
@@ -85,7 +85,7 @@ The state of this store is determined by `insights`, `queuedFeedback` and `hydra
 
 Feed.js, TaskExpansion.js, LoginPage.js, StarredTasks.js and ArchivedTasks.js.
 
-#####################################################################################################
+<!-- ##################################################################################################### -->
 
 ## useProfileStore.js
 
@@ -107,7 +107,7 @@ The state is determined by the values `profile` and `hydrated`, where profile co
 
 LoginPage.js and ProfileDetailsScreen.js.
 
-#####################################################################################################
+<!-- ##################################################################################################### -->
 
 ## useSettingsStore.js
 

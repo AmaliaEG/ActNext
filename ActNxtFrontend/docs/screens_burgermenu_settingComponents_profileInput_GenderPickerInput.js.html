@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/burgermenu/settingComponents/profileInput/GenderPickerInput.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/burgermenu/settingComponents/profileInput/GenderPickerInput.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file GenderPickerInput.js
  * @description
  * GenderPickerInput is another custom React Native component that allows users to select their gender from a predefined list using a 
@@ -34,7 +62,7 @@ const GENDERS = [
  * @returns {JSX.Element} A gender picker input component with modal dropdown.
  * 
  * @example 
- * <GenderPickInput 
+ * &lt;GenderPickInput 
  *    value={localEdits.gender}
  *    onChange={(selected) =>
  *        setLocalEdits({ ...localEdits, gender: selected })
@@ -60,10 +88,10 @@ const GenderPickerInput = ({ value, onChange }) => {
         const isSelected = item.value === value;
 
         return (
-            <TouchableOpacity
+            &lt;TouchableOpacity
                 onPress={() => {
                     setModalVisible(false);
-                    if (item.value && item.value !== value) {
+                    if (item.value &amp;&amp; item.value !== value) {
                         onChange(item.value);
                     }
                 }}
@@ -73,60 +101,60 @@ const GenderPickerInput = ({ value, onChange }) => {
                 ]}
                 testID={`gender-option-${item.value || 'placeholder'}`}
             >
-                <Text style={[styles.rowText, { color: theme.colors.sheetText }]}>
+                &lt;Text style={[styles.rowText, { color: theme.colors.sheetText }]}>
                     {item.label}
-                </Text>
-                {isSelected && (
-                    <MaterialIcons name="check" size={20} color={theme.colors.sheetBg} />
+                &lt;/Text>
+                {isSelected &amp;&amp; (
+                    &lt;MaterialIcons name="check" size={20} color={theme.colors.sheetBg} />
                 )}
-            </TouchableOpacity>
+            &lt;/TouchableOpacity>
         );
     };
 
     return (
-        <View style={styles.wrapper}>
-            <Text style={[styles.label, { color: theme.colors.text }]}>Select Gender</Text>
-            <TouchableOpacity
+        &lt;View style={styles.wrapper}>
+            &lt;Text style={[styles.label, { color: theme.colors.text }]}>Select Gender&lt;/Text>
+            &lt;TouchableOpacity
                 testID='gender-picker-button'
                 onPress={() => setModalVisible(true)}
                 style={[styles.picker, { 
                     backgroundColor: theme.colors.boxBg,
                      borderColor: theme.colors.boxBorder, }]}>
-                    <Text style={{ color: theme.colors.text, flex: 1 }}>
+                    &lt;Text style={{ color: theme.colors.text, flex: 1 }}>
                         {value ? value : '-- Select Gender --'}
-                    </Text>
-                    <MaterialIcons name="keyboard-arrow-down" size={20} color={theme.colors.arrow} />
-                </TouchableOpacity>
+                    &lt;/Text>
+                    &lt;MaterialIcons name="keyboard-arrow-down" size={20} color={theme.colors.arrow} />
+                &lt;/TouchableOpacity>
 
-                <Modal
+                &lt;Modal
                     transparent={true}
                     visible={modalVisible}
                     animationType='fade'
                     onRequestClose={() => setModalVisible(false)}
                 >
-                    <Pressable
+                    &lt;Pressable
                         style={styles.backdrop}
                         onPress={() => setModalVisible(false)}
                     />
 
-                    <View style={styles.centeredView}>
-                        <View style={[styles.sheetContainer, { 
+                    &lt;View style={styles.centeredView}>
+                        &lt;View style={[styles.sheetContainer, { 
                             backgroundColor: theme.colors.sheetBg, 
                             borderColor: theme.colors.sheetBorder }]}>
-                            <FlatList
+                            &lt;FlatList
                                 data={GENDERS}
                                 keyExtractor={(item) => item.value + item.label}
                                 renderItem={_renderItem}
                                 ItemSeparatorComponent={() => (
-                                    <View style={{ height: 1, backgroundColor: theme.colors.sheetBg }} />
+                                    &lt;View style={{ height: 1, backgroundColor: theme.colors.sheetBg }} />
                                 )}
-                                ListFooterComponent={<View style={{ height: 8 }} />}
+                                ListFooterComponent={&lt;View style={{ height: 8 }} />}
                                 style={{ width: '100%' }}
                             />
-                        </View>
-                    </View>
-                </Modal>
-        </View>
+                        &lt;/View>
+                    &lt;/View>
+                &lt;/Modal>
+        &lt;/View>
     );
 };
 
@@ -185,4 +213,26 @@ const styles = StyleSheet.create({
     },
 });
 
-export default GenderPickerInput;
+export default GenderPickerInput;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 17:40:36 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

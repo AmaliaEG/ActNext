@@ -1,3 +1,15 @@
+/**
+ * @file Navigator.js
+ * @description
+ * Sets up the app's main navigation structure using a Drawer navigator.
+ * Wraps the entire navigation in a ThemeProvider and Auth0Provider, and defines a custom drawer content component (CustomDrawerContent)
+ * that renders the app logo, navigation links, and a settings modal.
+ * 
+ * @module Navigator
+ * @author s224837
+ * @since 2025-17-03
+ */
+
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -18,6 +30,16 @@ import { useTheme, ThemeProvider } from '../Themes/ThemeContext';
 import { Styles } from '../screens/Pages/Styles';
 
 const Drawer = createDrawerNavigator();
+
+/**
+ * Custom drawer content component - renders the app logo, navigation items (Insights, Favorites and Archive),
+ * and a settings button that toggles a modal with the SettingsScreen.
+ * 
+ * @component
+ * @param {object} props - Props inserted by the Drawer navigator. 
+ * @param {object} props.navigation - Navigation object for screen transitions.
+ * @returns {JSX.Element}
+ */
 
 const CustomDrawerContent = (props) => {
   // Get the resolved theme
@@ -68,6 +90,13 @@ const CustomDrawerContent = (props) => {
   );
 };
 
+/**
+ * Main Navigator component - Wraps the app in ThemeProvider and Auth0Provider, then sets up a drawer navigatorwith all the screens:
+ * Home/Login, Feed, Details, Settings, Stared and Archived.
+ * 
+ * @component
+ * @returns {JSX.Element}
+ */
 const Navigator = () => {
   return (
     <ThemeProvider>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/burgermenu/settingComponents/profileInput/DateTimePickerInput.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/burgermenu/settingComponents/profileInput/DateTimePickerInput.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file DateTimePickerInput.js
+ * @description
+ * A React Native input component for selecting date using a native date picker.
+ * 
+ * The selected date is displayed in a formatted text input field (DD/MM/YYYY).
+ * 
+ * @module DateTimePickerInput
+ * @author s224837
+ * @since 2025-16-04
+ */
+
+import React, { useState } from "react";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { useTheme } from '../../../../Themes/ThemeContext';
+
+/**
+ * 
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.value - The currently selected date as a string.
+ * @param {function} props.onChange - Callback to update the selected date.
+ * @example
+ * &lt;DateTimePickerInput
+ *    value={localEdits.birthDate}
+ *    onChange={(date) => 
+ *        setLocalEdits({ ...localEdits, birthDate: date })
+ *    } 
+ * />
+ */
+
+const DateTimePickerInput = ({ value, onChange }) => {
+    const { theme } = useTheme();
+    const [show, setShow] = useState(false);
+
+    /**
+     * Handles the change event from the native date picker.
+     * 
+     * @param {Object} event - The event object from the date picker. 
+     * @param {Date} selectedDate - The date selected by the user.
+     */
+
+    const handleChange = (event, selectedDate) => {
+        setShow(false);
+        if (selectedDate) {
+            const formattedDate = selectedDate.toLocaleDateString('en-GB');
+            onChange(formattedDate);
+        }
+    };
+
+    return (
+        &lt;View>
+            &lt;TouchableOpacity onPress={() => setShow(true)} testID="datepicker-button" >
+                &lt;TextInput
+                    style={[styles.input, { 
+                        backgroundColor: theme.colors.boxBg, 
+                        color: theme.colors.text, 
+                        borderColor: theme.colors.border }]}
+                    value={value || ''}
+                    editable={false}
+                    placeholder="DD/MM/YYYY"
+                    placeholderTextColor={theme.colors.placeholder}
+                />
+            &lt;/TouchableOpacity>
+
+            { show &amp;&amp; (
+                &lt;DateTimePicker
+                    value={value ? new Date(value) : new Date()}
+                    mode="date"
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                    onChange={handleChange}
+                    // The mimimum date gets updated each year
+                    // Maximum age is set to 120 years old
+                    minimumDate={new Date(new Date().getFullYear() - 120, 0, 1)}
+                    maximumDate={new Date()}
+                    testID="datepicker"
+                />
+            )}
+        &lt;/View>
+    );
+};
+
+
+const styles = StyleSheet.create({
+    input: {
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        fontSize: 16,
+    },
+});
+
+export default DateTimePickerInput;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 17:40:36 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

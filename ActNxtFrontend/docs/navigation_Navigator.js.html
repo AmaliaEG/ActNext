@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: navigation/Navigator.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: navigation/Navigator.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Navigator.js
+ * @description
+ * Sets up the app's main navigation structure using a Drawer navigator.
+ * Wraps the entire navigation in a ThemeProvider and Auth0Provider, and defines a custom drawer content component (CustomDrawerContent)
+ * that renders the app logo, navigation links, and a settings modal.
+ * 
+ * @module Navigator
+ * @author s224837
+ * @since 2025-17-03
+ */
+
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import Modal from 'react-native-modal';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import LoginPage from '../screens/Pages/LoginPage'; 
+import Feed from '../screens/Pages/Feed'; 
+import AboutACTNXTAppScreen from '../screens/burgermenu/settingComponents/AboutACTNXTAppScreen';
+import ProfileDetailsScreen from '../screens/burgermenu/settingComponents/ProfileDetailsScreen';
+import SettingsScreen from '../screens/burgermenu/SettingsScreen';
+import TaskExpansion from '../screens/Pages/TaskExpansion';
+import ThemesScreen from '../screens/burgermenu/settingComponents/ThemesScreen';
+import StarredTasks from '../screens/Pages/StarredTasks';
+import ArchivedTasks from '../screens/Pages/ArchivedTasks';
+import { Auth0Provider} from 'react-native-auth0';
+import { useTheme, ThemeProvider } from '../Themes/ThemeContext';
+import { Styles } from '../screens/Pages/Styles';
+
+const Drawer = createDrawerNavigator();
+
+/**
+ * Custom drawer content component - renders the app logo, navigation items (Insights, Favorites and Archive),
+ * and a settings button that toggles a modal with the SettingsScreen.
+ * 
+ * @component
+ * @param {object} props - Props inserted by the Drawer navigator. 
+ * @param {object} props.navigation - Navigation object for screen transitions.
+ * @returns {JSX.Element}
+ */
+
+const CustomDrawerContent = (props) => {
+  // Get the resolved theme
+  const { theme } = useTheme();
+  const [settingsModalVisible, setSettingsModalVisible] = useState(false);
+  const [activeSettingScreen, setActiveSettingScreen] = useState(null);
+
+  return (
+    &lt;View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      &lt;DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: theme.colors.background }}>
+        {/* Header with logo and name */}
+        &lt;View style={[Styles.drawerHeader, { borderBottomColor: theme.colors.borderColor }]}>
+          &lt;Image source={require('../../assets/icon.png')} style={Styles.drawerLogo} resizeMode="contain" />
+          &lt;Text style={[Styles.drawerTitle, { color: theme.colors.itemTextColor }]}>
+            &lt;Text style={[Styles.drawerTitleAct, { color: theme.colors.itemTextColor }]}>act&lt;/Text>
+            &lt;Text style={[Styles.drawerTitleNxt, { color: theme.colors.itemTextColor }]}>nxt&lt;/Text>
+          &lt;/Text>
+        &lt;/View>
+
+        &lt;DrawerItem label="Insights" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('Feed')}/>
+        &lt;DrawerItem label="Favorites" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('StarredTasks')}/>
+        &lt;DrawerItem label="Archive" labelStyle={{ color: theme.colors.itemTextColor }} onPress={() => props.navigation.navigate('ArchivedTasks')}/>
+      &lt;/DrawerContentScrollView>
+
+      &lt;View style={Styles.gearWrapper}>
+        &lt;TouchableOpacity
+          onPress={() => {
+            setSettingsModalVisible(true);
+            setActiveSettingScreen(null); // Reset screen
+          }}
+          style={[Styles.gearButton, {backgroundColor: theme.colors.gearBg, shadowColor: theme.isDark}]}
+          testID='settings-button'
+        >
+          &lt;MaterialIcons name="settings" size={24} color={theme.colors.gearIconColor} testID="icon-settings"/>
+        &lt;/TouchableOpacity>
+      &lt;/View>
+
+      &lt;Modal
+        isVisible={settingsModalVisible}
+        onBackdropPress={() => setSettingsModalVisible(false)}
+        style={{ margin: 0, justifyContent: 'flex-end' }}
+      >
+        &lt;View style={[Styles.modalContainer, { backgroundColor: theme.colors.background, borderTopColor: theme.colors.borderColor }]}>
+            &lt;SettingsScreen props={props} closeModal={() => setSettingsModalVisible(false)} />
+        &lt;/View>
+      &lt;/Modal>
+    &lt;/View>
+  );
+};
+
+/**
+ * Main Navigator component - Wraps the app in ThemeProvider and Auth0Provider, then sets up a drawer navigatorwith all the screens:
+ * Home/Login, Feed, Details, Settings, Stared and Archived.
+ * 
+ * @component
+ * @returns {JSX.Element}
+ */
+const Navigator = () => {
+  return (
+    &lt;ThemeProvider>
+    &lt;Auth0Provider domain={"dev-actnxt.eu.auth0.com"} clientId={"7PV7PugpQ9TR2pYdHjYpvjiQC85rUb5J"} >
+       {/* &lt;- Add this around NavigationContainer */}
+        &lt;NavigationContainer>
+          &lt;Drawer.Navigator
+            screenOptions={{ drawerType: 'slide', drawerStyle: { width: '75%' }, headerShown: false }}
+            drawerContent={(props) => &lt;CustomDrawerContent {...props} />}
+          >
+            &lt;Drawer.Screen name="Home" component={LoginPage} />
+            &lt;Drawer.Screen name="Feed" component={Feed} options={{ headerShown: false }} />
+            &lt;Drawer.Screen name="Details" component={TaskExpansion} />
+            &lt;Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
+            &lt;Drawer.Screen name="StarredTasks" component={StarredTasks} />
+            &lt;Drawer.Screen name="ArchivedTasks" component={ArchivedTasks} />
+          &lt;/Drawer.Navigator>
+        &lt;/NavigationContainer>
+       {/* &lt;- Close it here */}
+    &lt;/Auth0Provider>
+    &lt;/ThemeProvider>
+  );
+};
+
+
+export { CustomDrawerContent };
+export default Navigator;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 17:40:36 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

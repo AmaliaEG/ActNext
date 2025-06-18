@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/burgermenu/settingComponents/ProfileDetailsScreen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/burgermenu/settingComponents/ProfileDetailsScreen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file ProfileDetailsScreen.js
  * @description
  * ProfileDetailsScreen allows the user to view and update their profile information, including name, birth date, gender, email, and password.
@@ -40,7 +68,7 @@ import { useTheme } from '../../../Themes/ThemeContext';
  * @returns {JSX.Element} A scrollable screen for managing user profile details.
  * 
  * @example
- * <ProfileDetailsScreen
+ * &lt;ProfileDetailsScreen
  *    navigation={navigation}
  *    closeModal={() => setModalVisible(false)}
  * />
@@ -64,7 +92,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     useEffect(() => {
-        if (hydrated && user) {
+        if (hydrated &amp;&amp; user) {
             const updatedProfile = {
                 name: profile?.name || '',
                 birthDate: profile?.birthDate || '',
@@ -97,7 +125,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
      * temporary password fields.
      * 
      * @async
-     * @returns {Promise<void>}
+     * @returns {Promise&lt;void>}
      */
 
     const handleSaveChanges = async () => {
@@ -107,7 +135,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
             return;
         }
 
-        if (newPassword && newPassword !== confirmPassword) {
+        if (newPassword &amp;&amp; newPassword !== confirmPassword) {
             Alert.alert('Error','Passwords do not match');
             return;
         }
@@ -130,7 +158,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
      * closes the Modal.
      * 
      * @async
-     * @returns {Promise<void>}
+     * @returns {Promise&lt;void>}
      */
 
     const LogoutFunc= async () => {
@@ -147,18 +175,18 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
 
     if (!hydrated) {
         return (
-            <View style={[styles.centered, { backgroundColor: theme.colors.background }]}>
-                <ActivityIndicator size="large" color={theme.colors.text} />
-                <Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading profile...</Text>
-            </View>
+            &lt;View style={[styles.centered, { backgroundColor: theme.colors.background }]}>
+                &lt;ActivityIndicator size="large" color={theme.colors.text} />
+                &lt;Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading profile...&lt;/Text>
+            &lt;/View>
         );
     }
     return (
-        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.background }]}>
-            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Profile Details</Text>
-            <View style={styles.inputContainer}>
-                <Text style={[styles.label, { color: theme.colors.text }]}>Name</Text>
-                <TextInput
+        &lt;ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.background }]}>
+            &lt;Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Profile Details&lt;/Text>
+            &lt;View style={styles.inputContainer}>
+                &lt;Text style={[styles.label, { color: theme.colors.text }]}>Name&lt;/Text>
+                &lt;TextInput
                     style={[styles.input, {
                         backgroundColor: theme.colors.inputBg,
                         color: theme.colors.inputText,
@@ -172,30 +200,30 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                     placeholder="Enter your name"
                     placeholderTextColor={theme.colors.placeholder}
                 />
-            </View>
+            &lt;/View>
     
-            <View style={styles.inputContainer}>
-                <Text style={[styles.label, { color: theme.colors.text }]}>Birth Date</Text>
-                <DateTimePickerInput
+            &lt;View style={styles.inputContainer}>
+                &lt;Text style={[styles.label, { color: theme.colors.text }]}>Birth Date&lt;/Text>
+                &lt;DateTimePickerInput
                     value={localEdits.birthDate}
                     onChange={(date) => setLocalEdits({ ...localEdits, birthDate: date })}
                     mode="date"
                     textStyle={{ color: theme.colors.inputText }}
                     placeholderTextColor={theme.colors.placeholder}
                 />
-            </View>
+            &lt;/View>
     
-                <View style={styles.inputContainer}>
-                    <GenderPickerInput
+                &lt;View style={styles.inputContainer}>
+                    &lt;GenderPickerInput
                         value={localEdits.gender}
                         onChange={(gender) => setLocalEdits({...localEdits, gender})}
                         textStyle={{ color: theme.colors.inputText }}
                     />
-                </View>
+                &lt;/View>
 
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.label, { color: theme.colors.text }]}>Email</Text>
-                    <TextInput
+                &lt;View style={styles.inputContainer}>
+                    &lt;Text style={[styles.label, { color: theme.colors.text }]}>Email&lt;/Text>
+                    &lt;TextInput
                         style={[styles.input, {
                             backgroundColor: theme.colors.inputBg,
                             color: theme.colors.inputText,
@@ -208,15 +236,15 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                         keyboardType="email-address"
                         autoCapitalize="none"
                     />
-                </View>
+                &lt;/View>
         
-              <View style={styles.inputContainer}>
-                <Text style={[styles.label, { color: theme.colors.text }]}>Code</Text>
-                <View style={[styles.codeContainer, {
+              &lt;View style={styles.inputContainer}>
+                &lt;Text style={[styles.label, { color: theme.colors.text }]}>Code&lt;/Text>
+                &lt;View style={[styles.codeContainer, {
                     backgroundColor: theme.colors.inputBg,
                     borderColor: theme.colors.border
                 }]}>
-                    <TextInput
+                    &lt;TextInput
                         testID="password-input"
                         style={[styles.codeInput, {
                             backgroundColor: theme.colors.inputBg,
@@ -230,28 +258,28 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                         placeholder="******"
                         placeholderTextColor={theme.colors.placeholder}
                     />
-                    <TouchableOpacity
+                    &lt;TouchableOpacity
                         testID="eye-icon"
                         style={styles.eyeIcon}
                         onPress={() => setShowCode(!showCode)}
                     >
-                        <Feather name={showCode ? 'eye-off' : 'eye'} size={20} color={theme.colors.inputText} />
-                    </TouchableOpacity>
-                </View>
-            </View>
+                        &lt;Feather name={showCode ? 'eye-off' : 'eye'} size={20} color={theme.colors.inputText} />
+                    &lt;/TouchableOpacity>
+                &lt;/View>
+            &lt;/View>
 
-                <TouchableOpacity
+                &lt;TouchableOpacity
                     style={[styles.newPasswordSection, {
                         backgroundColor: theme.colors.inputBg, 
                         borderColor: theme.colors.border }]}
                     onPress={() => setIsEditingPassword(!isEditingPassword)}
                 >
-                    <Text style={[styles.newPasswordLabel, { color: theme.colors.text }]}>New Password</Text>
-                    {isEditingPassword && (
-                        <>
-                            <View style={styles.inputContainer}>
-                                <Text style={[styles.label, { color: theme.colors.text }]}>New Password</Text>
-                                <TextInput
+                    &lt;Text style={[styles.newPasswordLabel, { color: theme.colors.text }]}>New Password&lt;/Text>
+                    {isEditingPassword &amp;&amp; (
+                        &lt;>
+                            &lt;View style={styles.inputContainer}>
+                                &lt;Text style={[styles.label, { color: theme.colors.text }]}>New Password&lt;/Text>
+                                &lt;TextInput
                                     style={[styles.input, { 
                                         backgroundColor: theme.colors.inputBg, 
                                         color: theme.colors.inputText, 
@@ -262,11 +290,11 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                                     placeholder='New Password'
                                     placeholderTextColor={theme.colors.placeholder}
                                 />
-                            </View>
+                            &lt;/View>
     
-                            <View style={styles.inputContainer}>
-                                <Text style={[styles.label, { color: theme.colors.text }]}>Confirm New Password</Text>
-                                <TextInput
+                            &lt;View style={styles.inputContainer}>
+                                &lt;Text style={[styles.label, { color: theme.colors.text }]}>Confirm New Password&lt;/Text>
+                                &lt;TextInput
                                     style={[styles.input, { 
                                         backgroundColor: theme.colors.inputBg, 
                                         color: theme.colors.inputText, 
@@ -277,38 +305,38 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
                                     placeholder='Confirm New Password'
                                     placeholderTextColor={theme.colors.placeholder}
                                 />
-                            </View>
-                        </>
+                            &lt;/View>
+                        &lt;/>
                     )}
-                </TouchableOpacity>
+                &lt;/TouchableOpacity>
                 
-                <TouchableOpacity style={[styles.saveButton, { 
+                &lt;TouchableOpacity style={[styles.saveButton, { 
                     backgroundColor: theme.colors.primary, 
                     borderColor: theme.colors.buttonBorder }]}
                     onPress={handleSaveChanges}>
-                    <Text style={[styles.saveButtonText, { color: theme.colors.buttonText }]}>Save Changes</Text>
-                </TouchableOpacity>
+                    &lt;Text style={[styles.saveButtonText, { color: theme.colors.buttonText }]}>Save Changes&lt;/Text>
+                &lt;/TouchableOpacity>
                 
-                <View>
+                &lt;View>
                     {user ? (
-                        <>
-                            <TouchableOpacity
+                        &lt;>
+                            &lt;TouchableOpacity
                                 style={[styles.saveButton, { 
                                     backgroundColor: theme.colors.primary, 
                                     borderColor: theme.colors.buttonBorder, 
                                     marginTop: 12 }]}
                                 onPress={LogoutFunc}
                             >
-                            <Text style={[styles.saveButtonText, { color: theme.colors.buttonText }]}>Log Out</Text>
-                            </TouchableOpacity>
-                        </>
+                            &lt;Text style={[styles.saveButtonText, { color: theme.colors.buttonText }]}>Log Out&lt;/Text>
+                            &lt;/TouchableOpacity>
+                        &lt;/>
                     ):(
-                        <>
-                            <Text style={{ color: theme.colors.text, marginTop: 12 }}> Not logged in to any user </Text>
-                        </>
+                        &lt;>
+                            &lt;Text style={{ color: theme.colors.text, marginTop: 12 }}> Not logged in to any user &lt;/Text>
+                        &lt;/>
                     )}
-                </View>
-            </ScrollView>
+                &lt;/View>
+            &lt;/ScrollView>
     )
 };
 
@@ -382,4 +410,26 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ProfileDetailsScreen;
+export default ProfileDetailsScreen;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 17:40:36 GMT+0200 (Centraleuropæisk sommertid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
