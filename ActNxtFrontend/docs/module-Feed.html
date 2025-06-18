@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Module: Feed</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Module: Feed</h1>
 
     
 
@@ -28,7 +28,8 @@
 
 <header>
     
-        <h2></h2>
+        
+            
         
     
 </header>
@@ -37,8 +38,24 @@
     <div class="container-overview">
     
         
+            <div class="description">Feed.js</div>
+        
 
         
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -46,7 +63,9 @@
     
 
     
-
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2025-04-03
+)</li></ul></dd>
     
 
     
@@ -62,11 +81,25 @@
     
 
     
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>s235224 and s235280</li>
+        </ul>
+    </dd>
+    
+
+    
 
     
 
     
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="screens_Pages_Feed.js.html">screens/Pages/Feed.js</a>, <a href="screens_Pages_Feed.js.html#line1">line 1</a>
+    </li></ul></dd>
     
 
     
@@ -75,6 +108,46 @@
 
     
 </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    A screen with a list of the 4 most recent insights, a menu button, and pull-to-refresh functionality.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSX.Element</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
 
 
         
@@ -94,31 +167,34 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         
             
-<h4 class="name" id="darkTheme"><span class="type-signature">(constant) </span>darkTheme<span class="type-signature"> :Object</span></h4>
 
+    
+
+    
+    <h4 class="name" id="~onRefresh"><span class="type-signature">(inner) </span>onRefresh<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    Dark theme configuration object.
-Defines the color palette and UI styles for dark mode.
+    Indicates whether the feed is currently refreshing.
 </div>
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
 
 
-        </li>
-    </ul>
+
+
+
 
 
 
@@ -128,82 +204,6 @@ Defines the color palette and UI styles for dark mode.
 
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Themes_theme.js.html">Themes/theme.js</a>, <a href="Themes_theme.js.html#line68">line 68</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="lightTheme"><span class="type-signature">(constant) </span>lightTheme<span class="type-signature"> :Object</span></h4>
-
-
-
-
-<div class="description">
-    Light theme configuration object.
-Defines the color palette and UI styles for light mode.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2025-06-06</li></ul></dd>
     
 
     
@@ -232,11 +232,16 @@ Defines the color palette and UI styles for light mode.
     
 
     
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>false</li>
+        </ul></dd>
+    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Themes_theme.js.html">Themes/theme.js</a>, <a href="Themes_theme.js.html#line9">line 9</a>
+        <a href="screens_Pages_Feed.js.html">screens/Pages/Feed.js</a>, <a href="screens_Pages_Feed.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -252,72 +257,14 @@ Defines the color palette and UI styles for light mode.
 
 
 
-        
-            
-<h4 class="name" id="themes"><span class="type-signature">(constant) </span>themes<span class="type-signature"> :Object</span></h4>
-
-
-
-
-<div class="description">
-    A theme map that groups both light and dark themes.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-        </li>
-    </ul>
 
 
 
 
 
-<dl class="details">
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Themes_theme.js.html">Themes/theme.js</a>, <a href="Themes_theme.js.html#line128">line 128</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
 
 
 
@@ -325,8 +272,6 @@ Defines the color palette and UI styles for light mode.
 
 
         
-    
-
     
 
     

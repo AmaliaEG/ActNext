@@ -2,6 +2,8 @@
  * @description
  * Displays a feed of insights with pull-to-refresh functionality.
  * Uses `useInsightsStore` for state management and `useTheme` for theming.
+ * @file Feed.js
+ * @module Feed
  * @returns {JSX.Element} A screen with a list of the 4 most recent insights, a menu button, and pull-to-refresh functionality.
  * @component
  * @author s235224 and s235280
