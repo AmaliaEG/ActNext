@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: AboutACTNXTAppScreen</title>
+    <title>JSDoc: Module: StarredTasks</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: AboutACTNXTAppScreen</h1>
+    <h1 class="page-title">Module: StarredTasks</h1>
 
     
 
@@ -38,7 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">This screen displays information about the ActNxt application, including a scrollable description of the company's mission, approach,and focus. It also includes a button that navigates to the official ActNxt website for support and additional information.If unable to open the website an error alert is shown to the user.</div>
+            <div class="description">This screen displays all user-starred insights in a list. If no insights are starred, a fallback message is shown.Includes drawer navigation and supports dynamic theming. Pulls state from Zustand store.</div>
         
 
         
@@ -64,7 +64,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2025-19-03</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>2025-04-06</li></ul></dd>
     
 
     
@@ -97,7 +97,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="screens_burgermenu_settingComponents_AboutACTNXTAppScreen.js.html">screens/burgermenu/settingComponents/AboutACTNXTAppScreen.js</a>, <a href="screens_burgermenu_settingComponents_AboutACTNXTAppScreen.js.html#line1">line 1</a>
+        <a href="screens_Pages_StarredTasks.js.html">screens/Pages/StarredTasks.js</a>, <a href="screens_Pages_StarredTasks.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -154,12 +154,16 @@
     
 
     
-    <h4 class="name" id="~AboutACTNXTAppScreen"><span class="type-signature">(inner) </span>AboutACTNXTAppScreen<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
+    <h4 class="name" id="~StarredTasks"><span class="type-signature">(inner) </span>StarredTasks<span class="signature">()</span><span class="type-signature"> &rarr; {JSX.Element}</span></h4>
     
 
     
 
 
+
+<div class="description">
+    StarredTasks filters and displays only those insights that the user has marked as starred (favorite).It uses Zustand for state management and accesses theming via ThemeContext.
+</div>
 
 
 
@@ -202,7 +206,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="screens_burgermenu_settingComponents_AboutACTNXTAppScreen.js.html">screens/burgermenu/settingComponents/AboutACTNXTAppScreen.js</a>, <a href="screens_burgermenu_settingComponents_AboutACTNXTAppScreen.js.html#line27">line 27</a>
+        <a href="screens_Pages_StarredTasks.js.html">screens/Pages/StarredTasks.js</a>, <a href="screens_Pages_StarredTasks.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -231,7 +235,7 @@
 
         
 <div class="param-desc">
-    A screen with app description, support link and version info.
+    A scrollable list of starred tasks, or a fallback message if none are starred.
 </div>
 
 
@@ -251,11 +255,6 @@
     
 
 
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>&lt;AboutACTNXTAppScreen /></code></pre>
 
 
 

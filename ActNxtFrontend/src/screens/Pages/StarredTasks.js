@@ -1,3 +1,13 @@
+/**
+ * @file StarredTasks.js
+ * @description
+ * This screen displays all user-starred insights in a list. If no insights are starred, a fallback message is shown.
+ * Includes drawer navigation and supports dynamic theming. Pulls state from Zustand store.
+ * @module StarredTasks
+ * @author s224837
+ * @since 2025-04-06
+ */
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,11 +17,21 @@ import { useTheme } from '../../Themes/ThemeContext';
 import { Styles } from './Styles';
 import TaskCard from './TaskCard';
 
+/**
+ * StarredTasks filters and displays only those insights that the user has marked as starred (favorite).
+ * It uses Zustand for state management and accesses theming via ThemeContext.
+ * @component
+ * @returns {JSX.Element} A scrollable list of starred tasks, or a fallback message if none are starred.
+ */
 const StarredTasks = () => {
   const navigation = useNavigation();
   const { insights, hydrated, getStarStatus } = useInsightsStore();
   const { theme } = useTheme();
 
+  /**
+   * Filters starred insights from the complete insights list.
+   * Uses Zustand hydration and `getStarStatus` function.
+   */
   const starredTasks = useMemo(() => {
     if (!hydrated || !insights) return [];
     return insights.filter(task => getStarStatus(task.Id));

@@ -38,30 +38,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Manages the list of sales insights (tasks), including loading, persisting, feedback flow, comments, starring, and archiving.
-Persists state in AsyncStorage and ensures hydration before UI uses data.
-
-State:
-- `insights` (Array<Object>): list of insight objects, each with these fields (`dateAssigned`, `isOverdue`, `firstSentence`).
-- `queuedFeedback` (Array): temporary queue for feedback actions before persistence.
-- `hydrated` (boolean): indicates whether data has been loaded from storage.
-
-Actions:
-- `initializeWithMockData`: seeds store with mock data, formats each insight, and persists it.
-- `clearInsights`: clears all persisted insights and resets store.
-- `loadInsights`: loads persisted insights or mock JSON, processes each record, and sets `hydrated`.
-- `setInsights(data)`: replaces all insights with provided data after formatting and persists.
-- `addFeedback(insightId, feedbackType)`: toggles like/dislike feedback on an insight and persists.
-- `getFeedback(insightId)`: retrieves current feedback for a given insight.
-- `clearQueuedFeedback`: empties the feedback queue.
-- `updateComment(insightId, commentText)`: updates or removes a single comment on an insight and persists.
-- `getComment(insightId)`: retieves the comment object for an insight.
-- `updateTaskComment(taskId, commentText)`: updates or removes a user comment on a specific task and persists.
-- `getTaskComment(taskId)`: retieves the user comment string for a task.
-- `toggleStar(taskId, starStatus)`: sets the starred status of a task and persists.
-- `getStarStatus(taskId)`: retrieves whether a task is starred.
-- `getStarredTasks`: returns all starred tasks.
-- `archiveTask(taskId)`/`unarchiveTask(taskId)`: toggles archived status for a task and persists.</div>
+            <div class="description">Manages the list of sales insights (tasks), including loading, persisting, feedback flow, comments, starring, and archiving.Persists state in AsyncStorage and ensures hydration before UI uses data.State:- `insights` (Array<Object>): list of insight objects, each with these fields (`dateAssigned`, `isOverdue`, `firstSentence`).- `queuedFeedback` (Array): temporary queue for feedback actions before persistence.- `hydrated` (boolean): indicates whether data has been loaded from storage.Actions:- `initializeWithMockData`: seeds store with mock data, formats each insight, and persists it.- `clearInsights`: clears all persisted insights and resets store.- `loadInsights`: loads persisted insights or mock JSON, processes each record, and sets `hydrated`.- `setInsights(data)`: replaces all insights with provided data after formatting and persists.- `addFeedback(insightId, feedbackType)`: toggles like/dislike feedback on an insight and persists.- `getFeedback(insightId)`: retrieves current feedback for a given insight.- `clearQueuedFeedback`: empties the feedback queue.- `updateComment(insightId, commentText)`: updates or removes a single comment on an insight and persists.- `getComment(insightId)`: retieves the comment object for an insight.- `updateTaskComment(taskId, commentText)`: updates or removes a user comment on a specific task and persists.- `getTaskComment(taskId)`: retieves the user comment string for a task.- `toggleStar(taskId, starStatus)`: sets the starred status of a task and persists.- `getStarStatus(taskId)`: retrieves whether a task is starred.- `getStarredTasks`: returns all starred tasks.- `archiveTask(taskId)`/`unarchiveTask(taskId)`: toggles archived status for a task and persists.</div>
         
 
         
@@ -2728,13 +2705,13 @@ Actions:
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Feed">Feed</a></li><li><a href="global.html#LanguagesScreen">LanguagesScreen</a></li><li><a href="global.html#ThemesScreen">ThemesScreen</a></li><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#onRefresh">onRefresh</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 18:08:20 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Jun 18 2025 20:37:00 GMT+0200 (Centraleuropæisk sommertid)
 </footer>
 
 <script> prettyPrint(); </script>

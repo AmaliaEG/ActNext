@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: screens/Pages/Feed.js</title>
+    <title>JSDoc: Source: screens/Pages/ArchivedTasks.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: screens/Pages/Feed.js</h1>
+    <h1 class="page-title">Source: screens/Pages/ArchivedTasks.js</h1>
 
     
 
@@ -26,7 +26,18 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+            <pre class="prettyprint source linenums"><code>/**
+ * @file ArchivedTasks.js
+ * @description
+ * This screen displays all insights that the user has marked as archived. If no insights are archived, a fallback message is shown.
+ * The screen includes drawer navigation and supports dynamic theming.
+ * State is managed globally via Zustand.
+ * @module ArchivedTasks
+ * @author s224837
+ * @since 2025-04-06
+ */
+
+import React, { useMemo } from 'react';
 import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -35,88 +46,76 @@ import { useTheme } from '../../Themes/ThemeContext';
 import { Styles } from './Styles';
 import TaskCard from './TaskCard';
 
+
 /**
- * Displays a feed of insights with pull-to-refresh functionality.
- * Uses `useInsightsStore` for state management and `useTheme` for theming.
- * @returns {JSX.Element} A screen with a list of the 4 most recent insights, a menu button, and pull-to-refresh functionality.
+ * ArchivedTasks displays all insights that have been marked as archived (finished) by the user.
+ * It allows unarchiving tasks using Zustand actions and adapts styling using the active theme.
+ * 
  * @component
- * @example
- * return (
- *   &lt;Feed />
- * )
+ * @returns {JSX.Element} A screen displaying archived tasks in a scrollable list. If none exist, it shows an empty-state message.
  */
-const Feed = () => {
-  const navigation = useNavigation();
-  const { insights, hydrated } = useInsightsStore();
+const ArchivedTasks = () => {
   const { theme } = useTheme();
+  const navigation = useNavigation();
+  const { insights, hydrated, unarchiveTask } = useInsightsStore();
 
-
-/**
- * Triggers when the user pulls down to refresh is pulled to refresh.
- * @type {boolean}
- * @default false
- * @description Indicates whether the feed is currently refreshing.
- * @function onRefresh
- */
-  const [refreshing, setRefreshing] = useState(false);
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await useInsightsStore.getState().clearInsights(); // clear AsyncStorage
-    await useInsightsStore.getState().loadInsights();  // reload mock data
-    setRefreshing(false);
-  };
-
-  useEffect(() => {
-    if (hydrated &amp;&amp; insights.length === 0) {
-    }
-  }, [hydrated]);
+  /**
+   * Filters insights to include only those marked as archived.
+   * Uses Zustand hydration and `task.isArchived` flag.
+   */
+  const archivedTasks = useMemo(() => {
+      if (!hydrated || !insights) return [];
+      return insights.filter(task => task.isArchived);
+    }, [hydrated, insights]);
 
   if (!hydrated) {
       return (
-        &lt;View style={[Styles.centered, { backgroundColor: theme.colors.background }]}>
+        &lt;View style={Styles.centered}>
             &lt;ActivityIndicator size="large" color="#007BFF" />
-            &lt;Text style={{ color: theme.colors.subText, marginTop: 8 }}>Loading insights...&lt;/Text>
+            &lt;Text style={{ color: theme.colors.text, marginTop: 8 }}>Loading archived insights...&lt;/Text>
         &lt;/View>
       );
   }
-  
+
   return (
-    &lt;View style={[Styles.container, { backgroundColor: theme.colors.background  }]}>
-      &lt;View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>
+    &lt;View style={[Styles.container, { backgroundColor: theme.colors.background }]}>
+      &lt;View style={[Styles.menuContainer,{backgroundColor: theme.colors.cardBg}]}>
         &lt;Pressable onPress={() => navigation.openDrawer()} style={Styles.menuButton} testID='burger-menu'>
           &lt;Ionicons 
             name="menu" 
             size={Styles.menuIcon.size}
-            color={theme.colors.text}
           />
         &lt;/Pressable>
-        &lt;Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Insights&lt;/Text>
+        &lt;Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Archive&lt;/Text>
       &lt;/View>
 
       &lt;Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
 
       &lt;FlatList
         keyExtractor={(item) => item.Id.toString()}
-        data={insights.filter(task => !task.isArchived).slice(0, 4)}
-        refreshing={refreshing}
-        onRefresh={onRefresh}
+        data={archivedTasks}
         renderItem={({ item }) => (
           &lt;TaskCard 
             item={item}
             navigation={navigation}
-            backgroundColor={theme.colors.cardBg}
+            backgroundColor={theme.colors.insightBackground}
             textColor={theme.colors.text}
             subTextColor={theme.colors.subText}
-            shadowColor={theme.colors.shadowColor}
+            shadowColor={theme.colors.shadow}
             shadowOpacity={theme.colors.shadowOpacity}
+            showUnarchive={true}
+            onUnarchive={unarchiveTask}
           />
         )}
+        ListEmptyComponent={
+          &lt;Text style={[{ textAlign: 'center', marginTop: 30 }, { color: theme.colors.text }]}>No archived tasks yet.&lt;/Text>
+        }
       />
     &lt;/View>
   );
 };
 
-export default Feed;</code></pre>
+export default ArchivedTasks;</code></pre>
         </article>
     </section>
 
