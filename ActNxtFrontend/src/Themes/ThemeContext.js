@@ -1,19 +1,19 @@
-// ThemeContext.js
+/**
+ * @file ThemeContext.js
+ * @description * Theme context mangages the application's theme settings: light, dark, or system. This context provides the current theme, the resolved mode based on system settings,
+ * and a function to update the theme mode. It listens for system theme changes and updates
+ * the theme accordingly when the mode is set to 'system'.
+ * @module ThemeContext
+ * @author s235224
+ * @since 2023-04-17
+ */
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Appearance } from 'react-native';
 import themes from './theme';
 
-/**
- * Theme context mangages the application's theme settings: light, dark, or system.
- * 
- * This context provides the current theme, the resolved mode based on system settings,
- * and a function to update the theme mode. It listens for system theme changes and updates
- * the theme accordingly when the mode is set to 'system'.
- * @module ThemeContext
- */
 
 const ThemeContext = createContext();
-
 /**
  * ThemeProvider component wraps the application to provide theme context.
  * 

@@ -1,7 +1,10 @@
 /**
+ * @description
  * Light theme configuration object.
  * Defines the color palette and UI styles for light mode.
+ * @author s235224
  * @type {Object}
+ * @since 2025-06-06
  */
 export const lightTheme = {
   mode: 'light',

@@ -1,18 +1,21 @@
+/**
+ * @description
+ * LanguagesScreen component – allows users to select the app's language (English or Danish).
+ *
+ * Uses `useTheme` for dynamic theming and `useSettingsStore` for managing language settings.
+ *
+ * @component
+ * @returns {JSX.Element} A screen with options to select the language.
+ * @author s235224
+ * @since 2025-06-12
+ */
+
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTheme } from '../../../Themes/ThemeContext';
 import useSettingsStore from '../../../store/useSettingsStore';
 
-/**
- * Screen component for selecting the app's language - English or Danish.
- * 
- * Uses 'useTheme' for theming and 'useSettingsStore' for managing language settings.
- * @component
- * @example
- * return (
- *   <LanguagesScreen />
- * )
- */
+
 const LanguagesScreen = () => {
   const { theme } = useTheme();
   const { language, setLanguage } = useSettingsStore();

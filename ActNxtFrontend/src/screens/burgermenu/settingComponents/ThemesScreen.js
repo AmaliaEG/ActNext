@@ -1,17 +1,17 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useTheme } from '../../../Themes/ThemeContext'
-
 /**
+ * @description
  * A screen component for selecting the app's theme (light, dark, or system).
  * Uses the current theme context to update and reflect theme changes.
  *
  * @component
- * @example
- * return (
- *   <ThemesScreen />
- * )
+ * @author s235224
+ * @since 2025-06-06
  */
+import React from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useTheme } from '../../../Themes/ThemeContext'
+
+
 const ThemesScreen = () => {
   const { mode, updateTheme, theme } = useTheme();
 

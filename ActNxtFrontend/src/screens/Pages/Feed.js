@@ -1,3 +1,14 @@
+/**
+ * @description
+ * Displays a feed of insights with pull-to-refresh functionality.
+ * Uses `useInsightsStore` for state management and `useTheme` for theming.
+ * @returns {JSX.Element} A screen with a list of the 4 most recent insights, a menu button, and pull-to-refresh functionality.
+ * @component
+ * @author s235224 and s235280
+ * @since 2025-04-03
+ * )
+ */
+
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,16 +18,7 @@ import { useTheme } from '../../Themes/ThemeContext';
 import { Styles } from './Styles';
 import TaskCard from './TaskCard';
 
-/**
- * Displays a feed of insights with pull-to-refresh functionality.
- * Uses `useInsightsStore` for state management and `useTheme` for theming.
- * @returns {JSX.Element} A screen with a list of the 4 most recent insights, a menu button, and pull-to-refresh functionality.
- * @component
- * @example
- * return (
- *   <Feed />
- * )
- */
+
 const Feed = () => {
   const navigation = useNavigation();
   const { insights, hydrated } = useInsightsStore();
@@ -29,6 +31,7 @@ const Feed = () => {
  * @default false
  * @description Indicates whether the feed is currently refreshing.
  * @function onRefresh
+
  */
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
