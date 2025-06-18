@@ -1,3 +1,5 @@
+// Written by s224837
+
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import Navigator from '../../src/navigation/Navigator';

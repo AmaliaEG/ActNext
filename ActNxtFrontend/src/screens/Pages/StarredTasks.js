@@ -31,6 +31,7 @@ const StarredTasks = () => {
   /**
    * Filters starred insights from the complete insights list.
    * Uses Zustand hydration and `getStarStatus` function.
+   * @author s235280
    */
   const starredTasks = useMemo(() => {
     if (!hydrated || !insights) return [];

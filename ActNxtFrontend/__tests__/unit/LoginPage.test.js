@@ -1,3 +1,5 @@
+// Written by s235251, with contributions from s224837
+
 import { render, waitFor } from "@testing-library/react-native";
 import LoginPage from "../../src/screens/Pages/LoginPage"
 import { useAuth0 as mockUseAuth0 } from "react-native-auth0";

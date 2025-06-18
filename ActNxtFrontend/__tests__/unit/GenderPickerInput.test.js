@@ -1,3 +1,5 @@
+// Written by s224837
+
 import { render, fireEvent } from "@testing-library/react-native";
 import GenderPickerInput from '../../src/screens/burgermenu/settingComponents/profileInput/GenderPickerInput';
 

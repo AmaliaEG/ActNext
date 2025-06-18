@@ -1,3 +1,5 @@
+// Written by s224837
+
 import React from 'react';
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { Alert, Linking } from 'react-native';

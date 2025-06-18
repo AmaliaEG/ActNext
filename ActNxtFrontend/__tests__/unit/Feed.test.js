@@ -1,3 +1,5 @@
+// Written by s235224
+
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import Feed from '../../src/screens/Pages/Feed';

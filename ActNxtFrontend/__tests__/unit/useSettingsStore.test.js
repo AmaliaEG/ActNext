@@ -1,3 +1,5 @@
+// Written by s224837
+
 import useSettingsStore from "../../src/store/useSettingsStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

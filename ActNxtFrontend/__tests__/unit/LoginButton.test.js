@@ -1,3 +1,5 @@
+// Written by s235251
+
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { useAuth0 as mockUseAuth0 } from "react-native-auth0";
 import { LoginButton } from "../../src/screens/Pages/LoginPage";

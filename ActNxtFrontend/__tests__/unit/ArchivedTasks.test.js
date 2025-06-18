@@ -1,3 +1,5 @@
+// Written by s235280, with contributions by s224837
+
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import ArchivedTasks from '../../src/screens/Pages/ArchivedTasks';

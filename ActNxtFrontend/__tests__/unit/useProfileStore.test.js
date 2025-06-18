@@ -1,3 +1,5 @@
+// Written by s224837, with contributions by s235251
+
 import useProfileStore from "../../src/store/useProfileStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

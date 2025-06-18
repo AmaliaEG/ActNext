@@ -1,3 +1,5 @@
+// Written by s224837
+
 import useAuthStore from "../../src/store/useAuthStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 

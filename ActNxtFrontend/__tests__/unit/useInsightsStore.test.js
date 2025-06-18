@@ -1,3 +1,5 @@
+// Written by s224837
+
 import { waitFor } from "@testing-library/react-native";
 import useInsightsStore from "../../src/store/useInsightsStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
