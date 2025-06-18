@@ -31,6 +31,7 @@ const Feed = () => {
  * @default false
  * @description Indicates whether the feed is currently refreshing.
  * @function onRefresh
+ * @author s235224
 
  */
   const [refreshing, setRefreshing] = useState(false);
