@@ -131,6 +131,7 @@ const ProfileDetailsScreen = ({navigation, closeModal}) => {
      * 
      * @async
      * @returns {Promise<void>}
+     * @author S235251
      */
 
     const LogoutFunc= async () => {

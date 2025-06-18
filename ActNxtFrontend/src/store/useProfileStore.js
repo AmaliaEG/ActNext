@@ -45,6 +45,7 @@ const useProfileStore = create((set) => ({
      * It then saves and sets the profile, and marks hydrated when done.
      * @async
      * @param {Object} user - Auth0 user object.
+     * @author S235251
      */
     loadProfile: async (user) => {
         try {

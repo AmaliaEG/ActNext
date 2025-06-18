@@ -96,6 +96,7 @@ const CustomDrawerContent = (props) => {
  * 
  * @component
  * @returns {JSX.Element}
+ * @author S235251
  */
 const Navigator = () => {
   return (

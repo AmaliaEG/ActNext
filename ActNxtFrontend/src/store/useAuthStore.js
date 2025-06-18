@@ -56,6 +56,7 @@ const useAuthStore = create((set) => ({
      * Persists new state to AsyncStorage.
      * @async
      * @param {string} accessToken - The auth token received upon login.
+     * @author s235251
      */
     login: async (accessToken) => {
         try {
