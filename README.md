@@ -32,8 +32,9 @@ If using an android emulator (we recommend Android Studio as it sets up pretty m
 - Android sdk Platform-tools
 - Android debug bridge (optional, but useful for installing build on the emulator)
   
-If using ios emulator (xcode)
-- Ionno I dont have macOS
+If using ios emulator (code)
+- xcode-select --install
+- Install CocoaPods (sudo gem install cocoapods)
 
 ## Usefull documentation
 - [npm](https://docs.npmjs.com/)
