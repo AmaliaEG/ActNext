@@ -1,5 +1,7 @@
 # Actnxt Frontend application
 This repository hosts the frontend of the Actnxt mobile application, and was developed by DTU Students \{names\} as our Software Technology Project course on our 4th semester at DTU.
+## Documentation
+All code documentation is found under the docs folder, launch ActnxtFrontend/docs/index.html to view
 ## Structure
 The structure is made like so and so...
 ## Packages
