@@ -5,7 +5,7 @@
  * The screen includes drawer navigation and supports dynamic theming.
  * State is managed globally via Zustand.
  * @module ArchivedTasks
- * @author s224837
+ * @author s224837 and s235280
  * @since 2025-04-06
  */
 

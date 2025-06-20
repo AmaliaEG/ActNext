@@ -11,8 +11,8 @@
  * @since 2025-03-05
  */
 
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Stylesheet, ActivityIndicator, TextInput, Platform, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, Stylesheet, ActivityIndicator, TextInput, Platform, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import useInsightsStore from '../../store/useInsightsStore';
@@ -57,6 +57,22 @@ const TaskExpansion = ({ route }) => {
   const [comment, setComment] = useState('');
   const [isStarred, setIsStarred] = useState(false);
   const { theme } = useTheme();
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const scrollViewRef = useRef();
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
+      setKeyboardHeight(e.endCoordinates.height);
+    });
+    const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardHeight(0);
+    });
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
   useEffect(() => {
     if (hydrated) {
@@ -103,16 +119,28 @@ const TaskExpansion = ({ route }) => {
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView 
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView 
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardDismissMode="on-drag"
-        >
-          <View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}>
+          ref={scrollViewRef}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 20, // Add some padding at the bottom
+          }}
+          // contentInset={{ bottom: keyboardHeight }}
+          // scrollIndicatorInsets={{ bottom: keyboardHeight }}
+          // // contentContainerStyle={{ flexGrow: 1 }}
+          // keyboardDismissMode="on-drag"
+          // keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps="handled"
+          >
+          {/* <View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}> */}
           {/* Head bar */}
           <View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
             <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={Styles.backButton}>
@@ -150,11 +178,11 @@ const TaskExpansion = ({ route }) => {
             <View
               testID="color-circle"
               style={[Styles.colorCircle, { backgroundColor: targetGroup.color }]}
-            />
-            <Text style={[Styles.groupNameText, { color: theme.colors.text }]}>
-              {targetGroup.name}
-            </Text>
-          </View>
+              />
+              <Text style={[Styles.groupNameText, { color: theme.colors.text }]}>
+                {targetGroup.name}
+              </Text>
+            </View>
 
             {/* Detailed description of task*/}
             <Text style={[Styles.contentText, {color: theme.colors.text}]}>{task.Description}</Text>
@@ -186,11 +214,10 @@ const TaskExpansion = ({ route }) => {
           </View>
 
           {/* Comment Section - integrated with the input */}
-          <View style={Styles.commentSection}>
+          <View style={[Styles.commentSection, { paddingBottom: keyboardHeight > 0 ? keyboardHeight + 20 : 20}]}>
             <Text style={[Styles.commentTitle, {color: theme.colors.text}]}>My Notes</Text>
             <TextInput
-              style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text },
-              ]}
+              style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text, minHeight: 100, paddingBottom: 10}]}
               placeholder="Type your notes here..."
               placeholderTextColor="#999"
               multiline
@@ -198,6 +225,11 @@ const TaskExpansion = ({ route }) => {
               onChangeText={setComment}
               onSubmitEditing={handleCommentSubmit}
               blurOnSubmit={false}
+              onFocus={() => {
+                setTimeout(() => {
+                  scrollViewRef.current?.scrollToEnd({ animated: true });
+                }, 300);
+              }}
             />
             <TouchableOpacity
               style={Styles.saveButton}
@@ -227,11 +259,11 @@ const TaskExpansion = ({ route }) => {
               <Text style={Styles.finishedButtonText}>Finished</Text>
             </TouchableOpacity>
           </View>
-        </View>
+          {/* </View> */}
         </ScrollView>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
-    
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+    // </TouchableWithoutFeedback>
   );
 };
 

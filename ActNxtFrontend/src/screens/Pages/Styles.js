@@ -357,9 +357,9 @@ export const Styles = StyleSheet.create({
       color: 'white',
   },
   commentSection: {
-    marginTop: 30,
+    marginTop: 20,
     marginHorizontal: 25,
-    marginBottom: 20,
+    paddingHorizontal: 16,
   },
   commentTitle: {
     fontSize: 16,
@@ -377,6 +377,7 @@ export const Styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontSize: 15,
     lineHeight: 22,
+    textAlignVertical: 'top',
   },
   commentHint: {
     fontSize: 12,
@@ -389,6 +390,9 @@ export const Styles = StyleSheet.create({
     bottom: 100,
     left: 20,
     right: 20,
+    paddingHorizontal: 16,
+    paddingBottom: 20,
+    marginBottom: 15,
   },
   finishedButton: {
       backgroundColor: '#2196F3',

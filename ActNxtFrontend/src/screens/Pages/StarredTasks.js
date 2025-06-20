@@ -4,7 +4,7 @@
  * This screen displays all user-starred insights in a list. If no insights are starred, a fallback message is shown.
  * Includes drawer navigation and supports dynamic theming. Pulls state from Zustand store.
  * @module StarredTasks
- * @author s224837
+ * @author s224837 and s235280
  * @since 2025-04-06
  */
 

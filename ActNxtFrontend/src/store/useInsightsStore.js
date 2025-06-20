@@ -27,7 +27,7 @@
  * - `archiveTask(taskId)`/`unarchiveTask(taskId)`: toggles archived status for a task and persists.
  * 
  * @module useInsightStore
- * @author s224837
+ * @author s224837 and s235280
  * @since 2025-05-05
  */
 
