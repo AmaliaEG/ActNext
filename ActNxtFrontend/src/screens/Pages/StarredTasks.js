@@ -63,7 +63,7 @@ const StarredTasks = () => {
         <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Favorites</Text>
       </View>
 
-      <Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
+      <Image style={Styles.backgroundImage}  source={require('../../../assets/blur.png')} resizeMode="contain"/>
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
@@ -84,6 +84,7 @@ const StarredTasks = () => {
             textAlign: 'center', 
             marginTop: 30, 
             color: theme.colors.shadowColor,
+            fontSize: 18
           }]}>
             <Text style={[ { color: theme.colors.text }]}>No starred tasks yet.</Text>
           </Text>

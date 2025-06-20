@@ -71,7 +71,7 @@ const Feed = () => {
         <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Insights</Text>
       </View>
 
-      <Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
+      <Image style={Styles.backgroundImage}  source={require('../../../assets/blur.png')} resizeMode="contain"/>
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}

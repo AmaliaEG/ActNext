@@ -29,6 +29,13 @@ export const Styles = StyleSheet.create({
   },
 
   // ===== BACKGROUND IMAGE ===== //
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
   backgroundImage: {
     position: 'absolute',
     transform: [{scale:1.65}],

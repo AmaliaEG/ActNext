@@ -62,7 +62,7 @@ const ArchivedTasks = () => {
         <Text style={[Styles.screenTitle, { color: theme.colors.text }]}>Archive</Text>
       </View>
 
-      <Image style={Styles.backgroundImage}  source={require('../../../assets/icon.png')} resizeMode="contain"/>
+      <Image style={Styles.backgroundImage}  source={require('../../../assets/blur.png')} resizeMode="contain"/>
 
       <FlatList
         keyExtractor={(item) => item.Id.toString()}
@@ -81,7 +81,7 @@ const ArchivedTasks = () => {
           />
         )}
         ListEmptyComponent={
-          <Text style={[{ textAlign: 'center', marginTop: 30 }, { color: theme.colors.text }]}>No archived tasks yet.</Text>
+          <Text style={[{ textAlign: 'center', marginTop: 30, fontSize: 18 }, { color: theme.colors.text }]}>No archived tasks yet.</Text>
         }
       />
     </View>
