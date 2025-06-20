@@ -246,20 +246,10 @@ export const Styles = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
   },
-  // Taskcontent: {
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
-  // text: {
-  //     fontSize: 18,
-  //     alignItems: 'center',
-  //     color: "Black",
-  // },
   contentContainer:{
     padding: 25,
     margin: 16,
-    marginTop: 60,
+    marginTop: 25,
     borderLeftWidth: 1, 
     //borderLeftColor: 'black',
     alignSelf: 'flex-start',
@@ -313,13 +303,6 @@ export const Styles = StyleSheet.create({
     lineHeight: 24,
     color: 'black',
   },
-  // taskButtonContainer: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   marginTop: 20,
-  //   paddingTop: 16,
-  //   borderTopColor: '#eee',
-  // },
   rightAlignedButtonContainer: {
       flexDirection: 'row',
       justifyContent: 'flex-end',
@@ -327,7 +310,7 @@ export const Styles = StyleSheet.create({
       paddingTop: 16,
   },
   button: {
-    width: 40, // Fixed width for circular buttons
+    width: 40,
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
@@ -345,11 +328,6 @@ export const Styles = StyleSheet.create({
       backgroundColor: '#F44336',
       borderColor: '#F44336',
   },
-  // TaskbuttonText: {
-  //     marginLeft: 8,
-  //     color: '#666',
-  //     fontWeight: '500',
-  // },
   likedText: {
       color: 'white',
   },
@@ -361,12 +339,6 @@ export const Styles = StyleSheet.create({
     marginHorizontal: 25,
     paddingHorizontal: 16,
   },
-  // commentHeader: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',  // This pushes items to opposite sides
-  //   alignItems: 'center',           // Vertically centers items
-  //   marginBottom: 10,
-  // },
   commentTitle: {
     fontSize: 16,
     fontWeight: '600',

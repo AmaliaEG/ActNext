@@ -74,7 +74,7 @@ const TaskExpansion = ({ route }) => {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (hydrated) {
       setFeedback(getFeedback(taskId));
       const taskComment = getTaskComment(taskId);
@@ -136,7 +136,24 @@ const TaskExpansion = ({ route }) => {
           >
           <View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}>
           {/* Head bar */}
-          <View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
+          <View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('Feed')} 
+              style={Styles.menuButton} 
+              testID='back-button'
+            >
+              <Ionicons 
+                name="arrow-back" 
+                size={24}  // Using fixed size instead of Styles.menuIcon.size
+                color={theme.colors.text}
+              />
+            </TouchableOpacity>
+            <Text style={[Styles.TaskTitle, { color: theme.colors.text }]}>
+              {task.Title || "Task title"}
+            </Text>
+            <View style={Styles.rightSpacer} />
+          </View>
+          {/* <View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
             <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={Styles.backButton}>
               <Ionicons name = "arrow-back" size = {24} color = {theme.colors.text} />
             </TouchableOpacity>
@@ -144,7 +161,7 @@ const TaskExpansion = ({ route }) => {
               {task.Title || "Task title"}
             </Text>
             <View style={Styles.rightSpacer} /> 
-          </View>
+          </View> */}
 
           {/*Main content */}
           <View style = {[Styles.contentContainer,{borderLeftColor: theme.colors.borderLeft}]}>
