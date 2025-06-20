@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
   backText: {
       fontSize: 16,
       marginRight: 20,
+      marginTop: 20,
   },
   header: {
       flexDirection: 'row',
