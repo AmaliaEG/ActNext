@@ -286,34 +286,34 @@ export const Styles = StyleSheet.create({
     width: 'auto',
   },
   companyName: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'regular',
-    marginBottom: 3,
   },
   starButton: {
-    padding: 6,
-    marginRight: -4,
+    padding: 0,
+    marginRight: -7,
   },
   targetGroupContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 16,
     marginBottom: 10,
   },
   colorCircle: {
-    width: 12,
-    height: 12,
+    width: 15,
+    height: 15,
     borderRadius: 6,
     marginRight: 6,
   },
   groupNameText: {
-    fontSize: 16,
+    fontSize: 17,
     color: '#333',
   },
   contentText: {
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 24,
     color: 'black',
+    marginTop: 14,
   },
   rightAlignedButtonContainer: {
       flexDirection: 'row',
