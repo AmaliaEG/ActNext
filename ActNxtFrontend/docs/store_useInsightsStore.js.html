@@ -27,7 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file useInsightStore.js
+ * @file useInsightsStore.js
  * @description
  * Manages the list of sales insights (tasks), including loading, persisting, feedback flow, comments, starring, and archiving.
  * Persists state in AsyncStorage and ensures hydration before UI uses data.
@@ -38,15 +38,11 @@
  * - `hydrated` (boolean): indicates whether data has been loaded from storage.
  * 
  * Actions:
- * - `initializeWithMockData`: seeds store with mock data, formats each insight, and persists it.
  * - `clearInsights`: clears all persisted insights and resets store.
  * - `loadInsights`: loads persisted insights or mock JSON, processes each record, and sets `hydrated`.
  * - `setInsights(data)`: replaces all insights with provided data after formatting and persists.
  * - `addFeedback(insightId, feedbackType)`: toggles like/dislike feedback on an insight and persists.
  * - `getFeedback(insightId)`: retrieves current feedback for a given insight.
- * - `clearQueuedFeedback`: empties the feedback queue.
- * - `updateComment(insightId, commentText)`: updates or removes a single comment on an insight and persists.
- * - `getComment(insightId)`: retieves the comment object for an insight.
  * - `updateTaskComment(taskId, commentText)`: updates or removes a user comment on a specific task and persists.
  * - `getTaskComment(taskId)`: retieves the user comment string for a task.
  * - `toggleStar(taskId, starStatus)`: sets the starred status of a task and persists.
@@ -54,7 +50,7 @@
  * - `getStarredTasks`: returns all starred tasks.
  * - `archiveTask(taskId)`/`unarchiveTask(taskId)`: toggles archived status for a task and persists.
  * 
- * @module useInsightStore
+ * @module useInsightsStore
  * @author s224837, s235280 and s235224
  * @since 2025-05-05
  */
@@ -88,30 +84,10 @@ const ensureDate = (input) => {
 };
 
 // Sales Insights
-const useInsightStore = create((set, get) => ({
+const useInsightsStore = create((set, get) => ({
         insights: [],
         queuedFeedback: [],
         hydrated: false,
-
-        /**
-         * Initializes store with mock data, processing dates and sentences, then persists.
-         * @async
-         * @author s235224
-         */
-        initializeWithMockData: async () => {
-            const currentDate = new Date();
-            const formatted = mockData.map(item => {
-            const dateAssigned = ensureDate(item.dateAssigned || item.DtCreate);
-            return {
-                ...item,
-                dateAssigned,
-                isOverdue: dateAssigned ? dateAssigned &lt; currentDate : false,
-                firstSentence: getTheFirstSentence(item.Description),
-            };
-            });
-            await AsyncStorage.setItem('insights', JSON.stringify(formatted));
-            set({ insights: formatted, hydrated: true });
-        },
 
         /**
          * Clears persisted insights and resets store state.
@@ -158,6 +134,8 @@ const useInsightStore = create((set, get) => ({
 
         /**
          * Replaces all insights with provided data after formatting and persists.
+         * 
+         * Used for tests.
          * @async
          * @param {Array&lt;Object>} data 
          * @author s235224
@@ -230,58 +208,6 @@ const useInsightStore = create((set, get) => ({
         getFeedback: (insightId) => {
             const insight = get().insights.find(item => item.Id === insightId);
             return insight?.feedback || {liked: false, disliked: false};
-        },
-
-        /**
-         * Clears the in-memory queuedFeedback array.
-         * @author s224837
-         */
-        clearQueuedFeedback: () => {
-            set({ queuedFeedback: [] });
-        },
-
-        /**
-         * Updates or removes a comment on an insight and persists change.
-         * @async
-         * @param {number} insightId 
-         * @param {string} commentText 
-         * @returns {Promise&lt;boolean>}
-         * @author s235280
-         */
-        updateComment: async (insightId, commentText) => {
-            try {
-            const currentInsights = [...get().insights];
-            const index = currentInsights.findIndex(item => item.Id === insightId);
-            
-            if (index !== -1) {
-                currentInsights[index] = { 
-                ...currentInsights[index],
-                comment: commentText.trim() ? { // Store as single comment object
-                    text: commentText.trim(),
-                    updatedAt: new Date().toISOString()
-                } : null
-                };
-                
-                await AsyncStorage.setItem('insights', JSON.stringify(currentInsights));
-                set({ insights: currentInsights });
-                return true;
-            }
-            return false;
-            } catch (error) {
-            console.error('Failed to update comment:', error);
-            return false;
-            }
-        },
-
-        /**
-         * Retrieves the comment object for a given insigt.
-         * @param {number} insightId 
-         * @returns {{text: string, updatedAt: string}|null}
-         * @author s235280
-         */
-        getComment: (insightId) => {
-            const insight = get().insights.find(item => item.Id === insightId);
-            return insight?.comment || null;
         },
         
         /**
@@ -434,7 +360,7 @@ const useInsightStore = create((set, get) => ({
         },
     }));
 
-export default useInsightStore;</code></pre>
+export default useInsightsStore;</code></pre>
         </article>
     </section>
 
@@ -444,17 +370,13 @@ export default useInsightStore;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-Feed.html">Feed</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-Styles.html">Styles</a></li><li><a href="module-TaskCard.html">TaskCard</a></li><li><a href="module-TaskExpansion.html">TaskExpansion</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#themes">themes</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-Feed.html">Feed</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-Styles.html">Styles</a></li><li><a href="module-TaskCard.html">TaskCard</a></li><li><a href="module-TaskExpansion.html">TaskExpansion</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightsStore.html">useInsightsStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-<<<<<<< HEAD
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 20 2025 21:51:09 GMT+0200 (Centraleuropæisk sommertid)
-=======
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 20 2025 12:14:01 GMT+0200 (Centraleuropæisk sommertid)
->>>>>>> parent of ab696a83 (Removed unused actions under useInsightsStore and changed documentation and tests accordingly)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 20 2025 23:59:29 GMT+0200 (Centraleuropæisk sommertid)
 </footer>
 
 <script> prettyPrint(); </script>

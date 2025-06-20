@@ -48,7 +48,7 @@ The state of this store is determined by `insights`, `queuedFeedback` and `hydra
 **Initialization and Loading**
 `initializeWithMockData` maps over the data, returns the wanted information, and persists that information to the storage. It then sets a new state, where the insights contain the information, and by setting hydrated to true.
 
-`loadInsights` reads the 'insights' from the storage, and has a fallback in case of no values stored in the storage. It then goes through the same process, of selecting values, from `initializeWithMockData` again to ensure that there is information to be used. Lastly, a state is set.
+`loadInsights` reads the 'insights' from the storage, and has a fallback in case of no values stored in the storage. It then maps over the data, returns the wanted information, and persists that information to the storage. It then sets a new state, where the insights contain the information, and by setting hydrated to true. Lastly, a state is set.
 
 **Managing the List**
 `clearInsights` removes information from the storage, and resets our state to the initial state.
@@ -60,13 +60,8 @@ The state of this store is determined by `insights`, `queuedFeedback` and `hydra
 
 `getFeedback` returns the current feedback depending on the insightId.
 
-`clearQueuedFeedback` resets the feedback.
 
 **Comments and User Notes**
-`updateComment` finds the insight based on the insightId. When found, it sets the comment value, persists to the storage and updates the state.
-
-`getComment` gets the comment based on the insightId.
-
 `updateTaskComment` sets the `userComment`, when the wanted task is found. It then persists this to the storage, and updates the state.
 
 `getTaskComment` retrieves the comment for the specific task.

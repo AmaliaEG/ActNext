@@ -74,13 +74,10 @@ jest.mock('../../src/store/useInsightsStore', () => {
       // Include all required methods from your actual store
       getStarStatus: jest.fn((id) => id === 1), // Only task with Id 1 is starred
       toggleStar: jest.fn(),
-      getStarredTasks: jest.fn(() => [mockStarredTask]),
       loadInsights: jest.fn(),
       setInsights: jest.fn(),
       addFeedback: jest.fn(),
       getFeedback: jest.fn(),
-      updateComment: jest.fn(),
-      getComment: jest.fn(),
       archiveTask: jest.fn(),
       unarchiveTask: jest.fn(),
     }),
