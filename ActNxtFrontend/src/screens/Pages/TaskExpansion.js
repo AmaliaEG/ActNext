@@ -12,7 +12,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, Stylesheet, ActivityIndicator, TextInput, Platform, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { View, Text, TouchableOpacity, Stylesheet, ActivityIndicator, TextInput, Platform, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard, Image} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import useInsightsStore from '../../store/useInsightsStore';
@@ -119,11 +119,37 @@ const TaskExpansion = ({ route }) => {
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
 
   return (
-    <KeyboardAvoidingView 
+    <View style={[Styles.container, { backgroundColor: theme.colors.background  }]}>
+        <KeyboardAvoidingView 
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
+      {/* Background Image*/}
+      <Image 
+        style={Styles.backgroundImage}
+        source={require('../../../assets/blur.png')}
+        resizeMode="contain"
+      />
+      {/* Fixed Header (outside ScrollView) */}
+      <View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('Feed')} 
+          style={Styles.menuButton} 
+          testID='back-button'
+        >
+          <Ionicons 
+            name="arrow-back" 
+            size={24}
+            color={theme.colors.text}
+          />
+        </TouchableOpacity>
+        <Text style={[Styles.TaskTitle, { color: theme.colors.text }]}>
+          {task.Title || "Task title"}
+        </Text>
+        <View style={Styles.rightSpacer} />
+      </View>
+      
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView 
           ref={scrollViewRef}
@@ -134,37 +160,9 @@ const TaskExpansion = ({ route }) => {
           keyboardDismissMode="interactive"
           keyboardShouldPersistTaps="handled"
           >
-          <View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}>
-          {/* Head bar */}
-          <View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>
-            <TouchableOpacity 
-              onPress={() => navigation.navigate('Feed')} 
-              style={Styles.menuButton} 
-              testID='back-button'
-            >
-              <Ionicons 
-                name="arrow-back" 
-                size={24}  // Using fixed size instead of Styles.menuIcon.size
-                color={theme.colors.text}
-              />
-            </TouchableOpacity>
-            <Text style={[Styles.TaskTitle, { color: theme.colors.text }]}>
-              {task.Title || "Task title"}
-            </Text>
-            <View style={Styles.rightSpacer} />
-          </View>
-          {/* <View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
-            <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={Styles.backButton}>
-              <Ionicons name = "arrow-back" size = {24} color = {theme.colors.text} />
-            </TouchableOpacity>
-            <Text style={[Styles.TaskTitle, { color: theme.colors.text }]}>
-              {task.Title || "Task title"}
-            </Text>
-            <View style={Styles.rightSpacer} /> 
-          </View> */}
-
+          
           {/*Main content */}
-          <View style = {[Styles.contentContainer,{borderLeftColor: theme.colors.borderLeft}]}>
+          <View style = {[Styles.contentContainer,{backgroundColor: theme.colors.cardBg}]}>
             <View style={Styles.companyRow}>
               {/*Company name*/}
               <View style={[
@@ -178,7 +176,7 @@ const TaskExpansion = ({ route }) => {
               <TouchableOpacity onPress={handleStarPress} style={Styles.starButton}>
                 <Ionicons 
                   name={isStarred ? "star" : "star-outline"} 
-                  size={24} 
+                  size={30} 
                   color={isStarred ? "#FFD700" : theme.colors.subText}
                 />
               </TouchableOpacity>
@@ -228,8 +226,9 @@ const TaskExpansion = ({ route }) => {
           <View style={[Styles.commentSection, { paddingBottom: keyboardHeight > 0 ? keyboardHeight + 20 : 20}]}>
             <View style={Styles.commentHeader}>
                 <Text style={[Styles.commentTitle, {color: theme.colors.text}]}>My Notes</Text>
-                <TextInput
-                  style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text, minHeight: 100, paddingBottom: 10}]}
+                <View style={Styles.commentInputContainer}>
+                  <TextInput
+                  style={[Styles.commentInput, { backgroundColor: theme.colors.cardBg, color: theme.colors.text, minHeight: 100, paddingBottom: 10}]}
                   placeholder="Type your notes here..."
                   placeholderTextColor="#999"
                   multiline
@@ -243,21 +242,20 @@ const TaskExpansion = ({ route }) => {
                     }, 300);
                   }}
               />
+                </View>
+                
               <TouchableOpacity
                 style={[Styles.saveButton, {opacity: comment.trim() ? 1 : 0.5,backgroundColor: theme.colors.primary || '#2196F3'}]}
                 onPress={handleCommentSubmit}
                 disabled={!comment.trim()}
               >
                 <Text style={[Styles.saveButtonText, {color: theme.colors.text}]}>
-                  {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
+                  {getTaskComment(taskId) ? 'Save Notes' : 'Save Notes'}
                 </Text>
               </TouchableOpacity>
-            </View>
-          </View>  
 
-          {/* Finish button */}
-          <View style={Styles.finishedButtonContainer}>
-            <TouchableOpacity
+              {/* Finish button */}
+              <TouchableOpacity
               style={Styles.finishedButton}
               onPress={ async () => {
                 const success = await archiveTask(taskId);
@@ -271,11 +269,13 @@ const TaskExpansion = ({ route }) => {
             >
               <Text style={Styles.finishedButtonText}>Finished</Text>
             </TouchableOpacity>
-          </View>
-          </View>
+            </View>
+          </View>  
+
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
+    </View>
   );
 };
 

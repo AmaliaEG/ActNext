@@ -257,12 +257,17 @@ export const Styles = StyleSheet.create({
     padding: 25,
     margin: 16,
     marginTop: 25,
-    borderLeftWidth: 1, 
-    //borderLeftColor: 'black',
-    alignSelf: 'flex-start',
-    width: 'auto',
-    flexGrow: 0,
-    flexShrink: 1,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    // Elevation for Android
+    elevation: 5,
   },
   companyRow: {
   flexDirection: 'row',
@@ -286,8 +291,8 @@ export const Styles = StyleSheet.create({
     marginBottom: 3,
   },
   starButton: {
-    padding: 8,
-    marginRight: -8,
+    padding: 6,
+    marginRight: -4,
   },
   targetGroupContainer: {
     flexDirection: 'row',
@@ -347,22 +352,32 @@ export const Styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   commentTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     marginBottom: 10,
     color: '#333',
   },
+  commentInputContainer: {  // New style for the wrapper
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    // Shadow for iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    // Elevation for Android
+    elevation: 3,
+    marginBottom: 10,  // Spacing below the input
+  },
   commentInput: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
+    borderWidth: 0,  // Remove default border
+    borderRadius: 10,
     padding: 15,
     minHeight: 100,
     textAlignVertical: 'top',
-    backgroundColor: '#fff',
     fontSize: 15,
     lineHeight: 22,
-    textAlignVertical: 'top',
+    backgroundColor: 'transparent',
   },
   commentHint: {
     fontSize: 12,
@@ -396,6 +411,7 @@ export const Styles = StyleSheet.create({
       borderRadius: 8,
       alignItems: 'center',
       justifyContent: 'center',
+      marginTop: 50,
   },
   finishedButtonText: {
       color: 'white',
