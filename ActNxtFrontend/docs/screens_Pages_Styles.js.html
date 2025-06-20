@@ -258,7 +258,7 @@ export const Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 35,
     paddingTop: 40,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0'
@@ -274,20 +274,10 @@ export const Styles = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
   },
-  // Taskcontent: {
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
-  // text: {
-  //     fontSize: 18,
-  //     alignItems: 'center',
-  //     color: "Black",
-  // },
   contentContainer:{
     padding: 25,
     margin: 16,
-    marginTop: 60,
+    marginTop: 25,
     borderLeftWidth: 1, 
     //borderLeftColor: 'black',
     alignSelf: 'flex-start',
@@ -341,13 +331,6 @@ export const Styles = StyleSheet.create({
     lineHeight: 24,
     color: 'black',
   },
-  // taskButtonContainer: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   marginTop: 20,
-  //   paddingTop: 16,
-  //   borderTopColor: '#eee',
-  // },
   rightAlignedButtonContainer: {
       flexDirection: 'row',
       justifyContent: 'flex-end',
@@ -355,7 +338,7 @@ export const Styles = StyleSheet.create({
       paddingTop: 16,
   },
   button: {
-    width: 40, // Fixed width for circular buttons
+    width: 40,
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
@@ -373,11 +356,6 @@ export const Styles = StyleSheet.create({
       backgroundColor: '#F44336',
       borderColor: '#F44336',
   },
-  // TaskbuttonText: {
-  //     marginLeft: 8,
-  //     color: '#666',
-  //     fontWeight: '500',
-  // },
   likedText: {
       color: 'white',
   },
@@ -413,6 +391,17 @@ export const Styles = StyleSheet.create({
     marginTop: 5,
     fontStyle: 'italic',
   },
+  saveButton: {
+    alignSelf: 'flex-end',
+    marginTop: 10,
+    backgroundColor: '#2196F3',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 80,
+  },
   finishedButtonContainer: {
     position: 'absolute',
     bottom: 100,
@@ -420,7 +409,7 @@ export const Styles = StyleSheet.create({
     right: 20,
     paddingHorizontal: 16,
     paddingBottom: 20,
-    marginBottom: 15,
+    marginBottom: -40,
   },
   finishedButton: {
       backgroundColor: '#2196F3',
@@ -451,13 +440,13 @@ export const GroupColours = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-Feed.html">Feed</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-Styles.html">Styles</a></li><li><a href="module-TaskCard.html">TaskCard</a></li><li><a href="module-TaskExpansion.html">TaskExpansion</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#themes">themes</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-Feed.html">Feed</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-Styles.html">Styles</a></li><li><a href="module-TaskCard.html">TaskCard</a></li><li><a href="module-TaskExpansion.html">TaskExpansion</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightsStore.html">useInsightsStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 20 2025 12:14:01 GMT+0200 (Centraleuropæisk sommertid)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 20 2025 15:21:12 GMT+0200 (Centraleuropæisk sommertid)
 </footer>
 
 <script> prettyPrint(); </script>
