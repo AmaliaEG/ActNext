@@ -1,5 +1,5 @@
 /**
- * @file useInsightsStore.js
+ * @file useInsightStore.js
  * @description
  * Manages the list of sales insights (tasks), including loading, persisting, feedback flow, comments, starring, and archiving.
  * Persists state in AsyncStorage and ensures hydration before UI uses data.
@@ -10,11 +10,15 @@
  * - `hydrated` (boolean): indicates whether data has been loaded from storage.
  * 
  * Actions:
+ * - `initializeWithMockData`: seeds store with mock data, formats each insight, and persists it.
  * - `clearInsights`: clears all persisted insights and resets store.
  * - `loadInsights`: loads persisted insights or mock JSON, processes each record, and sets `hydrated`.
  * - `setInsights(data)`: replaces all insights with provided data after formatting and persists.
  * - `addFeedback(insightId, feedbackType)`: toggles like/dislike feedback on an insight and persists.
  * - `getFeedback(insightId)`: retrieves current feedback for a given insight.
+ * - `clearQueuedFeedback`: empties the feedback queue.
+ * - `updateComment(insightId, commentText)`: updates or removes a single comment on an insight and persists.
+ * - `getComment(insightId)`: retieves the comment object for an insight.
  * - `updateTaskComment(taskId, commentText)`: updates or removes a user comment on a specific task and persists.
  * - `getTaskComment(taskId)`: retieves the user comment string for a task.
  * - `toggleStar(taskId, starStatus)`: sets the starred status of a task and persists.
@@ -22,7 +26,7 @@
  * - `getStarredTasks`: returns all starred tasks.
  * - `archiveTask(taskId)`/`unarchiveTask(taskId)`: toggles archived status for a task and persists.
  * 
- * @module useInsightsStore
+ * @module useInsightStore
  * @author s224837, s235280 and s235224
  * @since 2025-05-05
  */
@@ -56,10 +60,30 @@ const ensureDate = (input) => {
 };
 
 // Sales Insights
-const useInsightsStore = create((set, get) => ({
+const useInsightStore = create((set, get) => ({
         insights: [],
         queuedFeedback: [],
         hydrated: false,
+
+        /**
+         * Initializes store with mock data, processing dates and sentences, then persists.
+         * @async
+         * @author s235224
+         */
+        initializeWithMockData: async () => {
+            const currentDate = new Date();
+            const formatted = mockData.map(item => {
+            const dateAssigned = ensureDate(item.dateAssigned || item.DtCreate);
+            return {
+                ...item,
+                dateAssigned,
+                isOverdue: dateAssigned ? dateAssigned < currentDate : false,
+                firstSentence: getTheFirstSentence(item.Description),
+            };
+            });
+            await AsyncStorage.setItem('insights', JSON.stringify(formatted));
+            set({ insights: formatted, hydrated: true });
+        },
 
         /**
          * Clears persisted insights and resets store state.
@@ -106,7 +130,6 @@ const useInsightsStore = create((set, get) => ({
 
         /**
          * Replaces all insights with provided data after formatting and persists.
-         * Used for the test.
          * @async
          * @param {Array<Object>} data 
          * @author s235224
@@ -179,6 +202,58 @@ const useInsightsStore = create((set, get) => ({
         getFeedback: (insightId) => {
             const insight = get().insights.find(item => item.Id === insightId);
             return insight?.feedback || {liked: false, disliked: false};
+        },
+
+        /**
+         * Clears the in-memory queuedFeedback array.
+         * @author s224837
+         */
+        clearQueuedFeedback: () => {
+            set({ queuedFeedback: [] });
+        },
+
+        /**
+         * Updates or removes a comment on an insight and persists change.
+         * @async
+         * @param {number} insightId 
+         * @param {string} commentText 
+         * @returns {Promise<boolean>}
+         * @author s235280
+         */
+        updateComment: async (insightId, commentText) => {
+            try {
+            const currentInsights = [...get().insights];
+            const index = currentInsights.findIndex(item => item.Id === insightId);
+            
+            if (index !== -1) {
+                currentInsights[index] = { 
+                ...currentInsights[index],
+                comment: commentText.trim() ? { // Store as single comment object
+                    text: commentText.trim(),
+                    updatedAt: new Date().toISOString()
+                } : null
+                };
+                
+                await AsyncStorage.setItem('insights', JSON.stringify(currentInsights));
+                set({ insights: currentInsights });
+                return true;
+            }
+            return false;
+            } catch (error) {
+            console.error('Failed to update comment:', error);
+            return false;
+            }
+        },
+
+        /**
+         * Retrieves the comment object for a given insigt.
+         * @param {number} insightId 
+         * @returns {{text: string, updatedAt: string}|null}
+         * @author s235280
+         */
+        getComment: (insightId) => {
+            const insight = get().insights.find(item => item.Id === insightId);
+            return insight?.comment || null;
         },
         
         /**
@@ -331,4 +406,4 @@ const useInsightsStore = create((set, get) => ({
         },
     }));
 
-export default useInsightsStore;
+export default useInsightStore;

@@ -102,7 +102,7 @@ const TaskExpansion = ({ route }) => {
     };
   }, []);
 
-  useEffect(() => { 
+  useEffect(() => {
     if (hydrated) {
       setFeedback(getFeedback(taskId));
       const taskComment = getTaskComment(taskId);
@@ -147,6 +147,7 @@ const TaskExpansion = ({ route }) => {
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
 
   return (
+    // &lt;TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     &lt;KeyboardAvoidingView 
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -157,31 +158,19 @@ const TaskExpansion = ({ route }) => {
           ref={scrollViewRef}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: 20,
+            paddingBottom: 20, // Add some padding at the bottom
           }}
+          // contentInset={{ bottom: keyboardHeight }}
+          // scrollIndicatorInsets={{ bottom: keyboardHeight }}
+          // // contentContainerStyle={{ flexGrow: 1 }}
+          // keyboardDismissMode="on-drag"
+          // keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
           keyboardShouldPersistTaps="handled"
           >
-          &lt;View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}>
+          {/* &lt;View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}> */}
           {/* Head bar */}
-          &lt;View style={[Styles.menuContainer, { backgroundColor: theme.colors.cardBg }]}>
-            &lt;TouchableOpacity 
-              onPress={() => navigation.navigate('Feed')} 
-              style={Styles.menuButton} 
-              testID='back-button'
-            >
-              &lt;Ionicons 
-                name="arrow-back" 
-                size={24}  // Using fixed size instead of Styles.menuIcon.size
-                color={theme.colors.text}
-              />
-            &lt;/TouchableOpacity>
-            &lt;Text style={[Styles.TaskTitle, { color: theme.colors.text }]}>
-              {task.Title || "Task title"}
-            &lt;/Text>
-            &lt;View style={Styles.rightSpacer} />
-          &lt;/View>
-          {/* &lt;View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
+          &lt;View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
             &lt;TouchableOpacity onPress={() => navigation.navigate('Feed')} style={Styles.backButton}>
               &lt;Ionicons name = "arrow-back" size = {24} color = {theme.colors.text} />
             &lt;/TouchableOpacity>
@@ -189,7 +178,7 @@ const TaskExpansion = ({ route }) => {
               {task.Title || "Task title"}
             &lt;/Text>
             &lt;View style={Styles.rightSpacer} /> 
-          &lt;/View> */}
+          &lt;/View>
 
           {/*Main content */}
           &lt;View style = {[Styles.contentContainer,{borderLeftColor: theme.colors.borderLeft}]}>
@@ -254,34 +243,32 @@ const TaskExpansion = ({ route }) => {
 
           {/* Comment Section - integrated with the input */}
           &lt;View style={[Styles.commentSection, { paddingBottom: keyboardHeight > 0 ? keyboardHeight + 20 : 20}]}>
-            &lt;View style={Styles.commentHeader}>
-                &lt;Text style={[Styles.commentTitle, {color: theme.colors.text}]}>My Notes&lt;/Text>
-                &lt;TextInput
-                  style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text, minHeight: 100, paddingBottom: 10}]}
-                  placeholder="Type your notes here..."
-                  placeholderTextColor="#999"
-                  multiline
-                  value={comment}
-                  onChangeText={setComment}
-                  onSubmitEditing={handleCommentSubmit}
-                  blurOnSubmit={false}
-                  onFocus={() => {
-                    setTimeout(() => {
-                      scrollViewRef.current?.scrollToEnd({ animated: true });
-                    }, 300);
-                  }}
-              />
-              &lt;TouchableOpacity
-                style={[Styles.saveButton, {opacity: comment.trim() ? 1 : 0.5,backgroundColor: theme.colors.primary || '#2196F3'}]}
-                onPress={handleCommentSubmit}
-                disabled={!comment.trim()}
-              >
-                &lt;Text style={[Styles.saveButtonText, {color: theme.colors.text}]}>
-                  {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
-                &lt;/Text>
-              &lt;/TouchableOpacity>
-            &lt;/View>
-          &lt;/View>  
+            &lt;Text style={[Styles.commentTitle, {color: theme.colors.text}]}>My Notes&lt;/Text>
+            &lt;TextInput
+              style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text, minHeight: 100, paddingBottom: 10}]}
+              placeholder="Type your notes here..."
+              placeholderTextColor="#999"
+              multiline
+              value={comment}
+              onChangeText={setComment}
+              onSubmitEditing={handleCommentSubmit}
+              blurOnSubmit={false}
+              onFocus={() => {
+                setTimeout(() => {
+                  scrollViewRef.current?.scrollToEnd({ animated: true });
+                }, 300);
+              }}
+            />
+            &lt;TouchableOpacity
+              style={Styles.saveButton}
+              onPress={handleCommentSubmit}
+              disabled={!comment.trim()}
+            >
+              &lt;Text style={[Styles.saveButtonText, {color: theme.colors.text}]}>
+                {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
+              &lt;/Text>
+            &lt;/TouchableOpacity>
+          &lt;/View>
 
           {/* Finish button */}
           &lt;View style={Styles.finishedButtonContainer}>
@@ -300,10 +287,11 @@ const TaskExpansion = ({ route }) => {
               &lt;Text style={Styles.finishedButtonText}>Finished&lt;/Text>
             &lt;/TouchableOpacity>
           &lt;/View>
-          &lt;/View>
+          {/* &lt;/View> */}
         &lt;/ScrollView>
       &lt;/TouchableWithoutFeedback>
     &lt;/KeyboardAvoidingView>
+    // &lt;/TouchableWithoutFeedback>
   );
 };
 
@@ -320,13 +308,17 @@ export default TaskExpansion;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-Feed.html">Feed</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-Styles.html">Styles</a></li><li><a href="module-TaskCard.html">TaskCard</a></li><li><a href="module-TaskExpansion.html">TaskExpansion</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightsStore.html">useInsightsStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#themes">themes</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AboutACTNXTAppScreen.html">AboutACTNXTAppScreen</a></li><li><a href="module-ArchivedTasks.html">ArchivedTasks</a></li><li><a href="module-DateTimePickerInput.html">DateTimePickerInput</a></li><li><a href="module-Feed.html">Feed</a></li><li><a href="module-GenderPickerInput.html">GenderPickerInput</a></li><li><a href="module-LoginPage.html">LoginPage</a></li><li><a href="module-Navigator.html">Navigator</a></li><li><a href="module-ProfileDetailsScreen.html">ProfileDetailsScreen</a></li><li><a href="module-SettingsScreen.html">SettingsScreen</a></li><li><a href="module-StarredTasks.html">StarredTasks</a></li><li><a href="module-Styles.html">Styles</a></li><li><a href="module-TaskCard.html">TaskCard</a></li><li><a href="module-TaskExpansion.html">TaskExpansion</a></li><li><a href="module-ThemeContext.html">ThemeContext</a></li><li><a href="module-useAuthStore.html">useAuthStore</a></li><li><a href="module-useInsightStore.html">useInsightStore</a></li><li><a href="module-useProfileStore.html">useProfileStore</a></li><li><a href="module-useSettingsStore.html">useSettingsStore</a></li></ul><h3>Global</h3><ul><li><a href="global.html#darkTheme">darkTheme</a></li><li><a href="global.html#lightTheme">lightTheme</a></li><li><a href="global.html#themes">themes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
+<<<<<<< HEAD
     Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 20 2025 21:51:09 GMT+0200 (Centraleuropæisk sommertid)
+=======
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 20 2025 12:14:01 GMT+0200 (Centraleuropæisk sommertid)
+>>>>>>> parent of ab696a83 (Removed unused actions under useInsightsStore and changed documentation and tests accordingly)
 </footer>
 
 <script> prettyPrint(); </script>
