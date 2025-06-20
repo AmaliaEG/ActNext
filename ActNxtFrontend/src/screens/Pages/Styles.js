@@ -230,7 +230,7 @@ export const Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 35,
     paddingTop: 40,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0'
@@ -361,6 +361,12 @@ export const Styles = StyleSheet.create({
     marginHorizontal: 25,
     paddingHorizontal: 16,
   },
+  // commentHeader: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',  // This pushes items to opposite sides
+  //   alignItems: 'center',           // Vertically centers items
+  //   marginBottom: 10,
+  // },
   commentTitle: {
     fontSize: 16,
     fontWeight: '600',
@@ -385,6 +391,17 @@ export const Styles = StyleSheet.create({
     marginTop: 5,
     fontStyle: 'italic',
   },
+  saveButton: {
+    alignSelf: 'flex-end',
+    marginTop: 10,
+    backgroundColor: '#2196F3',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 80,
+  },
   finishedButtonContainer: {
     position: 'absolute',
     bottom: 100,
@@ -392,7 +409,7 @@ export const Styles = StyleSheet.create({
     right: 20,
     paddingHorizontal: 16,
     paddingBottom: 20,
-    marginBottom: 15,
+    marginBottom: -40,
   },
   finishedButton: {
       backgroundColor: '#2196F3',

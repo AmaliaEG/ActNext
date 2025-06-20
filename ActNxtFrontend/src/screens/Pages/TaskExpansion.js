@@ -119,7 +119,6 @@ const TaskExpansion = ({ route }) => {
   const targetGroup = Groups[task.SalesAnalysisId] || Groups[1];// Fallback to group 1
 
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <KeyboardAvoidingView 
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -130,17 +129,12 @@ const TaskExpansion = ({ route }) => {
           ref={scrollViewRef}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: 20, // Add some padding at the bottom
+            paddingBottom: 20,
           }}
-          // contentInset={{ bottom: keyboardHeight }}
-          // scrollIndicatorInsets={{ bottom: keyboardHeight }}
-          // // contentContainerStyle={{ flexGrow: 1 }}
-          // keyboardDismissMode="on-drag"
-          // keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
           keyboardShouldPersistTaps="handled"
           >
-          {/* <View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}> */}
+          <View style={[Styles.Taskcontainer,{ backgroundColor: theme.colors.background }]}>
           {/* Head bar */}
           <View style = {[Styles.Taskheader, {backgroundColor: theme.colors.background}]}>
             <TouchableOpacity onPress={() => navigation.navigate('Feed')} style={Styles.backButton}>
@@ -215,32 +209,34 @@ const TaskExpansion = ({ route }) => {
 
           {/* Comment Section - integrated with the input */}
           <View style={[Styles.commentSection, { paddingBottom: keyboardHeight > 0 ? keyboardHeight + 20 : 20}]}>
-            <Text style={[Styles.commentTitle, {color: theme.colors.text}]}>My Notes</Text>
-            <TextInput
-              style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text, minHeight: 100, paddingBottom: 10}]}
-              placeholder="Type your notes here..."
-              placeholderTextColor="#999"
-              multiline
-              value={comment}
-              onChangeText={setComment}
-              onSubmitEditing={handleCommentSubmit}
-              blurOnSubmit={false}
-              onFocus={() => {
-                setTimeout(() => {
-                  scrollViewRef.current?.scrollToEnd({ animated: true });
-                }, 300);
-              }}
-            />
-            <TouchableOpacity
-              style={Styles.saveButton}
-              onPress={handleCommentSubmit}
-              disabled={!comment.trim()}
-            >
-              <Text style={[Styles.saveButtonText, {color: theme.colors.text}]}>
-                {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
-              </Text>
-            </TouchableOpacity>
-          </View>
+            <View style={Styles.commentHeader}>
+                <Text style={[Styles.commentTitle, {color: theme.colors.text}]}>My Notes</Text>
+                <TextInput
+                  style={[Styles.commentInput, { backgroundColor: theme.colors.inputBackground, color: theme.colors.text, minHeight: 100, paddingBottom: 10}]}
+                  placeholder="Type your notes here..."
+                  placeholderTextColor="#999"
+                  multiline
+                  value={comment}
+                  onChangeText={setComment}
+                  onSubmitEditing={handleCommentSubmit}
+                  blurOnSubmit={false}
+                  onFocus={() => {
+                    setTimeout(() => {
+                      scrollViewRef.current?.scrollToEnd({ animated: true });
+                    }, 300);
+                  }}
+              />
+              <TouchableOpacity
+                style={[Styles.saveButton, {opacity: comment.trim() ? 1 : 0.5,backgroundColor: theme.colors.primary || '#2196F3'}]}
+                onPress={handleCommentSubmit}
+                disabled={!comment.trim()}
+              >
+                <Text style={[Styles.saveButtonText, {color: theme.colors.text}]}>
+                  {getTaskComment(taskId) ? 'Update Notes' : 'Save Notes'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>  
 
           {/* Finish button */}
           <View style={Styles.finishedButtonContainer}>
@@ -259,11 +255,10 @@ const TaskExpansion = ({ route }) => {
               <Text style={Styles.finishedButtonText}>Finished</Text>
             </TouchableOpacity>
           </View>
-          {/* </View> */}
+          </View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-    // </TouchableWithoutFeedback>
   );
 };
 
