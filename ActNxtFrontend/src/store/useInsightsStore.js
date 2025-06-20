@@ -27,7 +27,7 @@
  * - `archiveTask(taskId)`/`unarchiveTask(taskId)`: toggles archived status for a task and persists.
  * 
  * @module useInsightStore
- * @author s224837 and s235280
+ * @author s224837, s235280 and s235224
  * @since 2025-05-05
  */
 
@@ -39,6 +39,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * Extracts the first sentence from a longer text.
  * @param {string} description - Full description text.
  * @returns {string}
+ * @author s235224
  */
 const getTheFirstSentence = (description) => {
   if (!description) return '';
@@ -50,6 +51,7 @@ const getTheFirstSentence = (description) => {
  * Parses various input formats into a Date object or returns null.
  * @param {string|Date} input 
  * @returns {Date|null}
+ * @author s235224
  */
 const ensureDate = (input) => {
   if (!input) return null;
@@ -66,7 +68,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Initializes store with mock data, processing dates and sentences, then persists.
          * @async
-         * @author s235280
+         * @author s235224
          */
         initializeWithMockData: async () => {
             const currentDate = new Date();
@@ -100,7 +102,7 @@ const useInsightStore = create((set, get) => ({
         /**
          * Loads insights from storage or mock JSON, processes each entry, and sets hydrated.
          * @async
-         * @author s235280
+         * @author s235224
          */
         loadInsights: async () => {
             try {
@@ -130,6 +132,7 @@ const useInsightStore = create((set, get) => ({
          * Replaces all insights with provided data after formatting and persists.
          * @async
          * @param {Array<Object>} data 
+         * @author s235224
          */
         setInsights: async (data) => {
             try {
@@ -203,6 +206,7 @@ const useInsightStore = create((set, get) => ({
 
         /**
          * Clears the in-memory queuedFeedback array.
+         * @author s224837
          */
         clearQueuedFeedback: () => {
             set({ queuedFeedback: [] });
@@ -318,8 +322,8 @@ const useInsightStore = create((set, get) => ({
             }
             return false;
             } catch (error) {
-            console.error('Failed to toggle star:', error);
-            return false;
+                console.error('Failed to toggle star:', error);
+                return false;
             }
         },
 
@@ -348,6 +352,7 @@ const useInsightStore = create((set, get) => ({
          * @async
          * @param {number} taskId 
          * @returns {Promise<boolean>}
+         * @author s224837
          */
         archiveTask: async (taskId) => {
             try {
@@ -376,6 +381,7 @@ const useInsightStore = create((set, get) => ({
          * @async
          * @param {number} taskId 
          * @returns {Promise<boolean>}
+         * @author s224837
          */
         unarchiveTask: async (taskId) => {
             try {
